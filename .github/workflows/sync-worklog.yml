@@ -1,0 +1,52 @@
+name: 작업 로그를 AAA 레포에 동기화
+
+on:
+  push:
+    branches: [main]
+    paths: ['docs/worklog.md']
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: selfishclub-ax 체크아웃
+        uses: actions/checkout@v4
+
+      - name: 주차 계산 및 aaa 레포에 복사
+        env:
+          AAA_TOKEN: ${{ secrets.AAA_REPO_TOKEN }}
+        run: |
+          # Week 01 시작일: 2026-03-16 (월요일)
+          WEEK1_START="2026-03-16"
+          TODAY=$(date -u +%Y-%m-%d)
+
+          # 오늘 날짜 기준 주차 계산
+          WEEK1_EPOCH=$(date -d "$WEEK1_START" +%s 2>/dev/null || date -j -f "%Y-%m-%d" "$WEEK1_START" +%s)
+          TODAY_EPOCH=$(date -d "$TODAY" +%s 2>/dev/null || date -j -f "%Y-%m-%d" "$TODAY" +%s)
+          DIFF_DAYS=$(( (TODAY_EPOCH - WEEK1_EPOCH) / 86400 ))
+          WEEK_NUM=$(( DIFF_DAYS / 7 + 1 ))
+          WEEK_PADDED=$(printf "%02d" $WEEK_NUM)
+
+          echo "오늘: $TODAY → Week $WEEK_PADDED"
+
+          # aaa 레포 클론
+          git clone https://x-access-token:${AAA_TOKEN}@github.com/selfishclub-all/aaa.git /tmp/aaa
+
+          # 주차 폴더 없으면 생성
+          TARGET_DIR="/tmp/aaa/00_주차별미션/Week_${WEEK_PADDED}"
+          mkdir -p "$TARGET_DIR"
+
+          # worklog.md → Week_XX_비비안.md로 복사
+          cp docs/worklog.md "${TARGET_DIR}/Week_${WEEK_PADDED}_비비안.md"
+
+          # aaa 레포에 커밋 & push
+          cd /tmp/aaa
+          git config user.name "vivien-selfishclub"
+          git config user.email "noreply@selfishclub.xyz"
+          git add .
+          if git diff --cached --quiet; then
+            echo "변경사항 없음 — 스킵"
+          else
+            git commit -m "비비안 Week ${WEEK_PADDED} 미션 제출 — 자동 동기화"
+            git push origin main
+          fi
