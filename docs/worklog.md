@@ -48,3 +48,13 @@
 - 언제든 다시 Private으로 되돌릴 수 있음
 - org admin 권한이 필요해서 젬마에게 요청해야 할 수 있음
 **대안:** Vercel Pro(월 $20) 또는 Pro Trial(14일 무료)
+**결정:** Public으로 전환 완료
+
+### Vercel 배포 + 홈페이지/어드민 레이아웃
+**왜:** 로컬만으로는 한계가 있어서, 기본 레이아웃이라도 배포해두고 작업하기 위해
+**한 일:**
+- GitHub 레포 Public 전환 → Vercel Hobby(무료) 배포 성공
+- 홈페이지 기본 레이아웃 구성 (Header, Hero, 프로그램 카드, 소개 섹션, Footer)
+- 어드민 기본 레이아웃 구성 (사이드바 + 대시보드 껍데기)
+- AX 대시보드 경로 변경 (/admin/dashboard → /dashboard)
+- 배포 주소: selfishclub-ax.vercel.app
