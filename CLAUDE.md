@@ -100,6 +100,7 @@ type: feat, fix, refactor, style, docs, chore, test
 ### 미결정 사항
 - 배포 구조: `selfishclub-all/aaa` 레포에 합칠지 별도 레포 만들지 미정
 - 카카오 비즈앱 인증 아직 안 됨 (전화번호 수집 필요)
+- item 테이블에 홈페이지 노출 여부 컬럼(i_visible) 추가 여부 — 현재는 전체 노출
 
 ## 주의사항
 
