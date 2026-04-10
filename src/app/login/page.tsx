@@ -11,13 +11,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0A0A0A]">
-      <div className="w-full max-w-sm px-6">
+    <div className="min-h-screen flex items-center justify-center bg-[#0A0A0A] px-4">
+      <div className="w-full max-w-sm">
+        {/* 헤더 */}
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold text-white mb-2">셀피쉬클럽</h1>
           <p className="text-[#888888]">로그인하고 더 많은 혜택을 만나보세요</p>
         </div>
 
+        {/* 카카오 로그인 버튼 */}
         <button
           onClick={handleKakaoLogin}
           className="w-full flex items-center justify-center gap-2 bg-[#FEE500] text-[#191919] font-semibold py-3 px-4 rounded-lg hover:brightness-95 transition-all cursor-pointer"
@@ -31,7 +33,39 @@ export default function LoginPage() {
           카카오로 시작하기
         </button>
 
-        <p className="text-center text-[#888888] text-xs mt-6">
+        {/* 안내 사항 */}
+        <div className="mt-8 space-y-4">
+          <div className="bg-white/5 rounded-xl p-4 space-y-3">
+            <h3 className="text-sm font-semibold text-white">
+              기존 회원이신가요?
+            </h3>
+            <p className="text-xs text-[#888888] leading-relaxed">
+              카카오 로그인 시 <span className="text-white">전화번호</span>를
+              기준으로 기존 멤버십 · 결제 내역을 자동으로 불러옵니다.
+            </p>
+          </div>
+
+          <div className="bg-white/5 rounded-xl p-4 space-y-3">
+            <h3 className="text-sm font-semibold text-white">
+              전화번호가 바뀌었나요?
+            </h3>
+            <p className="text-xs text-[#888888] leading-relaxed">
+              전화번호가 달라 기존 정보가 연결되지 않으면, 이메일로 다시 한번
+              찾아볼게요. 그래도 안 되면{" "}
+              <a
+                href="http://pf.kakao.com/_dxmxixhG/chat"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FFD700] underline underline-offset-2"
+              >
+                카카오 채널
+              </a>
+              로 문의해 주세요.
+            </p>
+          </div>
+        </div>
+
+        <p className="text-center text-[#888888] text-xs mt-8">
           로그인 시 서비스 이용약관에 동의하게 됩니다
         </p>
       </div>

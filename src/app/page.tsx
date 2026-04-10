@@ -1,15 +1,34 @@
 import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { supabase } from "@/lib/supabase";
 
-const programs = [
-  { title: "이기적공유회", desc: "냅-다 실전 공유 세미나", href: "/sharing", badge: "무료" },
-  { title: "이기적챌린지", desc: "함께 몰입하는 실전 챌린지", href: "/challenge", badge: "모집중" },
-  { title: "이기적멤버십", desc: "AI 네이티브 멤버십", href: "/membership", badge: "상시" },
-  { title: "AAA", desc: "AI 네이티브 클로즈드 커뮤니티", href: "/aaa", badge: "코호트" },
-];
+async function getPrograms() {
+  const { data } = await supabase
+    .from("item")
+    .select("i_title, i_title_userside, i_type, i_formid_webflow, i_paid_tf, i_price, i_eventdate, i_event_count")
+    .order("ID", { ascending: false });
+  return data ?? [];
+}
 
-export default function Home() {
+function getProgramHref(type: string, slug: string) {
+  const prefix: Record<string, string> = {
+    sharing: "/sharing",
+    challenge: "/challenge",
+    workshop: "/sharing",
+    special: "/sharing",
+  };
+  return `${prefix[type] ?? "/sharing"}/${slug}`;
+}
+
+function formatPrice(paid: boolean, price: number | null) {
+  if (!paid) return "무료";
+  return price ? `${price.toLocaleString()}원` : "유료";
+}
+
+export default async function Home() {
+  const programs = await getPrograms();
+
   return (
     <>
       <Header />
@@ -46,18 +65,28 @@ export default function Home() {
         <section className="py-20">
           <div className="max-w-[1200px] mx-auto px-4 lg:px-12">
             <h2 className="text-2xl lg:text-3xl font-bold mb-10">프로그램</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {programs.map((p) => (
                 <Link
-                  key={p.href}
-                  href={p.href}
+                  key={p.i_formid_webflow}
+                  href={getProgramHref(p.i_type, p.i_formid_webflow)}
                   className="bg-white border border-[#E5E5E5] rounded-2xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all"
                 >
-                  <span className="inline-block bg-[#FFD700] text-[#0A0A0A] text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                    {p.badge}
-                  </span>
-                  <h3 className="text-lg font-bold mb-2">{p.title}</h3>
-                  <p className="text-sm text-[#888888]">{p.desc}</p>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="inline-block bg-[#FFD700] text-[#0A0A0A] text-xs font-semibold px-3 py-1 rounded-full">
+                      {formatPrice(p.i_paid_tf, p.i_price)}
+                    </span>
+                    <span className="inline-block bg-[#F5F5F0] text-[#0A0A0A] text-xs px-3 py-1 rounded-full">
+                      {p.i_type}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">
+                    {p.i_title_userside || p.i_title}
+                  </h3>
+                  <div className="flex items-center gap-3 text-xs text-[#888888]">
+                    {p.i_eventdate && <span>{p.i_eventdate}</span>}
+                    {p.i_event_count > 0 && <span>{p.i_event_count}명 신청</span>}
+                  </div>
                 </Link>
               ))}
             </div>

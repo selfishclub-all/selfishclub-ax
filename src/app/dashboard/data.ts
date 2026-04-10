@@ -44,7 +44,14 @@ export const sitemap: SitemapPage[] = [
     path: "/",
     name: "홈",
     auth: "none",
-    status: "not-started",
+    status: "in-progress",
+    phase: 1,
+  },
+  {
+    path: "/login",
+    name: "로그인",
+    auth: "none",
+    status: "done",
     phase: 1,
   },
   {
@@ -140,11 +147,15 @@ export const sitemap: SitemapPage[] = [
     path: "/admin",
     name: "어드민",
     auth: "admin",
-    status: "not-started",
+    status: "in-progress",
     phase: 1,
-    children: [
-      { path: "/admin/dashboard", name: "AX 대시보드", auth: "admin", status: "in-progress", phase: 1 },
-    ],
+  },
+  {
+    path: "/dashboard",
+    name: "AX 대시보드",
+    auth: "none",
+    status: "done",
+    phase: 1,
   },
 ];
 
@@ -156,12 +167,13 @@ export const phases: PhaseInfo[] = [
     title: "1차 — 껍데기 + 핵심 이슈",
     description: "대시보드, 디자인 시스템, 인증, 결제, CRM 자동화, 어드민 v1",
     tasks: [
-      { id: "1-1", title: "AX 대시보드 v1", status: "in-progress", phase: 1, category: "dashboard", page: "/admin/dashboard" },
+      { id: "1-1", title: "AX 대시보드 v1", status: "done", phase: 1, category: "dashboard", page: "/dashboard" },
       { id: "1-2", title: "Design.md + 디자인 시스템 정의", status: "done", phase: 1, category: "design" },
       { id: "1-3", title: "Next.js 프로젝트 초기 셋업", status: "done", phase: 1, category: "setup" },
       { id: "1-4", title: "CLAUDE.md 코딩 컨벤션", status: "done", phase: 1, category: "setup" },
-      { id: "1-5", title: "전체 페이지 레이아웃 쉘", status: "todo", phase: 1, category: "design", page: "/" },
-      { id: "1-6", title: "카카오 소셜 로그인", status: "todo", phase: 1, category: "auth", page: "/mypage" },
+      { id: "1-5", title: "전체 페이지 레이아웃 쉘", status: "done", phase: 1, category: "design", page: "/" },
+      { id: "1-6", title: "카카오 소셜 로그인 + BetterAuth", status: "in-progress", phase: 1, category: "auth", page: "/login" },
+      { id: "1-6a", title: "로그인 페이지 안내 문구 (매핑/전화번호 변경 안내)", status: "done", phase: 1, category: "auth", page: "/login" },
       { id: "1-7", title: "기존 회원 매핑 로직", status: "todo", phase: 1, category: "auth", page: "/mypage" },
       { id: "1-T1", title: "[테스트] 카카오 로그인 + 회원 매핑 정상 동작", status: "todo", phase: 1, category: "test", page: "/mypage" },
       { id: "1-8", title: "마이페이지 Invalid Date 버그", status: "todo", phase: 1, category: "setup", page: "/mypage" },
