@@ -6,8 +6,10 @@ import { supabase } from "@/lib/supabase";
 async function getPrograms() {
   const { data } = await supabase
     .from("item")
-    .select("i_title, i_title_userside, i_type, i_formid_webflow, i_paid_tf, i_price, i_eventdate, i_event_count")
-    .order("ID", { ascending: false });
+    .select("ID, i_title, i_title_userside, i_type, i_formid_webflow, i_paid_tf, i_price, i_eventdate, i_event_count")
+    .not("i_formid_webflow", "is", null)
+    .order("ID", { ascending: false })
+    .limit(6);
   return data ?? [];
 }
 
@@ -68,7 +70,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {programs.map((p) => (
                 <Link
-                  key={p.i_formid_webflow}
+                  key={p.ID}
                   href={getProgramHref(p.i_type, p.i_formid_webflow)}
                   className="bg-white border border-[#E5E5E5] rounded-2xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all"
                 >
