@@ -43,3 +43,13 @@ description: 작업 마무리 시 selfishclub-ax(docs/worklog.md)와 Obsidian(We
 3. 시간은 기록하지 않음
 4. "왜"는 기술적 이유가 아니라 **프로젝트 관점의 동기**를 적을 것
 5. "한 일"은 변경한 파일 나열이 아니라 **무엇이 달라졌는지** 중심으로
+
+## 커밋 & 푸시
+
+기록 완료 후 자동으로 커밋 및 푸시합니다:
+
+1. `docs/worklog.md` 파일을 스테이징
+2. 커밋 메시지: `docs: YYYY-MM-DD 작업 로그 업데이트`
+3. `git push origin main`
+
+이렇게 하면 GitHub Actions가 aaa 레포로 자동 동기화됩니다.
