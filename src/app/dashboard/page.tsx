@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   CheckCircle,
   Circle,
@@ -23,7 +24,6 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import {
   phases,
@@ -159,80 +159,8 @@ export default function AXDashboardPage() {
 
         <Separator className="bg-white/10" />
 
-        {/* 차수별 탭 */}
-        <Tabs defaultValue="phase-1">
-          <div className="flex items-center gap-3 mb-4">
-            <ListTodo className="h-5 w-5 text-[#FFD700]" />
-            <h2 className="text-lg font-semibold">작업 현황</h2>
-          </div>
-          <TabsList className="w-full bg-white/5 border border-white/10 mb-6 grid grid-cols-3">
-            {phases.map((phase) => (
-              <TabsTrigger
-                key={phase.phase}
-                value={`phase-${phase.phase}`}
-                className="data-[state=active]:bg-[#FFD700] data-[state=active]:text-[#0A0A0A] data-[state=inactive]:text-white/40 data-[state=inactive]:hover:text-white/70 transition-colors"
-              >
-                {phase.phase}차 ({getPhaseProgress(phase)}%)
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
-          {phases.map((phase) => (
-            <TabsContent key={phase.phase} value={`phase-${phase.phase}`}>
-              <Card className="bg-white/5 border-white/10 text-white">
-                <CardHeader>
-                  <CardTitle className="text-lg text-white">{phase.title}</CardTitle>
-                  <CardDescription className="text-white/50">
-                    {phase.description}
-                  </CardDescription>
-                  <Progress
-                    value={getPhaseProgress(phase)}
-                    className="h-2 bg-white/10 mt-2"
-                  />
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    {phase.tasks.map((task) => {
-                      const config = statusConfig[task.status];
-                      const Icon = config.icon;
-                      return (
-                        <div
-                          key={task.id}
-                          className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors"
-                        >
-                          <Icon className={`h-4 w-4 shrink-0 ${config.className}`} />
-                          <span
-                            className={
-                              task.status === "done"
-                                ? "text-white/40 line-through"
-                                : "text-white/90"
-                            }
-                          >
-                            {task.title}
-                          </span>
-                          {task.page && (
-                            <Badge
-                              variant="outline"
-                              className="text-[10px] text-white/40 border-white/20 font-mono"
-                            >
-                              {task.page}
-                            </Badge>
-                          )}
-                          <Badge
-                            variant="outline"
-                            className={`ml-auto text-xs ${config.className} border-current shrink-0`}
-                          >
-                            {config.label}
-                          </Badge>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          ))}
-        </Tabs>
+        {/* 차수별 작업 현황 */}
+        <PhaseSection />
 
         <Separator className="bg-white/10" />
 
@@ -332,6 +260,94 @@ function SitemapTree({
 }
 
 // ─── 통계 카드 컴포넌트 ───
+
+function PhaseSection() {
+  const [activePhase, setActivePhase] = useState(1);
+  const currentPhase = phases.find((p) => p.phase === activePhase)!;
+
+  return (
+    <section>
+      <div className="flex items-center gap-3 mb-4">
+        <ListTodo className="h-5 w-5 text-[#FFD700]" />
+        <h2 className="text-lg font-semibold">작업 현황</h2>
+      </div>
+
+      {/* 탭 버튼 — 상단 가로 배치 */}
+      <div className="grid grid-cols-3 gap-2 mb-6">
+        {phases.map((phase) => {
+          const progress = getPhaseProgress(phase);
+          const isActive = phase.phase === activePhase;
+          return (
+            <button
+              key={phase.phase}
+              onClick={() => setActivePhase(phase.phase)}
+              className={`rounded-lg px-4 py-3 text-sm font-medium transition-all ${
+                isActive
+                  ? "bg-[#FFD700] text-[#0A0A0A]"
+                  : "bg-white/5 text-white/40 hover:text-white/70 hover:bg-white/10 border border-white/10"
+              }`}
+            >
+              {phase.phase}차 ({progress}%)
+            </button>
+          );
+        })}
+      </div>
+
+      {/* 선택된 차수 콘텐츠 */}
+      <Card className="bg-white/5 border-white/10 text-white">
+        <CardHeader>
+          <CardTitle className="text-lg text-white">{currentPhase.title}</CardTitle>
+          <CardDescription className="text-white/50">
+            {currentPhase.description}
+          </CardDescription>
+          <Progress
+            value={getPhaseProgress(currentPhase)}
+            className="h-2 bg-white/10 mt-2"
+          />
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {currentPhase.tasks.map((task) => {
+              const config = statusConfig[task.status];
+              const Icon = config.icon;
+              return (
+                <div
+                  key={task.id}
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors"
+                >
+                  <Icon className={`h-4 w-4 shrink-0 ${config.className}`} />
+                  <span
+                    className={
+                      task.status === "done"
+                        ? "text-white/40 line-through"
+                        : "text-white/90"
+                    }
+                  >
+                    {task.title}
+                  </span>
+                  {task.page && (
+                    <Badge
+                      variant="outline"
+                      className="text-[10px] text-white/40 border-white/20 font-mono"
+                    >
+                      {task.page}
+                    </Badge>
+                  )}
+                  <Badge
+                    variant="outline"
+                    className={`ml-auto text-xs ${config.className} border-current shrink-0`}
+                  >
+                    {config.label}
+                  </Badge>
+                </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+  );
+}
 
 function StatCard({
   icon,
