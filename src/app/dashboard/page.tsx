@@ -161,12 +161,16 @@ export default function AXDashboardPage() {
 
         {/* 차수별 탭 */}
         <Tabs defaultValue="phase-1">
-          <TabsList className="bg-white/5 border border-white/10">
+          <div className="flex items-center gap-3 mb-4">
+            <ListTodo className="h-5 w-5 text-[#FFD700]" />
+            <h2 className="text-lg font-semibold">작업 현황</h2>
+          </div>
+          <TabsList className="w-full bg-white/5 border border-white/10 mb-6 grid grid-cols-3">
             {phases.map((phase) => (
               <TabsTrigger
                 key={phase.phase}
                 value={`phase-${phase.phase}`}
-                className="data-[state=active]:bg-[#FFD700] data-[state=active]:text-[#0A0A0A]"
+                className="data-[state=active]:bg-[#FFD700] data-[state=active]:text-[#0A0A0A] data-[state=inactive]:text-white/40 data-[state=inactive]:hover:text-white/70 transition-colors"
               >
                 {phase.phase}차 ({getPhaseProgress(phase)}%)
               </TabsTrigger>
