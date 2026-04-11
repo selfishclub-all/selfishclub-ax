@@ -101,6 +101,7 @@ type: feat, fix, refactor, style, docs, chore, test
 - 배포 구조: `selfishclub-all/aaa` 레포에 합칠지 별도 레포 만들지 미정
 - 카카오 비즈앱 인증 아직 안 됨 (전화번호 수집 필요)
 - item 테이블에 홈페이지 노출 여부 컬럼(i_visible) 추가 여부 — 현재는 전체 노출
+- Supabase 유료 전환 시점 및 비용 검토 — 현재 무료 플랜(1GB 저장 + 2GB 전송/월), 이미지 저장소(Storage)도 Supabase 사용 중. 트래픽/데이터 증가 시 Pro($25/월) 전환 필요할 수 있음
 
 ## 주의사항
 

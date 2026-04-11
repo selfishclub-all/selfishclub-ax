@@ -6,7 +6,7 @@ export default function LoginPage() {
   const handleKakaoLogin = () => {
     signIn.social({
       provider: "kakao",
-      callbackURL: "/mypage",
+      callbackURL: "/",
     });
   };
 
