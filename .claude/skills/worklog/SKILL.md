@@ -78,11 +78,22 @@ description: 작업 마무리 시 selfishclub-ax(docs/worklog.md)와 Obsidian(We
 4. "왜"는 기술적 이유가 아니라 **프로젝트 관점의 동기**를 적을 것
 5. "한 일"은 변경한 파일 나열이 아니라 **무엇이 달라졌는지** 중심으로
 
+## AX 대시보드 업데이트
+
+워크로그 기록과 함께 `src/app/dashboard/data.ts`도 업데이트합니다:
+
+- 이번 대화에서 **완료한 작업** → status를 `"done"`으로 변경
+- 이번 대화에서 **착수한 작업** → status를 `"in-progress"`로 변경
+- 기존 목록에 **없던 작업**을 했으면 → 새 항목 추가 (적절한 phase/category 지정)
+- **사이트맵**도 페이지 상태가 바뀌었으면 반영
+
+대시보드 데이터 변경분도 함께 커밋합니다.
+
 ## 커밋 & 푸시
 
 기록 완료 후 자동으로 커밋 및 푸시합니다:
 
-1. `docs/worklog.md` 파일을 스테이징
+1. `docs/worklog.md`와 `src/app/dashboard/data.ts`(변경 있을 경우)를 스테이징
 2. 커밋 메시지: `docs: YYYY-MM-DD 작업 로그 업데이트`
 3. `git push origin main`
 
