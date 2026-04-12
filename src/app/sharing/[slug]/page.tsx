@@ -2,6 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PurchaseButton } from "./PurchaseButton";
 
 export const dynamic = "force-dynamic";
 
@@ -357,6 +358,25 @@ export default async function SharingDetailPage({ params }: Props) {
                 )}
               </div>
             </div>
+
+            {/* 신청 CTA */}
+            {!past && isPaid && (
+              <div className="sticky bottom-6">
+                <div className="bg-white border border-[#E5E5E5] rounded-2xl p-6 shadow-lg flex items-center justify-between">
+                  <div>
+                    <p className="font-bold text-lg">{price.toLocaleString()}원</p>
+                    <p className="text-sm text-[#888]">{displayTitle}</p>
+                  </div>
+                  <PurchaseButton
+                    itemId={item.iid}
+                    slug={slug}
+                    title={displayTitle}
+                    price={price}
+                    isPaid={isPaid}
+                  />
+                </div>
+              </div>
+            )}
 
             {/* 리뷰 — 진행 중 프로그램은 하단 */}
             {!past && reviews.length > 0 && (
