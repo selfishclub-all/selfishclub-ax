@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const { paymentKey, orderId, amount, itemId } = await request.json();
+  const { paymentId, itemId } = await request.json();
 
   // 1. item 테이블에서 실제 가격 조회
   const { data: item, error: itemError } = await supabase
@@ -18,41 +18,45 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 2. 서버 사이드 금액 검증 (위변조 방지)
-  if (item.i_price !== amount) {
+  // 2. 포트원 API로 결제 내역 조회 + 검증
+  const portoneSecret = process.env.PORTONE_API_SECRET!;
+
+  const portoneRes = await fetch(
+    `https://api.portone.io/payments/${encodeURIComponent(paymentId)}`,
+    {
+      headers: {
+        Authorization: `PortOne ${portoneSecret}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const payment = await portoneRes.json();
+
+  if (!portoneRes.ok) {
+    return NextResponse.json(
+      { data: null, error: payment.message || "결제 조회 실패" },
+      { status: 400 }
+    );
+  }
+
+  // 3. 결제 상태 확인
+  if (payment.status !== "PAID") {
+    return NextResponse.json(
+      { data: null, error: `결제가 완료되지 않았습니다 (상태: ${payment.status})` },
+      { status: 400 }
+    );
+  }
+
+  // 4. 서버 사이드 금액 검증 (위변조 방지)
+  if (payment.amount.total !== item.i_price) {
     return NextResponse.json(
       { data: null, error: "결제 금액이 일치하지 않습니다" },
       { status: 400 }
     );
   }
 
-  // 3. 토스페이먼츠 결제 승인 요청
-  const secretKey = process.env.TOSS_SECRET_KEY!;
-  const basicToken = Buffer.from(`${secretKey}:`).toString("base64");
-
-  const tossRes = await fetch(
-    "https://api.tosspayments.com/v1/payments/confirm",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${basicToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ paymentKey, orderId, amount }),
-    }
-  );
-
-  const tossData = await tossRes.json();
-
-  if (!tossRes.ok) {
-    return NextResponse.json(
-      { data: null, error: tossData.message || "결제 승인 실패" },
-      { status: 400 }
-    );
-  }
-
-  // 4. purchase 테이블에 저장
-  // 다음 ID 생성
+  // 5. purchase 테이블에 저장
   const { data: lastPurchase } = await supabase
     .from("purchase")
     .select("ID")
@@ -65,18 +69,18 @@ export async function POST(request: NextRequest) {
   const { error: purchaseError } = await supabase.from("purchase").insert({
     ID: newId,
     p_created_at: new Date().toISOString(),
-    u_name: tossData.card?.ownerType === "개인" ? "" : "",
-    u_phone: "",
-    u_email: "",
+    u_name: payment.customer?.name || "",
+    u_phone: payment.customer?.phoneNumber || "",
+    u_email: payment.customer?.email || "",
     iid: item.iid,
     i_title: item.i_title,
     i_formid_webflow: item.i_formid_webflow,
-    p_amount: amount,
+    p_amount: payment.amount.total,
     p_cancel_amount: 0,
     p_custom_data: JSON.stringify({
-      paymentKey,
-      orderId,
-      method: tossData.method,
+      paymentId,
+      method: payment.method?.type,
+      portone: true,
     }),
     p_new_tf: "new",
   });
@@ -88,29 +92,20 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 5. item 테이블 신청자 수 + 매출 업데이트
-  await supabase.rpc("increment_item_stats", {
-    target_iid: item.iid,
-    add_count: 1,
-    add_revenue: amount,
-  }).then(async (res) => {
-    // rpc 없으면 직접 업데이트
-    if (res.error) {
-      const { data: current } = await supabase
-        .from("item")
-        .select("i_event_count, i_total_revenue")
-        .eq("iid", item.iid)
-        .single();
+  // 6. item 테이블 신청자 수 + 매출 업데이트
+  const { data: current } = await supabase
+    .from("item")
+    .select("i_event_count, i_total_revenue")
+    .eq("iid", item.iid)
+    .single();
 
-      await supabase
-        .from("item")
-        .update({
-          i_event_count: (current?.i_event_count ?? 0) + 1,
-          i_total_revenue: (current?.i_total_revenue ?? 0) + amount,
-        })
-        .eq("iid", item.iid);
-    }
-  });
+  await supabase
+    .from("item")
+    .update({
+      i_event_count: (current?.i_event_count ?? 0) + 1,
+      i_total_revenue: (current?.i_total_revenue ?? 0) + payment.amount.total,
+    })
+    .eq("iid", item.iid);
 
-  return NextResponse.json({ data: { orderId, status: "paid" }, error: null });
+  return NextResponse.json({ data: { paymentId, status: "paid" }, error: null });
 }
