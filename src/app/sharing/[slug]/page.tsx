@@ -122,7 +122,7 @@ function isPast(dateStr: string | null): boolean {
 
 function Stars({ rating }: { rating: number }) {
   return (
-    <span className="text-[#FFD700] text-sm tracking-wider">
+    <span className="text-[#E2E545] text-sm tracking-wider">
       {"★".repeat(rating)}{"☆".repeat(5 - rating)}
     </span>
   );
@@ -164,7 +164,7 @@ export default async function SharingDetailPage({ params }: Props) {
 
           <div className="relative max-w-[1400px] mx-auto px-5 lg:px-10 py-12 lg:py-16 w-full">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-[11px] text-[#FFD700] tracking-[0.3em] uppercase font-medium">
+              <span className="text-[11px] text-[#E2E545] tracking-[0.3em] uppercase font-medium">
                 {item.i_type}
               </span>
               <span className="text-[11px] text-white/30">·</span>
@@ -204,7 +204,7 @@ export default async function SharingDetailPage({ params }: Props) {
                 <div className="flex items-center gap-3 mb-6">
                   <p className="text-[11px] text-[#888] tracking-[0.3em] uppercase">Reviews</p>
                   {avgRating && (
-                    <span className="text-sm text-[#FFD700] font-semibold">
+                    <span className="text-sm text-[#E2E545] font-semibold">
                       ★ {avgRating} ({reviews.length})
                     </span>
                   )}
@@ -237,12 +237,12 @@ export default async function SharingDetailPage({ params }: Props) {
                 <h2 className="text-xl font-bold text-[#0A0A0A] mb-8">커리큘럼</h2>
                 <div className="space-y-8">
                   {detail.curriculum.map((section, i) => (
-                    <div key={i} className="border-l-2 border-[#FFD700] pl-6">
+                    <div key={i} className="border-l-2 border-[#E2E545] pl-6">
                       <h3 className="text-base font-semibold text-[#0A0A0A] mb-3">{section.title}</h3>
                       <ul className="space-y-2">
                         {section.items.map((item, j) => (
                           <li key={j} className="text-sm text-[#666] flex items-start gap-2">
-                            <span className="text-[#FFD700] mt-0.5 shrink-0">·</span>
+                            <span className="text-[#E2E545] mt-0.5 shrink-0">·</span>
                             {item}
                           </li>
                         ))}
@@ -261,7 +261,7 @@ export default async function SharingDetailPage({ params }: Props) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {detail.target.map((t, i) => (
                     <div key={i} className="flex items-start gap-3 bg-[#FAFAF8] rounded-lg p-4">
-                      <span className="text-[#FFD700] font-bold text-sm shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="text-[#E2E545] font-bold text-sm shrink-0">{String(i + 1).padStart(2, "0")}</span>
                       <p className="text-sm text-[#444]">{t}</p>
                     </div>
                   ))}
@@ -293,7 +293,7 @@ export default async function SharingDetailPage({ params }: Props) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {detail.benefits.map((b, i) => (
                     <div key={i} className="flex items-center gap-3 bg-[#0A0A0A] text-white rounded-lg p-4">
-                      <span className="text-[#FFD700] text-lg">✓</span>
+                      <span className="text-[#E2E545] text-lg">✓</span>
                       <p className="text-sm">{b}</p>
                     </div>
                   ))}
@@ -310,7 +310,7 @@ export default async function SharingDetailPage({ params }: Props) {
                   href={item.i_vodurl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex text-sm text-[#0A0A0A] bg-[#FFD700] font-semibold px-5 py-2.5 rounded hover:bg-[#E5C200] transition-colors"
+                  className="inline-flex text-sm text-[#0A0A0A] bg-[#E2E545] font-semibold px-5 py-2.5 rounded hover:bg-[#CDD03B] transition-colors"
                 >
                   VOD 보러가기
                 </a>
@@ -384,7 +384,7 @@ export default async function SharingDetailPage({ params }: Props) {
                 <div className="flex items-center gap-3 mb-6">
                   <p className="text-[11px] text-[#888] tracking-[0.3em] uppercase">Reviews</p>
                   {avgRating && (
-                    <span className="text-sm text-[#FFD700] font-semibold">
+                    <span className="text-sm text-[#E2E545] font-semibold">
                       ★ {avgRating} ({reviews.length})
                     </span>
                   )}

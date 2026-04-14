@@ -41,7 +41,7 @@ export function Footer() {
           </p>
           <Link
             href="/membership"
-            className="inline-flex text-sm text-[#0A0A0A] bg-[#FFD700] font-semibold px-8 py-3 rounded hover:bg-[#E5C200] transition-colors duration-300"
+            className="inline-flex text-sm text-[#0A0A0A] bg-[#E2E545] font-semibold px-8 py-3 rounded hover:bg-[#CDD03B] transition-colors duration-300"
           >
             멤버십 시작하기
           </Link>

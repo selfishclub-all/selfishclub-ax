@@ -35,7 +35,7 @@ export default async function ChallengeDetailPage({ params }: Props) {
         <section className="bg-[#0A0A0A] text-white py-20">
           <div className="max-w-3xl mx-auto px-4 lg:px-12">
             <div className="flex items-center gap-2 mb-4">
-              <span className="inline-block bg-[#FFD700] text-[#0A0A0A] text-xs font-semibold px-3 py-1 rounded-full">
+              <span className="inline-block bg-[#E2E545] text-[#0A0A0A] text-xs font-semibold px-3 py-1 rounded-full">
                 {item.i_type}
               </span>
               <span className="inline-block bg-white/10 text-white text-xs px-3 py-1 rounded-full">

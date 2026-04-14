@@ -42,7 +42,7 @@ export function Header() {
           </Link>
           <Link
             href="/membership"
-            className="hidden sm:inline-flex text-[13px] text-[#0A0A0A] bg-[#FFD700] font-semibold px-4 py-1.5 rounded tracking-wide hover:bg-[#E5C200] transition-colors duration-300"
+            className="hidden sm:inline-flex text-[13px] text-[#0A0A0A] bg-[#E2E545] font-semibold px-4 py-1.5 rounded tracking-wide hover:bg-[#CDD03B] transition-colors duration-300"
           >
             시작하기
           </Link>
@@ -83,7 +83,7 @@ export function Header() {
               </Link>
               <Link
                 href="/membership"
-                className="text-sm text-[#0A0A0A] bg-[#FFD700] font-semibold px-4 py-2 rounded text-center hover:bg-[#E5C200] transition-colors"
+                className="text-sm text-[#0A0A0A] bg-[#E2E545] font-semibold px-4 py-2 rounded text-center hover:bg-[#CDD03B] transition-colors"
               >
                 시작하기
               </Link>

@@ -66,7 +66,7 @@ const agentStatusConfig = {
 const authIcons = {
   none: <Globe className="h-3 w-3 text-white/30" />,
   user: <Lock className="h-3 w-3 text-blue-400" />,
-  admin: <Shield className="h-3 w-3 text-[#FFD700]" />,
+  admin: <Shield className="h-3 w-3 text-[#E2E545]" />,
 };
 
 export default function AXDashboardPage() {
@@ -82,13 +82,13 @@ export default function AXDashboardPage() {
           <div>
             <h1 className="text-2xl font-bold tracking-tight">
               셀피쉬클럽 v4.0{" "}
-              <span className="text-[#FFD700]">AX 대시보드</span>
+              <span className="text-[#E2E545]">AX 대시보드</span>
             </h1>
             <p className="text-sm text-white/50 mt-1">
               AI로 플랫폼을 만드는 과정을 실시간으로 기록합니다
             </p>
           </div>
-          <Badge variant="outline" className="border-[#FFD700] text-[#FFD700]">
+          <Badge variant="outline" className="border-[#E2E545] text-[#E2E545]">
             Phase 1 진행 중
           </Badge>
         </div>
@@ -98,7 +98,7 @@ export default function AXDashboardPage() {
         {/* 전체 진행률 카드 */}
         <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           <StatCard
-            icon={<BarChart3 className="h-5 w-5 text-[#FFD700]" />}
+            icon={<BarChart3 className="h-5 w-5 text-[#E2E545]" />}
             label="전체 진행률"
             value={`${progressPercent}%`}
           />
@@ -124,7 +124,7 @@ export default function AXDashboardPage() {
           <CardContent className="pt-6">
             <div className="flex justify-between text-sm mb-2">
               <span className="text-white/70">전체 진행률</span>
-              <span className="text-[#FFD700] font-semibold">
+              <span className="text-[#E2E545] font-semibold">
                 {stats.done} / {stats.total} 작업 완료
               </span>
             </div>
@@ -135,12 +135,12 @@ export default function AXDashboardPage() {
         {/* ─── 사이트맵 구조 ─── */}
         <section>
           <div className="flex items-center gap-2 mb-4">
-            <Map className="h-5 w-5 text-[#FFD700]" />
+            <Map className="h-5 w-5 text-[#E2E545]" />
             <h2 className="text-lg font-semibold">사이트맵</h2>
             <div className="ml-auto flex items-center gap-4 text-xs text-white/50">
               <span className="flex items-center gap-1"><Globe className="h-3 w-3" /> 공개</span>
               <span className="flex items-center gap-1"><Lock className="h-3 w-3 text-blue-400" /> 로그인</span>
-              <span className="flex items-center gap-1"><Shield className="h-3 w-3 text-[#FFD700]" /> 어드민</span>
+              <span className="flex items-center gap-1"><Shield className="h-3 w-3 text-[#E2E545]" /> 어드민</span>
             </div>
           </div>
           <Card className="bg-white/5 border-white/10 text-white overflow-hidden">
@@ -167,7 +167,7 @@ export default function AXDashboardPage() {
         {/* CRM 에이전트 현황 */}
         <section>
           <div className="flex items-center gap-2 mb-4">
-            <Bot className="h-5 w-5 text-[#FFD700]" />
+            <Bot className="h-5 w-5 text-[#E2E545]" />
             <h2 className="text-lg font-semibold">CRM 에이전트 현황</h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -178,7 +178,7 @@ export default function AXDashboardPage() {
                   <CardHeader className="pb-2">
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-sm font-medium text-white">
-                        <Zap className="inline h-4 w-4 mr-1 text-[#FFD700]" />
+                        <Zap className="inline h-4 w-4 mr-1 text-[#E2E545]" />
                         {agent.name}
                       </CardTitle>
                       <Badge className={config.className}>{config.label}</Badge>
@@ -268,7 +268,7 @@ function PhaseSection() {
   return (
     <section>
       <div className="flex items-center gap-3 mb-4">
-        <ListTodo className="h-5 w-5 text-[#FFD700]" />
+        <ListTodo className="h-5 w-5 text-[#E2E545]" />
         <h2 className="text-lg font-semibold">작업 현황</h2>
       </div>
 
@@ -283,7 +283,7 @@ function PhaseSection() {
               onClick={() => setActivePhase(phase.phase)}
               className={`rounded-lg px-4 py-3 text-sm font-medium transition-all ${
                 isActive
-                  ? "bg-[#FFD700] text-[#0A0A0A]"
+                  ? "bg-[#E2E545] text-[#0A0A0A]"
                   : "bg-white/5 text-white/40 hover:text-white/70 hover:bg-white/10 border border-white/10"
               }`}
             >

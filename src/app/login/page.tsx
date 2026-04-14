@@ -56,7 +56,7 @@ export default function LoginPage() {
                 href="http://pf.kakao.com/_dxmxixhG/chat"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#FFD700] underline underline-offset-2"
+                className="text-[#E2E545] underline underline-offset-2"
               >
                 카카오 채널
               </a>

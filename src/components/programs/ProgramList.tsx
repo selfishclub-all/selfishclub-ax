@@ -247,7 +247,7 @@ function ProgramCard({
               {typeLabel[p.i_type] ?? p.i_type}
             </span>
             {p.i_vodurl && (
-              <span className="text-[10px] text-[#FFD700] bg-[#FFD700]/10 backdrop-blur-sm px-2 py-0.5 rounded">
+              <span className="text-[10px] text-[#E2E545] bg-[#E2E545]/10 backdrop-blur-sm px-2 py-0.5 rounded">
                 VOD
               </span>
             )}
@@ -274,7 +274,7 @@ function ProgramCard({
               )}
             </div>
             <span className={`text-[11px] font-semibold px-2.5 py-1 rounded tracking-wide ${
-              past ? "text-[#999] bg-[#F0F0EC]" : "text-[#0A0A0A] bg-[#FFD700]/20"
+              past ? "text-[#999] bg-[#F0F0EC]" : "text-[#0A0A0A] bg-[#E2E545]/20"
             }`}>
               {formatPrice(p.i_paid_tf, p.i_price)}
             </span>

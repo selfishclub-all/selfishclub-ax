@@ -24,7 +24,7 @@ export default async function CommunityPage() {
       <main className="pt-14">
         <section className="bg-[#0A0A0A] text-white py-16 lg:py-20">
           <div className="max-w-[1400px] mx-auto px-5 lg:px-10">
-            <p className="text-[11px] text-[#FFD700] tracking-[0.3em] uppercase mb-4">
+            <p className="text-[11px] text-[#E2E545] tracking-[0.3em] uppercase mb-4">
               Community Events
             </p>
             <h1 className="text-3xl lg:text-4xl font-bold mb-3">커뮤니티 행사</h1>

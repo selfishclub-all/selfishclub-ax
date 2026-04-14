@@ -61,7 +61,7 @@ export function HomeClient({ programs }: { programs: Program[] }) {
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }} />
         {/* 글로우 */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#FFD700]/[0.03] rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#E2E545]/[0.03] rounded-full blur-[120px]" />
 
         <motion.div
           style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
@@ -80,9 +80,9 @@ export function HomeClient({ programs }: { programs: Program[] }) {
                   initial={{ width: 0 }}
                   animate={{ width: 32 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="h-px bg-[#FFD700] block"
+                  className="h-px bg-[#E2E545] block"
                 />
-                <span className="text-[11px] text-[#FFD700] tracking-[0.3em] uppercase font-medium">
+                <span className="text-[11px] text-[#E2E545] tracking-[0.3em] uppercase font-medium">
                   AI Practitioners Community
                 </span>
               </motion.div>
@@ -100,7 +100,7 @@ export function HomeClient({ programs }: { programs: Program[] }) {
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 0.6, delay: 1.2, ease: "easeOut" }}
-                    className="absolute bottom-1 left-0 right-0 h-[6px] bg-[#FFD700]/30 origin-left -z-10"
+                    className="absolute bottom-1 left-0 right-0 h-[6px] bg-[#E2E545]/30 origin-left -z-10"
                   />
                 </span>
                 하는 사람들
@@ -125,7 +125,7 @@ export function HomeClient({ programs }: { programs: Program[] }) {
                 <MagneticButton strength={0.15}>
                   <Link
                     href="/membership"
-                    className="inline-flex items-center justify-center text-sm text-[#0A0A0A] bg-[#FFD700] font-semibold px-7 py-3 rounded hover:bg-[#E5C200] transition-colors duration-300"
+                    className="inline-flex items-center justify-center text-sm text-[#0A0A0A] bg-[#E2E545] font-semibold px-7 py-3 rounded hover:bg-[#CDD03B] transition-colors duration-300"
                   >
                     멤버십 시작하기
                   </Link>
@@ -152,7 +152,7 @@ export function HomeClient({ programs }: { programs: Program[] }) {
                 ].map((s) => (
                   <StaggerItem key={s.sub}>
                     <div className="bg-[#0A0A0A] p-6 lg:p-8 group hover:bg-white/[0.02] transition-colors duration-500">
-                      <p className="text-2xl lg:text-3xl font-bold text-[#FFD700] mb-1">
+                      <p className="text-2xl lg:text-3xl font-bold text-[#E2E545] mb-1">
                         <CountUp value={s.num} />
                       </p>
                       <p className="text-sm text-white/60 mb-0.5">{s.label}</p>
@@ -190,7 +190,7 @@ export function HomeClient({ programs }: { programs: Program[] }) {
             <p className="text-xl lg:text-3xl text-white/80 leading-relaxed font-light max-w-3xl">
               결이 같은 마케터·실무자들이 모여,{" "}
               <span className="text-white font-medium">AI를 날것 그대로 흡수</span>하고,{" "}
-              <span className="text-[#FFD700] font-medium">실제 비즈니스 무기</span>로 장착하는 커뮤니티.
+              <span className="text-[#E2E545] font-medium">실제 비즈니스 무기</span>로 장착하는 커뮤니티.
             </p>
           </FadeIn>
         </div>
@@ -227,7 +227,7 @@ export function HomeClient({ programs }: { programs: Program[] }) {
                     <span className="text-[11px] text-[#0A0A0A] bg-[#F0F0EC] px-2.5 py-1 rounded tracking-wide">
                       {typeLabel[p.i_type] ?? p.i_type}
                     </span>
-                    <span className="text-[11px] text-[#0A0A0A] font-semibold bg-[#FFD700]/20 px-2.5 py-1 rounded tracking-wide">
+                    <span className="text-[11px] text-[#0A0A0A] font-semibold bg-[#E2E545]/20 px-2.5 py-1 rounded tracking-wide">
                       {formatPrice(p.i_paid_tf, p.i_price)}
                     </span>
                   </div>
@@ -285,9 +285,9 @@ export function HomeClient({ programs }: { programs: Program[] }) {
               <StaggerItem key={item.num}>
                 <div className="bg-[#0A0A0A] p-8 lg:p-10 group hover:bg-white/[0.02] transition-colors duration-500 relative overflow-hidden">
                   <motion.div
-                    className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-[#FFD700]/0 via-[#FFD700]/40 to-[#FFD700]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-[#E2E545]/0 via-[#E2E545]/40 to-[#E2E545]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   />
-                  <span className="text-[11px] text-[#FFD700] tracking-widest font-mono mb-6 block">
+                  <span className="text-[11px] text-[#E2E545] tracking-widest font-mono mb-6 block">
                     {item.num}
                   </span>
                   <h3 className="text-lg font-semibold mb-3">{item.title}</h3>
