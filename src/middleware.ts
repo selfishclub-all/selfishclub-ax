@@ -4,8 +4,6 @@ import type { NextRequest } from "next/server";
 // 접근 허용 경로
 const ALLOWED = [
   "/sharing/sponge-club",
-  "/dashboard-bbn-699",
-  "/admin-bbn-699",
   "/coming-soon",
   "/api/",
   "/_next/",
@@ -15,10 +13,15 @@ const ALLOWED = [
 ];
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
 
   // 허용 경로는 통과
   if (ALLOWED.some((path) => pathname.startsWith(path))) {
+    return NextResponse.next();
+  }
+
+  // ?access=secret 붙이면 통과
+  if (searchParams.get("access") === "secret") {
     return NextResponse.next();
   }
 
