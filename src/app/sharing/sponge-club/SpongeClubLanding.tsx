@@ -83,14 +83,14 @@ function SectionDivider({ from, to }: { from: string; to: string }) {
 
 /* ─── 데이터 ─── */
 const SPEAKERS = [
-  { initial: "G", name: "젬마 (신주혜)", role: "Creator · Vision Holder", title: "AAA 6주의 기록 — 우리가 증명하려 했던 것", desc: "AI 교육이 아닌 AI 빌딩. 팀 양성 6주 동안 무엇이 작동했고, 무엇이 바뀌었는지. 그리고 이 경험이 만들어낼 다음 챕터.", image: "", part: 1 },
-  { initial: "D", name: "다다 (김다솔)", role: "PM · AAA팀 리더", title: "팀의 과정을 기록하고, 세상에 드러내는 PM의 AI 활용법", desc: "6주 동안 팀을 이끌면서 마주친 것들을 Claude로 어떻게 정리하고 외부에 알렸는지.", image: "", part: 2 },
-  { initial: "Da", name: "다니 (송다은)", role: "Contents · Marketing", title: "AI 영상 제작으로 콘텐츠 마케터에 슈퍼파워 달기", desc: "촬영 없이, 편집 전문가 없이. AI 툴로 영상을 냅다 만들어본 6주.", image: "", part: 2 },
-  { initial: "H", name: "흐민 (김현민)", role: "AI Thinking Partner", title: "내 옆에 두는 AI — 생각을 확장하고 질문을 깊게 만드는 법", desc: "답을 찾는 도구가 아니라, 더 좋은 질문을 하게 도와주는 존재로.", image: "", part: 2 },
-  { initial: "V", name: "비비안 (박정은)", role: "Operations · AX Design", title: "셀피쉬클럽 AX 프로젝트 대시보드 — 조직의 AI 전환을 눈에 보이게", desc: "우리 팀의 AI 도입 현황을 한눈에 볼 수 있는 대시보드를 직접 만들었습니다.", image: "", part: 3, group: "internal" as const },
-  { initial: "E", name: "에밀리 (문주희)", role: "CRM · Member Relations", title: "고객과의 관계를 자동으로 이어가는 CRM 시스템 구축기", desc: "멤버가 늘어날수록 관계 관리는 복잡해집니다. AI로 CRM을 직접 설계하고 연동해본 경험.", image: "", part: 3, group: "internal" as const },
-  { initial: "O", name: "오웬 (성현)", role: "Platform Builder", title: "셀러들의 상부상조를 위한 안전 맞찜 플랫폼", desc: "아이디어에서 실제 플랫폼까지 — Claude Code로 혼자 만들어낸 과정.", image: "", part: 3, group: "external" as const },
-  { initial: "T", name: "띵크", role: "Workflow Architect", title: "결제·예약·CRM·광고·워크플로우를 하나로 잇는 통합 대시보드", desc: "흩어진 비즈니스 도구들을 하나의 화면으로 통합하는 것.", image: "", part: 3, group: "external" as const },
+  { initial: "G", name: "젬마", avatar: "/images/speakers/젬마.png", role: "Creator · Vision Holder", title: "AAA 6주의 기록 — 우리가 증명하려 했던 것", desc: "AI 교육이 아닌 AI 빌딩. 팀 양성 6주 동안 무엇이 작동했고, 무엇이 바뀌었는지. 그리고 이 경험이 만들어낼 다음 챕터.", image: "", part: 1 },
+  { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "팀의 과정을 기록하고, 세상에 드러내는 PM의 AI 활용법", desc: "6주 동안 팀을 이끌면서 마주친 것들을 Claude로 어떻게 정리하고 외부에 알렸는지.", image: "", part: 2 },
+  { initial: "Da", name: "다니", avatar: "/images/speakers/다니.png", role: "Contents · Marketing", title: "AI 영상 제작으로 콘텐츠 마케터에 슈퍼파워 달기", desc: "촬영 없이, 편집 전문가 없이. AI 툴로 영상을 냅다 만들어본 6주.", image: "", part: 2 },
+  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "내 옆에 두는 AI — 생각을 확장하고 질문을 깊게 만드는 법", desc: "답을 찾는 도구가 아니라, 더 좋은 질문을 하게 도와주는 존재로.", image: "", part: 2 },
+  { initial: "V", name: "비비안", avatar: "/images/speakers/비비안.png", role: "Operations · AX Design", title: "셀피쉬클럽 AX 프로젝트 대시보드 — 조직의 AI 전환을 눈에 보이게", desc: "우리 팀의 AI 도입 현황을 한눈에 볼 수 있는 대시보드를 직접 만들었습니다.", image: "", part: 3, group: "internal" as const },
+  { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "고객과의 관계를 자동으로 이어가는 CRM 시스템 구축기", desc: "멤버가 늘어날수록 관계 관리는 복잡해집니다. AI로 CRM을 직접 설계하고 연동해본 경험.", image: "", part: 3, group: "internal" as const },
+  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "셀러들의 상부상조를 위한 안전 맞찜 플랫폼", desc: "아이디어에서 실제 플랫폼까지 — Claude Code로 혼자 만들어낸 과정.", image: "", part: 3, group: "external" as const },
+  { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제·예약·CRM·광고·워크플로우를 하나로 잇는 통합 대시보드", desc: "흩어진 비즈니스 도구들을 하나의 화면으로 통합하는 것.", image: "", part: 3, group: "external" as const },
 ];
 
 const AGENDA_PARTS = [
@@ -128,6 +128,27 @@ function SpeakerCard({ speaker, delay }: { speaker: (typeof SPEAKERS)[0]; delay:
   return (
     <FadeUp delay={delay}>
       <div className="bg-white/[0.03] border border-white/[0.06] rounded-lg overflow-hidden">
+        {/* 크루 프로필 + 타이틀 */}
+        <div className="p-5 sm:p-6 pb-4">
+          <div className="flex items-center gap-4 mb-5">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden shrink-0 bg-white/5">
+              {speaker.avatar ? (
+                <img src={speaker.avatar} alt={speaker.name} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-sm text-[#E2E545] font-mono">{speaker.initial}</div>
+              )}
+            </div>
+            <div>
+              <p className="text-lg font-semibold text-white">{speaker.name}</p>
+            </div>
+          </div>
+          <p className="text-lg sm:text-xl font-medium text-white mb-3 leading-snug">
+            {speaker.title}
+          </p>
+          <p className="text-base text-white/40 leading-relaxed">{speaker.desc}</p>
+        </div>
+
+        {/* 세션 이미지 */}
         {speaker.image ? (
           <div className="aspect-[16/9] overflow-hidden">
             <img src={speaker.image} alt={`${speaker.name} 세션`} className="w-full h-full object-cover" />
@@ -137,21 +158,6 @@ function SpeakerCard({ speaker, delay }: { speaker: (typeof SPEAKERS)[0]; delay:
             <span className="text-white/10 text-xs font-mono">SESSION IMAGE</span>
           </div>
         )}
-        <div className="p-5 sm:p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-[#E2E545]/10 border border-[#E2E545]/20 flex items-center justify-center text-xs text-[#E2E545] font-mono shrink-0">
-              {speaker.initial}
-            </div>
-            <div>
-              <p className="text-base font-medium text-white">{speaker.name}</p>
-              <p className="text-xs text-white/30 font-mono">{speaker.role}</p>
-            </div>
-          </div>
-          <p className="text-lg sm:text-xl font-medium text-white mb-3 leading-snug">
-            {speaker.title}
-          </p>
-          <p className="text-base text-white/40 leading-relaxed">{speaker.desc}</p>
-        </div>
       </div>
     </FadeUp>
   );
@@ -233,7 +239,7 @@ export function SpongeClubLanding({ item }: Props) {
               </div>
               <div className="text-center">
                 <p className="text-xs text-white/25 tracking-[0.15em] uppercase font-mono mb-2">Duration</p>
-                <p className="text-lg sm:text-xl font-semibold text-white">약 90분</p>
+                <p className="text-lg sm:text-xl font-semibold text-white">120분+</p>
               </div>
             </motion.div>
 
@@ -511,9 +517,10 @@ export function SpongeClubLanding({ item }: Props) {
                 <button type="submit" className="w-full bg-[#0A0A0A] text-[#E2E545] font-bold text-base py-4 rounded hover:bg-[#1a1a1a] transition-all duration-300 mt-3">
                   무료로 신청하기
                 </button>
-                <p className="text-xs text-[#0A0A0A]/25 text-center pt-3 font-mono">
-                  * 개인정보는 공유회 운영 목적으로만 사용됩니다.
-                </p>
+                <div className="flex justify-center gap-3 pt-3">
+                  <a href="https://sepia-quartz-81f.notion.site/22b5c0a046468081b11cc019c2f558a4?pvs=74" target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#0A0A0A]/20 underline">이용약관</a>
+                  <a href="https://sepia-quartz-81f.notion.site/22b5c0a0464680528d1ffb54dfd7eaeb" target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#0A0A0A]/20 underline">개인정보처리방침</a>
+                </div>
               </form>
             ) : (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-lg p-10 text-center">

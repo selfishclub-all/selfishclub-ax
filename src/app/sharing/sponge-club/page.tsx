@@ -1,6 +1,5 @@
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
-import { Header } from "@/components/layout/Header";
 import { SpongeClubLanding } from "./SpongeClubLanding";
 
 export const dynamic = "force-dynamic";
@@ -21,11 +20,8 @@ export default async function SpongeClubPage() {
   if (!item) notFound();
 
   return (
-    <>
-      <Header />
-      <main className="pt-14">
-        <SpongeClubLanding item={item} />
-      </main>
-    </>
+    <main>
+      <SpongeClubLanding item={item} />
+    </main>
   );
 }
