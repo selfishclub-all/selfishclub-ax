@@ -26,12 +26,47 @@ interface Props {
   basePath: string;
 }
 
-// 프로토타입: 이미지가 있는 프로그램 (나중에 DB에서 가져옴)
+// 프로그램 이미지 (Webflow CMS에서 마이그레이션)
 const SUPABASE_STORAGE = "https://mryzkyvxcjeqjkdhlkeo.supabase.co/storage/v1/object/public/program-images";
+const LOCAL_IMAGES = "/images/program-images";
 const PROTOTYPE_IMAGES: Record<string, string> = {
   "ai-github": `${SUPABASE_STORAGE}/ai-github/hero.jpg`,
   "ai-bizvideo": `${SUPABASE_STORAGE}/ai-bizvideo/hero.jpg`,
   "ai-claude4": `${SUPABASE_STORAGE}/ai-claude4/hero.jpg`,
+  "ai-beautyvideo": `${LOCAL_IMAGES}/ai-beautyvideo.jpg`,
+  "ai-beginner": `${LOCAL_IMAGES}/ai-beginner.jpg`,
+  "ai-blogprofit2": `${LOCAL_IMAGES}/ai-blogprofit2.jpg`,
+  "ai-brandmkt": `${LOCAL_IMAGES}/ai-brandmkt.jpg`,
+  "ai-chal": `${LOCAL_IMAGES}/ai-chal.png`,
+  "ai-claude": `${LOCAL_IMAGES}/ai-claude.jpg`,
+  "ai-claude2": `${LOCAL_IMAGES}/ai-claude2.jpg`,
+  "ai-claude3": `${LOCAL_IMAGES}/ai-claude3.jpg`,
+  "ai-claude5": `${LOCAL_IMAGES}/ai-claude5.jpg`,
+  "ai-claude6": `${LOCAL_IMAGES}/ai-claude6.jpg`,
+  "ai-claude7": `${LOCAL_IMAGES}/ai-claude7.jpg`,
+  "ai-claude8": `${LOCAL_IMAGES}/ai-claude8.jpg`,
+  "ai-github2": `${LOCAL_IMAGES}/ai-github2.jpg`,
+  "ai-github3": `${LOCAL_IMAGES}/ai-github3.jpg`,
+  "ai-hunters2": `${LOCAL_IMAGES}/ai-hunters2.jpg`,
+  "ai-ir": `${LOCAL_IMAGES}/ai-ir.png`,
+  "ai-seo": `${LOCAL_IMAGES}/ai-seo.png`,
+  "ai-video": `${LOCAL_IMAGES}/ai-video.jpg`,
+  "aimkt": `${LOCAL_IMAGES}/aimkt.png`,
+  "automation-n8n": `${LOCAL_IMAGES}/automation-n8n.jpg`,
+  "chal-ai-cosmetic": `${LOCAL_IMAGES}/chal-ai-cosmetic.jpg`,
+  "selfishmbs-crew": `${LOCAL_IMAGES}/selfishmbs-crew.jpg`,
+  "seminar-yusagil": `${LOCAL_IMAGES}/seminar-yusagil.png`,
+  "sharing-ai-consistency": `${LOCAL_IMAGES}/sharing-ai-consistency.png`,
+  "sharing-ai-marketing": `${LOCAL_IMAGES}/sharing-ai-marketing.jpg`,
+  "sharing-ai-mbs": `${LOCAL_IMAGES}/sharing-ai-mbs.jpg`,
+  "sharing-ai-shorts": `${LOCAL_IMAGES}/sharing-ai-shorts.jpg`,
+  "sharing-ai-toss": `${LOCAL_IMAGES}/sharing-ai-toss.jpg`,
+  "sharing-aivideo": `${LOCAL_IMAGES}/sharing-aivideo.png`,
+  "sharing-crm": `${LOCAL_IMAGES}/sharing-crm.jpg`,
+  "sharing-csc2": `${LOCAL_IMAGES}/sharing-csc2.jpg`,
+  "sharing-mvp": `${LOCAL_IMAGES}/sharing-mvp.jpg`,
+  "workshop-vibecoding": `${LOCAL_IMAGES}/workshop-vibecoding.jpg`,
+  "workshop-vibecoding2": `${LOCAL_IMAGES}/workshop-vibecoding2.jpg`,
 };
 
 // 기존 카테고리 → 통합 카테고리 매핑

@@ -98,7 +98,7 @@ const DETAIL_DATA: Record<string, {
     benefits: ["공유회 다시보기 VOD", "AI 요약노트 제공", "후기 작성자 중 추첨 영상 무료 제작", "꿀팁 프롬프트 모음 제공"],
     faq: [],
     speakers: [{ name: "젬마", desc: "셀피쉬클럽 마스터이자 AI 마케팅 디렉터. AI 영상 집중팀을 만들고 브랜드 협업까지 성공한 과정을 공유합니다." }],
-    images: ["https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67c6b4b9cd986f6c003471a6_OG%20(1).png"],
+    images: ["/images/program-images/sharing-aivideo.png"],
     reviewKey: "",
   },
   "ai-ir": {
@@ -108,7 +108,7 @@ const DETAIL_DATA: Record<string, {
     benefits: ["베타멤버십 가입 + 라이브 끝까지 참여시 공유회 VOD 녹화본 제공"],
     faq: [],
     speakers: [{ name: "젬마", desc: "셀피쉬클럽 마스터이자 AI마케팅디렉터. AI 해자팀과 함께 존재하지 않았던 것도 존재하게 만든 여정을 공유합니다." }],
-    images: ["https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6709b7e9abbea464e945926c_OG.png"],
+    images: ["/images/program-images/ai-ir.png"],
     reviewKey: "",
   },
   "ai-seo": {
@@ -118,7 +118,7 @@ const DETAIL_DATA: Record<string, {
     benefits: ["공유회 VOD 녹화본 제공", "AI&SEO 비법 자료집 제공"],
     faq: [],
     speakers: [{ name: "콜", desc: "SEO, 웹플로우 전문가. 6개월만에 MAU 13만에서 22만 달성한 AI 노코드 SEO의 비밀을 공유합니다." }],
-    images: ["https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/66f51b584ccaf48d43a2da49_%E1%84%80%E1%85%A1%E1%84%85%E1%85%A9%E1%84%92%E1%85%A7%E1%86%BC.png"],
+    images: ["/images/program-images/ai-seo.png"],
     reviewKey: "",
   },
   "ai-chal": {
@@ -128,7 +128,7 @@ const DETAIL_DATA: Record<string, {
     benefits: ["공유회 다시보기 VOD 및 요약본 제공", "AI 마케팅 실무 커뮤니티 초대"],
     faq: [],
     speakers: [{ name: "AI 마케팅 크루", desc: "브랜딩부터 마케팅까지 생성형 AI를 실무에 적용한 크루들이 찐 사례를 공유합니다." }],
-    images: ["https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/66eab52bc6c4cb20ea798eb7_%E1%84%80%E1%85%A1%E1%84%85%E1%85%A9%E1%84%92%E1%85%A7%E1%86%BC.png"],
+    images: ["/images/program-images/ai-chal.png"],
     reviewKey: "",
   },
   "aimkt": {
@@ -138,7 +138,7 @@ const DETAIL_DATA: Record<string, {
     benefits: ["라이브 참여자 모두에게 공유회 VOD 제공"],
     faq: [],
     speakers: [{ name: "젬마", desc: "셀피쉬클럽 마스터이자 AI마케팅디렉터. 10년간 스타트업 마케팅 경험을 바탕으로 AI 실전 사례를 공유합니다." }],
-    images: ["https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/66c0bae619a9bbe902a714db_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF%2048%20(5).png"],
+    images: ["/images/program-images/aimkt.png"],
     reviewKey: "",
   },
   "seminar-yusagil": {
@@ -148,7 +148,7 @@ const DETAIL_DATA: Record<string, {
     benefits: ["혼술바 창업 체크리스트 템플릿 공유", "모던그로스스택 2024 입장티켓 증정"],
     faq: [],
     speakers: [{ name: "하니", desc: "IT 스타트업을 대차게 말아먹고, 냅다 제주도 게스트하우스와 혼술바를 창업하고 운영 중." }],
-    images: ["https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/669b3570e77d89c67d8a6486_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF%2035.png"],
+    images: ["/images/program-images/seminar-yusagil.png"],
     reviewKey: "",
   },
 };

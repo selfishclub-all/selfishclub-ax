@@ -1,0 +1,429 @@
+[
+  {
+    "type": "sharing",
+    "slug": "bigaebaljareul-wihan-keulrodeukodeuaeb-gisheob-siljeon-jeongboggi",
+    "name": "비개발자를 위한 클로드코드앱 & 깃헙 실전 정복기",
+    "date": "2026-04-01",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69c64b43ca00c11ce320f40f_OG_%E1%84%8F%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%E1%84%8B%E1%85%A2%E1%86%B8%E1%84%80%E1%85%B5%E1%86%BA%E1%84%92%E1%85%A5%E1%86%B8.jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "bijeuniseueseo-jinjja-sseuineun-ai-yeongsang-jejaggiwa-weokeupeulrou-gonggae",
+    "name": "비즈니스에서 진짜 쓰이는 AI 영상 제작기와 워크플로우 공개",
+    "date": "2026-03-16",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69b103ec4df53f576aaa2c5e_OG(NEW!)%20(38).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "keulrodeu-peurojegteu-seukil-siljeon-sarye-gonggae",
+    "name": "클로드 프로젝트 & 스킬 실전 사례 공개",
+    "date": "2026-02-25",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/699be2b86f27007cfe1513ca_OG(NEW!)%20(35).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "ai-claude",
+    "name": "나만 모르나? 싶은 클로드코드 냅-다 경험하기",
+    "date": "2026-02-11",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69855d18f7cfdfae42efa068_OG(NEW!)%20(1).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "ai-sidae-palrineun-sangsepeiji-eoddeohge-mandeuleoyahalgga",
+    "name": "팔리는 상세페이지 어떻게 만들어야할까?",
+    "date": "2026-01-19",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/696840ef1b4ce5c3b286b666_OG(NEW!)%20(30).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "dan-2jumane-suighwa-seonggong-airo-beulrogeu-ceos-suig-mandeulgi",
+    "name": "2주만에 수익화 성공! AI 블로그 첫수익 만들기",
+    "date": "2026-01-15",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/695ef0f6a574aa604619b88f_OG(NEW!)%20(25).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "igijeogmembeosib-keurudeulyi-siljeon-nohau-olinweon-paekiji",
+    "name": "멤버십 크루들의 실전 노하우 올인원 패키지",
+    "date": "2026-01-08",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6959f6d47eb47bcf98e6c452_OG(NEW!)%20(24).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "nuguna-ganeungeun-geojismal-n8neuro-db-crm-jadonghwa-sabjilgi",
+    "name": "n8n으로 DB·CRM 자동화 삽질기",
+    "date": "2025-11-19",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/691aa2bd4dc2ffe141cec62d_OG(NEW!)%20(19).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "ai-yeongsangeuro-migug-sijang-ddulhgo-on-5gaeweolyi-yeojeonggi",
+    "name": "AI 영상으로 미국 시장 뚫고 온 5개월의 여정기",
+    "date": "2025-11-02",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6906b64098659d321f05ff61_%E1%84%85%E1%85%B5%E1%84%90%E1%85%B3%E1%86%AF%E1%84%85%E1%85%B5.jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "dan-2ju-1-415myeong-moeun-igijeogmembeosib-maketing-naeb-da-ggabalrigi",
+    "name": "이기적멤버십 마케팅 냅다 까발리기",
+    "date": "2025-09-10",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/68bab90ee9166566b98d42ba_OG(NEW!)%20(14).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "airo-bijeuniseu-misyeon-haegyeol-a-to-z",
+    "name": "AI로 비즈니스 미션 해결 A to Z",
+    "date": "2025-08-21",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/68a25e936994820dea74ebde_OG(NEW!)%20(12).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "selpiswikeulreobyi-ai-syospom-nojaem-talculgi",
+    "name": "셀피쉬클럽의 AI 숏폼 노잼 탈출기",
+    "date": "2025-07-23",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6879d86b1e8b478f9fdfc23f_Group%201000002929.jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "yutyubeu-ai-kontenceu-suighwa-jeongcaeg-ganghwa",
+    "name": "유튜브, AI 콘텐츠 수익화 정책 강화",
+    "date": null,
+    "image_url": ""
+  },
+  {
+    "type": "sharing",
+    "slug": "sharing-ai-review",
+    "name": "실제 주문까지 이끈 AI로 만드는 나만의 리뷰 담당자",
+    "date": "2025-07-15",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/68720890900b3d36cdfc0260_OG(NEW!).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "sharing-ai-consistency",
+    "name": "AI 인물·제품 일관성 고민 한방에 해결 가능!",
+    "date": "2025-06-26",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6857d5df62988817291d48eb_Group%201000002884.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "sharing-ai-marketing",
+    "name": "AI 브랜드 마케팅의 A to Z ",
+    "date": "2025-05-29",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/682d5ca002e4d2c1cc0c61f6_OG(NEW!)%20(8).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "sharing-mvp",
+    "name": "누구나 가능! 코딩 없이 나만의 서비스 만들기",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/681dd905d8209ef9356b808b_OG(NEW!)%20(6).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "ceonseuce-sijeun2-ai-siljeongi-ceonseucetimyi-ai-hwalyong-sarye-daegonggae",
+    "name": "천스체 시즌2 AI 실전기",
+    "date": "2025-05-07",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/681732c3d9744b614a3fa01a_OG(NEW!)%20(4).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "sharing-aivideo",
+    "name": "누구나 가능! AI 마케팅 영상 제작 과정과 노하우 전격 공개",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67c6b4b9cd986f6c003471a6_OG%20(1).png"
+  },
+  {
+    "type": "sharing",
+    "slug": "sharing-crm",
+    "name": "자동화 & CRM 왕초보들의 삽질기",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67effe2859c6d6e04fc38be6_OG(NEW!).jpg"
+  },
+  {
+    "type": "sharing",
+    "slug": "ai-video-promotion",
+    "name": "누구나 가능! AI 마케팅 영상 제작 과정과 노하우 전격 공개",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67c6b4b9cd986f6c003471a6_OG%20(1).png"
+  },
+  {
+    "type": "sharing",
+    "slug": "sharing-notion",
+    "name": "오늘 배워서 내일 바로 써먹는 팀노션 구축법 ",
+    "date": "2025-02-25",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67b849c4c7fb36f6ef3e84bb_OG.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "ai-video",
+    "name": "냅-다 AI 영상 실전 챌린지",
+    "date": null,
+    "image_url": ""
+  },
+  {
+    "type": "sharing",
+    "slug": "ai-unit",
+    "name": "AI 영상 냅-다 제작기: 애니메이션부터 커머셜콘텐츠까지",
+    "date": "2025-01-16",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6784ac8ac71e1da007184d32_OG.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "beta5",
+    "name": "AI로 냅-다 만들기 : 이젠 볼 수 없는 강아지와 다시 만났다",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67767345c20bacd2c95d332a_%E1%84%80%E1%85%A1%E1%84%85%E1%85%A9%E1%84%92%E1%85%A7%E1%86%BC.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "ai-ir",
+    "name": "투자자 마음을 사로잡는 IR영상, AI로 해결하기",
+    "date": "2024-10-16",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6709b7e9abbea464e945926c_OG.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "ai-seo",
+    "name": "AI로 가능! 0원으로 월 22만명 유입시키는 비밀",
+    "date": "2024-10-06",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/66f51b584ccaf48d43a2da49_%E1%84%80%E1%85%A1%E1%84%85%E1%85%A9%E1%84%92%E1%85%A7%E1%86%BC.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "ai-chal",
+    "name": "누구나 가능한 AI로 콘텐츠 뽑기",
+    "date": "2024-09-19",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/66eab52bc6c4cb20ea798eb7_%E1%84%80%E1%85%A1%E1%84%85%E1%85%A9%E1%84%92%E1%85%A7%E1%86%BC.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "aimktteam",
+    "name": "AI로 만드는 나만의 마케팅팀(feat. GPTs)",
+    "date": "2024-08-20",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/66c0bae619a9bbe902a714db_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF%2048%20(5).png"
+  },
+  {
+    "type": "sharing",
+    "slug": "aishining",
+    "name": "신인 AI 마케팅 그룹 Shining 데뷔 공유회",
+    "date": "2024-07-18",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/669ef8ee910e6ba885851b73_KakaoTalk_20240723_070921463.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "yusagil",
+    "name": "부업으로 이틀만 열어도 흑자인 오프라인 창업 노하우 A to Z",
+    "date": "2024-07-23",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/669b3570e77d89c67d8a6486_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF%2035.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "patent",
+    "name": "무지성도 가능! 특허로 사업자금 확보하기",
+    "date": "2024-04-16",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/669662efce5d615d05bb5a44_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF%2034.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "biz",
+    "name": "창업! 아는 곳이 아닌 ‘되는’ 곳에서 시작하기",
+    "date": "2024-03-27",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/660165704bcd6e840ece9d7c_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF%2023.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "seo",
+    "name": "0원으로 매달 13만명을 유입시키는 SEO 방법론",
+    "date": "2024-03-12",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/65e488f1f75f133236024317_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF%209.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "nomoney",
+    "name": "팔릴 수 밖에 없는 지식 창업 진-짜 노하우!",
+    "date": "2024-02-28",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/65cd9eec32273d0eb6173dbe_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF%209.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "water",
+    "name": "물경력 대표 주자의 '팔리는' 커리어 만들기",
+    "date": "2024-02-07",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/65b873a40996f4161aa6aca4_Frame%201000001852.png"
+  },
+  {
+    "type": "sharing",
+    "slug": "lmf",
+    "name": "아무나 만나고 싶지 않은 당신을 위한 '연애 방법론'",
+    "date": "2024-01-19",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/65a423897eb6560d92647d0f_001.png"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-github3",
+    "name": "이기적워크샵 <클로드코드앱 / 깃헙 앵콜 편>",
+    "date": "2026-04-17",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69de3681fa50f6aac7dca29b_OG(NEW!)%20(14).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-github2",
+    "name": "이기적워크샵 <클로드코드앱 / 깃헙 편>",
+    "date": "2026-04-10",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69d5d2e7efa045cd69db9920_OG(NEW!)%20(8).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-beautyvideo",
+    "name": "현업에서 진짜 쓰이는 뷰티·패션 AI 영상 챌린지",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69c4ad81a97c99b30df397da_OG(NEW!).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-claude8",
+    "name": "이기적워크샵 <클로드코드앱 실전> 편 ",
+    "date": "2026-04-03",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69c3910793e0756a788c9f91_OG(NEW!)%20(8).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "igijeogweokeusyab-keulrodeukodeuaeb-aengkol-pyeon",
+    "name": "이기적워크샵 <클로드코드앱 앵콜> 편 ",
+    "date": "2026-03-22",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69b8e727edc525d54f61e081_OG(NEW!)%20(1).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-claude6",
+    "name": "터미널 없이 클로드코드 앱으로 나만의 웹서비스 만들기",
+    "date": "2026-03-14",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69b0cdc1195014d249605794_OG(NEW!)%20(1).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-claude5",
+    "name": "클로드 [프로젝트+스킬 실전]편 ver.2",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/699edbf58224bfb52e0a79b2_OG(NEW!)%20(9).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-claude3",
+    "name": "클로드 [프로젝트,스킬]편",
+    "date": "2026-02-18",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/69928d9d332a19ff8805351b_OG(NEW!)%20(8).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-claude2",
+    "name": "클로드코드로 슬랙 봇 만드는 하루 실전 워크샵",
+    "date": "2026-02-15",
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/698b5ec1c15820e600274548_OG(NEW!)%20(6).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-beulrogeu-ceossuig-4ju-caelrinji-2gi",
+    "name": "AI 블로그 첫수익 4주 챌린지 2기",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6968c5b749dd9092eb4f68c6_OG(NEW!)%20(3).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-beulrogeu-ceossuig-4ju-caelrinji",
+    "name": "AI 블로그 첫수익 4주 챌린지",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6926dcbc26497c40e896515b_OG(NEW!)%20(22).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "chal-ai-cosmetic",
+    "name": "AI 코스메틱 이미지, 영상 제작 A to Z 챌린지",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/68a730c64a074f1e69ff8bbf_OG(NEW!)%20(7).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "workshop-vibecoding2",
+    "name": "나만의 웹서비스 하루만에 만드는 바이브코딩 워크샵",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/68771e7ce6a24089400d7d35_%EB%B0%94%EC%9D%B4%EB%B8%8C%EC%BD%94%EB%94%A9%EC%9B%8C%ED%81%AC%EC%83%B52%20%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-brandmkt",
+    "name": "AI 브랜드 마케팅 영상 제작 챌린지",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/68415da55f372d83eb09f309_%EB%B8%8C%EB%9E%9C%EB%93%9C%EB%A7%88%EC%BC%80%ED%8C%85%EC%98%81%EC%83%81%EC%B1%8C%EB%A6%B0%EC%A7%80%20%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "dbj",
+    "name": "ㄷㅂㅈ",
+    "date": null,
+    "image_url": ""
+  },
+  {
+    "type": "challenge",
+    "slug": "workshop-vibecoding",
+    "name": "코딩 없이 나만의 서비스 만드는 '바이브코딩' 워크샵",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/682531eeccb51e327bfafeff_%EB%B0%94%EC%9D%B4%EB%B8%8C%EC%BD%94%EB%94%A9%EC%9B%8C%ED%81%AC%EC%83%B5%20%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "chai-aivideo",
+    "name": "AI 마케팅 영상 제작 챌린지",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6814df6cc78fef9eb4f951d9_%EC%98%81%EC%83%81%EC%A0%9C%EC%9E%91%EC%B1%8C%EB%A6%B0%EC%A7%80%20%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-video",
+    "name": "냅-다 AI 영상 실전 챌린지",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6814e25b3aa6e5342232f24d_%EC%98%81%EC%83%81%EC%8B%A4%EC%A0%84%EC%B1%8C%EB%A6%B0%EC%A7%80%20%EC%8D%B8%EB%84%A4%EC%9D%BC%20(2).jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-beginner",
+    "name": "AI 상세페이지 챌린지",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6814de4b44d850df5ba1deb0_%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80%EC%B1%8C%EB%A6%B0%EC%A7%80%20%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "ai-marketing",
+    "name": "AI 마케팅 냅-다 챌린지",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/6814db589f5be701b84cd943_%EB%83%85%EB%8B%A4%EC%B1%8C%EB%A6%B0%EC%A7%80%20%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg"
+  },
+  {
+    "type": "challenge",
+    "slug": "challenge-4",
+    "name": "Photography Challenge",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67aeac824b2e5bcc67d6d4a1_image19.jpeg"
+  },
+  {
+    "type": "challenge",
+    "slug": "challenge-3",
+    "name": "Creative Writing Challenge",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67aeac824b2e5bcc67d6d47e_image19.jpeg"
+  },
+  {
+    "type": "challenge",
+    "slug": "challenge-2",
+    "name": "Monthly Reading Challenge",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67aeac824b2e5bcc67d6d517_image15.jpeg"
+  },
+  {
+    "type": "challenge",
+    "slug": "challenge-1",
+    "name": "Weekly Fitness Challenge",
+    "date": null,
+    "image_url": "https://cdn.prod.website-files.com/6472fa78944b04bd3b6ecbd7/67aeac824b2e5bcc67d6d4ce_image16.jpeg"
+  }
+]
