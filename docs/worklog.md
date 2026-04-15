@@ -223,5 +223,31 @@ Vercel CLI에 이전 계정(bbmktduo)으로 로그인되어 있어서, `selfishc
 처음에 무료 공유회도 purchase 테이블에 `p_amount: 0`으로 저장될 것이라 추정했지만, 실제 n8n 워크플로우를 분석해보니 event 테이블에 별도로 INSERT하고 있었다. 추정만으로 구현했으면 기존 데이터와 다른 곳에 쌓이는 문제가 생겼을 것.
 → **배움: 기존 시스템을 연동할 때는 반드시 실제 워크플로우/코드를 확인하고, 추정으로 구현하지 말아야 한다.**
 
+### 콘텐츠 마이그레이션 — Webflow CMS → 상세 콘텐츠 + 썸네일
+**왜:** 기존 Webflow에 있던 공유회/챌린지 프로그램 데이터를 새 사이트에서 볼 수 있게 하기 위해
+**한 일:**
+- Webflow CMS API로 공유회 37개 + 챌린지 24개 데이터 전체 추출
+- slug + 날짜 + 이름 3가지 방식으로 Webflow ↔ Supabase 매핑 (매핑 성공 37개, 실패 21개 — Supabase에 없는 초기 프로그램)
+- 상세 콘텐츠(summary, speakers, target, benefits) 6개 마이그레이션 (ai-seo, ai-ir, ai-chal, aimkt, sharing-aivideo, seminar-yusagil)
+- 프로그램 썸네일 34개 다운로드 → public/images/program-images에 저장
+- ProgramList 컴포넌트에 37개 이미지 매핑 추가
+- 상세 페이지 히어로 이미지를 Webflow CDN → 로컬로 교체 (핫링크 차단 대비)
+
+### 접근 제한 방식 개선
+**왜:** bbn-699 접미사 방식은 URL이 변해서 불편했고, 더 유연한 방식이 필요
+**한 일:**
+- `?access=secret` 쿼리 파라미터 방식으로 통일
+- 대시보드, 어드민, 공유회 목록 등 모든 숨김 페이지에 적용
+- bbn-699 접미사 완전 제거, 라우트 폴더명 원복
+
+### 삽질과 배움
+
+**Webflow slug와 Supabase slug가 달라서 매핑에 시간 소요**
+Webflow CMS의 slug(예: aimktteam, yusagil)와 Supabase item 테이블의 i_formid_webflow(예: aimkt, seminar-yusagil)가 달랐다. slug 직접 매칭으로는 3개밖에 안 되어서, 날짜 매핑과 이름 매핑을 추가로 적용해 6개까지 올렸다. 나머지 10개는 Supabase에 해당 프로그램 자체가 없었다.
+→ **배움: 두 시스템 간 데이터 마이그레이션 시 slug가 다를 수 있으므로, 여러 기준(slug, 날짜, 이름)으로 교차 매핑해야 한다.**
+
 ### 미결정 / 논의 필요
 - 상세 내용은 [[AX프로젝트 추후 결정 및 논의 필요사항]] 참고
+- 신청 폼 n8n 연동: CRM 자동화 작업 확인 후 진행
+- 카카오싱크 재심사: 개인정보처리방침 수정 후 재신청 예정
+- 매핑 실패 10개 프로그램: Supabase에 새로 등록할지 결정 필요
