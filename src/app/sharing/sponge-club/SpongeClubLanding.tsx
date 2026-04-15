@@ -83,14 +83,14 @@ function SectionDivider({ from, to }: { from: string; to: string }) {
 
 /* ─── 데이터 ─── */
 const SPEAKERS = [
-  { initial: "G", name: "젬마", avatar: "/images/speakers/젬마.png", role: "Creator · Vision Holder", title: "AAA 6주의 기록 — 우리가 증명하려 했던 것", desc: "AI 교육이 아닌 AI 빌딩. 팀 양성 6주 동안 무엇이 작동했고, 무엇이 바뀌었는지. 그리고 이 경험이 만들어낼 다음 챕터.", image: "", part: 1 },
-  { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "팀의 과정을 기록하고, 세상에 드러내는 PM의 AI 활용법", desc: "6주 동안 팀을 이끌면서 마주친 것들을 Claude로 어떻게 정리하고 외부에 알렸는지.", image: "", part: 2 },
-  { initial: "Da", name: "다니", avatar: "/images/speakers/다니.png", role: "Contents · Marketing", title: "AI 영상 제작으로 콘텐츠 마케터에 슈퍼파워 달기", desc: "촬영 없이, 편집 전문가 없이. AI 툴로 영상을 냅다 만들어본 6주.", image: "", part: 2 },
-  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "내 옆에 두는 AI — 생각을 확장하고 질문을 깊게 만드는 법", desc: "답을 찾는 도구가 아니라, 더 좋은 질문을 하게 도와주는 존재로.", image: "", part: 2 },
-  { initial: "V", name: "비비안", avatar: "/images/speakers/비비안.png", role: "Operations · AX Design", title: "셀피쉬클럽 AX 프로젝트 대시보드 — 조직의 AI 전환을 눈에 보이게", desc: "우리 팀의 AI 도입 현황을 한눈에 볼 수 있는 대시보드를 직접 만들었습니다.", image: "", part: 3, group: "internal" as const },
-  { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "고객과의 관계를 자동으로 이어가는 CRM 시스템 구축기", desc: "멤버가 늘어날수록 관계 관리는 복잡해집니다. AI로 CRM을 직접 설계하고 연동해본 경험.", image: "", part: 3, group: "internal" as const },
-  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "셀러들의 상부상조를 위한 안전 맞찜 플랫폼", desc: "아이디어에서 실제 플랫폼까지 — Claude Code로 혼자 만들어낸 과정.", image: "", part: 3, group: "external" as const },
-  { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제·예약·CRM·광고·워크플로우를 하나로 잇는 통합 대시보드", desc: "흩어진 비즈니스 도구들을 하나의 화면으로 통합하는 것.", image: "", part: 3, group: "external" as const },
+  { initial: "G", name: "젬마", avatar: "/images/speakers/젬마.png", role: "Creator · Vision Holder", title: "AAA 6주의 기록 —\n우리가 증명하려 했던 것", desc: "AI 교육이 아닌 AI 빌딩. 팀 양성 6주 동안 무엇이 작동했고, 무엇이 바뀌었는지. 그리고 이 경험이 만들어낼 다음 챕터.", image: "", part: 1 },
+  { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "팀의 과정을 기록하고,\n세상에 드러내는 PM의 AI 활용법", desc: "6주 동안 팀을 이끌면서 마주친 것들을 Claude로 어떻게 정리하고 외부에 알렸는지.", image: "", part: 2 },
+  { initial: "Da", name: "다니", avatar: "/images/speakers/다니.png", role: "Contents · Marketing", title: "AI 영상 제작으로\n콘텐츠 마케터에 슈퍼파워 달기", desc: "촬영 없이, 편집 전문가 없이. AI 툴로 영상을 냅다 만들어본 6주.", image: "", part: 2 },
+  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "내 옆에 두는 AI —\n생각을 확장하고 질문을 깊게 만드는 법", desc: "답을 찾는 도구가 아니라, 더 좋은 질문을 하게 도와주는 존재로.", image: "", part: 2 },
+  { initial: "V", name: "비비안", avatar: "/images/speakers/비비안.png", role: "Operations · AX Design", title: "셀피쉬클럽 AX 프로젝트 대시보드 —\n조직의 AI 전환을 눈에 보이게", desc: "우리 팀의 AI 도입 현황을 한눈에 볼 수 있는 대시보드를 직접 만들었습니다.", image: "", part: 3, group: "internal" as const },
+  { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "고객과의 관계를\n자동으로 이어가는 CRM 시스템 구축기", desc: "멤버가 늘어날수록 관계 관리는 복잡해집니다. AI로 CRM을 직접 설계하고 연동해본 경험.", image: "", part: 3, group: "internal" as const },
+  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "셀러들의 상부상조를 위한\n안전 맞찜 플랫폼", desc: "아이디어에서 실제 플랫폼까지 — Claude Code로 혼자 만들어낸 과정.", image: "", part: 3, group: "external" as const },
+  { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제·예약·CRM·광고·워크플로우를\n하나로 잇는 통합 대시보드", desc: "흩어진 비즈니스 도구들을 하나의 화면으로 통합하는 것.", image: "", part: 3, group: "external" as const },
 ];
 
 const AGENDA_PARTS = [
@@ -142,10 +142,10 @@ function SpeakerCard({ speaker, delay }: { speaker: (typeof SPEAKERS)[0]; delay:
               <p className="text-lg font-semibold text-white">{speaker.name}</p>
             </div>
           </div>
-          <p className="text-lg sm:text-xl font-medium text-white mb-3 leading-snug">
+          <p className="text-xl sm:text-2xl font-extrabold text-white mb-4 leading-snug whitespace-pre-line">
             {speaker.title}
           </p>
-          <p className="text-base text-white/40 leading-relaxed">{speaker.desc}</p>
+          <p className="text-base sm:text-lg text-white leading-relaxed">{speaker.desc}</p>
         </div>
 
         {/* 세션 이미지 */}
@@ -191,14 +191,14 @@ export function SpongeClubLanding({ item }: Props) {
         <motion.div style={{ opacity: heroOpacity, y: heroY }} className="relative z-10">
           {/* 타이틀 */}
           <div className="text-center px-5 pt-32 sm:pt-40 lg:pt-48 pb-10 sm:pb-14">
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white leading-[1.1] mb-4">
-              <StaggerText text={"셀피쉬클럽 AX PROJECT"} />
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] mb-4">
+              <StaggerText text={"무료 공유회"} />
             </h1>
             <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="text-base sm:text-lg text-white/40"
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="text-xl sm:text-2xl lg:text-3xl font-bold text-white"
             >
               우리가 일하는 방식을 바꾼 6주
             </motion.p>
@@ -224,23 +224,26 @@ export function SpongeClubLanding({ item }: Props) {
 
           {/* 서브카피 + 메타 */}
           <div className="text-center px-5 pt-8 sm:pt-12 pb-10 sm:pb-14 max-w-3xl mx-auto">
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.8 }} className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white leading-snug max-w-2xl mx-auto mb-14 lg:mb-20">
-              스스로를 에이전틱하게 바꾼 이야기
-            </motion.p>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.8 }} className="mb-14 lg:mb-20">
+              <p className="text-lg sm:text-xl text-white/50 mb-3">
+                Selfish Club AX PROJECT
+              </p>
+              <p className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-white leading-snug max-w-2xl mx-auto">
+                스스로를 에이전틱하게 바꾼 이야기
+              </p>
+            </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.0 }} className="flex flex-col sm:flex-row flex-wrap justify-center gap-6 sm:gap-10 mb-16 lg:mb-20">
-              <div className="text-center">
-                <p className="text-xs text-white/25 tracking-[0.15em] uppercase font-mono mb-2">Date</p>
-                <p className="text-lg sm:text-xl font-semibold text-white">2025년 4월 28일 (월)</p>
-              </div>
-              <div className="text-center">
-                <p className="text-xs text-white/25 tracking-[0.15em] uppercase font-mono mb-2">Format</p>
-                <p className="text-lg sm:text-xl font-semibold text-white">온라인 (Zoom) · 무료</p>
-              </div>
-              <div className="text-center">
-                <p className="text-xs text-white/25 tracking-[0.15em] uppercase font-mono mb-2">Duration</p>
-                <p className="text-lg sm:text-xl font-semibold text-white">120분+</p>
-              </div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.0 }} className="grid grid-cols-3 gap-3 sm:gap-4 max-w-xl mx-auto mb-16 lg:mb-20">
+              {[
+                { label: "Date", value: "4월 28일 (월)" },
+                { label: "Format", value: "Zoom · 무료" },
+                { label: "Duration", value: "120분+" },
+              ].map((item) => (
+                <div key={item.label} className="bg-white/[0.06] border border-white/[0.08] rounded-lg p-4 sm:p-5 text-center">
+                  <p className="text-[10px] sm:text-xs text-white/30 tracking-[0.15em] uppercase font-mono mb-2">{item.label}</p>
+                  <p className="text-base sm:text-lg font-bold text-white">{item.value}</p>
+                </div>
+              ))}
             </motion.div>
 
             {/* 스크롤 화살표 */}
@@ -316,12 +319,12 @@ export function SpongeClubLanding({ item }: Props) {
               <FadeUp key={part.num}>
                 <div className={`${partIdx < AGENDA_PARTS.length - 1 ? "mb-24 pb-24 border-b border-white/5" : ""}`}>
                   {/* 파트 번호 */}
-                  <span className="text-xs text-[#E2E545] tracking-[0.15em] font-mono bg-[#E2E545]/10 border border-[#E2E545]/20 px-3 py-1.5 rounded inline-block mb-5">
+                  <span className="text-base sm:text-lg text-[#E2E545] tracking-[0.15em] font-mono bg-[#E2E545]/10 border border-[#E2E545]/20 px-4 py-2 rounded inline-block mb-6">
                     {part.num}
                   </span>
 
                   {/* 파트 타이틀 */}
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-snug mb-3">
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#E2E545] leading-snug mb-3">
                     {part.title}
                   </h3>
                   <p className="text-base text-white/30 mb-8">{part.subtitle}</p>
