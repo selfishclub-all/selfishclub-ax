@@ -62,6 +62,7 @@ export const sitemap: SitemapPage[] = [
     phase: 2,
     children: [
       { path: "/sharing/[slug]", name: "공유회 상세", auth: "none", status: "in-progress", phase: 2 },
+      { path: "/sharing/sponge-club", name: "스폰지클럽 공유회 랜딩", auth: "none", status: "done", phase: 3 },
     ],
   },
   {
@@ -243,8 +244,10 @@ export const phases: PhaseInfo[] = [
     title: "3차 — AAA 론칭 + 완성도",
     description: "AAA 랜딩, 홈 최종, 어드민 v3, SEO",
     tasks: [
-      { id: "3-1", title: "스폰지클럽(AAA 2기) 랜딩 페이지", status: "todo", phase: 3, category: "content", page: "/aaa" },
-      { id: "3-1a", title: "스폰지클럽 신청 폼 + 결제", status: "todo", phase: 3, category: "payment", page: "/aaa" },
+      { id: "3-1", title: "스폰지클럽 공유회 커스텀 랜딩 페이지", status: "done", phase: 3, category: "content", page: "/sharing/sponge-club" },
+      { id: "3-1a", title: "스폰지클럽 신청 폼 n8n 연동", status: "in-progress", phase: 3, category: "payment", page: "/sharing/sponge-club" },
+      { id: "3-1b", title: "사이트 포인트 컬러 변경 + Pretendard 폰트", status: "done", phase: 3, category: "design" },
+      { id: "3-1c", title: "커밍순 페이지 + 미들웨어 접근 제한", status: "done", phase: 3, category: "setup" },
       { id: "3-2", title: "홈 최종 완성", status: "todo", phase: 3, category: "design", page: "/" },
       { id: "3-3", title: "어드민 v3 — 크루/AI툴/파트너사 관리", status: "todo", phase: 3, category: "admin", page: "/admin" },
       { id: "3-4", title: "어드민 v3 — 보도자료 자동 파싱", status: "todo", phase: 3, category: "admin", page: "/admin" },
