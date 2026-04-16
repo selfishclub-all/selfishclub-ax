@@ -11,7 +11,7 @@ async function getPrograms() {
     .select("ID, iid, i_title, i_title_userside, i_type, i_formid_webflow, i_paid_tf, i_price, i_eventdate, i_event_count, i_category, i_vodurl, i_full_schedule")
     .eq("i_type", "sharing")
     .not("i_formid_webflow", "is", null)
-    .order("ID", { ascending: false });
+    .order("i_eventdate", { ascending: false });
   return data ?? [];
 }
 

@@ -67,6 +67,36 @@ const PROTOTYPE_IMAGES: Record<string, string> = {
   "sharing-mvp": `${LOCAL_IMAGES}/sharing-mvp.jpg`,
   "workshop-vibecoding": `${LOCAL_IMAGES}/workshop-vibecoding.jpg`,
   "workshop-vibecoding2": `${LOCAL_IMAGES}/workshop-vibecoding2.jpg`,
+  "ai-sidae-palrineun-sangsepeiji-eoddeohge-mandeuleoyahalgga": `${LOCAL_IMAGES}/ai-sidae-palrineun-sangsepeiji-eoddeohge-mandeuleoyahalgga.jpg`,
+  "sharing-ai-review": `${LOCAL_IMAGES}/sharing-ai-review.jpg`,
+  "ai-video-promotion": `${LOCAL_IMAGES}/ai-video-promotion.png`,
+  "sharing-notion": `${LOCAL_IMAGES}/sharing-notion.png`,
+  "ai-unit": `${LOCAL_IMAGES}/ai-unit.png`,
+  "beta5": `${LOCAL_IMAGES}/beta5.png`,
+  "aishining": `${LOCAL_IMAGES}/aishining.png`,
+  "patent": `${LOCAL_IMAGES}/patent.png`,
+  "biz": `${LOCAL_IMAGES}/biz.png`,
+  "seo": `${LOCAL_IMAGES}/seo.png`,
+  "nomoney": `${LOCAL_IMAGES}/nomoney.png`,
+  "water": `${LOCAL_IMAGES}/water.png`,
+  "lmf": `${LOCAL_IMAGES}/lmf.png`,
+  "ai-beulrogeu-ceossuig-4ju-caelrinji-2gi": `${LOCAL_IMAGES}/ai-beulrogeu-ceossuig-4ju-caelrinji-2gi.jpg`,
+  "ai-beulrogeu-ceossuig-4ju-caelrinji": `${LOCAL_IMAGES}/ai-beulrogeu-ceossuig-4ju-caelrinji.jpg`,
+  "chai-aivideo": `${LOCAL_IMAGES}/chai-aivideo.jpg`,
+  "ai-marketing": `${LOCAL_IMAGES}/ai-marketing.jpg`,
+  "ai-blog": `${LOCAL_IMAGES}/ai-blog.jpg`,
+  "sharing-ai-mbs2": `${LOCAL_IMAGES}/sharing-ai-mbs2.jpg`,
+  "ai-hunters": `${LOCAL_IMAGES}/ai-hunters.jpg`,
+  "ai-blogprofit": `${LOCAL_IMAGES}/ai-blogprofit.jpg`,
+  "ai-hookable": `${LOCAL_IMAGES}/ai-hookable.jpg`,
+  "ai-blogprofit3": `${LOCAL_IMAGES}/ai-blogprofit3.jpg`,
+  "evt-1": `${LOCAL_IMAGES}/evt-1.png`,
+  "evt-2": `${LOCAL_IMAGES}/evt-2.png`,
+  "evt-hwaseongsi-x-selpiswikeulreob": `${LOCAL_IMAGES}/evt-hwaseongsi-x-selpiswikeulreob.png`,
+  "evt-selfishworld-afterparty": `${LOCAL_IMAGES}/evt-selfishworld-afterparty.png`,
+  "evt-selfishworld-gangnam": `${LOCAL_IMAGES}/evt-selfishworld-gangnam.png`,
+  "evt-selfishworld-reservation": `${LOCAL_IMAGES}/evt-selfishworld-reservation.png`,
+  "evt-selfishworld-seongsu": `${LOCAL_IMAGES}/evt-selfishworld-seongsu.jpg`,
 };
 
 // 기존 카테고리 → 통합 카테고리 매핑
@@ -155,9 +185,15 @@ export function ProgramList({ programs, basePath }: Props) {
     return programs.filter((p) => programGroups.get(p.ID)?.has(selectedCategory));
   }, [programs, selectedCategory, programGroups]);
 
-  // 진행 중 / 지난 프로그램 분리
+  // 진행 중 / 지난 프로그램 분리 (최신순 정렬)
   const upcoming = filtered.filter((p) => !isPast(p.i_eventdate));
-  const past = filtered.filter((p) => isPast(p.i_eventdate));
+  const past = filtered
+    .filter((p) => isPast(p.i_eventdate))
+    .sort((a, b) => {
+      const da = a.i_eventdate ? new Date(a.i_eventdate).getTime() : 0;
+      const db = b.i_eventdate ? new Date(b.i_eventdate).getTime() : 0;
+      return db - da;
+    });
 
   return (
     <div>
@@ -238,7 +274,10 @@ function ProgramCard({
   basePath: string;
   past: boolean;
 }) {
-  const href = `${basePath}/${p.i_formid_webflow}`;
+  const isEvent = basePath === "/events";
+  const href = isEvent
+    ? `https://www.selfishclub.xyz/events/${p.i_formid_webflow.replace("evt-", "")}`
+    : `${basePath}/${p.i_formid_webflow}`;
   const heroImage = p.hero_image || PROTOTYPE_IMAGES[p.i_formid_webflow];
 
   return (
@@ -251,6 +290,7 @@ function ProgramCard({
     >
       <Link
         href={href}
+        {...(isEvent ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         className={`group block rounded-lg overflow-hidden border transition-all duration-300 h-full ${
           past
             ? "border-[#E5E5E5]/40 grayscale hover:grayscale-0 opacity-60 hover:opacity-100"

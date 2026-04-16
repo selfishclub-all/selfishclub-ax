@@ -1,0 +1,66 @@
+[
+  {
+    "slug": "evt-ai-video",
+    "name": "냅다 AI 영상 실전 챌린지",
+    "date": null,
+    "ext_url": "https://www.selfishclub.xyz/events/ai-video",
+    "has_img": false,
+    "img_ext": null
+  },
+  {
+    "slug": "evt-hwaseongsi-x-selpiswikeulreob",
+    "name": "[화성시 X 셀피쉬클럽]",
+    "date": null,
+    "ext_url": "https://walla.my/AI_CF",
+    "has_img": true,
+    "img_ext": "png"
+  },
+  {
+    "slug": "evt-selfishworld-afterparty",
+    "name": "셀피쉬월드 산전수전공유회",
+    "date": "2024-06-15",
+    "ext_url": "https://www.selfishclub.xyz/event/selfishworld-afterparty",
+    "has_img": true,
+    "img_ext": "png"
+  },
+  {
+    "slug": "evt-selfishworld-gangnam",
+    "name": "셀피쉬월드-강남",
+    "date": "2024-06-01",
+    "ext_url": "http://www.selfishclub.xyz/selfishworld/selfishworld-specialticket",
+    "has_img": true,
+    "img_ext": "png"
+  },
+  {
+    "slug": "evt-selfishworld-seongsu",
+    "name": "셀피쉬월드 성수",
+    "date": "2024-05-11",
+    "ext_url": "https://www.selfishclub.xyz/selfishworld/selfishworld-seongsu",
+    "has_img": true,
+    "img_ext": "jpg"
+  },
+  {
+    "slug": "evt-selfishworld-reservation",
+    "name": "셀피쉬월드 입장 예약",
+    "date": "2024-05-11",
+    "ext_url": "http://www.selfishclub.xyz/selfishworld/selfishworld-reservation",
+    "has_img": true,
+    "img_ext": "png"
+  },
+  {
+    "slug": "evt-2",
+    "name": "천하제일 스타트업 체육대회",
+    "date": "2023-10-14",
+    "ext_url": "https://www.selfishclub.xyz/sharing-v1/athletic-competition",
+    "has_img": true,
+    "img_ext": "png"
+  },
+  {
+    "slug": "evt-1",
+    "name": "에아이오락톤",
+    "date": "2023-07-09",
+    "ext_url": "https://www.selfishclub.xyz/sharing-v1/ai-gamethon",
+    "has_img": true,
+    "img_ext": "png"
+  }
+]
