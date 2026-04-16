@@ -78,22 +78,24 @@ export async function POST(request: NextRequest) {
   // 5. n8n 웹훅 트리거 (알림만 — 실패해도 신청은 완료)
   const n8nWebhookUrl = process.env.N8N_SPONGE_WEBHOOK_URL;
   if (n8nWebhookUrl) {
-    fetch(n8nWebhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        u_name,
-        u_phone,
-        u_email,
-        item_title: item.i_title_userside || item.i_title,
-        item_schedule: item.i_full_schedule,
-        slug,
-        event_count: eventCount,
-        is_new: isNew,
-      }),
-    }).catch(() => {
+    try {
+      await fetch(n8nWebhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          u_name,
+          u_phone,
+          u_email,
+          item_title: item.i_title_userside || item.i_title,
+          item_schedule: item.i_full_schedule,
+          slug,
+          event_count: eventCount,
+          is_new: isNew,
+        }),
+      });
+    } catch {
       // n8n 실패해도 신청은 이미 저장됨
-    });
+    }
   }
 
   return NextResponse.json({
