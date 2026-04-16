@@ -209,6 +209,8 @@ export function SpongeClubLanding({ item }: Props) {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 100]);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState("");
   const registerRef = useRef<HTMLDivElement>(null);
   const isRegisterVisible = useInView(registerRef, { margin: "0px" });
 
@@ -595,18 +597,59 @@ export function SpongeClubLanding({ item }: Props) {
           </FadeUp>
 
           <FadeUp delay={0.1}>
-            <div className="bg-white/60 rounded-xl p-8 sm:p-10 text-center">
-              <p className="text-2xl sm:text-3xl font-extrabold text-[#0A0A0A] mb-3">
-                신청이 곧 열립니다
-              </p>
-              <p className="text-base text-[#0A0A0A]/50 leading-relaxed mb-6">
-                오픈 알림을 놓치지 마세요.
-              </p>
-              <div className="inline-flex items-center gap-2 bg-[#0A0A0A]/10 rounded-full px-5 py-2.5">
-                <span className="w-2 h-2 rounded-full bg-[#0A0A0A]/30 animate-pulse" />
-                <span className="text-sm font-medium text-[#0A0A0A]/50">준비 중</span>
-              </div>
-            </div>
+            {!formSubmitted ? (
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setFormLoading(true);
+                  setFormError("");
+                  const form = e.currentTarget;
+                  const data = {
+                    u_name: (form.elements.namedItem("u_name") as HTMLInputElement).value,
+                    u_phone: (form.elements.namedItem("u_phone") as HTMLInputElement).value,
+                    u_email: (form.elements.namedItem("u_email") as HTMLInputElement).value,
+                    slug: "sponge-club",
+                  };
+                  try {
+                    const res = await fetch("/api/registrations/free", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(data),
+                    });
+                    const result = await res.json();
+                    if (result.error) {
+                      setFormError(result.error);
+                    } else {
+                      setFormSubmitted(true);
+                    }
+                  } catch {
+                    setFormError("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+                  } finally {
+                    setFormLoading(false);
+                  }
+                }}
+                className="space-y-3"
+              >
+                <input name="u_name" type="text" required placeholder="이름" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
+                <input name="u_phone" type="tel" required placeholder="전화번호 (010-0000-0000)" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
+                <input name="u_email" type="email" required placeholder="이메일" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
+                <button
+                  type="submit"
+                  disabled={formLoading}
+                  className="w-full bg-[#0A0A0A] text-[#E2E545] font-bold text-base py-4 rounded hover:bg-[#1a1a1a] transition-all duration-300 mt-3 disabled:opacity-50"
+                >
+                  {formLoading ? "신청 중..." : "무료로 신청하기"}
+                </button>
+                {formError && (
+                  <p className="text-sm text-red-600 text-center pt-2">{formError}</p>
+                )}
+              </form>
+            ) : (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-lg p-10 text-center">
+                <p className="text-[#0A0A0A] font-medium text-lg mb-3">신청이 완료됐습니다!</p>
+                <p className="text-base text-[#0A0A0A]/50 leading-relaxed">Zoom 링크는 행사 전날 이메일로 보내드릴게요.</p>
+              </motion.div>
+            )}
             <div className="flex justify-center gap-3 pt-4">
               <a href="https://sepia-quartz-81f.notion.site/22b5c0a046468081b11cc019c2f558a4?pvs=74" target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#0A0A0A]/20 underline">이용약관</a>
               <a href="https://sepia-quartz-81f.notion.site/22b5c0a0464680528d1ffb54dfd7eaeb" target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#0A0A0A]/20 underline">개인정보처리방침</a>
@@ -615,12 +658,19 @@ export function SpongeClubLanding({ item }: Props) {
         </div>
       </section>
 
-      {/* ── 플로팅 CTA (비활성) ── */}
+      {/* ── 플로팅 CTA ── */}
       <div className="fixed bottom-0 left-0 right-0 z-40 p-4 sm:p-5">
         <div className="max-w-lg mx-auto">
-          <div className="block w-full font-bold text-base text-center py-4 rounded-full bg-white/20 text-white/40 cursor-not-allowed">
-            신청 오픈 준비 중
-          </div>
+          <a
+            href="#register"
+            className={`block w-full font-bold text-base text-center py-4 rounded-full transition-colors duration-300 ${
+              isRegisterVisible
+                ? "bg-[#0A0A0A] text-[#E2E545]"
+                : "bg-[#E2E545] text-[#0A0A0A]"
+            }`}
+          >
+            무료 신청하기
+          </a>
         </div>
       </div>
     </>

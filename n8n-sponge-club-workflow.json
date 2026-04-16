@@ -1,127 +1,17 @@
 {
-  "name": "스폰지클럽 공유회 신청",
+  "name": "[비비안] AAA 공유회",
   "nodes": [
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "sponge-club-register",
-        "options": {
-          "responseMode": "responseNode"
-        }
+        "path": "sponge-club-notify",
+        "options": {}
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [400, 300],
       "id": "webhook-sponge",
-      "name": "[Webhook] sponge-club"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            { "id": "1", "name": "u_name", "value": "={{ $json.body.u_name }}", "type": "string" },
-            { "id": "2", "name": "u_phone", "value": "={{ $json.body.u_phone }}", "type": "string" },
-            { "id": "3", "name": "u_email", "value": "={{ $json.body.u_email }}", "type": "string" },
-            { "id": "4", "name": "submittedAt", "value": "={{ new Date(Date.now() + 9*60*60*1000).toISOString().replace('Z', '') }}", "type": "string" },
-            { "id": "5", "name": "slug", "value": "sponge-club", "type": "string" }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [620, 300],
-      "id": "data-setting",
-      "name": "[Data Setting]",
-      "executeOnce": true
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "tableId": "item",
-        "filters": {
-          "conditions": [
-            { "keyName": "i_formid_webflow", "keyValue": "sponge-club" }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [840, 300],
-      "id": "get-item",
-      "name": "[Get] item",
-      "credentials": {
-        "supabaseApi": {
-          "id": "XszFVXqj7lsiCqLn",
-          "name": "Supabase account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT CASE WHEN EXISTS ( SELECT 1 FROM public.event WHERE REGEXP_REPLACE(u_phone, '^0+', '') = REGEXP_REPLACE('{{ $('[Data Setting]').item.json.u_phone }}', '^0+', '') OR u_phone = '{{ $('[Data Setting]').item.json.u_phone }}' ) THEN 'retention' ELSE 'new' END AS isretention;",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [1060, 300],
-      "id": "sql-retention",
-      "name": "[SQL] retention / new",
-      "credentials": {
-        "postgres": {
-          "id": "Fvwo31FZCaLAdmUl",
-          "name": "Postgres account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "tableId": "event",
-        "fieldsUi": {
-          "fieldValues": [
-            { "fieldId": "iid", "fieldValue": "={{ $('[Get] item').item.json.iid }}" },
-            { "fieldId": "e_created_at", "fieldValue": "={{ $('[Data Setting]').item.json.submittedAt }}" },
-            { "fieldId": "i_title", "fieldValue": "={{ $('[Get] item').item.json.i_title }}" },
-            { "fieldId": "i_type", "fieldValue": "={{ $('[Get] item').item.json.i_type }}" },
-            { "fieldId": "u_name", "fieldValue": "={{ $('[Data Setting]').item.json.u_name }}" },
-            { "fieldId": "u_phone", "fieldValue": "={{ $('[Data Setting]').item.json.u_phone }}" },
-            { "fieldId": "u_email", "fieldValue": "={{ $('[Data Setting]').item.json.u_email }}" },
-            { "fieldId": "e_marketingagree_tf", "fieldValue": "TRUE" },
-            { "fieldId": "e_infoagree_tf", "fieldValue": "TRUE" },
-            { "fieldId": "e_new_tf", "fieldValue": "={{ $json.isretention }}" }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [1280, 300],
-      "id": "add-event",
-      "name": "[Add] Event",
-      "credentials": {
-        "supabaseApi": {
-          "id": "XszFVXqj7lsiCqLn",
-          "name": "Supabase account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT COUNT(*) AS row_count FROM public.event WHERE iid = '{{ $('[Get] item').item.json.iid }}';",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [1500, 300],
-      "id": "sql-count",
-      "name": "[SQL] 누적신청자 수",
-      "credentials": {
-        "postgres": {
-          "id": "Fvwo31FZCaLAdmUl",
-          "name": "Postgres account"
-        }
-      }
+      "name": "[Webhook] 알림 트리거"
     },
     {
       "parameters": {
@@ -132,12 +22,12 @@
           "mode": "list",
           "cachedResultName": "form제출-이기적공유회"
         },
-        "text": "=:tada: {{ $('[Data Setting]').item.json.u_name }}님 스폰지클럽 공유회 신청!\n\n:fire: [프로그램명] : {{ $('[Get] item').item.json.i_title }}\n:star2: [누적신청자] : {{ $json.row_count }}명\n:repeat: [리텐션 여부] : {{ $('[SQL] retention / new').item.json.isretention }}",
+        "text": "=:tada: {{ $json.body.u_name }}님 AAA 공유회 신청!\n\n:fire: [프로그램명] : {{ $json.body.item_title }}\n:star2: [누적신청자] : {{ $json.body.event_count }}명\n:repeat: [리텐션 여부] : {{ $json.body.is_new }}\n:email: [이메일] : {{ $json.body.u_email }}\n:phone: [전화번호] : {{ $json.body.u_phone }}",
         "otherOptions": {}
       },
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.3,
-      "position": [1720, 200],
+      "position": [700, 200],
       "id": "slack-notify",
       "name": "[Slack] 공유회 신청 알림",
       "credentials": {
@@ -152,14 +42,14 @@
       "parameters": {
         "authentication": "apiKey",
         "operation": "sendKakaoATA",
-        "to": "={{ $('[Data Setting]').item.json.u_phone }}",
+        "to": "={{ $json.body.u_phone }}",
         "channelId": "KA01PF240125063749199ZgJ6Y7BfG9c",
         "templateId": "KA01TP250227090718801CffOFWkaVWi",
         "variables": {
           "variable": [
-            { "name": "#{이름}", "value": "={{ $('[Data Setting]').item.json.u_name }}" },
-            { "name": "#{공유회명}", "value": "={{ $('[Get] item').item.json.i_title_userside }}" },
-            { "name": "#{라이브일정}", "value": "={{ $('[Get] item').item.json.i_full_schedule }}" },
+            { "name": "#{이름}", "value": "={{ $json.body.u_name }}" },
+            { "name": "#{공유회명}", "value": "={{ $json.body.item_title }}" },
+            { "name": "#{라이브일정}", "value": "={{ $json.body.item_schedule }}" },
             { "name": "#{url}", "value": "=www.selfishclub.xyz/sharing/sponge-club" }
           ]
         },
@@ -167,7 +57,7 @@
       },
       "type": "n8n-nodes-solapi.solapi",
       "typeVersion": 1,
-      "position": [1720, 400],
+      "position": [700, 420],
       "id": "solapi-alimtok",
       "name": "[SOLAPI] 알림톡",
       "credentials": {
@@ -177,28 +67,17 @@
         }
       },
       "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={ \"success\": true, \"message\": \"신청 완료\" }",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
-      "position": [1940, 300],
-      "id": "respond",
-      "name": "[Respond] 성공"
     }
   ],
   "connections": {
-    "[Webhook] sponge-club": { "main": [[{ "node": "[Data Setting]", "type": "main", "index": 0 }]] },
-    "[Data Setting]": { "main": [[{ "node": "[Get] item", "type": "main", "index": 0 }]] },
-    "[Get] item": { "main": [[{ "node": "[SQL] retention / new", "type": "main", "index": 0 }]] },
-    "[SQL] retention / new": { "main": [[{ "node": "[Add] Event", "type": "main", "index": 0 }]] },
-    "[Add] Event": { "main": [[{ "node": "[SQL] 누적신청자 수", "type": "main", "index": 0 }]] },
-    "[SQL] 누적신청자 수": { "main": [[{ "node": "[Slack] 공유회 신청 알림", "type": "main", "index": 0 }, { "node": "[SOLAPI] 알림톡", "type": "main", "index": 0 }]] },
-    "[SOLAPI] 알림톡": { "main": [[{ "node": "[Respond] 성공", "type": "main", "index": 0 }]] }
+    "[Webhook] 알림 트리거": {
+      "main": [
+        [
+          { "node": "[Slack] 공유회 신청 알림", "type": "main", "index": 0 },
+          { "node": "[SOLAPI] 알림톡", "type": "main", "index": 0 }
+        ]
+      ]
+    }
   },
   "settings": { "executionOrder": "v1" },
   "tags": []

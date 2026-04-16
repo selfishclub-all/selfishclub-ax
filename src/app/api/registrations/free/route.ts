@@ -1,0 +1,103 @@
+import { supabase } from "@/lib/supabase";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(request: NextRequest) {
+  const { u_name, u_phone, u_email, slug } = await request.json();
+
+  // 입력 검증
+  if (!u_name || !u_phone || !u_email || !slug) {
+    return NextResponse.json(
+      { data: null, error: "이름, 전화번호, 이메일은 필수입니다" },
+      { status: 400 }
+    );
+  }
+
+  // 1. item 조회
+  const { data: item, error: itemError } = await supabase
+    .from("item")
+    .select("iid, i_title, i_type, i_formid_webflow, i_title_userside, i_full_schedule")
+    .eq("i_formid_webflow", slug)
+    .order("ID", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (itemError || !item) {
+    return NextResponse.json(
+      { data: null, error: "프로그램을 찾을 수 없습니다" },
+      { status: 400 }
+    );
+  }
+
+  // 2. 신규/재방문 판별
+  const { data: retentionData } = await supabase
+    .from("event")
+    .select("ID")
+    .eq("u_phone", u_phone)
+    .limit(1);
+
+  const isNew = !retentionData || retentionData.length === 0 ? "new" : "retention";
+
+  // 3. event 테이블에 INSERT
+  const submittedAt = new Date(Date.now() + 9 * 60 * 60 * 1000)
+    .toISOString()
+    .replace("Z", "");
+
+  const { error: insertError } = await supabase.from("event").insert({
+    iid: item.iid,
+    e_created_at: submittedAt,
+    i_title: item.i_title,
+    i_type: item.i_type,
+    u_name,
+    u_phone,
+    u_email,
+    e_marketingagree_tf: true,
+    e_infoagree_tf: true,
+    e_new_tf: isNew,
+  });
+
+  if (insertError) {
+    return NextResponse.json(
+      { data: null, error: "신청 저장 중 오류가 발생했습니다" },
+      { status: 500 }
+    );
+  }
+
+  // 4. item.i_event_count 증가
+  const { data: countData } = await supabase
+    .from("event")
+    .select("ID")
+    .eq("iid", item.iid);
+
+  const eventCount = countData?.length ?? 0;
+
+  await supabase
+    .from("item")
+    .update({ i_event_count: eventCount })
+    .eq("iid", item.iid);
+
+  // 5. n8n 웹훅 트리거 (알림만 — 실패해도 신청은 완료)
+  const n8nWebhookUrl = process.env.N8N_SPONGE_WEBHOOK_URL;
+  if (n8nWebhookUrl) {
+    fetch(n8nWebhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        u_name,
+        u_phone,
+        u_email,
+        item_title: item.i_title_userside || item.i_title,
+        item_schedule: item.i_full_schedule,
+        slug,
+        event_count: eventCount,
+        is_new: isNew,
+      }),
+    }).catch(() => {
+      // n8n 실패해도 신청은 이미 저장됨
+    });
+  }
+
+  return NextResponse.json({
+    data: { message: "신청 완료", eventCount },
+    error: null,
+  });
+}
