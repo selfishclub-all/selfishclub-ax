@@ -106,17 +106,17 @@ const SPEAKERS = [
   { initial: "G", name: "젬마", avatar: "/images/speakers/젬마.png", role: "Creator · Vision Holder", title: "AAA 6주의 기록 —\n우리가 증명하려 했던 것", desc: "<hl>AI 교육이 아닌 AI 빌딩.</hl>\n팀 양성 6주 동안 무엇이 작동했고, 무엇이 바뀌었는지.\n그리고 이 경험이 만들어낼 다음 챕터.", image: "/images/sessions/젬마.png", part: 1 },
   { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "옵시디언+깃헙+클로드코드로\n4주만에 만든 웹페이지", desc: "에밀리가 만든 CRM 자동화, 흐민이 만든 Sullivan,\n띵크의 5개 에이전트 동시 투입 —\n우리끼리만 알기엔 너무 아까운 것들.\n\n<hl>\"잠깐, 이거 우리만 보기 아깝지 않아?\"</hl>\n\n자랑하고 싶고, 외부에 보여주고 싶었지만\n노션 링크 공유는 좀...\n<hl>그래서 우리만의 웹사이트를 직접 만들었습니다.</hl>", image: "/images/sessions/다다.png", part: 2 },
   { initial: "Da", name: "다니", avatar: "/images/speakers/다니.png", role: "Contents · Marketing", title: "이미지부터 캐러셀, 영상까지 —\n마케터가 직접 만든 콘텐츠 자동화 OS", desc: "<hl>피그마 없이, 코드도 모르는 마케터</hl>가 Claude Code로\n인스타 캐러셀 자동 생성 에디터,\nURL 하나로 캐러셀+스레드+링크드인 동시 생성기,\n터미널에서 영상까지 만드는 시스템을 직접 만들었습니다.\n\n\"AI 잘 쓰는 법\"이 아니라,\n<hl>실무에서 매일 쓰는 나만의 콘텐츠 OS</hl>를 만든\n과정과 삽질 이야기를 공유합니다.", image: "/images/sessions/다니.gif", part: 2 },
-  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "내 옆에 두는 AI —\n생각을 확장하고 질문을 깊게 만드는 법", desc: "<hl>답을 찾는 도구가 아니라,</hl>\n더 좋은 질문을 하게 도와주는 존재로.", image: "/images/sessions/흐민.png", part: 2 },
+  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "사고 → 지식 → 자산화\nAI로 만든 나만의 성장 OS", desc: "<hl>AI Native 시대의 경쟁력은 결국, '나만의 독창성'</hl>입니다.\n그것을 갈고 닦기 위해,\n내 일상을 자산화하는 나만의 OS를 만들었습니다.\n\n[1] AI 파트너가 매일 질문하고, 함께 사고를 확장\n[2] 이 과정을 AI가 기록하고 연결해, <hl>지식 창고를 구축</hl>\n[3] 쌓인 지식이 데이터로만 남지 않도록, 콘텐츠로 자산화", image: "/images/sessions/흐민.gif", part: 2 },
   { initial: "V", name: "비비안", avatar: "/images/speakers/비비안.png", role: "Operations · AX Design", title: "셀피쉬클럽 AX 프로젝트 대시보드 —\n조직의 AI 전환을 눈에 보이게", desc: "우리 팀의 <hl>AI 도입 현황을 한눈에</hl> 볼 수 있는\n대시보드를 직접 만들었습니다.", image: "/images/sessions/비비안.png", part: 3, group: "internal" as const },
-  { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "고객과의 관계를\n자동으로 이어가는 CRM 시스템 구축기", desc: "멤버가 늘어날수록 관계 관리는 복잡해집니다.\n<hl>AI로 CRM을 직접 설계하고 연동해본 경험.</hl>", image: "/images/sessions/에밀리.png", part: 3, group: "internal" as const },
-  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "회사를 벗어나 AI 솔로프리너로 :\n나만의 '무한 성장 비즈니스 생태계' 구축기", desc: "13년 실무 경험을 바탕으로\n<hl>시장의 반복적인 비효율을 발견</hl>하고,\nAI를 역할별 팀처럼 운영하며\n찜마켓이라는 실제 서비스를 빠르게 출시한 과정을 공유합니다.\n\n<hl>병렬 실행, 이기적 공유, 사람이 개입하는 팀 구조</hl>가\nAI 시대에 더 중요해졌는지를\n실제 사례 중심으로 보여줍니다.", image: "/images/sessions/오웬.png", part: 3, group: "external" as const },
-  { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제·예약·CRM·광고·워크플로우를\n하나로 잇는 통합 대시보드", desc: "<hl>흩어진 비즈니스 도구들을</hl>\n하나의 화면으로 통합하는 것.", image: "", part: 3, group: "external" as const },
+  { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "셀피쉬클럽 CRM 자동화 구축기 —\n마케터가 만든 원클릭 발송 시스템", desc: "공유회 하나 열 때마다 나가는 알림톡만 9종 + 채널 N개.\n<hl>전부 수동이던 CRM을 자동화</hl>하고,\n반복에 쓰던 시간을 진짜 핵심에 쓰기 위해 직접 만들었습니다.\n\n반복되는 CRM 업무를 구조화하고,\n팀이 함께 운영할 수 있는 시스템으로 만들어\n<hl>승인 한 번이면 발송이 끝나는 자동화</hl>를 직접 구축한 과정을 공유합니다.", image: "/images/sessions/에밀리.png", part: 3, group: "internal" as const },
+  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "13년 차 핀테크 대표는 왜 회사를 팔고\n'AI 1인 기업'이 되었을까?", desc: "트렌드에 밀리지 않으려고 꾸역꾸역 AI를 붙잡고 방황하던 3주.\n하지만 <hl>'누구의 문제를 풀 것인가'를 찾은 순간,</hl>\n단 4시간 만에 12개의 AI 에이전트를 동시에 굴려\n실제 서비스(찜마켓)를 세상에 내놓았습니다.\n\n<hl>'클로드 코드'를 나만의 코파운더처럼 활용하는 법!</hl>\n모든 걸 다 해줄 것 같은 AI 앞에서도\n결국 '사람의 개입'이 서비스의 성패를 가르는 이유를\n솔직한 경험담과 함께 아낌없이 나눕니다.", image: "/images/sessions/오웬.gif", part: 3, group: "external" as const },
+  { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제, 예약, CRM, 광고를 하나로 —\n나만의 대시보드 만들기", desc: "매번 여러 SaaS 툴들을 돌아다니면서\n데이터 정리하고 성과분석을 하셨죠?\n\n<hl>이제는 API를 활용해 결제, 예약, CRM, 광고, 성과를\n한번에 확인 가능합니다!</hl>\n\n매번 다른 툴에 들어가서 확인하고 데이터 정리하던 그 작업,\n이제 <hl>나만의 커스텀 대시보드</hl>로 한번에 확인하세요.", image: "/images/sessions/띵크.png", part: 3, group: "external" as const },
 ];
 
 const AGENDA_PARTS = [
   { num: "PART 01", title: "AAA, 그리고 앞으로의 이야기", subtitle: "젬마 · 오프닝 세션", desc: "AAA팀은 왜 만들어졌을까요.\n셀피쉬클럽 내부에서 시작된 <hl>작은 실험</hl>이\n6주 동안 어떻게 진화했는지,\n그리고 이 경험이 앞으로 어떤 커뮤니티로 이어질지 —\n젬마가 직접 이야기합니다." },
-  { num: "PART 02", title: "나를 위한 OS를 만들기", subtitle: "내 일하는 방식 자체를 AI로 다시 설계한 이야기", desc: "거창한 프로덕트가 아닙니다.\n내가 매일 하는 일, 내가 매번 막히던 지점 —\n거기서 시작한 세 사람의 이야기입니다.\n\n<hl>\"나도 이렇게 해볼 수 있겠다\"</hl>는 생각이 드는 게\n이 파트의 목표입니다." },
-  { num: "PART 03", title: "고객을 위한 Product를 만들기", subtitle: "실제 유저가 쓰는 것을 Claude Code로 직접 개발한 이야기", desc: "<hl>\"코딩 몰라도 만들 수 있어\"</hl>라는 말이\n실제로 가능한지 — 이 파트가 그 증거입니다.\n\n각자 다른 문제를 풀기 위해 시작한\n4개의 실전 프로덕트,\n그 과정에서 배운 것들을 공유합니다." },
+  { num: "PART 02", title: "나를 위한 OS를 만들기", subtitle: "내 일하는 방식 자체를 AI로 다시 설계한 이야기", desc: "거창한 프로덕트가 아닙니다.\n내가 매일 하는 일, 내가 매번 막히던 지점 —\n거기서 시작한 세 사람의 이야기입니다.\n\n최신 AI 소식들을 받아본다고 해서 그게 다 내 것이 아니고,\n<hl>내 일에 적용한다는 것은 많은 시간과 고심이 필요합니다.</hl>\n\n\"나도 이렇게 해볼 수 있겠다\"는 생각이 드는 게\n이 파트의 목표입니다." },
+  { num: "PART 03", title: "고객을 위한 Product를 만들기", subtitle: "실제 유저가 쓰는 것을 Claude Code로 직접 개발한 이야기", desc: "<hl>\"코딩 몰라도 만들 수 있어\"</hl>라는 말이\n실제로 가능한지 — 이 파트가 그 증거입니다.\n\n또 혼자서 해서는 나만의 세계에 갇히게 됩니다.\n각자 다른 문제를 풀기 위해 시작한 4개의 실전 프로덕트,\n<hl>매주 미션을 가지고 과정과 결과물을 공유하며</hl>\n인사이트, 피드백을 나눈 이야기를 공유합니다." },
 ];
 
 const TIMETABLE = [
@@ -135,14 +135,14 @@ const WHO_CARDS = [
 ];
 
 const CREW_COMMENTS = [
-  { name: "오웬", avatar: "/images/speakers/오웬.png", comment: "내가 먼저 배우고 부딪히며 얻은 것들을\n아낌없이 나눠드릴게요.\n\n아마 이런 고민, 한 번쯤 해보셨을 거예요.\nAI를 많이 들어봤는데 막상 내 일에는 어떻게 붙여야 할지,\n혼자 해보려니 어디서부터 시작해야 할지 막막했던 순간들요.\n\n이번 발표는 그런 고민에서 출발해,\n실제로 문제를 발견하고 서비스로 만들기까지의\n과정을 함께 나누는 시간입니다." },
+  { name: "오웬", avatar: "/images/speakers/오웬.png", comment: "아마 이런 고민, 한 번쯤 해보셨을 거예요.\nAI에 대해 많이 들어는 봤지만\n막상 내 일에 붙이려니, 혹은 혼자 무언가를 시작해보려니\n어디서부터 손대야 할지 막막했던 순간들요.\n\n저 역시 같은 막막함을 겪었습니다.\n제가 먼저 치열하게 배우고 맨땅에 부딪히며 얻은 것들을\n아낌없이 나눠드릴게요.\n\n거창한 이론이 아니라,\n실제로 시장의 문제를 발견하고\n'클로드 코드'를 활용해 <찜마켓>이라는 서비스를\n단기간에 뚝딱 만들어내기까지의 찐 경험담을 준비했습니다.\n여러분의 시행착오를 확실히 줄여드리겠습니다." },
   { name: "젬마", avatar: "/images/speakers/젬마.png", comment: "" },
   { name: "다다", avatar: "/images/speakers/다다.png", comment: "개인이나 팀이 공들여 쌓은 기록들,\n그냥 노션에만 잠자게 두기엔 너무 아깝지 않나요?\n\n이제 그 흩어진 데이터들을\nClaude Code가 가장 잘 읽을 수 있는 형태로 변환해서\n완전히 새롭게 재가공해 보세요!\n\n우리만의 아카이브를 단순히 '보관용'이 아니라,\nAI가 언제든 꺼내 쓸 수 있는\n'살아있는 자산'으로 만드는 법을 공유해 드릴게요." },
   { name: "다니", avatar: "/images/speakers/다니.png", comment: "내가 실무에 바로 쓸 수 있는\n서비스와 시스템을 만들려면 어떤 부분이 중요한지,\n삽질한 과정과 실제 결과물을 함께 공유합니다." },
-  { name: "흐민", avatar: "/images/speakers/흐민.png", comment: "" },
+  { name: "흐민", avatar: "/images/speakers/흐민.png", comment: "매일 뭔가를 보고 읽는데,\n정작 내 생각은 뭔지 모르겠던 적 있지 않나요?\n\nAI한테 답을 구하다가,\n어느 날 질문을 받아봤어요.\n대답하다 보니 내 생각이 생기고,\n그 생각들이 자연스럽게 쌓이고 연결되더라고요.\n\n생각하고 부딪힌 과정이 자산이 되는 구조,\n직접 만들어본 삽질 과정부터\n실제 돌아가는 시스템까지 소개해 드리겠습니다!" },
   { name: "비비안", avatar: "/images/speakers/비비안.png", comment: "" },
   { name: "에밀리", avatar: "/images/speakers/에밀리.png", comment: "" },
-  { name: "띵크", avatar: "/images/speakers/띵크.png", comment: "" },
+  { name: "띵크", avatar: "/images/speakers/띵크.png", comment: "저는 매일 쏟아지는 마케팅 데이터들의 늪에서\n정리하는 일에 시간을 가장 많이 쏟았던\n마케터 중 한 명인데요.\n\n이제는 실시간으로 성과가 업데이트되는\n직접 만든 대시보드로\n원하는 성과를 한번에 확인할 수 있게\n도와드릴게요!" },
 ];
 
 const JOB_OPTIONS = ["마케터 / 콘텐츠 담당자", "비즈니스 / 기획", "개발 / 디자인", "사이드 프로젝트 운영 중", "기타"];
@@ -309,24 +309,75 @@ export function SpongeClubLanding({ item }: Props) {
       <SectionDivider from={BG.dark} to={BG.mid} />
 
       {/* ═══ 인트로 (미드 다크) ═══ */}
-      <section style={{ background: BG.mid }} className="py-16 lg:py-28">
+      <section style={{ background: BG.mid }} className="py-20 lg:py-32">
         <div className="max-w-3xl mx-auto px-5 lg:px-10">
           <FadeUp>
             <div className="border-l-2 border-[#E2E545]/60 pl-6 sm:pl-8">
               <p className="text-lg sm:text-xl text-white/50 leading-[2]">
-                AI를 배웠다고 해서 뭔가 달라지지 않습니다.
+                쏟아지는 AI 툴과 정보 속에서
                 <br />
                 <strong className="text-white/80 font-medium">
-                  직접 만들고, 실제로 써보고, 고객 앞에 내놓아야
-                </strong>{" "}
-                비로소 무기가 됩니다.
+                  &ldquo;딸깍 한 번이면 자동화 된다&rdquo;
+                </strong>
+                는 이야기가 정말 많습니다.
               </p>
               <p className="text-lg sm:text-xl text-white/50 leading-[2] mt-8">
-                AAA팀은 지난 6주 동안 그 과정을 온몸으로 통과했습니다.
+                그런데 막상 내 업무에 가져오면
                 <br />
+                일주일이 걸려도 실제로 활용하기 어려워,
+                <br />
+                많은 분들이 쉽게 포기하기 마련이에요.
+              </p>
+              <p className="text-lg sm:text-xl text-white/50 leading-[2] mt-8">
+                AI 툴이 범람할수록,
+                <br />
+                <strong className="text-white/80 font-medium">
+                  &lsquo;가능해졌다&rsquo;와 &lsquo;그걸 내 일에 진짜로 적용한다&rsquo;
+                </strong>
+                <br />
+                사이의 간극은 오히려 더 벌어집니다.
+              </p>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.1}>
+            <div className="mt-16 lg:mt-24">
+              <p className="text-xs text-[#E2E545]/60 tracking-[0.3em] uppercase font-mono mb-5">
+                Our Journey
+              </p>
+              <p className="text-lg sm:text-xl text-white/50 leading-[2] mb-8">
+                셀피쉬클럽은 이 간극을 메우기 위해
+                <br />
+                지난 2년간 내부 크루를 직접 양성해왔습니다.
+              </p>
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-10">
+                {["AI해자", "AI 집중 활용 유닛", "AI 헌터스", "AAA"].map((step, i) => (
+                  <div key={step} className="flex items-center gap-3 sm:gap-4">
+                    <span className={`text-sm sm:text-base font-medium ${i === 3 ? "text-[#E2E545] font-bold" : "text-white/40"}`}>
+                      {step}
+                    </span>
+                    {i < 3 && <span className="text-white/20">→</span>}
+                  </div>
+                ))}
+              </div>
+              <p className="text-lg sm:text-xl text-white/50 leading-[2]">
+                그중 가장 최근 <strong className="text-white/80 font-medium">AAA(AI Agent AZA)</strong>팀은
+                <br />
+                8명이 6주 동안 모여, Claude Code를 활용해
+                <br />
+                AI 에이전트를 각자의 업무와 서비스에 직접 적용했습니다.
+              </p>
+              <p className="text-lg sm:text-xl text-white/50 leading-[2] mt-8">
+                <strong className="text-white/80 font-medium">
+                  6주 만에, 자기 일에 AI 에이전트를
+                  <br />
+                  진짜로 실제 활용하는 단계까지 왔습니다.
+                </strong>
+              </p>
+              <p className="text-lg sm:text-xl text-white/50 leading-[2] mt-8">
                 막힌 것도, 틀린 것도, 결국 뚫어낸 것도 —
                 <br />
-                오는 4월 28일, 있는 그대로 공유합니다.
+                4월 28일, 있는 그대로 공유합니다.
               </p>
             </div>
           </FadeUp>
@@ -543,12 +594,22 @@ export function SpongeClubLanding({ item }: Props) {
               />
             </div>
 
-            <p className="text-lg sm:text-xl text-white/40 leading-relaxed max-w-xl mx-auto mb-14">
-              AAA 팀 8명의 6주 경험이 토대가 된,
+            <p className="text-lg sm:text-xl text-white/40 leading-[2] max-w-xl mx-auto mb-6">
+              셀피쉬클럽 안에서 쌓아온
               <br />
-              AI 에이전트 풀사이클 빌딩 커뮤니티.
+              이기적 공유 경험과 크루 양성 노하우를 응집해,
+            </p>
+            <p className="text-lg sm:text-xl text-white/70 font-medium leading-[2] max-w-xl mx-auto mb-6">
+              마케터·비개발자 중심의
               <br />
-              <span className="text-white/70 font-medium">이 공유회가 그 시작입니다.</span>
+              AI 에이전트 풀사이클 빌딩 프로그램으로
+              <br />
+              정식 런칭됩니다.
+            </p>
+            <p className="text-base text-white/30 leading-relaxed max-w-lg mx-auto mb-14">
+              양성 교육과 이기적 공유 커뮤니티가 함께하는 6주간의 프로그램.
+              <br />
+              이 공유회가 그 시작입니다.
             </p>
           </FadeUp>
 
