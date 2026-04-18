@@ -84,6 +84,7 @@ const PROTOTYPE_IMAGES: Record<string, string> = {
   "ai-beulrogeu-ceossuig-4ju-caelrinji": `${LOCAL_IMAGES}/ai-beulrogeu-ceossuig-4ju-caelrinji.jpg`,
   "chai-aivideo": `${LOCAL_IMAGES}/chai-aivideo.jpg`,
   "ai-marketing": `${LOCAL_IMAGES}/ai-marketing.jpg`,
+  "aaa": "/images/sponge-club-kv.gif",
   "ai-blog": `${LOCAL_IMAGES}/ai-blog.jpg`,
   "sharing-ai-mbs2": `${LOCAL_IMAGES}/sharing-ai-mbs2.jpg`,
   "ai-hunters": `${LOCAL_IMAGES}/ai-hunters.jpg`,
