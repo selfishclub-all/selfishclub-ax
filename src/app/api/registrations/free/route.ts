@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const { u_name, u_phone, u_email, slug } = await request.json();
+  const { u_name, u_phone, u_email, slug, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = await request.json();
 
   // 입력 검증
   if (!u_name || !u_phone || !u_email || !slug) {
@@ -53,6 +53,11 @@ export async function POST(request: NextRequest) {
     e_marketingagree_tf: true,
     e_infoagree_tf: true,
     e_new_tf: isNew,
+    utm_source: utm_source || null,
+    utm_medium: utm_medium || null,
+    utm_campaign: utm_campaign || null,
+    utm_content: utm_content || null,
+    utm_term: utm_term || null,
   });
 
   if (insertError) {

@@ -665,11 +665,17 @@ export function SpongeClubLanding({ item }: Props) {
                   setFormLoading(true);
                   setFormError("");
                   const form = e.currentTarget;
+                  const params = new URLSearchParams(window.location.search);
                   const data = {
                     u_name: (form.elements.namedItem("u_name") as HTMLInputElement).value,
                     u_phone: (form.elements.namedItem("u_phone") as HTMLInputElement).value,
                     u_email: (form.elements.namedItem("u_email") as HTMLInputElement).value,
                     slug: "sponge-club",
+                    utm_source: params.get("utm_source") || "",
+                    utm_medium: params.get("utm_medium") || "",
+                    utm_campaign: params.get("utm_campaign") || "",
+                    utm_content: params.get("utm_content") || "",
+                    utm_term: params.get("utm_term") || "",
                   };
                   try {
                     const res = await fetch("/api/registrations/free", {
