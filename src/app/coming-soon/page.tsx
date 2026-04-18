@@ -12,7 +12,7 @@ export default function ComingSoonPage() {
           새로운 모습으로 곧 찾아갑니다.
         </p>
         <a
-          href="/sharing/sponge-club"
+          href="/sharing/aaa"
           className="inline-flex text-sm bg-[#E2E545] text-[#0A0A0A] font-bold px-6 py-3 rounded-full hover:bg-[#CDD03B] transition-colors"
         >
           AAA 공유회 보러가기

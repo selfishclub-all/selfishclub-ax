@@ -62,7 +62,7 @@ export const sitemap: SitemapPage[] = [
     phase: 2,
     children: [
       { path: "/sharing/[slug]", name: "공유회 상세", auth: "none", status: "in-progress", phase: 2 },
-      { path: "/sharing/sponge-club", name: "스폰지클럽 공유회 랜딩", auth: "none", status: "done", phase: 3 },
+      { path: "/sharing/aaa", name: "스폰지클럽 공유회 랜딩", auth: "none", status: "done", phase: 3 },
     ],
   },
   {
@@ -252,8 +252,8 @@ export const phases: PhaseInfo[] = [
     title: "3차 — AAA 론칭 + 완성도",
     description: "AAA 랜딩, 홈 최종, 어드민 v3, SEO",
     tasks: [
-      { id: "3-1", title: "스폰지클럽 공유회 커스텀 랜딩 페이지", status: "done", phase: 3, category: "content", page: "/sharing/sponge-club" },
-      { id: "3-1a", title: "스폰지클럽 신청 폼 + n8n 알림 연동", status: "done", phase: 3, category: "payment", page: "/sharing/sponge-club" },
+      { id: "3-1", title: "스폰지클럽 공유회 커스텀 랜딩 페이지", status: "done", phase: 3, category: "content", page: "/sharing/aaa" },
+      { id: "3-1a", title: "스폰지클럽 신청 폼 + n8n 알림 연동", status: "done", phase: 3, category: "payment", page: "/sharing/aaa" },
       { id: "3-1d", title: "이벤트 페이지 신규 생성", status: "done", phase: 3, category: "content", page: "/events" },
       { id: "3-1e", title: "프로그램 카드 수 맞추기 (17+8개 등록)", status: "done", phase: 3, category: "content" },
       { id: "3-1b", title: "사이트 포인트 컬러 변경 + Pretendard 폰트", status: "done", phase: 3, category: "design" },

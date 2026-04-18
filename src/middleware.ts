@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 // 접근 허용 경로
 const ALLOWED = [
-  "/sharing/sponge-club",
+  "/sharing/aaa",
   "/coming-soon",
   "/api/",
   "/_next/",

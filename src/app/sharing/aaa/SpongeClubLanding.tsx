@@ -670,7 +670,7 @@ export function SpongeClubLanding({ item }: Props) {
                     u_name: (form.elements.namedItem("u_name") as HTMLInputElement).value,
                     u_phone: (form.elements.namedItem("u_phone") as HTMLInputElement).value,
                     u_email: (form.elements.namedItem("u_email") as HTMLInputElement).value,
-                    slug: "sponge-club",
+                    slug: "aaa",
                     utm_source: params.get("utm_source") || "",
                     utm_medium: params.get("utm_medium") || "",
                     utm_campaign: params.get("utm_campaign") || "",
