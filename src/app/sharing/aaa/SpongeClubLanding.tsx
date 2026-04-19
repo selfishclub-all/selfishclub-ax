@@ -90,7 +90,7 @@ function HighlightedText({ text, className = "" }: { text: string; className?: s
         if (part.startsWith("<hl>") && part.endsWith("</hl>")) {
           const inner = part.slice(4, -5);
           return (
-            <span key={i} className="font-bold" style={{ backgroundImage: "linear-gradient(to top, rgba(226,229,69,0.25) 40%, transparent 40%)" }}>
+            <span key={i} className="font-bold underline decoration-[#E2E545] decoration-2 underline-offset-4">
               {inner}
             </span>
           );
@@ -103,14 +103,14 @@ function HighlightedText({ text, className = "" }: { text: string; className?: s
 
 /* ─── 데이터 ─── */
 const SPEAKERS = [
-  { initial: "G", name: "젬마", avatar: "/images/speakers/젬마.png", role: "Creator · Vision Holder", title: "AAA 6주의 기록 —\n우리가 증명하려 했던 것", desc: "AI 교육이 아니라 AI 빌딩.\n팀 양성 6주 동안 무엇이 작동했고, 무엇이 바뀌었는지.\n그리고 이 경험이 만들어낼 다음 챕터.", image: "/images/sessions/젬마.png", part: 1, before: "", after: "" },
-  { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "흩어진 노션을 AI가 읽는 \"살아있는 자산\"으로 —\n팀 웹페이지를 만든 이야기", desc: "AAA팀이 매주 만들어내는 좋은 기록들이\n각자 노션에 잠들어 있는 게 아까웠어요.\n\n노션 대신 옵시디언을 쓰기로 냅-다 결정한 이유,\nAI가 읽기 좋은 구조로 바꿔서\n외부에 공유 가능한 아카이빙 시스템을 만들기까지 —\n썼던 도구, 했던 삽질, 남은 과제까지 공유합니다.", image: "/images/sessions/다다.png", part: 2, before: "AAA팀의 좋은 기록들이 각자의 노션에 흩어져 잠들어 있었다.", after: "옵시디언에 쓰면 AI가 정리해서 웹사이트에 올라가는\n팀 아카이빙 시스템이 돌아가고 있다." },
-  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "AI한테 답 구하기를 멈추고,\nAI에게 질문 받기 시작한 이야기", desc: "AI가 모든 답을 주는 시대에\n정작 \"내 생각이 뭔지\" 흐릿해지는 게 아쉬웠어요.\n\n텔레그램에 한 줄 던지면 AI가 질문을 던져주고,\n그 대화가 자동으로 위키에 쌓이고,\n3일 뒤에 콘텐츠 초안이 되는 시스템 —\n혼자 쓰면서 허술하게 굴려온 실제 과정을 공유합니다.", image: "/images/sessions/흐민.gif", part: 2, before: "AI한테 계속 답을 구하다가,\n정작 \"내 생각은 뭔지\" 흐릿해지는 게 아쉬웠다.", after: "텔레그램에 한 줄 쓰면 AI가 질문을 던져주고,\n그 대화가 3일 뒤에 콘텐츠 초안으로 돌아오는 구조를 돌리고 있다." },
-  { initial: "Da", name: "다니", avatar: "/images/speakers/다니.png", role: "Contents · Marketing", title: "\"딸깍 자동화\"에 실패하고,\n내 손으로 만든 콘텐츠 OS", desc: "처음엔 URL 하나 넣으면 블로그·인스타·링크드인이\n동시에 나오는 걸 만들었어요. 결과는 실패.\n톤이 안 맞아서 결국 다시 캔바에서 작업했고,\n오히려 시간이 더 걸렸습니다.\n\n그래서 방향을 바꿨어요.\n캐러셀 에디터, 스레드·링크드인 동시 생성기,\n터미널에서 영상까지 만드는 시스템을 직접 만들었습니다.\n\n자동화가 실패한 이유와 돌아온 이유,\n그 과정에서 구조화한 디자인 규칙까지 공유합니다.", image: "/images/sessions/다니.gif", part: 2, before: "\"딸깍 한 번 자동화\"를 믿고 시도했지만,\n결국 캔바로 다시 작업하느라 시간이 더 걸렸다.", after: "내 톤에 맞는 캐러셀을 즉시 생성·편집할 수 있는\n나만의 에디터를 만들어서 실제 업무에 쓰고 있다." },
-  { initial: "V", name: "비비안", avatar: "/images/speakers/비비안.png", role: "Operations · AX Design", title: "비개발자 마케터가\nAX 프로젝트 PM이 되기까지", desc: "개발 지식도, 기술적 원리도 모르는 마케터가\n어떻게 AX 프로젝트의 PM을 맡게 됐을까요.\n\nAX Dashboard를 직접 설계하고 활용해\n프로젝트 전체를 한눈에 관리하는 구조를 만들었고,\n회원 시스템, 결제, 카카오 로그인까지 붙이며\n비개발자도 프로젝트를 이끌 수 있다는 걸 증명한 과정을 공유합니다.", image: "/images/sessions/비비안.png", part: 3, group: "internal" as const, before: "할 일을 노션에 적어놓고 하나씩 지우고 있었고,\n새 사이트는 \"일정상 무리\"라고 회의에서 결론 내렸다.", after: "AX 대시보드를 직접 만들어서 프로젝트를 굴리고,\n\"무리\"라던 새 사이트로 실제로 공유회를 열고 있다." },
-  { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "\"맥북 꺼지면 어떡해\"에서 시작된\nCRM 자동화 구축기", desc: "공유회 하나 열 때마다 나가는 알림톡 9종 + 채널 N개.\n카피 쓰고 DB 뽑고 UTM 붙이는 데 매번 하루 3시간.\n\n처음엔 클로드 코드로 만들어봤는데\n문제가 있었어요. 맥북이 꺼지면 발송이 안 되더라고요.\n거기서 서버로 옮기는 이야기가 시작됐습니다.\n\n승인 한 번이면 발송이 끝나는 자동화를 어떻게 만들었는지,\n실제 실패했던 구간부터 공유합니다.", image: "/images/sessions/에밀리.png", part: 3, group: "internal" as const, before: "공유회 하나 열 때마다 알림톡 9종을 수동으로 발송했다.\n카피 쓰고 DB 뽑고 UTM 붙이는 데 하루 3시간.", after: "슬랙에서 승인 한 번이면 발송이 끝난다. 하루 5분." },
-  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "13년 차 핀테크 대표가 회사를 정리하고\n\"왜(Why)\"를 찾아 AI에 올인하기까지", desc: "3주 동안 AI를 붙잡고 방황했어요.\n\"남들이 하는 거\"를 따라 하다가 전부 실패했습니다.\n\n\"내가 누구의 무슨 문제를 풀 건지\"가 선명해진 순간,\n4시간 만에 12개 에이전트를 굴려\n찜마켓이라는 실제 서비스를 세상에 내놓았어요.\n\n하루 만에 카톡으로 고객 문의가 오기까지의 기록,\n클로드 코드를 '나만의 코파운더'로 쓰는 법,\n그리고 '왜'가 빠졌을 때 AI가 어떻게 엉뚱해지는지 —\n찐 경험담으로 아낌없이 나눕니다.", image: "/images/sessions/오웬.gif", part: 3, group: "external" as const, before: "13년 다닌 회사를 정리하고\n\"뭘 해야 할지\"를 모른 채 AI를 붙잡고 있었다.", after: "찜마켓이라는 서비스를 직접 만들어 운영 중이고,\n하루 만에 실제 고객 문의가 카톡으로 오는 단계까지 왔다." },
-  { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제, 예약, CRM, 광고를 한 화면에 —\n나만의 대시보드 만들기", desc: "매일 여러 SaaS 툴을 돌아다니며\n데이터 모으고 성과 정리하던 시간,\n이제는 없습니다.\n\nAPI를 엮어서 만든 커스텀 대시보드 하나로\n결제, 예약, CRM, 광고 성과를 한 번에 확인하는 법,\n그리고 마케터가 직접 만들 수 있었던 이유를 공유합니다.", image: "/images/sessions/띵크.png", part: 3, group: "external" as const, before: "결제, 예약, CRM, 광고 성과를 보려고\n매일 여러 SaaS 툴을 돌아다니며 데이터를 수기로 정리했다.", after: "API를 엮어서 만든 나만의 대시보드 하나에서\n모든 성과를 한 번에 본다." },
+  { initial: "G", name: "젬마", avatar: "/images/speakers/젬마.png", role: "Creator · Vision Holder", title: "AAA 6주의 기록 —\n우리가 증명하려 했던 것", desc: "<hl>AI 교육이 아니라 AI 빌딩.</hl>\n팀 양성 6주 동안 무엇이 작동했고, 무엇이 바뀌었는지.\n그리고 이 경험이 만들어낼 다음 챕터.", image: "/images/sessions/젬마.png", part: 1, before: "", after: "" },
+  { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "흩어진 노션을 AI가 읽는 \"살아있는 자산\"으로 —\n팀 웹페이지를 만든 이야기", desc: "AAA팀이 매주 만들어내는 좋은 기록들이\n각자 노션에 잠들어 있는 게 아까웠어요.\n\n<hl>노션 대신 옵시디언을 쓰기로 냅-다 결정한 이유,</hl>\nAI가 읽기 좋은 구조로 바꿔서\n외부에 공유 가능한 아카이빙 시스템을 만들기까지 —\n썼던 도구, 했던 삽질, 남은 과제까지 공유합니다.", image: "/images/sessions/다다.png", part: 2, before: "AAA팀의 좋은 기록들이 각자의 노션에 흩어져 잠들어 있었다.", after: "옵시디언에 쓰면 AI가 정리해서 웹사이트에 올라가는\n팀 아카이빙 시스템이 돌아가고 있다." },
+  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "AI한테 답 구하기를 멈추고,\nAI에게 질문 받기 시작한 이야기", desc: "AI가 모든 답을 주는 시대에\n정작 \"내 생각이 뭔지\" 흐릿해지는 게 아쉬웠어요.\n\n<hl>텔레그램에 한 줄 던지면 AI가 질문을 던져주고,</hl>\n그 대화가 자동으로 위키에 쌓이고,\n<hl>3일 뒤에 콘텐츠 초안이 되는 시스템</hl> —\n혼자 쓰면서 허술하게 굴려온 실제 과정을 공유합니다.", image: "/images/sessions/흐민.gif", part: 2, before: "AI한테 계속 답을 구하다가,\n정작 \"내 생각은 뭔지\" 흐릿해지는 게 아쉬웠다.", after: "텔레그램에 한 줄 쓰면 AI가 질문을 던져주고,\n그 대화가 3일 뒤에 콘텐츠 초안으로 돌아오는 구조를 돌리고 있다." },
+  { initial: "Da", name: "다니", avatar: "/images/speakers/다니.png", role: "Contents · Marketing", title: "\"딸깍 자동화\"에 실패하고,\n내 손으로 만든 콘텐츠 OS", desc: "처음엔 URL 하나 넣으면 블로그·인스타·링크드인이\n동시에 나오는 걸 만들었어요. <hl>결과는 실패.</hl>\n톤이 안 맞아서 결국 다시 캔바에서 작업했고,\n오히려 시간이 더 걸렸습니다.\n\n그래서 방향을 바꿨어요.\n<hl>캐러셀 에디터, 스레드·링크드인 동시 생성기,</hl>\n터미널에서 영상까지 만드는 시스템을 직접 만들었습니다.\n\n자동화가 실패한 이유와 돌아온 이유,\n그 과정에서 구조화한 디자인 규칙까지 공유합니다.", image: "/images/sessions/다니.gif", part: 2, before: "\"딸깍 한 번 자동화\"를 믿고 시도했지만,\n결국 캔바로 다시 작업하느라 시간이 더 걸렸다.", after: "내 톤에 맞는 캐러셀을 즉시 생성·편집할 수 있는\n나만의 에디터를 만들어서 실제 업무에 쓰고 있다." },
+  { initial: "V", name: "비비안", avatar: "/images/speakers/비비안.png", role: "Operations · AX Design", title: "비개발자 마케터가\nAX 프로젝트 PM이 되기까지", desc: "<hl>개발 지식도, 기술적 원리도 모르는 마케터</hl>가\n어떻게 AX 프로젝트의 PM을 맡게 됐을까요.\n\nAX Dashboard를 직접 설계하고 활용해\n<hl>프로젝트 전체를 한눈에 관리하는 구조</hl>를 만들었고,\n회원 시스템, 결제, 카카오 로그인까지 붙이며\n비개발자도 프로젝트를 이끌 수 있다는 걸 증명한 과정을 공유합니다.", image: "/images/sessions/비비안.png", part: 3, group: "internal" as const, before: "할 일을 노션에 적어놓고 하나씩 지우고 있었고,\n새 사이트는 \"일정상 무리\"라고 회의에서 결론 내렸다.", after: "AX 대시보드를 직접 만들어서 프로젝트를 굴리고,\n\"무리\"라던 새 사이트로 실제로 공유회를 열고 있다." },
+  { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "\"맥북 꺼지면 어떡해\"에서 시작된\nCRM 자동화 구축기", desc: "공유회 하나 열 때마다 나가는 <hl>알림톡 9종 + 채널 N개.</hl>\n카피 쓰고 DB 뽑고 UTM 붙이는 데 매번 하루 3시간.\n\n처음엔 클로드 코드로 만들어봤는데\n문제가 있었어요. <hl>맥북이 꺼지면 발송이 안 되더라고요.</hl>\n거기서 서버로 옮기는 이야기가 시작됐습니다.\n\n<hl>승인 한 번이면 발송이 끝나는 자동화</hl>를 어떻게 만들었는지,\n실제 실패했던 구간부터 공유합니다.", image: "/images/sessions/에밀리.png", part: 3, group: "internal" as const, before: "공유회 하나 열 때마다 알림톡 9종을 수동으로 발송했다.\n카피 쓰고 DB 뽑고 UTM 붙이는 데 하루 3시간.", after: "슬랙에서 승인 한 번이면 발송이 끝난다. 하루 5분." },
+  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "13년 차 핀테크 대표가 회사를 정리하고\n\"왜(Why)\"를 찾아 AI에 올인하기까지", desc: "3주 동안 AI를 붙잡고 방황했어요.\n\"남들이 하는 거\"를 따라 하다가 전부 실패했습니다.\n\n<hl>\"내가 누구의 무슨 문제를 풀 건지\"가 선명해진 순간,</hl>\n4시간 만에 12개 에이전트를 굴려\n찜마켓이라는 실제 서비스를 세상에 내놓았어요.\n\n<hl>하루 만에 카톡으로 고객 문의가 오기까지의 기록,</hl>\n클로드 코드를 '나만의 코파운더'로 쓰는 법,\n그리고 '왜'가 빠졌을 때 AI가 어떻게 엉뚱해지는지 —\n찐 경험담으로 아낌없이 나눕니다.", image: "/images/sessions/오웬.gif", part: 3, group: "external" as const, before: "13년 다닌 회사를 정리하고\n\"뭘 해야 할지\"를 모른 채 AI를 붙잡고 있었다.", after: "찜마켓이라는 서비스를 직접 만들어 운영 중이고,\n하루 만에 실제 고객 문의가 카톡으로 오는 단계까지 왔다." },
+  { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제, 예약, CRM, 광고를 한 화면에 —\n나만의 대시보드 만들기", desc: "매일 여러 SaaS 툴을 돌아다니며\n데이터 모으고 성과 정리하던 시간,\n<hl>이제는 없습니다.</hl>\n\nAPI를 엮어서 만든 <hl>커스텀 대시보드 하나로</hl>\n결제, 예약, CRM, 광고 성과를 한 번에 확인하는 법,\n그리고 마케터가 직접 만들 수 있었던 이유를 공유합니다.", image: "/images/sessions/띵크.png", part: 3, group: "external" as const, before: "결제, 예약, CRM, 광고 성과를 보려고\n매일 여러 SaaS 툴을 돌아다니며 데이터를 수기로 정리했다.", after: "API를 엮어서 만든 나만의 대시보드 하나에서\n모든 성과를 한 번에 본다." },
 ];
 
 const AGENDA_PARTS = [
@@ -177,7 +177,23 @@ function SpeakerCard({ speaker, delay }: { speaker: (typeof SPEAKERS)[0]; delay:
           </h3>
         </div>
 
-        {/* 2. Before → After (이미지와 같은 너비, 밝은 회색 박스) */}
+        {/* 2. 줄글 설명 */}
+        <div className="px-6 sm:px-8 pb-6">
+          <p className="text-base sm:text-lg text-white/90 leading-[1.8] whitespace-pre-line"><HighlightedText text={speaker.desc} /></p>
+        </div>
+
+        {/* 3. 세션 이미지 */}
+        {speaker.image ? (
+          <div className="aspect-[16/9] overflow-hidden">
+            <img src={speaker.image} alt={`${speaker.name} 세션`} className="w-full h-full object-cover" />
+          </div>
+        ) : (
+          <div className="aspect-[16/9] bg-white/[0.02] flex items-center justify-center">
+            <span className="text-white/10 text-xs font-mono">SESSION IMAGE</span>
+          </div>
+        )}
+
+        {/* 4. Before → After (밝은 회색 박스) */}
         {speaker.before && speaker.after && (
           <div className="bg-[#E8E8E3] px-6 py-8 sm:px-8 sm:py-10">
             <div className="flex items-start gap-3 mb-6">
@@ -194,22 +210,6 @@ function SpeakerCard({ speaker, delay }: { speaker: (typeof SPEAKERS)[0]; delay:
             </div>
           </div>
         )}
-
-        {/* 3. 세션 이미지 */}
-        {speaker.image ? (
-          <div className="aspect-[16/9] overflow-hidden">
-            <img src={speaker.image} alt={`${speaker.name} 세션`} className="w-full h-full object-cover" />
-          </div>
-        ) : (
-          <div className="aspect-[16/9] bg-white/[0.02] flex items-center justify-center">
-            <span className="text-white/10 text-xs font-mono">SESSION IMAGE</span>
-          </div>
-        )}
-
-        {/* 4. 줄글 설명 */}
-        <div className="p-6 sm:p-8">
-          <p className="text-base sm:text-lg text-white/90 leading-[1.8] whitespace-pre-line">{speaker.desc}</p>
-        </div>
       </div>
     </FadeUp>
   );
@@ -301,11 +301,14 @@ export function SpongeClubLanding({ item }: Props) {
               ))}
             </motion.div>
 
-            {/* VOD 없음 경고 */}
+            {/* VOD 없음 경고 — 강조 */}
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 1.2 }} className="max-w-xl mx-auto mb-16 lg:mb-20">
-              <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-center">
-                <p className="text-sm sm:text-base text-white/90">
-                  ⚠️ 별도 VOD 제공이 없으므로 꼭 라이브에 참여하세요
+              <div className="bg-white rounded-lg px-5 py-4 sm:px-6 sm:py-5 text-center">
+                <p className="text-base sm:text-lg font-bold text-[#0A0A0A] mb-1">
+                  ⚠️ 별도 VOD 제공이 없습니다
+                </p>
+                <p className="text-sm text-[#0A0A0A]/60">
+                  꼭 라이브에 참여해주세요
                 </p>
               </div>
             </motion.div>
@@ -576,9 +579,12 @@ export function SpongeClubLanding({ item }: Props) {
 
           {/* 라이브 전용 경고 */}
           <FadeUp delay={0.05}>
-            <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 mb-10">
-              <p className="text-sm sm:text-base text-white/90 text-center">
-                ⚠️ 라이브 전용 · VOD 없음 — 당일 참여만 가능합니다
+            <div className="bg-white rounded-lg px-5 py-4 sm:px-6 sm:py-5 mb-10 text-center">
+              <p className="text-base sm:text-lg font-bold text-[#0A0A0A] mb-1">
+                ⚠️ 별도 VOD 제공이 없습니다
+              </p>
+              <p className="text-sm text-[#0A0A0A]/60">
+                4월 28일 저녁 9시, 꼭 라이브에 참여해주세요
               </p>
             </div>
           </FadeUp>
@@ -734,7 +740,7 @@ export function SpongeClubLanding({ item }: Props) {
                   disabled={formLoading}
                   className="w-full bg-[#0A0A0A] text-[#E2E545] font-bold text-base py-4 rounded hover:bg-[#1a1a1a] transition-all duration-300 mt-3 disabled:opacity-50"
                 >
-                  {formLoading ? "신청 중..." : "라이브 참여 신청하기"}
+                  {formLoading ? "신청 중..." : "공유회 참여 신청하기"}
                 </button>
                 {formError && (
                   <p className="text-sm text-red-600 text-center pt-2">{formError}</p>
@@ -765,7 +771,7 @@ export function SpongeClubLanding({ item }: Props) {
                 : "bg-[#E2E545] text-[#0A0A0A]"
             }`}
           >
-            라이브 참여 신청하기
+            공유회 참여 신청하기
           </a>
         </div>
       </div>
