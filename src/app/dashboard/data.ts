@@ -257,6 +257,8 @@ export const phases: PhaseInfo[] = [
       { id: "3-1d", title: "이벤트 페이지 신규 생성", status: "done", phase: 3, category: "content", page: "/events" },
       { id: "3-1e", title: "프로그램 카드 수 맞추기 (17+8개 등록)", status: "done", phase: 3, category: "content" },
       { id: "3-1b", title: "사이트 포인트 컬러 변경 + Pretendard 폰트", status: "done", phase: 3, category: "design" },
+      { id: "3-1f", title: "Webflow → Vercel JS 리다이렉트 + UTM 캡처", status: "done", phase: 3, category: "setup" },
+      { id: "3-1g", title: "슬러그 sponge-club → aaa 변경", status: "done", phase: 3, category: "setup" },
       { id: "3-1c", title: "커밍순 페이지 + 미들웨어 접근 제한", status: "done", phase: 3, category: "setup" },
       { id: "3-2", title: "홈 최종 완성", status: "todo", phase: 3, category: "design", page: "/" },
       { id: "3-3", title: "어드민 v3 — 크루/AI툴/파트너사 관리", status: "todo", phase: 3, category: "admin", page: "/admin" },
