@@ -2,7 +2,10 @@ import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const { u_name, u_phone, u_email, slug, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = await request.json();
+  const { u_name, u_phone: rawPhone, u_email, slug, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = await request.json();
+
+  // 전화번호 정규화: 대시/공백 제거 (010-1111-2222 → 01011112222)
+  const u_phone = rawPhone?.replace(/[-\s]/g, "") || "";
 
   // 입력 검증
   if (!u_name || !u_phone || !u_email || !slug) {
