@@ -783,21 +783,22 @@ export function SpongeClubLanding({ item }: Props) {
       {/* ═══ Q&A ═══ */}
       <section style={{ background: BG.dark }} className="py-16 lg:py-20">
         <div className="max-w-3xl mx-auto px-5 lg:px-10">
-          <p className="text-xs text-white/20 tracking-[0.2em] uppercase font-mono mb-8">FAQ</p>
+          <p className="text-xs text-white/40 tracking-[0.2em] uppercase font-mono mb-8">FAQ</p>
           <div className="space-y-6">
             {[
+              { q: "마이페이지에서 신청 내역이 안 보여요.", a: "현재 셀피쉬클럽은 홈페이지 리뉴얼을 진행 중이에요. 이번 공유회 신청은 새로운 시스템에서 접수되기 때문에 기존 마이페이지에서는 내역이 보이지 않을 수 있어요. 신청 완료 화면을 보셨다면 정상적으로 접수된 거니 걱정 마세요!" },
               { q: "셀피쉬클럽이 뭔가요?", a: "AI로 나의 가능성을 확장하는 커뮤니티입니다. 마케터, 디자이너, 창업가들이 함께 AI를 실험하고 배우며 지식을 쌓는 대신 나누며 성장하는 방식을 실천합니다." },
               { q: "이기적공유회가 뭐예요?", a: "AI 실무자들이 직접 겪은 시행착오와 성과를 그대로 나누는 셀피쉬클럽의 대표 프로그램입니다. 배우는 공유가 아니라 공유자가 가장 크게 성장하는 공유, 실무에 바로 적용할 수 있는 인사이트를 얻을 수 있습니다." },
               { q: "그 밖에 문의는 어디로 하나요?", a: "카카오채널 [셀피쉬클럽]을 추가해 바로 문의해주세요. 이메일로도 가능합니다." },
             ].map((item, i) => (
-              <div key={i} className="border-b border-white/5 pb-6">
-                <p className="text-sm text-white/30 mb-2">Q{i + 1}.</p>
-                <p className="text-base text-white/50 font-medium mb-2">{item.q}</p>
-                <p className="text-sm text-white/30 leading-[1.7]">{item.a}</p>
-                {i === 2 && (
+              <div key={i} className="border-b border-white/10 pb-6">
+                <p className="text-sm text-white/50 mb-2">Q{i + 1}.</p>
+                <p className="text-base text-white/80 font-medium mb-2">{item.q}</p>
+                <p className="text-sm text-white/50 leading-[1.7]">{item.a}</p>
+                {i === 3 && (
                   <div className="flex gap-4 mt-3">
-                    <a href="http://pf.kakao.com/_dxmxixhG/chat" target="_blank" rel="noopener noreferrer" className="text-xs text-white/20 underline">카카오채널</a>
-                    <a href="mailto:public.selfishclub@gmail.com" className="text-xs text-white/20 underline">public.selfishclub@gmail.com</a>
+                    <a href="http://pf.kakao.com/_dxmxixhG/chat" target="_blank" rel="noopener noreferrer" className="text-sm text-[#E2E545] font-bold underline">카카오채널</a>
+                    <a href="mailto:public.selfishclub@gmail.com" className="text-sm text-[#E2E545] underline">public.selfishclub@gmail.com</a>
                   </div>
                 )}
               </div>
