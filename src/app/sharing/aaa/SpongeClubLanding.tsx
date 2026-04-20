@@ -102,15 +102,26 @@ function TopBanner() {
   if (expired) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-[#E2E545] text-[#0A0A0A] text-center py-2.5 px-4">
-      <p className="text-xs sm:text-sm font-bold">
-        {timeLeft && (
-          <span className="mr-3 font-mono bg-[#0A0A0A] text-[#E2E545] px-2.5 py-0.5 rounded text-xs sm:text-sm">
-            {timeLeft}
-          </span>
-        )}
-        🔒 설문에 참여해주신 분들을 위한 우선 신청 페이지입니다
-      </p>
+    <div className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1a] text-white/90 py-2.5 overflow-hidden border-b border-white/10">
+      <div className="animate-marquee whitespace-nowrap flex items-center gap-8">
+        {[0, 1].map((i) => (
+          <p key={i} className="text-sm sm:text-base font-bold shrink-0">
+            {timeLeft && (
+              <span className="font-mono mr-1 text-[#FF3B3B]">[마감까지{timeLeft}]</span>
+            )}
+            <span>설문 참여자 분들을 위한 우선 신청 페이지입니다!</span>
+          </p>
+        ))}
+      </div>
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 20s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }
@@ -147,18 +158,18 @@ function HighlightedText({ text, className = "" }: { text: string; className?: s
 
 /* ─── 데이터 ─── */
 const SPEAKERS = [
-  { initial: "G", name: "젬마", avatar: "/images/speakers/젬마.png", role: "Creator · Vision Holder", title: "AAA 6주의 기록 —\n우리가 증명하려 했던 것", desc: "<hl>AI 교육이 아니라 AI 빌딩.</hl>\n팀 양성 6주 동안 무엇이 작동했고, 무엇이 바뀌었는지.\n그리고 이 경험이 만들어낼 다음 챕터.", image: "/images/sessions/젬마.png", part: 1, before: "", after: "" },
-  { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "흩어진 노션을 AI가 읽는 \"살아있는 자산\"으로 —\n팀 웹페이지를 만든 이야기", desc: "AAA팀이 매주 만들어내는 좋은 기록들이\n각자 노션에 잠들어 있는 게 아까웠어요.\n\n<hl>노션 대신 옵시디언을 쓰기로 냅-다 결정한 이유,</hl>\nAI가 읽기 좋은 구조로 바꿔서\n외부에 공유 가능한 아카이빙 시스템을 만들기까지 —\n썼던 도구, 했던 삽질, 남은 과제까지 공유합니다.", image: "/images/sessions/다다.png", part: 1, before: "AAA팀의 좋은 기록들이 각자의 노션에 흩어져 잠들어 있었다.", after: "옵시디언에 쓰면 AI가 정리해서 웹사이트에 올라가는\n팀 아카이빙 시스템이 돌아가고 있다." },
-  { initial: "Da", name: "다니", avatar: "/images/speakers/다니.png", role: "Contents · Marketing", title: "\"딸깍 자동화\"에 실패하고,\n내 손으로 만든 콘텐츠 OS", desc: "처음엔 URL 하나 넣으면 블로그·인스타·링크드인이\n동시에 나오는 걸 만들었어요. <hl>결과는 실패.</hl>\n톤이 안 맞아서 결국 다시 캔바에서 작업했고,\n오히려 시간이 더 걸렸습니다.\n\n그래서 방향을 바꿨어요.\n<hl>캐러셀 에디터, 스레드·링크드인 동시 생성기,</hl>\n터미널에서 영상까지 만드는 시스템을 직접 만들었습니다.\n\n자동화가 실패한 이유와 돌아온 이유,\n그 과정에서 구조화한 디자인 규칙까지 공유합니다.", image: "/images/sessions/다니.gif", part: 2, before: "\"딸깍 한 번 자동화\"를 믿고 시도했지만,\n결국 캔바로 다시 작업하느라 시간이 더 걸렸다.", after: "내 톤에 맞는 캐러셀을 즉시 생성·편집할 수 있는\n나만의 에디터를 만들어서 실제 업무에 쓰고 있다." },
-  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "AI한테 답 구하기를 멈추고,\nAI에게 질문 받기 시작한 이야기", desc: "AI가 모든 답을 주는 시대에\n정작 \"내 생각이 뭔지\" 흐릿해지는 게 아쉬웠어요.\n\n<hl>텔레그램에 한 줄 던지면 AI가 질문을 던져주고,</hl>\n그 대화가 자동으로 위키에 쌓이고,\n<hl>3일 뒤에 콘텐츠 초안이 되는 시스템</hl> —\n혼자 쓰면서 허술하게 굴려온 실제 과정을 공유합니다.", image: "/images/sessions/흐민.gif", part: 2, before: "AI한테 계속 답을 구하다가,\n정작 \"내 생각은 뭔지\" 흐릿해지는 게 아쉬웠다.", after: "텔레그램에 한 줄 쓰면 AI가 질문을 던져주고,\n그 대화가 3일 뒤에 콘텐츠 초안으로 돌아오는 구조를 돌리고 있다." },
-  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "13년 차 핀테크 대표가 회사를 정리하고\n\"왜(Why)\"를 찾아 AI에 올인하기까지", desc: "3주 동안 AI를 붙잡고 방황했어요.\n\"남들이 하는 거\"를 따라 하다가 전부 실패했습니다.\n\n<hl>\"내가 누구의 무슨 문제를 풀 건지\"가 선명해진 순간,</hl>\n4시간 만에 12개 에이전트를 굴려\n찜마켓이라는 실제 서비스를 세상에 내놓았어요.\n\n<hl>하루 만에 카톡으로 고객 문의가 오기까지의 기록,</hl>\n클로드 코드를 '나만의 코파운더'로 쓰는 법,\n그리고 '왜'가 빠졌을 때 AI가 어떻게 엉뚱해지는지 —\n찐 경험담으로 아낌없이 나눕니다.", image: "/images/sessions/오웬.gif", part: 3, before: "13년 다닌 회사를 정리하고\n\"뭘 해야 할지\"를 모른 채 AI를 붙잡고 있었다.", after: "찜마켓이라는 서비스를 직접 만들어 운영 중이고,\n하루 만에 실제 고객 문의가 카톡으로 오는 단계까지 왔다." },
+  { initial: "G", name: "젬마", avatar: "/images/speakers/젬마.png", role: "Creator · Vision Holder", title: "각자 잘할 수 있다는 AI 시대에,\n왜 팀이었을까", image2: "/images/sessions/젬마1.png", desc: "AAA 팀이 탄생할 수밖에 없었던 이유\n\nClaude Code가 등장하면서,\n비개발자든 개발자든 직무의 경계를\n본격적으로 넘나들 수 있게 됐어요.\n\n다만 <hl>\"딸깍이면 된다\"</hl>와\n<hl>\"내 삶과 업무에 적용한다\"</hl>는\n<hl>완전히 다른 이야기</hl>예요.\n\n쏟아지는 정보를 혼자 학습하고, 적용하고,\n진짜 내 것으로 만드는 것까지 —\n혼자 해내기엔 너무 많고, 너무 빠릅니다.\n\n그래서 혼자가 아니라,\n<hl>팀으로 부딪치기로 했어요.</hl>\n그렇게 만들어진 팀이 AAA(AI Agent AZA)예요.\n\n8명이 매주 일요일에 모여\n서로 만든 것을 주고받으며 6주를 채웠습니다.\n\n무엇이 작동했고, 무엇이 바뀌었는지.\n그리고 그 경험이 만들어낼 다음 챕터,\n스폰지클럽까지 소개드립니다.", image: "/images/sessions/젬마.png", part: 1, before: "", after: "" },
+  { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "흩어진 노션을 AI가 읽는 \"살아있는 자산\"으로 —\n팀 웹페이지를 만든 이야기", desc: "AAA팀이 매주 만들어내는 좋은 기록들이\n각자 노션에 잠들어 있는 게 아까웠어요.\n\n옵시디언으로 매주 제출한 과제와 회의 기록이 데이터로 쌓이니,\n팀 안에서 어떤 일이 있었는지,\n각자가 어떤 흐름으로 성장했는지까지\n<hl>AI가 꺼내서 보여줄 수 있게 됐어요.</hl>\n그리고 그 데이터로 링크드인 글 같은\n새로운 콘텐츠까지 이어서 만들어낼 수 있습니다.\n\nAI가 가장 잘 읽는 형태(마크다운)로 쌓이니,\n아카이브가 \"보관용\"이 아니라\n<hl>계속 꺼내 쓰는 \"살아있는 자산\"</hl>이 되었고,\n외부에 공유 가능한 아카이빙 시스템까지 모두 공유합니다.", image: "/images/sessions/다다.png", part: 1, before: "AAA팀의 좋은 기록들이 각자의 노션에 흩어져 잠들어 있었다.", after: "옵시디언에 쓰면 AI가 정리해서 웹사이트에 올라가는\n팀 아카이빙 시스템이 돌아가고 있다." },
+  { initial: "Da", name: "다니", avatar: "/images/speakers/다니.png", role: "Contents · Marketing", title: "\"딸깍 자동화\"에 실패하고,\n내 손으로 만든 콘텐츠 OS", desc: "처음엔 URL 하나 넣으면 블로그·인스타·링크드인이\n동시에 나오는 걸 만들었어요. <hl>결과는 실패.</hl>\n톤이 안 맞아서 결국 다시 캔바에서 작업했고,\n오히려 시간이 더 걸렸습니다.\n\n그래서 방향을 바꿨어요.\n<hl>캐러셀 에디터, 스레드·링크드인 동시 생성기,</hl>\n터미널에서 영상까지 만드는 시스템을 직접 만들었습니다.\n\n자동화가 실패한 이유와 돌아온 이유,\n그 과정에서 구조화한 디자인 규칙까지 공유합니다.", image: "/images/sessions/다니.mp4", part: 2, before: "\"딸깍 한 번 자동화\"를 믿고 시도했지만,\n결국 캔바로 다시 작업하느라 시간이 더 걸렸다.", after: "내 톤에 맞는 캐러셀을 즉시 생성·편집할 수 있는\n나만의 에디터를 만들어서 실제 업무에 쓰고 있다." },
+  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "AI한테 답 구하기를 멈추고,\nAI에게 질문 받기 시작한 이야기", desc: "AI가 모든 답을 주는 시대에\n정작 \"내 생각이 뭔지\" 흐릿해지는 게 아쉬웠어요.\n\n<hl>텔레그램에 한 줄 던지면 AI가 질문을 던져주고,</hl>\n그 대화가 자동으로 위키에 쌓이고,\n<hl>3일 뒤에 콘텐츠 초안이 되는 시스템</hl> —\n혼자 쓰면서 허술하게 굴려온 실제 과정을 공유합니다.", image: "/images/sessions/흐민.mp4", part: 2, before: "AI한테 계속 답을 구하다가,\n정작 \"내 생각은 뭔지\" 흐릿해지는 게 아쉬웠다.", after: "텔레그램에 한 줄 쓰면 AI가 질문을 던져주고,\n그 대화가 3일 뒤에 콘텐츠 초안으로 돌아오는 구조를 돌리고 있다." },
+  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "13년 차 핀테크 대표가 회사를 정리하고\n\"왜(Why)\"를 찾아 AI에 올인하기까지", desc: "3주 동안 AI를 붙잡고 방황했어요.\n\"남들이 하는 거\"를 따라 하다가 전부 실패했습니다.\n\n<hl>\"내가 누구의 무슨 문제를 풀 건지\"가 선명해진 순간,</hl>\n4시간 만에 12개 에이전트를 굴려\n찜마켓이라는 실제 서비스를 세상에 내놓았어요.\n\n<hl>하루 만에 카톡으로 고객 문의가 오기까지의 기록,</hl>\n클로드 코드를 '나만의 코파운더'로 쓰는 법,\n그리고 '왜'가 빠졌을 때 AI가 어떻게 엉뚱해지는지 —\n찐 경험담으로 아낌없이 나눕니다.", image: "/images/sessions/오웬.mp4", part: 3, before: "13년 다닌 회사를 정리하고\n\"뭘 해야 할지\"를 모른 채 AI를 붙잡고 있었다.", after: "찜마켓이라는 서비스를 직접 만들어 운영 중이고,\n하루 만에 실제 고객 문의가 카톡으로 오는 단계까지 왔다." },
   { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제, 예약, CRM, 광고를 한 화면에 —\n나만의 대시보드 만들기", desc: "매일 여러 SaaS 툴을 돌아다니며\n데이터 모으고 성과 정리하던 시간,\n<hl>이제는 없습니다.</hl>\n\nAPI를 엮어서 만든 <hl>커스텀 대시보드 하나로</hl>\n결제, 예약, CRM, 광고 성과를 한 번에 확인하는 법,\n그리고 마케터가 직접 만들 수 있었던 이유를 공유합니다.", image: "/images/sessions/띵크.png", part: 3, before: "결제, 예약, CRM, 광고 성과를 보려고\n매일 여러 SaaS 툴을 돌아다니며 데이터를 수기로 정리했다.", after: "API를 엮어서 만든 나만의 대시보드 하나에서\n모든 성과를 한 번에 본다." },
   { initial: "V", name: "비비안", avatar: "/images/speakers/비비안.png", role: "Operations · AX Design", title: "비개발자 마케터가\nAX 프로젝트 PM이 되기까지", desc: "<hl>개발 지식도, 기술적 원리도 모르는 마케터</hl>가\n어떻게 AX 프로젝트의 PM을 맡게 됐을까요.\n\nAX Dashboard를 직접 설계하고 활용해\n<hl>프로젝트 전체를 한눈에 관리하는 구조</hl>를 만들었고,\n회원 시스템, 결제, 카카오 로그인까지 붙이며\n비개발자도 프로젝트를 이끌 수 있다는 걸 증명한 과정을 공유합니다.", image: "/images/sessions/비비안.png", part: 3, before: "할 일을 노션에 적어놓고 하나씩 지우고 있었고,\n새 사이트는 \"일정상 무리\"라고 회의에서 결론 내렸다.", after: "AX 대시보드를 직접 만들어서 프로젝트를 굴리고,\n\"무리\"라던 새 사이트로 실제로 공유회를 열고 있다." },
   { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "\"맥북 꺼지면 어떡해\"에서 시작된\nCRM 자동화 구축기", desc: "공유회 하나 열 때마다 나가는 <hl>알림톡 9종 + 채널 N개.</hl>\n카피 쓰고 DB 뽑고 UTM 붙이는 데 매번 하루 3시간.\n\n처음엔 클로드 코드로 만들어봤는데\n문제가 있었어요. <hl>맥북이 꺼지면 발송이 안 되더라고요.</hl>\n거기서 서버로 옮기는 이야기가 시작됐습니다.\n\n<hl>승인 한 번이면 발송이 끝나는 자동화</hl>를 어떻게 만들었는지,\n실제 실패했던 구간부터 공유합니다.", image: "/images/sessions/에밀리.png", part: 3, before: "공유회 하나 열 때마다 알림톡 9종을 수동으로 발송했다.\n카피 쓰고 DB 뽑고 UTM 붙이는 데 하루 3시간.", after: "슬랙에서 승인 한 번이면 발송이 끝난다. 하루 5분." },
 ];
 
 const AGENDA_PARTS = [
-  { num: "PART 01", title: "AAA, 그리고 우리의 기록", subtitle: "젬마 · 다다", desc: "AAA팀은 왜 만들어졌고, 6주 동안 어떻게 진화했는지.\n그리고 그 과정에서 쌓인 기록들을\n어떻게 살아있는 자산으로 만들었는지 —\n오프닝과 함께 이야기합니다." },
+  { num: "PART 01", title: "AAA팀, 무엇이고 어떻게 굴러갔는지", subtitle: "젬마 · 다다", desc: "왜 이 팀이 만들어졌고, 어떻게 함께 일했는지,\n그리고 일하는 구조조차도 AI의 도움으로\n어떻게 지었는지 —\nAI 팀 자체를 다루는 파트입니다." },
   { num: "PART 02", title: "나를 위한 OS를 만들기", subtitle: "다니 · 흐민", desc: "거창한 프로덕트가 아닙니다.\n내가 매일 하는 일, 내가 매번 막히던 지점 —\n거기서 시작한 두 사람의 이야기입니다.\n\n\"나도 이렇게 해볼 수 있겠다\"는 생각이 드는 게\n이 파트의 목표입니다." },
   { num: "PART 03", title: "고객을 위한 Product를 만들기", subtitle: "오웬 · 띵크 · 비비안 · 에밀리", desc: "\"코딩 몰라도 만들 수 있어\"라는 말이\n실제로 가능한지 — 이 파트가 그 증거입니다.\n\n또 혼자서 해서는 나만의 세계에 갇히게 됩니다.\n각자 다른 문제를 풀기 위해 시작한 4개의 실전 프로덕트,\n매주 미션을 가지고 과정과 결과물을 공유하며\n인사이트, 피드백을 나눈 이야기를 공유합니다." },
 ];
@@ -182,7 +193,7 @@ const WHO_CARDS = [
 
 const TOGETHER_EPISODES = [
   "매주 일요일, 8명이 모여 각자의 진행 상황을 공유하고 피드백하는 환경이 있었어요. 혼자였다면 \"이게 맞나?\" 하고 멈췄을 순간에, 옆에서 \"나는 이렇게 했는데\" 한마디가 다시 움직이게 만들었습니다.",
-  "젬마가 \"우리 노션 말고, 옵시디언 써보면 어떨까요?\" 한 마디를 던졌어요. 그 한 마디에 다다가 팀의 기록 방식을 통째로 바꾸고, 옵시디언 + 깃헙 기반으로 데이터화시키고, 더 나아가 팀 아카이빙 웹사이트까지 만들었습니다.",
+  "젬마가 \"우리 노션 말고, 옵시디언 써보면 어떨까요?\" 한마디를 던졌어요. 그 한마디에 다다가 팀의 기록 방식을 통째로 바꾸고, 옵시디언 + 깃헙 기반으로 데이터화하고, 더 나아가 팀 아카이빙 웹사이트까지 만들었습니다.",
   "오웬이 흐민의 기록 시스템을 보고 \"나도 내 생각을 구조화해야겠다\"고 말한 날이 있어요. 그날 이후 오웬은 자기만의 기록 구조를 만들기 시작했고, 그게 결국 찜마켓의 고객 응대 흐름에까지 영향을 줬습니다.",
   "혼자 했으면 중간에 그만뒀을 거예요. 그리고 내가 하는 것만이 AI 활용의 전부라고 생각했을 거예요. 서로 다른 문제를 풀고 있었지만, 매주 공유하면서 생각지도 못한 연결이 생겼고, 그게 각자의 결과물을 완전히 다른 수준으로 끌어올렸습니다.",
 ];
@@ -228,10 +239,20 @@ function SpeakerCard({ speaker, delay }: { speaker: (typeof SPEAKERS)[0]; delay:
 
         {/* 3+4. 이미지 + Before/After — 하나의 둥근 사각형으로 통합 */}
         <div className="mx-5 sm:mx-6 mb-6 rounded-xl overflow-hidden border border-[#E8E8E3]/30">
-          {/* 세션 이미지 */}
+          {/* 추가 이미지 (image2) */}
+          {speaker.image2 && (
+            <div className="overflow-hidden">
+              <img src={speaker.image2} alt={`${speaker.name} 세션`} className="w-full h-auto" />
+            </div>
+          )}
+          {/* 세션 이미지/영상 */}
           {speaker.image ? (
             <div className="aspect-[16/9] overflow-hidden">
-              <img src={speaker.image} alt={`${speaker.name} 세션`} className="w-full h-full object-cover" />
+              {speaker.image.endsWith(".mp4") ? (
+                <video src={speaker.image} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+              ) : (
+                <img src={speaker.image} alt={`${speaker.name} 세션`} className="w-full h-full object-cover" />
+              )}
             </div>
           ) : (
             <div className="aspect-[16/9] bg-white/[0.02] flex items-center justify-center">
@@ -305,17 +326,9 @@ export function SpongeClubLanding({ item }: Props) {
             >
               무료 온라인 공유회 · 4월 28일(화) 20:30
             </motion.p>
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.3] sm:leading-[1.2] mb-6 whitespace-pre-line">
-              <StaggerText text={`AI, '딸-깍'이 가능할까요?\n셀피쉬가 6주 동안 부딪혀봤습니다.`} />
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.3] sm:leading-[1.2] mb-6 whitespace-pre-line">
+              <StaggerText text={`AI, '딸-깍'이 가능할까요?\n셀피쉬가 6주 동안 부딪쳐봤습니다.`} />
             </h1>
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-base sm:text-xl lg:text-2xl text-white/90"
-            >
-              Selfish Club AX PROJECT — AAA 8명의 쌩-날 기록
-            </motion.p>
           </div>
 
           {/* GIF */}
@@ -325,9 +338,12 @@ export function SpongeClubLanding({ item }: Props) {
             transition={{ duration: 1, delay: 0.4 }}
             className="relative w-full max-w-md sm:max-w-lg mx-auto px-5"
           >
-            <img
-              src="/images/sponge-club-kv.gif"
-              alt="AAA"
+            <video
+              src="/images/sponge-club-kv.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
               className="w-full h-auto block"
               style={{
                 mask: "radial-gradient(ellipse at center, black 45%, transparent 72%)",
@@ -336,8 +352,11 @@ export function SpongeClubLanding({ item }: Props) {
             />
           </motion.div>
 
-          {/* 메타 카드 */}
+          {/* 서브타이틀 + 메타 카드 */}
           <div className="text-center px-5 pt-8 sm:pt-12 pb-10 sm:pb-14 max-w-3xl mx-auto">
+            <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.8 }} className="text-base sm:text-xl text-white/90 mb-8">
+              Selfish Club AX PROJECT — AAA 8명의 쌩-날 기록
+            </motion.p>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.0 }} className="grid grid-cols-3 gap-3 sm:gap-4 max-w-xl mx-auto mb-6">
               {[
                 { label: "Date", value: "4월 28일 (화)\n20:30" },
@@ -792,7 +811,7 @@ export function SpongeClubLanding({ item }: Props) {
               if (navigator.share) {
                 navigator.share({
                   title: "셀피쉬클럽 AAA 공유회",
-                  text: "AI, '딸-깍'이 가능할까요? 셀피쉬가 6주 동안 부딪혀봤습니다.",
+                  text: "AI, '딸-깍'이 가능할까요? 셀피쉬가 6주 동안 부딪쳐봤습니다.",
                   url: window.location.href,
                 });
               } else {
