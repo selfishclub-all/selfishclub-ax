@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AAA 공유회 — AI, '딸-깍'이 가능할까요?",
     description: "AAA팀 8명이 6주 동안 직접 부딪쳐본 기록. 4월 28일 무료 온라인 라이브.",
-    images: [{ url: "/images/og-aaa.png", width: 1200, height: 630 }],
+    images: [{ url: "https://selfishclub-ax.vercel.app/images/og-aaa.png", width: 1200, height: 630 }],
   },
 };
 
