@@ -665,28 +665,20 @@ export function SpongeClubLanding({ item }: Props) {
               />
             </div>
 
-            <p className="text-base sm:text-xl text-white/90 leading-[1.7] max-w-xl mx-auto mb-6">
-              셀피쉬클럽 안에서 쌓아온
-              <br />
-              이기적 공유 경험과 크루 양성 노하우를 응집해,
-            </p>
-            <p className="text-base sm:text-xl text-white font-medium leading-[1.7] max-w-xl mx-auto mb-6">
-              마케터·비개발자 중심의
-              <br />
-              AI 에이전트 풀사이클 빌딩 프로그램으로
-              <br />
-              정식 런칭됩니다.
-            </p>
-            <p className="text-base text-white/90 leading-[1.7] max-w-lg mx-auto mb-6">
-              양성 교육과 이기적 공유 커뮤니티가 함께하는 6주간의 프로그램.
-              <br />
-              이 공유회가 그 시작입니다.
-            </p>
-            <p className="text-base text-white/90 leading-[1.7] max-w-lg mx-auto mb-14">
-              공유회 당일, 이 이름과 정식 모집 일정이 공개됩니다.
-              <br />
-              라이브에 참여하신 분이 가장 먼저 보게 됩니다.
-            </p>
+            <div className="text-base sm:text-lg text-white leading-[1.8] max-w-xl mx-auto mb-14 space-y-5">
+              <p>
+                셀피쉬클럽 안에서 쌓아온 <span className="font-bold underline decoration-[#E2E545] decoration-2 underline-offset-4">이기적 공유 경험</span>과 <span className="font-bold underline decoration-[#E2E545] decoration-2 underline-offset-4">크루 양성 노하우</span>를 응집해,
+              </p>
+              <p>
+                <span className="font-bold text-[#E2E545]">마케터·비개발자 중심의 AI 에이전트 풀사이클 빌딩 프로그램</span>으로 정식 런칭됩니다.
+              </p>
+              <p>
+                양성 교육과 이기적 공유 커뮤니티가 함께하는 <span className="font-bold underline decoration-[#E2E545] decoration-2 underline-offset-4">6주간의 프로그램</span>. 이 공유회가 그 시작입니다.
+              </p>
+              <p>
+                공유회 당일, 이 이름과 <span className="font-bold">정식 모집 일정이 공개</span>됩니다. <span className="font-bold underline decoration-[#E2E545] decoration-2 underline-offset-4">라이브에 참여하신 분이 가장 먼저 보게 됩니다.</span>
+              </p>
+            </div>
           </FadeUp>
         </div>
       </section>
@@ -770,7 +762,8 @@ export function SpongeClubLanding({ item }: Props) {
             ) : (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-lg p-10 text-center">
                 <p className="text-[#0A0A0A] font-medium text-lg mb-3">신청이 완료됐습니다!</p>
-                <p className="text-base text-[#0A0A0A]/50 leading-relaxed">라이브 입장 링크는 행사 당일 이메일과 알림톡으로 보내드릴게요.</p>
+                <p className="text-base text-[#0A0A0A]/50 leading-relaxed mb-3">라이브 링크는 행사 당일 이메일과 알림톡으로 보내드릴게요.</p>
+                <p className="text-sm text-[#0A0A0A]/70 font-bold leading-relaxed">📢 당일 카카오톡에서 셀피쉬클럽 알림톡 채팅창을 꼭 확인해주세요!</p>
               </motion.div>
             )}
             <div className="flex justify-center gap-4 pt-5">
