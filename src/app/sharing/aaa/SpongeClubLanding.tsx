@@ -522,6 +522,9 @@ export function SpongeClubLanding({ item }: Props) {
 
                 {/* 설명 */}
                 <div>
+                  <p className="text-sm text-white/40 mb-3">
+                    &ldquo;실무에서 AI를 적용하려 할 때 가장 큰 허들은 무엇인가요?&rdquo;
+                  </p>
                   <p className="text-lg sm:text-xl font-bold text-white mb-3">
                     &ldquo;혼자서는 안 된다&rdquo;
                   </p>
@@ -750,6 +753,9 @@ export function SpongeClubLanding({ item }: Props) {
                 <input name="u_name" type="text" required placeholder="이름" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
                 <input name="u_phone" type="tel" required placeholder="전화번호 (010-0000-0000)" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
                 <input name="u_email" type="email" required placeholder="이메일" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
+                <div className="bg-[#0A0A0A]/10 rounded-lg px-4 py-3 mt-3 text-center">
+                  <p className="text-sm font-bold text-[#0A0A0A]">🎁 지금 이기적공유회 신청 시, 이기적멤버십2.0에도 무료로 가입됩니다.</p>
+                </div>
                 <button
                   type="submit"
                   disabled={formLoading}
@@ -764,7 +770,7 @@ export function SpongeClubLanding({ item }: Props) {
             ) : (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-lg p-10 text-center">
                 <p className="text-[#0A0A0A] font-medium text-lg mb-3">신청이 완료됐습니다!</p>
-                <p className="text-base text-[#0A0A0A]/50 leading-relaxed">라이브 입장 링크는 행사 전날 이메일로 보내드릴게요.</p>
+                <p className="text-base text-[#0A0A0A]/50 leading-relaxed">라이브 입장 링크는 행사 당일 이메일과 알림톡으로 보내드릴게요.</p>
               </motion.div>
             )}
             <div className="flex justify-center gap-4 pt-5">
@@ -773,6 +779,32 @@ export function SpongeClubLanding({ item }: Props) {
               <a href="https://sepia-quartz-81f.notion.site/22b5c0a0464680528d1ffb54dfd7eaeb" target="_blank" rel="noopener noreferrer" className="text-xs text-[#0A0A0A]/40 underline hover:text-[#0A0A0A]/60">개인정보처리방침</a>
             </div>
           </FadeUp>
+        </div>
+      </section>
+
+      {/* ═══ Q&A ═══ */}
+      <section style={{ background: BG.dark }} className="py-16 lg:py-20">
+        <div className="max-w-3xl mx-auto px-5 lg:px-10">
+          <p className="text-xs text-white/20 tracking-[0.2em] uppercase font-mono mb-8">FAQ</p>
+          <div className="space-y-6">
+            {[
+              { q: "셀피쉬클럽이 뭔가요?", a: "AI로 나의 가능성을 확장하는 커뮤니티입니다. 마케터, 디자이너, 창업가들이 함께 AI를 실험하고 배우며 지식을 쌓는 대신 나누며 성장하는 방식을 실천합니다." },
+              { q: "이기적공유회가 뭐예요?", a: "AI 실무자들이 직접 겪은 시행착오와 성과를 그대로 나누는 셀피쉬클럽의 대표 프로그램입니다. 배우는 공유가 아니라 공유자가 가장 크게 성장하는 공유, 실무에 바로 적용할 수 있는 인사이트를 얻을 수 있습니다." },
+              { q: "그 밖에 문의는 어디로 하나요?", a: "카카오채널 [셀피쉬클럽]을 추가해 바로 문의해주세요. 이메일로도 가능합니다." },
+            ].map((item, i) => (
+              <div key={i} className="border-b border-white/5 pb-6">
+                <p className="text-sm text-white/30 mb-2">Q{i + 1}.</p>
+                <p className="text-base text-white/50 font-medium mb-2">{item.q}</p>
+                <p className="text-sm text-white/30 leading-[1.7]">{item.a}</p>
+                {i === 2 && (
+                  <div className="flex gap-4 mt-3">
+                    <a href="http://pf.kakao.com/_dxmxixhG/chat" target="_blank" rel="noopener noreferrer" className="text-xs text-white/20 underline">카카오채널</a>
+                    <a href="mailto:public.selfishclub@gmail.com" className="text-xs text-white/20 underline">public.selfishclub@gmail.com</a>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

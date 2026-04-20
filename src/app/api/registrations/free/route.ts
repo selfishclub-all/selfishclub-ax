@@ -80,7 +80,29 @@ export async function POST(request: NextRequest) {
     .update({ i_event_count: eventCount })
     .eq("iid", item.iid);
 
-  // 5. n8n 웹훅 트리거 (알림만 — 실패해도 신청은 완료)
+  // 5. membership 테이블에 자동 가입 (이미 회원이면 스킵)
+  const { data: existingMember } = await supabase
+    .from("membership")
+    .select("ID")
+    .eq("u_phone", u_phone)
+    .limit(1);
+
+  if (!existingMember || existingMember.length === 0) {
+    await supabase.from("membership").insert({
+      signup_at: submittedAt,
+      u_name,
+      u_phone,
+      u_email,
+      u_membership_type: item.i_formid_webflow,
+      utm_source: utm_source || null,
+      utm_medium: utm_medium || null,
+      utm_campaign: utm_campaign || null,
+      utm_content: utm_content || null,
+      utm_term: utm_term || null,
+    });
+  }
+
+  // 6. n8n 웹훅 트리거 (알림만 — 실패해도 신청은 완료)
   const n8nWebhookUrl = process.env.N8N_SPONGE_WEBHOOK_URL;
   if (n8nWebhookUrl) {
     try {
