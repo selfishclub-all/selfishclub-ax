@@ -169,7 +169,7 @@ const SPEAKERS = [
 ];
 
 const AGENDA_PARTS = [
-  { num: "PART 01", title: "AAA팀, 무엇이고 어떻게 굴러갔는지", subtitle: "젬마 · 다다", desc: "왜 이 팀이 만들어졌고, 어떻게 함께 일했는지,\n그리고 일하는 구조조차도 AI의 도움으로\n어떻게 지었는지 —\nAI 팀 자체를 다루는 파트입니다." },
+  { num: "PART 01", title: "AAA팀: 무엇이고 어떻게 굴러갔는지", subtitle: "젬마 · 다다", desc: "왜 이 팀이 만들어졌고, 어떻게 함께 일했는지,\n그리고 일하는 구조조차도 AI의 도움으로\n어떻게 지었는지 —\nAI 팀 자체를 다루는 파트입니다." },
   { num: "PART 02", title: "나를 위한 OS를 만들기", subtitle: "다니 · 흐민", desc: "거창한 프로덕트가 아닙니다.\n내가 매일 하는 일, 내가 매번 막히던 지점 —\n거기서 시작한 두 사람의 이야기입니다.\n\n\"나도 이렇게 해볼 수 있겠다\"는 생각이 드는 게\n이 파트의 목표입니다." },
   { num: "PART 03", title: "고객을 위한 Product를 만들기", subtitle: "오웬 · 띵크 · 비비안 · 에밀리", desc: "\"코딩 몰라도 만들 수 있어\"라는 말이\n실제로 가능한지 — 이 파트가 그 증거입니다.\n\n또 혼자서 해서는 나만의 세계에 갇히게 됩니다.\n각자 다른 문제를 풀기 위해 시작한 4개의 실전 프로덕트,\n매주 미션을 가지고 과정과 결과물을 공유하며\n인사이트, 피드백을 나눈 이야기를 공유합니다." },
 ];
@@ -211,34 +211,30 @@ const BG = {
 function SpeakerCard({ speaker, delay }: { speaker: (typeof SPEAKERS)[0]; delay: number }) {
   return (
     <FadeUp delay={delay}>
-      <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl overflow-hidden">
+      <div className="border-t border-white/10 pt-12">
         {/* 1. 프로필 + 이름 + 타이틀 */}
-        <div className="p-6 sm:p-8">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-white/5 shrink-0">
-              {speaker.avatar ? (
-                <img src={speaker.avatar} alt={speaker.name} className="w-full h-full object-cover" />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-lg text-[#E2E545] font-mono">{speaker.initial}</div>
-              )}
-            </div>
-            <div>
-              <p className="text-xs text-white/40 mb-1">공유자</p>
-              <p className="text-xl sm:text-2xl font-extrabold text-white">{speaker.name}</p>
-            </div>
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden bg-white/5 shrink-0">
+            {speaker.avatar ? (
+              <img src={speaker.avatar} alt={speaker.name} className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-lg text-[#E2E545] font-mono">{speaker.initial}</div>
+            )}
           </div>
-          <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white leading-[1.3] whitespace-pre-line">
-            {speaker.title}
-          </h3>
+          <div>
+            <p className="text-xs text-white/40 mb-1">공유자</p>
+            <p className="text-xl sm:text-2xl font-extrabold text-white">{speaker.name}</p>
+          </div>
         </div>
+        <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white leading-[1.3] whitespace-pre-line mb-6">
+          {speaker.title}
+        </h3>
 
         {/* 2. 줄글 설명 */}
-        <div className="px-6 sm:px-8 pb-6">
-          <p className="text-base sm:text-lg text-white/90 leading-[1.8] whitespace-pre-line"><HighlightedText text={speaker.desc} /></p>
-        </div>
+        <p className="text-base sm:text-lg text-white/90 leading-[1.8] whitespace-pre-line mb-8"><HighlightedText text={speaker.desc} /></p>
 
-        {/* 3+4. 이미지 + Before/After — 하나의 둥근 사각형으로 통합 */}
-        <div className="mx-5 sm:mx-6 mb-6 rounded-xl overflow-hidden border border-[#E8E8E3]/30">
+        {/* 3+4. 이미지 + Before/After */}
+        <div className="rounded-xl overflow-hidden border border-[#E8E8E3]/30">
           {/* 추가 이미지 (image2) */}
           {speaker.image2 && (
             <div className="overflow-hidden">
@@ -327,7 +323,7 @@ export function SpongeClubLanding({ item }: Props) {
               무료 온라인 공유회 · 4월 28일(화) 20:30
             </motion.p>
             <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.3] sm:leading-[1.2] mb-6 whitespace-pre-line">
-              <StaggerText text={`AI, '딸-깍'이 가능할까요?\n셀피쉬가 6주 동안 부딪쳐봤습니다.`} />
+{`AI, '딸-깍'이 가능할까요?\n6주 동안 직접 부딪쳐봤습니다.`}
             </h1>
           </div>
 
@@ -385,7 +381,7 @@ export function SpongeClubLanding({ item }: Props) {
             {/* 스크롤 화살표 */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}>
               <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="mx-auto text-white/30">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="mx-auto text-[#E2E545]">
                   <path d="M12 5V19M12 19L6 13M12 19L18 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </motion.div>
@@ -397,7 +393,7 @@ export function SpongeClubLanding({ item }: Props) {
             <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </div>
 
-          <div className="h-16 sm:h-20" />
+          <div className="h-8 sm:h-12" />
         </motion.div>
       </section>
 
@@ -405,46 +401,31 @@ export function SpongeClubLanding({ item }: Props) {
       <SectionDivider from={BG.dark} to={BG.mid} />
 
       {/* ═══ 인트로 — 문제 제기 + Our Journey 통합 ═══ */}
-      <section style={{ background: BG.mid }} className="py-20 lg:py-32">
+      <section style={{ background: BG.mid }} className="py-14 lg:py-24">
         <div className="max-w-3xl mx-auto px-5 lg:px-10">
           <FadeUp>
             <div className="border-l-2 border-[#E2E545]/60 pl-6 sm:pl-8">
-              <p className="text-base sm:text-xl text-white leading-[1.7]">
-                <strong className="text-white font-bold">
-                  &ldquo;딸깍 한 번이면 자동화 된다&rdquo;
-                </strong>
-                는 이야기가 정말 많지만,
-                <br />
-                막상 내 업무에 가져오면 쉽게 포기하기 마련이에요.
+              <p className="text-base sm:text-xl text-white leading-[1.8]">
+                <strong className="text-white font-bold">&ldquo;딸깍 한 번이면 자동화 된다&rdquo;</strong>는 이야기가 정말 많지만, 막상 내 업무에 가져오면 쉽게 포기하기 마련이에요.
               </p>
-              <p className="text-base sm:text-xl text-white leading-[1.7] mt-6 sm:mt-8">
-                <strong className="text-[#E2E545] font-bold">
-                  &lsquo;되는구나&rsquo;와 &lsquo;내가 이걸 내 일에 쓴다&rsquo;
-                </strong>
-                {" "}사이의 간극,
-                <br />
-                그걸 6주 동안 좁혀온 팀이 있어요.
+              <p className="text-base sm:text-xl text-white leading-[1.8] mt-6">
+                <strong className="text-[#E2E545] font-bold">&lsquo;되는구나&rsquo;와 &lsquo;내가 이걸 내 일에 쓴다&rsquo;</strong> 사이의 간극, 그걸 6주 동안 좁혀온 팀이 있어요.
               </p>
-              <p className="text-base sm:text-xl text-white leading-[1.7] mt-6 sm:mt-8">
+            </div>
+
+            <div className="border-l-2 border-white/10 pl-6 sm:pl-8 mt-8">
+              <p className="text-base sm:text-xl text-white/70 leading-[1.8]">
                 셀피쉬클럽이 2년간 내부에서 해온 실험들의 가장 최근 버전,
-                <br />
-                <strong className="text-white font-bold">AAA(AI Agent AZA)팀 8명.</strong>
-                <br />
-                매주 일요일에 모여, Claude Code로 각자의 업무에
-                <br />
+              </p>
+              <p className="text-base sm:text-xl text-white leading-[1.8] mt-4">
+                <strong className="text-white font-bold">AAA(AI Agent AZA)팀 8명.</strong> 매주 일요일에 모여, Claude Code로 각자의 업무에
                 AI 에이전트를 직접 붙여봤어요.
               </p>
-              <p className="text-base sm:text-xl text-white leading-[1.7] mt-6 sm:mt-8">
-                어떤 건 됐고, 어떤 건 안 됐고,
-                <br />
-                회의에서 불가능하다고 판단한 걸
-                <br />
-                클로드랑 얘기하다 뒤집은 날도 있어요.
+              <p className="text-base sm:text-xl text-white leading-[1.8] mt-4">
+                어떤 건 됐고, 어떤 건 안 됐고, 회의에서 불가능하다고 판단한 걸 클로드랑 얘기하다 뒤집은 날도 있어요.
               </p>
-              <p className="text-base sm:text-xl text-white font-bold leading-[1.7] mt-6 sm:mt-8">
-                막힌 것도, 틀린 것도, 결국 뚫어낸 것도 —
-                <br />
-                4월 28일, 있는 그대로 공유합니다.
+              <p className="text-base sm:text-xl text-white font-bold leading-[1.8] mt-6">
+                막힌 것도, 틀린 것도, 결국 뚫어낸 것도 — 4월 28일, 있는 그대로 공유합니다.
               </p>
             </div>
           </FadeUp>
@@ -721,7 +702,7 @@ export function SpongeClubLanding({ item }: Props) {
                 라이브에서 만나요
               </h2>
               <p className="text-base text-[#0A0A0A]/70 leading-[1.7] whitespace-pre-line">
-                {"신청 후 이메일로 라이브 입장 링크를 보내드립니다.\n라이브로만 진행되니 시간 꼭 체크해주세요.\n(참여하신 분 전원에게 공유 자료 이메일 발송)"}
+                {"공유회 당일 알림톡과 이메일로 라이브 입장 링크를 보내드립니다.\nVOD가 제공되지 않으니 꼭 실시간 라이브에 참여해 주세요."}
               </p>
             </div>
           </FadeUp>
@@ -774,7 +755,7 @@ export function SpongeClubLanding({ item }: Props) {
                   disabled={formLoading}
                   className="w-full bg-[#0A0A0A] text-[#E2E545] font-bold text-base py-4 rounded hover:bg-[#1a1a1a] transition-all duration-300 mt-3 disabled:opacity-50"
                 >
-                  {formLoading ? "신청 중..." : "신청하기"}
+                  {formLoading ? "신청 중..." : "마감되기 전에 신청하기"}
                 </button>
                 {formError && (
                   <p className="text-sm text-red-600 text-center pt-2">{formError}</p>
@@ -811,7 +792,7 @@ export function SpongeClubLanding({ item }: Props) {
               if (navigator.share) {
                 navigator.share({
                   title: "셀피쉬클럽 AAA 공유회",
-                  text: "AI, '딸-깍'이 가능할까요? 셀피쉬가 6주 동안 부딪쳐봤습니다.",
+                  text: "AI, '딸-깍'이 가능할까요? 6주 동안 직접 부딪쳐봤습니다.",
                   url: window.location.href,
                 });
               } else {
