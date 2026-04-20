@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
+import { checkAdminAuth } from "@/lib/admin-auth";
 
 // 프로그램 목록 조회
 export async function GET() {
@@ -17,6 +18,8 @@ export async function GET() {
 
 // 프로그램 등록
 export async function POST(request: NextRequest) {
+  const authError = checkAdminAuth(request);
+  if (authError) return authError;
   const body = await request.json();
 
   // 다음 ID, iid 생성

@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
+import { checkAdminAuth } from "@/lib/admin-auth";
 
 export async function GET() {
   const { data, error } = await supabase
@@ -11,6 +12,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const authError = checkAdminAuth(request);
+  if (authError) return authError;
   const body = await request.json();
 
   const { data, error } = await supabase
@@ -33,6 +36,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  const authError = checkAdminAuth(request);
+  if (authError) return authError;
   const body = await request.json();
   const { id, ...updates } = body;
 
@@ -50,6 +55,8 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const authError = checkAdminAuth(request);
+  if (authError) return authError;
   const { id } = await request.json();
 
   const { error } = await supabase.from("aitools").delete().eq("id", id);

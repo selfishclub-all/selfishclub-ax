@@ -608,7 +608,7 @@ export function SpongeClubLanding({ item }: Props) {
                 ⚠️ 별도 VOD 제공이 없습니다
               </p>
               <p className="text-sm text-[#0A0A0A]/60">
-                4월 28일 저녁 8시 30분, 꼭 라이브에 참여해주세요
+                4/28(화) 저녁 8:30, 꼭 라이브에 참여해주세요
               </p>
             </div>
           </FadeUp>
@@ -700,12 +700,12 @@ export function SpongeClubLanding({ item }: Props) {
                 무료 · 온라인 라이브 · 선착순 · VOD 없음
               </p>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A0A0A] mb-6">
-                4월 28일 저녁 8시 30분,
+                4/28(화) 저녁 8:30,
                 <br />
                 라이브에서 만나요
               </h2>
               <p className="text-base text-[#0A0A0A]/70 leading-[1.7] whitespace-pre-line">
-                {"공유회 당일 알림톡과 이메일로 라이브 입장 링크를 보내드립니다.\nVOD가 제공되지 않으니 꼭 실시간 라이브에 참여해 주세요."}
+                {"공유회 당일 알림톡과 이메일로 라이브 링크를 보내드립니다.\nVOD가 제공되지 않으니 꼭 라이브에 참여해 주세요."}
               </p>
             </div>
           </FadeUp>
@@ -754,7 +754,7 @@ export function SpongeClubLanding({ item }: Props) {
                 <input name="u_phone" type="tel" required placeholder="전화번호 (010-0000-0000)" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
                 <input name="u_email" type="email" required placeholder="이메일" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
                 <div className="bg-[#0A0A0A]/10 rounded-lg px-4 py-3 mt-3 text-center">
-                  <p className="text-sm font-bold text-[#0A0A0A]">🎁 지금 이기적공유회 신청 시, 이기적멤버십2.0에도 무료로 가입됩니다.</p>
+                  <p className="text-sm font-bold text-[#0A0A0A]">🎁 해당 이기적공유회 신청 시, 이기적멤버십 2.0에도 무료로 자동가입됩니다.</p>
                 </div>
                 <button
                   type="submit"
