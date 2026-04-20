@@ -763,7 +763,12 @@ export function SpongeClubLanding({ item }: Props) {
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-lg p-10 text-center">
                 <p className="text-[#0A0A0A] font-medium text-lg mb-3">신청이 완료됐습니다!</p>
                 <p className="text-base text-[#0A0A0A]/50 leading-relaxed mb-3">라이브 링크는 행사 당일 이메일과 알림톡으로 보내드릴게요.</p>
-                <p className="text-sm text-[#0A0A0A]/70 font-bold leading-relaxed">📢 당일 카카오톡에서 셀피쉬클럽 알림톡 채팅창을 꼭 확인해주세요!</p>
+                <p className="text-sm text-[#0A0A0A]/70 font-bold leading-relaxed mb-5">📢 당일 카카오톡에서 셀피쉬클럽 알림톡 채팅창을 꼭 확인해주세요!</p>
+                <div className="bg-[#0A0A0A]/5 rounded-lg p-4 text-left">
+                  <p className="text-sm text-[#0A0A0A]/60 leading-[1.7]">
+                    셀피쉬클럽은 지금 AX의 일환으로 <strong className="text-[#0A0A0A]/80">홈페이지 리뉴얼도 진행 중</strong>에 있어요! 이번 공유회는 신청을 하셨더라도 기존 홈페이지의 마이페이지에서 신청내역이 보이지 않을 수 있어요. <strong className="text-[#0A0A0A]/80">이 페이지까지 오셨다면 신청은 정상적으로 접수</strong>됐으니 걱정 마시고, 궁금한 점은 <a href="http://pf.kakao.com/_dxmxixhG/chat" target="_blank" rel="noopener noreferrer" className="text-[#0A0A0A] font-bold underline">카카오 채널</a>로 편하게 문의해 주세요.
+                  </p>
+                </div>
               </motion.div>
             )}
             <div className="flex justify-center gap-4 pt-5">
