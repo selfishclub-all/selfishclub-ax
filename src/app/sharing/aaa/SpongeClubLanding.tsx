@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useInView } from "motion/react";
 
 interface ItemData {
@@ -71,6 +71,50 @@ function StaggerText({ text, className = "" }: { text: string; className?: strin
   );
 }
 
+/* ─── 탑띠배너 + 카운트다운 ─── */
+function TopBanner() {
+  const [timeLeft, setTimeLeft] = useState("");
+  const [expired, setExpired] = useState(false);
+
+  useEffect(() => {
+    // 내일(4/21) 오후 3시 KST
+    const deadline = new Date("2026-04-21T15:00:00+09:00");
+
+    function update() {
+      const now = new Date();
+      const diff = deadline.getTime() - now.getTime();
+      if (diff <= 0) {
+        setExpired(true);
+        setTimeLeft("");
+        return;
+      }
+      const h = Math.floor(diff / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+      setTimeLeft(`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`);
+    }
+
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (expired) return null;
+
+  return (
+    <div className="fixed top-0 left-0 right-0 z-50 bg-[#E2E545] text-[#0A0A0A] text-center py-2.5 px-4">
+      <p className="text-xs sm:text-sm font-bold">
+        {timeLeft && (
+          <span className="mr-3 font-mono bg-[#0A0A0A] text-[#E2E545] px-2.5 py-0.5 rounded text-xs sm:text-sm">
+            {timeLeft}
+          </span>
+        )}
+        🔒 설문에 참여해주신 분들을 위한 우선 신청 페이지입니다
+      </p>
+    </div>
+  );
+}
+
 /* ─── 그라데이션 구분선 ─── */
 function SectionDivider({ from, to }: { from: string; to: string }) {
   return (
@@ -104,30 +148,29 @@ function HighlightedText({ text, className = "" }: { text: string; className?: s
 /* ─── 데이터 ─── */
 const SPEAKERS = [
   { initial: "G", name: "젬마", avatar: "/images/speakers/젬마.png", role: "Creator · Vision Holder", title: "AAA 6주의 기록 —\n우리가 증명하려 했던 것", desc: "<hl>AI 교육이 아니라 AI 빌딩.</hl>\n팀 양성 6주 동안 무엇이 작동했고, 무엇이 바뀌었는지.\n그리고 이 경험이 만들어낼 다음 챕터.", image: "/images/sessions/젬마.png", part: 1, before: "", after: "" },
-  { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "흩어진 노션을 AI가 읽는 \"살아있는 자산\"으로 —\n팀 웹페이지를 만든 이야기", desc: "AAA팀이 매주 만들어내는 좋은 기록들이\n각자 노션에 잠들어 있는 게 아까웠어요.\n\n<hl>노션 대신 옵시디언을 쓰기로 냅-다 결정한 이유,</hl>\nAI가 읽기 좋은 구조로 바꿔서\n외부에 공유 가능한 아카이빙 시스템을 만들기까지 —\n썼던 도구, 했던 삽질, 남은 과제까지 공유합니다.", image: "/images/sessions/다다.png", part: 2, before: "AAA팀의 좋은 기록들이 각자의 노션에 흩어져 잠들어 있었다.", after: "옵시디언에 쓰면 AI가 정리해서 웹사이트에 올라가는\n팀 아카이빙 시스템이 돌아가고 있다." },
-  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "AI한테 답 구하기를 멈추고,\nAI에게 질문 받기 시작한 이야기", desc: "AI가 모든 답을 주는 시대에\n정작 \"내 생각이 뭔지\" 흐릿해지는 게 아쉬웠어요.\n\n<hl>텔레그램에 한 줄 던지면 AI가 질문을 던져주고,</hl>\n그 대화가 자동으로 위키에 쌓이고,\n<hl>3일 뒤에 콘텐츠 초안이 되는 시스템</hl> —\n혼자 쓰면서 허술하게 굴려온 실제 과정을 공유합니다.", image: "/images/sessions/흐민.gif", part: 2, before: "AI한테 계속 답을 구하다가,\n정작 \"내 생각은 뭔지\" 흐릿해지는 게 아쉬웠다.", after: "텔레그램에 한 줄 쓰면 AI가 질문을 던져주고,\n그 대화가 3일 뒤에 콘텐츠 초안으로 돌아오는 구조를 돌리고 있다." },
+  { initial: "D", name: "다다", avatar: "/images/speakers/다다.png", role: "PM · AAA팀 리더", title: "흩어진 노션을 AI가 읽는 \"살아있는 자산\"으로 —\n팀 웹페이지를 만든 이야기", desc: "AAA팀이 매주 만들어내는 좋은 기록들이\n각자 노션에 잠들어 있는 게 아까웠어요.\n\n<hl>노션 대신 옵시디언을 쓰기로 냅-다 결정한 이유,</hl>\nAI가 읽기 좋은 구조로 바꿔서\n외부에 공유 가능한 아카이빙 시스템을 만들기까지 —\n썼던 도구, 했던 삽질, 남은 과제까지 공유합니다.", image: "/images/sessions/다다.png", part: 1, before: "AAA팀의 좋은 기록들이 각자의 노션에 흩어져 잠들어 있었다.", after: "옵시디언에 쓰면 AI가 정리해서 웹사이트에 올라가는\n팀 아카이빙 시스템이 돌아가고 있다." },
   { initial: "Da", name: "다니", avatar: "/images/speakers/다니.png", role: "Contents · Marketing", title: "\"딸깍 자동화\"에 실패하고,\n내 손으로 만든 콘텐츠 OS", desc: "처음엔 URL 하나 넣으면 블로그·인스타·링크드인이\n동시에 나오는 걸 만들었어요. <hl>결과는 실패.</hl>\n톤이 안 맞아서 결국 다시 캔바에서 작업했고,\n오히려 시간이 더 걸렸습니다.\n\n그래서 방향을 바꿨어요.\n<hl>캐러셀 에디터, 스레드·링크드인 동시 생성기,</hl>\n터미널에서 영상까지 만드는 시스템을 직접 만들었습니다.\n\n자동화가 실패한 이유와 돌아온 이유,\n그 과정에서 구조화한 디자인 규칙까지 공유합니다.", image: "/images/sessions/다니.gif", part: 2, before: "\"딸깍 한 번 자동화\"를 믿고 시도했지만,\n결국 캔바로 다시 작업하느라 시간이 더 걸렸다.", after: "내 톤에 맞는 캐러셀을 즉시 생성·편집할 수 있는\n나만의 에디터를 만들어서 실제 업무에 쓰고 있다." },
-  { initial: "V", name: "비비안", avatar: "/images/speakers/비비안.png", role: "Operations · AX Design", title: "비개발자 마케터가\nAX 프로젝트 PM이 되기까지", desc: "<hl>개발 지식도, 기술적 원리도 모르는 마케터</hl>가\n어떻게 AX 프로젝트의 PM을 맡게 됐을까요.\n\nAX Dashboard를 직접 설계하고 활용해\n<hl>프로젝트 전체를 한눈에 관리하는 구조</hl>를 만들었고,\n회원 시스템, 결제, 카카오 로그인까지 붙이며\n비개발자도 프로젝트를 이끌 수 있다는 걸 증명한 과정을 공유합니다.", image: "/images/sessions/비비안.png", part: 3, group: "internal" as const, before: "할 일을 노션에 적어놓고 하나씩 지우고 있었고,\n새 사이트는 \"일정상 무리\"라고 회의에서 결론 내렸다.", after: "AX 대시보드를 직접 만들어서 프로젝트를 굴리고,\n\"무리\"라던 새 사이트로 실제로 공유회를 열고 있다." },
-  { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "\"맥북 꺼지면 어떡해\"에서 시작된\nCRM 자동화 구축기", desc: "공유회 하나 열 때마다 나가는 <hl>알림톡 9종 + 채널 N개.</hl>\n카피 쓰고 DB 뽑고 UTM 붙이는 데 매번 하루 3시간.\n\n처음엔 클로드 코드로 만들어봤는데\n문제가 있었어요. <hl>맥북이 꺼지면 발송이 안 되더라고요.</hl>\n거기서 서버로 옮기는 이야기가 시작됐습니다.\n\n<hl>승인 한 번이면 발송이 끝나는 자동화</hl>를 어떻게 만들었는지,\n실제 실패했던 구간부터 공유합니다.", image: "/images/sessions/에밀리.png", part: 3, group: "internal" as const, before: "공유회 하나 열 때마다 알림톡 9종을 수동으로 발송했다.\n카피 쓰고 DB 뽑고 UTM 붙이는 데 하루 3시간.", after: "슬랙에서 승인 한 번이면 발송이 끝난다. 하루 5분." },
-  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "13년 차 핀테크 대표가 회사를 정리하고\n\"왜(Why)\"를 찾아 AI에 올인하기까지", desc: "3주 동안 AI를 붙잡고 방황했어요.\n\"남들이 하는 거\"를 따라 하다가 전부 실패했습니다.\n\n<hl>\"내가 누구의 무슨 문제를 풀 건지\"가 선명해진 순간,</hl>\n4시간 만에 12개 에이전트를 굴려\n찜마켓이라는 실제 서비스를 세상에 내놓았어요.\n\n<hl>하루 만에 카톡으로 고객 문의가 오기까지의 기록,</hl>\n클로드 코드를 '나만의 코파운더'로 쓰는 법,\n그리고 '왜'가 빠졌을 때 AI가 어떻게 엉뚱해지는지 —\n찐 경험담으로 아낌없이 나눕니다.", image: "/images/sessions/오웬.gif", part: 3, group: "external" as const, before: "13년 다닌 회사를 정리하고\n\"뭘 해야 할지\"를 모른 채 AI를 붙잡고 있었다.", after: "찜마켓이라는 서비스를 직접 만들어 운영 중이고,\n하루 만에 실제 고객 문의가 카톡으로 오는 단계까지 왔다." },
-  { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제, 예약, CRM, 광고를 한 화면에 —\n나만의 대시보드 만들기", desc: "매일 여러 SaaS 툴을 돌아다니며\n데이터 모으고 성과 정리하던 시간,\n<hl>이제는 없습니다.</hl>\n\nAPI를 엮어서 만든 <hl>커스텀 대시보드 하나로</hl>\n결제, 예약, CRM, 광고 성과를 한 번에 확인하는 법,\n그리고 마케터가 직접 만들 수 있었던 이유를 공유합니다.", image: "/images/sessions/띵크.png", part: 3, group: "external" as const, before: "결제, 예약, CRM, 광고 성과를 보려고\n매일 여러 SaaS 툴을 돌아다니며 데이터를 수기로 정리했다.", after: "API를 엮어서 만든 나만의 대시보드 하나에서\n모든 성과를 한 번에 본다." },
+  { initial: "H", name: "흐민", avatar: "/images/speakers/흐민.png", role: "AI Thinking Partner", title: "AI한테 답 구하기를 멈추고,\nAI에게 질문 받기 시작한 이야기", desc: "AI가 모든 답을 주는 시대에\n정작 \"내 생각이 뭔지\" 흐릿해지는 게 아쉬웠어요.\n\n<hl>텔레그램에 한 줄 던지면 AI가 질문을 던져주고,</hl>\n그 대화가 자동으로 위키에 쌓이고,\n<hl>3일 뒤에 콘텐츠 초안이 되는 시스템</hl> —\n혼자 쓰면서 허술하게 굴려온 실제 과정을 공유합니다.", image: "/images/sessions/흐민.gif", part: 2, before: "AI한테 계속 답을 구하다가,\n정작 \"내 생각은 뭔지\" 흐릿해지는 게 아쉬웠다.", after: "텔레그램에 한 줄 쓰면 AI가 질문을 던져주고,\n그 대화가 3일 뒤에 콘텐츠 초안으로 돌아오는 구조를 돌리고 있다." },
+  { initial: "O", name: "오웬", avatar: "/images/speakers/오웬.png", role: "Platform Builder", title: "13년 차 핀테크 대표가 회사를 정리하고\n\"왜(Why)\"를 찾아 AI에 올인하기까지", desc: "3주 동안 AI를 붙잡고 방황했어요.\n\"남들이 하는 거\"를 따라 하다가 전부 실패했습니다.\n\n<hl>\"내가 누구의 무슨 문제를 풀 건지\"가 선명해진 순간,</hl>\n4시간 만에 12개 에이전트를 굴려\n찜마켓이라는 실제 서비스를 세상에 내놓았어요.\n\n<hl>하루 만에 카톡으로 고객 문의가 오기까지의 기록,</hl>\n클로드 코드를 '나만의 코파운더'로 쓰는 법,\n그리고 '왜'가 빠졌을 때 AI가 어떻게 엉뚱해지는지 —\n찐 경험담으로 아낌없이 나눕니다.", image: "/images/sessions/오웬.gif", part: 3, before: "13년 다닌 회사를 정리하고\n\"뭘 해야 할지\"를 모른 채 AI를 붙잡고 있었다.", after: "찜마켓이라는 서비스를 직접 만들어 운영 중이고,\n하루 만에 실제 고객 문의가 카톡으로 오는 단계까지 왔다." },
+  { initial: "T", name: "띵크", avatar: "/images/speakers/띵크.png", role: "Workflow Architect", title: "결제, 예약, CRM, 광고를 한 화면에 —\n나만의 대시보드 만들기", desc: "매일 여러 SaaS 툴을 돌아다니며\n데이터 모으고 성과 정리하던 시간,\n<hl>이제는 없습니다.</hl>\n\nAPI를 엮어서 만든 <hl>커스텀 대시보드 하나로</hl>\n결제, 예약, CRM, 광고 성과를 한 번에 확인하는 법,\n그리고 마케터가 직접 만들 수 있었던 이유를 공유합니다.", image: "/images/sessions/띵크.png", part: 3, before: "결제, 예약, CRM, 광고 성과를 보려고\n매일 여러 SaaS 툴을 돌아다니며 데이터를 수기로 정리했다.", after: "API를 엮어서 만든 나만의 대시보드 하나에서\n모든 성과를 한 번에 본다." },
+  { initial: "V", name: "비비안", avatar: "/images/speakers/비비안.png", role: "Operations · AX Design", title: "비개발자 마케터가\nAX 프로젝트 PM이 되기까지", desc: "<hl>개발 지식도, 기술적 원리도 모르는 마케터</hl>가\n어떻게 AX 프로젝트의 PM을 맡게 됐을까요.\n\nAX Dashboard를 직접 설계하고 활용해\n<hl>프로젝트 전체를 한눈에 관리하는 구조</hl>를 만들었고,\n회원 시스템, 결제, 카카오 로그인까지 붙이며\n비개발자도 프로젝트를 이끌 수 있다는 걸 증명한 과정을 공유합니다.", image: "/images/sessions/비비안.png", part: 3, before: "할 일을 노션에 적어놓고 하나씩 지우고 있었고,\n새 사이트는 \"일정상 무리\"라고 회의에서 결론 내렸다.", after: "AX 대시보드를 직접 만들어서 프로젝트를 굴리고,\n\"무리\"라던 새 사이트로 실제로 공유회를 열고 있다." },
+  { initial: "E", name: "에밀리", avatar: "/images/speakers/에밀리.png", role: "CRM · Member Relations", title: "\"맥북 꺼지면 어떡해\"에서 시작된\nCRM 자동화 구축기", desc: "공유회 하나 열 때마다 나가는 <hl>알림톡 9종 + 채널 N개.</hl>\n카피 쓰고 DB 뽑고 UTM 붙이는 데 매번 하루 3시간.\n\n처음엔 클로드 코드로 만들어봤는데\n문제가 있었어요. <hl>맥북이 꺼지면 발송이 안 되더라고요.</hl>\n거기서 서버로 옮기는 이야기가 시작됐습니다.\n\n<hl>승인 한 번이면 발송이 끝나는 자동화</hl>를 어떻게 만들었는지,\n실제 실패했던 구간부터 공유합니다.", image: "/images/sessions/에밀리.png", part: 3, before: "공유회 하나 열 때마다 알림톡 9종을 수동으로 발송했다.\n카피 쓰고 DB 뽑고 UTM 붙이는 데 하루 3시간.", after: "슬랙에서 승인 한 번이면 발송이 끝난다. 하루 5분." },
 ];
 
 const AGENDA_PARTS = [
-  { num: "PART 01", title: "AAA, 그리고 앞으로의 이야기", subtitle: "젬마 · 오프닝 세션", desc: "AAA팀은 왜 만들어졌을까요.\n셀피쉬클럽 내부에서 시작된 작은 실험이\n6주 동안 어떻게 진화했는지,\n그리고 이 경험이 앞으로 어떤 커뮤니티로 이어질지 —\n젬마가 직접 이야기합니다." },
-  { num: "PART 02", title: "나를 위한 OS를 만들기", subtitle: "내 일하는 방식 자체를 AI로 다시 설계한 이야기", desc: "거창한 프로덕트가 아닙니다.\n내가 매일 하는 일, 내가 매번 막히던 지점 —\n거기서 시작한 세 사람의 이야기입니다.\n\n최신 AI 소식들을 받아본다고 해서 그게 다 내 것이 아니고,\n내 일에 적용한다는 것은 많은 시간과 고심이 필요합니다.\n\n\"나도 이렇게 해볼 수 있겠다\"는 생각이 드는 게\n이 파트의 목표입니다." },
-  { num: "PART 03", title: "고객을 위한 Product를 만들기", subtitle: "실제 유저가 쓰는 것을 Claude Code로 직접 개발한 이야기", desc: "\"코딩 몰라도 만들 수 있어\"라는 말이\n실제로 가능한지 — 이 파트가 그 증거입니다.\n\n또 혼자서 해서는 나만의 세계에 갇히게 됩니다.\n각자 다른 문제를 풀기 위해 시작한 4개의 실전 프로덕트,\n매주 미션을 가지고 과정과 결과물을 공유하며\n인사이트, 피드백을 나눈 이야기를 공유합니다." },
+  { num: "PART 01", title: "AAA, 그리고 우리의 기록", subtitle: "젬마 · 다다", desc: "AAA팀은 왜 만들어졌고, 6주 동안 어떻게 진화했는지.\n그리고 그 과정에서 쌓인 기록들을\n어떻게 살아있는 자산으로 만들었는지 —\n오프닝과 함께 이야기합니다." },
+  { num: "PART 02", title: "나를 위한 OS를 만들기", subtitle: "다니 · 흐민", desc: "거창한 프로덕트가 아닙니다.\n내가 매일 하는 일, 내가 매번 막히던 지점 —\n거기서 시작한 두 사람의 이야기입니다.\n\n\"나도 이렇게 해볼 수 있겠다\"는 생각이 드는 게\n이 파트의 목표입니다." },
+  { num: "PART 03", title: "고객을 위한 Product를 만들기", subtitle: "오웬 · 띵크 · 비비안 · 에밀리", desc: "\"코딩 몰라도 만들 수 있어\"라는 말이\n실제로 가능한지 — 이 파트가 그 증거입니다.\n\n또 혼자서 해서는 나만의 세계에 갇히게 됩니다.\n각자 다른 문제를 풀기 위해 시작한 4개의 실전 프로덕트,\n매주 미션을 가지고 과정과 결과물을 공유하며\n인사이트, 피드백을 나눈 이야기를 공유합니다." },
 ];
 
 // Before/After는 SPEAKERS 데이터에 통합됨
 
 const TIMETABLE = [
-  { time: "21:00", title: "오프닝 & 젬마 세션", note: "PART 1 — AAA의 탄생과 6주간의 여정", highlight: false },
-  { time: "", title: "나를 위한 OS 만들기", note: "PART 2 — 다다 · 흐민 · 다니", highlight: false },
-  { time: "", title: "고객을 위한 Product 만들기", note: "PART 3 — 비비안 · 에밀리 · 오웬 · 띵크", highlight: false },
-  { time: "", title: "⭐ Q&A", note: "공유자 8명 전원 참여 · 자유 질문", highlight: true },
-  { time: "", title: "스펀지클럽 정식 모집 오픈", note: "SXXXXX CLUB 모집 일정 공개", highlight: false },
-  { time: "", title: "종료", note: "참가자 전원 공유 자료 이메일 발송", highlight: false },
+  { time: "20:30", title: "AAA, 그리고 우리의 기록", note: "PART 1 — 젬마 · 다다", highlight: false },
+  { time: "21:00", title: "나를 위한 OS 만들기", note: "PART 2 — 다니 · 흐민", highlight: false },
+  { time: "21:30", title: "고객을 위한 Product 만들기", note: "PART 3 — 오웬 · 띵크 · 비비안 · 에밀리", highlight: false },
+  { time: "22:30", title: "★ 스폰지클럽 정식 모집 오픈", note: "SPONGE CLUB 모집 일정 공개", highlight: true },
+  { time: "22:45", title: "Q&A", note: "공유자 8명 전원 참여 · 자유 질문", highlight: false },
 ];
 
 const WHO_CARDS = [
@@ -138,9 +181,10 @@ const WHO_CARDS = [
 ];
 
 const TOGETHER_EPISODES = [
-  "다다가 어느 날 \"다같이 옵시디언으로 옮기자\"고 한마디 했어요. 그 한마디가 팀 전체의 기록 방식을 바꿨고, 지금 AAA팀의 아카이빙 시스템은 그때 시작됐습니다.",
+  "매주 일요일, 8명이 모여 각자의 진행 상황을 공유하고 피드백하는 환경이 있었어요. 혼자였다면 \"이게 맞나?\" 하고 멈췄을 순간에, 옆에서 \"나는 이렇게 했는데\" 한마디가 다시 움직이게 만들었습니다.",
+  "젬마가 \"우리 노션 말고, 옵시디언 써보면 어떨까요?\" 한 마디를 던졌어요. 그 한 마디에 다다가 팀의 기록 방식을 통째로 바꾸고, 옵시디언 + 깃헙 기반으로 데이터화시키고, 더 나아가 팀 아카이빙 웹사이트까지 만들었습니다.",
   "오웬이 흐민의 기록 시스템을 보고 \"나도 내 생각을 구조화해야겠다\"고 말한 날이 있어요. 그날 이후 오웬은 자기만의 기록 구조를 만들기 시작했고, 그게 결국 찜마켓의 고객 응대 흐름에까지 영향을 줬습니다.",
-  "혼자 했으면 내 세계 안에서만 맴돌았을 거예요. 서로 다른 문제를 풀고 있었지만, 매주 공유하고 피드백하는 과정에서 생각지도 못한 연결이 생기고, 그게 결국 각자의 결과물을 완전히 다른 수준으로 끌어올렸습니다.",
+  "혼자 했으면 중간에 그만뒀을 거예요. 그리고 내가 하는 것만이 AI 활용의 전부라고 생각했을 거예요. 서로 다른 문제를 풀고 있었지만, 매주 공유하면서 생각지도 못한 연결이 생겼고, 그게 각자의 결과물을 완전히 다른 수준으로 끌어올렸습니다.",
 ];
 
 const JOB_OPTIONS = ["마케터 / 콘텐츠 담당자", "비즈니스 / 기획", "개발 / 디자인", "사이드 프로젝트 운영 중", "기타"];
@@ -235,6 +279,9 @@ export function SpongeClubLanding({ item }: Props) {
 
   return (
     <>
+      {/* ═══ 탑띠배너 + 카운트다운 ═══ */}
+      <TopBanner />
+
       {/* ═══ HERO (다크) ═══ */}
       <section
         ref={heroRef}
@@ -249,17 +296,17 @@ export function SpongeClubLanding({ item }: Props) {
 
         <motion.div style={{ opacity: heroOpacity, y: heroY }} className="relative z-10">
           {/* 상단 라벨 */}
-          <div className="text-center px-5 pt-32 sm:pt-40 lg:pt-48 pb-10 sm:pb-14">
+          <div className="text-center px-5 pt-40 sm:pt-48 lg:pt-56 pb-10 sm:pb-14">
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-sm sm:text-base text-white/40 tracking-wide mb-6"
             >
-              무료 공유회 · 라이브 전용 · 4월 28일(화) 21:00
+              무료 온라인 공유회 · 4월 28일(화) 20:30
             </motion.p>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.3] sm:leading-[1.2] mb-6 whitespace-pre-line">
-              <StaggerText text={`AI "딸깍 한 번"이 안 되는 이유,\n우리가 6주 동안 직접 부딪혀봤어요.`} />
+              <StaggerText text={`AI, '딸-깍'이 가능할까요?\n셀피쉬가 6주 동안 부딪혀봤습니다.`} />
             </h1>
             <motion.p
               initial={{ opacity: 0, y: 15 }}
@@ -293,13 +340,13 @@ export function SpongeClubLanding({ item }: Props) {
           <div className="text-center px-5 pt-8 sm:pt-12 pb-10 sm:pb-14 max-w-3xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.0 }} className="grid grid-cols-3 gap-3 sm:gap-4 max-w-xl mx-auto mb-6">
               {[
-                { label: "Date", value: "4월 28일 (화) 21:00" },
-                { label: "Format", value: "라이브 · 무료" },
-                { label: "Duration", value: "120분+ (Q&A 포함)" },
+                { label: "Date", value: "4월 28일 (화)\n20:30" },
+                { label: "Format", value: "온라인\n무료 공유회" },
+                { label: "Duration", value: "120분 + α\nQ&A 포함" },
               ].map((item) => (
                 <div key={item.label} className="bg-white/[0.06] border border-white/[0.08] rounded-lg p-4 sm:p-5 text-center">
                   <p className="text-[10px] sm:text-xs text-white/30 tracking-[0.15em] uppercase font-mono mb-2">{item.label}</p>
-                  <p className="text-sm sm:text-lg font-bold text-white">{item.value}</p>
+                  <p className="text-sm sm:text-lg font-bold text-white whitespace-pre-line">{item.value}</p>
                 </div>
               ))}
             </motion.div>
@@ -403,61 +450,32 @@ export function SpongeClubLanding({ item }: Props) {
 
           {AGENDA_PARTS.map((part, partIdx) => {
             const partSpeakers = SPEAKERS.filter((s) => s.part === partIdx + 1);
-            const internalSpeakers = partSpeakers.filter((s) => s.group === "internal");
-            const externalSpeakers = partSpeakers.filter((s) => s.group === "external");
-            const ungrouped = partSpeakers.filter((s) => !s.group);
 
             return (
               <FadeUp key={part.num}>
                 <div className={`${partIdx < AGENDA_PARTS.length - 1 ? "mb-32 pb-32 border-b border-white/10" : ""}`}>
-                  {/* 파트 헤더 — 강조 */}
-                  <div className="bg-[#E2E545]/10 border border-[#E2E545]/20 rounded-xl p-6 sm:p-8 mb-10">
-                    <span className="text-lg sm:text-xl text-[#E2E545] tracking-[0.15em] font-mono font-bold">
-                      {part.num}
-                    </span>
-
-                  {/* 파트 타이틀 */}
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug mt-3 mb-2">
+                  {/* 파트 헤더 + 설명 통합 */}
+                  <div className="bg-[#E2E545]/10 border border-[#E2E545]/20 rounded-xl p-6 sm:p-8 mb-14">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="text-xs sm:text-sm text-[#0A0A0A] font-bold bg-[#E2E545] px-3 py-1 rounded-full">
+                        {part.num}
+                      </span>
+                      <span className="text-sm text-white/40">{part.subtitle}</span>
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug mb-4">
                       {part.title}
                     </h3>
-                    <p className="text-base text-white/50">{part.subtitle}</p>
+                    <p className="text-base sm:text-lg text-white/70 leading-[1.8] whitespace-pre-line">
+                      {part.desc}
+                    </p>
                   </div>
 
-                  {/* 파트 설명 */}
-                  <p className="text-base sm:text-lg text-white/90 leading-[1.8] mb-14 whitespace-pre-line">
-                    {part.desc}
-                  </p>
-
                   {/* 스피커 카드 */}
-                  {ungrouped.length > 0 && (
-                    <div className="space-y-32">
-                      {ungrouped.map((s, i) => (
-                        <SpeakerCard key={s.name} speaker={s} delay={i * 0.1} />
-                      ))}
-                    </div>
-                  )}
-
-                  {ungrouped.length > 0 && (internalSpeakers.length > 0 || externalSpeakers.length > 0) && (
-                    <div className="h-32" />
-                  )}
-                  {internalSpeakers.length > 0 && (
-                    <div className="space-y-32">
-                      {internalSpeakers.map((s, i) => (
-                        <SpeakerCard key={s.name} speaker={s} delay={i * 0.1} />
-                      ))}
-                    </div>
-                  )}
-
-                  {externalSpeakers.length > 0 && internalSpeakers.length > 0 && (
-                    <div className="h-32" />
-                  )}
-                  {externalSpeakers.length > 0 && (
-                    <div className="space-y-32">
-                      {externalSpeakers.map((s, i) => (
-                        <SpeakerCard key={s.name} speaker={s} delay={i * 0.1} />
-                      ))}
-                    </div>
-                  )}
+                  <div className="space-y-32">
+                    {partSpeakers.map((s, i) => (
+                      <SpeakerCard key={s.name} speaker={s} delay={i * 0.1} />
+                    ))}
+                  </div>
                 </div>
               </FadeUp>
             );
@@ -475,7 +493,7 @@ export function SpongeClubLanding({ item }: Props) {
               Together
             </p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-              같이 해서 뚫린 것들
+              &lsquo;같이&rsquo;해서 가능했던 것들
             </h2>
             <p className="text-base sm:text-xl text-white/90 leading-[1.7] mb-14 whitespace-pre-line">
               {"8명이 각자 자기 걸 만들었지만,\n사실은 혼자 한 게 하나도 없어요."}
@@ -587,8 +605,25 @@ export function SpongeClubLanding({ item }: Props) {
                 ⚠️ 별도 VOD 제공이 없습니다
               </p>
               <p className="text-sm text-[#0A0A0A]/60">
-                4월 28일 저녁 9시, 꼭 라이브에 참여해주세요
+                4월 28일 저녁 8시 30분, 꼭 라이브에 참여해주세요
               </p>
+            </div>
+          </FadeUp>
+
+          {/* 혜택 */}
+          <FadeUp delay={0.08}>
+            <div className="mb-10">
+              <p className="text-base font-bold text-white mb-4">라이브를 끝까지 보신 분들을 위한 혜택</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-white rounded-lg p-4 sm:p-5 text-center">
+                  <p className="text-base font-extrabold text-[#0A0A0A] mb-1">🎁 SPONGE CLUB 얼리버드 특가</p>
+                  <p className="text-sm text-[#0A0A0A]/60">라이브 말미에 특가 링크 바로 공개</p>
+                </div>
+                <div className="bg-white rounded-lg p-4 sm:p-5 text-center">
+                  <p className="text-base font-extrabold text-[#0A0A0A] mb-1">📖 40페이지 분량 교안 제공</p>
+                  <p className="text-sm text-[#0A0A0A]/60">라이브 내용을 활용한 교안</p>
+                </div>
+              </div>
             </div>
           </FadeUp>
 
@@ -607,6 +642,7 @@ export function SpongeClubLanding({ item }: Props) {
               </FadeUp>
             ))}
           </div>
+          <p className="text-xs text-white/30 text-center mt-6">* 타임라인은 상황에 따라 변동될 수 있습니다.</p>
         </div>
       </section>
 
@@ -614,18 +650,15 @@ export function SpongeClubLanding({ item }: Props) {
       <section style={{ background: "#000000" }} className="py-24 lg:py-40">
         <div className="max-w-3xl mx-auto px-5 lg:px-10 text-center">
           <FadeUp>
-            <p className="text-xs text-[#E2E545]/60 tracking-[0.3em] uppercase mb-5">
+            <p className="text-base sm:text-lg text-[#E2E545] tracking-[0.2em] uppercase font-bold mb-8">
               Coming Soon
             </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-8">
-              SXXXXX CLUB
-            </h2>
 
-            <div className="max-w-xs sm:max-w-sm mx-auto mb-10">
+            <div className="max-w-md sm:max-w-lg mx-auto mb-10">
               <img
-                src="/images/sponge-club-teaser.png"
-                alt="SXXXXX CLUB"
-                className="w-full h-auto rounded-lg"
+                src="/images/sponge-club-teaser-v2.png"
+                alt="SPONGE CLUB"
+                className="w-full h-auto"
               />
             </div>
 
@@ -652,27 +685,6 @@ export function SpongeClubLanding({ item }: Props) {
               라이브에 참여하신 분이 가장 먼저 보게 됩니다.
             </p>
           </FadeUp>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            {[
-              { step: "01", word: "Absorb", ko: "흡수" },
-              { step: "02", word: "Compress", ko: "압축" },
-              { step: "03", word: "Release", ko: "방출" },
-              { step: "04", word: "React", ko: "반응" },
-            ].map((card, i) => (
-              <FadeUp key={card.step} delay={i * 0.1}>
-                <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 sm:p-6">
-                  <p className="text-[11px] text-[#E2E545]/50 tracking-wider mb-3 font-mono">
-                    {card.step}
-                  </p>
-                  <p className="text-lg sm:text-xl font-bold text-white mb-1">
-                    {card.word}
-                  </p>
-                  <p className="text-sm text-white/30">{card.ko}</p>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -682,10 +694,10 @@ export function SpongeClubLanding({ item }: Props) {
           <FadeUp>
             <div className="text-center mb-12">
               <p className="text-xs text-[#0A0A0A]/40 tracking-[0.3em] uppercase font-mono mb-5">
-                무료 · 실시간 라이브 전용 · VOD 없음
+                무료 · 온라인 라이브 · 선착순 · VOD 없음
               </p>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A0A0A] mb-6">
-                4월 28일 저녁 9시,
+                4월 28일 저녁 8시 30분,
                 <br />
                 라이브에서 만나요
               </h2>
@@ -743,7 +755,7 @@ export function SpongeClubLanding({ item }: Props) {
                   disabled={formLoading}
                   className="w-full bg-[#0A0A0A] text-[#E2E545] font-bold text-base py-4 rounded hover:bg-[#1a1a1a] transition-all duration-300 mt-3 disabled:opacity-50"
                 >
-                  {formLoading ? "신청 중..." : "공유회 참여 신청하기"}
+                  {formLoading ? "신청 중..." : "신청하기"}
                 </button>
                 {formError && (
                   <p className="text-sm text-red-600 text-center pt-2">{formError}</p>
@@ -755,27 +767,46 @@ export function SpongeClubLanding({ item }: Props) {
                 <p className="text-base text-[#0A0A0A]/50 leading-relaxed">라이브 입장 링크는 행사 전날 이메일로 보내드릴게요.</p>
               </motion.div>
             )}
-            <div className="flex justify-center gap-3 pt-4">
-              <a href="https://sepia-quartz-81f.notion.site/22b5c0a046468081b11cc019c2f558a4?pvs=74" target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#0A0A0A]/20 underline">이용약관</a>
-              <a href="https://sepia-quartz-81f.notion.site/22b5c0a0464680528d1ffb54dfd7eaeb" target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#0A0A0A]/20 underline">개인정보처리방침</a>
+            <div className="flex justify-center gap-4 pt-5">
+              <a href="https://sepia-quartz-81f.notion.site/22b5c0a046468081b11cc019c2f558a4?pvs=74" target="_blank" rel="noopener noreferrer" className="text-xs text-[#0A0A0A]/40 underline hover:text-[#0A0A0A]/60">이용약관</a>
+              <span className="text-xs text-[#0A0A0A]/20">|</span>
+              <a href="https://sepia-quartz-81f.notion.site/22b5c0a0464680528d1ffb54dfd7eaeb" target="_blank" rel="noopener noreferrer" className="text-xs text-[#0A0A0A]/40 underline hover:text-[#0A0A0A]/60">개인정보처리방침</a>
             </div>
           </FadeUp>
         </div>
       </section>
 
-      {/* ── 플로팅 CTA ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 p-4 sm:p-5">
-        <div className="max-w-lg mx-auto">
+      {/* ── 플로팅 CTA (신청 섹션 도달 시 숨김) ── */}
+      <div className={`fixed bottom-0 left-0 right-0 z-40 p-4 sm:p-5 transition-all duration-300 ${
+        isRegisterVisible ? "opacity-0 pointer-events-none translate-y-4" : "opacity-100 translate-y-0"
+      }`}>
+        <div className="max-w-lg mx-auto flex gap-2">
           <a
             href="#register"
-            className={`block w-full font-bold text-base text-center py-4 rounded-full transition-colors duration-300 ${
-              isRegisterVisible
-                ? "bg-[#0A0A0A] text-[#E2E545]"
-                : "bg-[#E2E545] text-[#0A0A0A]"
-            }`}
+            className="flex-1 font-bold text-base text-center py-4 rounded-full bg-[#E2E545] text-[#0A0A0A]"
           >
-            공유회 참여 신청하기
+            마감되기 전에 신청하기
           </a>
+          <button
+            onClick={() => {
+              if (navigator.share) {
+                navigator.share({
+                  title: "셀피쉬클럽 AAA 공유회",
+                  text: "AI, '딸-깍'이 가능할까요? 셀피쉬가 6주 동안 부딪혀봤습니다.",
+                  url: window.location.href,
+                });
+              } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert("링크가 복사되었습니다!");
+              }
+            }}
+            className="w-14 h-14 shrink-0 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors"
+            aria-label="공유하기"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-white">
+              <path d="M13.5 7C14.8807 7 16 5.88071 16 4.5C16 3.11929 14.8807 2 13.5 2C12.1193 2 11 3.11929 11 4.5C11 4.65163 11.0138 4.79987 11.0401 4.94368L7.45723 6.73512C6.93119 6.27683 6.24881 6 5.5 6C3.84315 6 2.5 7.34315 2.5 9C2.5 10.6569 3.84315 12 5.5 12C6.24881 12 6.93119 11.7232 7.45723 11.2649L11.0401 13.0563C11.0138 13.2001 11 13.3484 11 13.5C11 14.8807 12.1193 16 13.5 16C14.8807 16 16 14.8807 16 13.5C16 12.1193 14.8807 11 13.5 11C12.7512 11 12.0688 11.2768 11.5428 11.7351L7.95986 9.94368C7.98617 9.79987 8 9.65163 8 9.5C8 9.34837 7.98617 9.20013 7.95986 9.05632L11.5428 7.26488C12.0688 7.72317 12.7512 8 13.5 8C13.5 7.65482 13.5 7.34518 13.5 7Z" fill="currentColor" />
+            </svg>
+          </button>
         </div>
       </div>
     </>

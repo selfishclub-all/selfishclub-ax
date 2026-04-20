@@ -271,6 +271,13 @@ export const phases: PhaseInfo[] = [
       { id: "3-T2", title: "[테스트] 프론트에서 Supabase 직접 호출 없는지 최종 확인", status: "todo", phase: 3, category: "test" },
       { id: "3-T3", title: "[테스트] BetterAuth /mypage, /admin 접근 제어 확인", status: "todo", phase: 3, category: "test", page: "/mypage" },
       { id: "3-8", title: "인스타그램 피드 정상화", status: "todo", phase: 3, category: "content" },
+      { id: "SEC-1", title: "🔴 [보안] Vercel 환경변수 전체 교체 + Sensitive 전환", status: "in-progress", phase: 3, category: "setup" },
+      { id: "SEC-2", title: "🔴 [보안] Vercel Activity Log 이상 여부 확인", status: "todo", phase: 3, category: "setup" },
+      { id: "SEC-3", title: "🟡 [보안] Google OAuth 앱 점검 — 미사용 앱 해제", status: "todo", phase: 3, category: "auth" },
+      { id: "SEC-4", title: "🟡 [보안] Supabase 접근 키 재발급 (anon + service role)", status: "todo", phase: 3, category: "setup" },
+      { id: "SEC-5", title: "🟡 [보안] 카카오 클라이언트 시크릿 재발급", status: "todo", phase: 3, category: "auth" },
+      { id: "SEC-6", title: "🔵 [보안] 포트원 키 권한 최소화 확인", status: "todo", phase: 3, category: "payment" },
+      { id: "SEC-7", title: "🔵 [보안] Supabase RLS 정책 점검", status: "todo", phase: 3, category: "setup" },
     ],
   },
 ];
