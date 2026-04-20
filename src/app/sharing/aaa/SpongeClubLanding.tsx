@@ -323,7 +323,7 @@ export function SpongeClubLanding({ item }: Props) {
               무료 온라인 공유회 · 4월 28일(화) 20:30
             </motion.p>
             <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.3] sm:leading-[1.2] mb-6 whitespace-pre-line">
-{`AI, '딸-깍'이 가능할까요?\n6주 동안 직접 부딪쳐봤습니다.`}
+{`AI, '딸-깍'이 가능할까요?\n6주간 직접 부딪쳐봤습니다.`}
             </h1>
           </div>
 
@@ -803,7 +803,7 @@ export function SpongeClubLanding({ item }: Props) {
 
       {/* ── 플로팅 CTA (신청 섹션 도달 시 숨김) ── */}
       <div className={`fixed bottom-0 left-0 right-0 z-40 p-4 sm:p-5 transition-all duration-300 ${
-        isRegisterVisible ? "opacity-0 pointer-events-none translate-y-4" : "opacity-100 translate-y-0"
+        (isRegisterVisible || formSubmitted) ? "opacity-0 pointer-events-none translate-y-4" : "opacity-100 translate-y-0"
       }`}>
         <div className="max-w-lg mx-auto flex gap-2">
           <a
@@ -817,7 +817,7 @@ export function SpongeClubLanding({ item }: Props) {
               if (navigator.share) {
                 navigator.share({
                   title: "셀피쉬클럽 AAA 공유회",
-                  text: "AI, '딸-깍'이 가능할까요? 6주 동안 직접 부딪쳐봤습니다.",
+                  text: "AI, '딸-깍'이 가능할까요? 6주간 직접 부딪쳐봤습니다.",
                   url: window.location.href,
                 });
               } else {
