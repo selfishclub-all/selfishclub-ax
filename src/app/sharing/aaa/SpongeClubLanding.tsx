@@ -182,34 +182,37 @@ function SpeakerCard({ speaker, delay }: { speaker: (typeof SPEAKERS)[0]; delay:
           <p className="text-base sm:text-lg text-white/90 leading-[1.8] whitespace-pre-line"><HighlightedText text={speaker.desc} /></p>
         </div>
 
-        {/* 3. 세션 이미지 */}
-        {speaker.image ? (
-          <div className="aspect-[16/9] overflow-hidden">
-            <img src={speaker.image} alt={`${speaker.name} 세션`} className="w-full h-full object-cover" />
-          </div>
-        ) : (
-          <div className="aspect-[16/9] bg-white/[0.02] flex items-center justify-center">
-            <span className="text-white/10 text-xs font-mono">SESSION IMAGE</span>
-          </div>
-        )}
+        {/* 3+4. 이미지 + Before/After — 하나의 둥근 사각형으로 통합 */}
+        <div className="mx-5 sm:mx-6 mb-6 rounded-xl overflow-hidden border border-[#E8E8E3]/30">
+          {/* 세션 이미지 */}
+          {speaker.image ? (
+            <div className="aspect-[16/9] overflow-hidden">
+              <img src={speaker.image} alt={`${speaker.name} 세션`} className="w-full h-full object-cover" />
+            </div>
+          ) : (
+            <div className="aspect-[16/9] bg-white/[0.02] flex items-center justify-center">
+              <span className="text-white/10 text-xs font-mono">SESSION IMAGE</span>
+            </div>
+          )}
 
-        {/* 4. Before → After (밝은 회색 박스) */}
-        {speaker.before && speaker.after && (
-          <div className="bg-[#E8E8E3] px-6 py-8 sm:px-8 sm:py-10">
-            <div className="flex items-start gap-3 mb-6">
-              <span className="text-xs font-bold text-[#0A0A0A]/40 bg-[#0A0A0A]/10 px-2.5 py-1 rounded shrink-0 mt-0.5">6주 전</span>
-              <p className="text-base text-[#0A0A0A]/50 leading-[1.7] whitespace-pre-line">{speaker.before}</p>
+          {/* Before → After */}
+          {speaker.before && speaker.after && (
+            <div className="bg-[#E8E8E3] px-6 py-8 sm:px-8 sm:py-10">
+              <div className="flex items-start gap-3 mb-6">
+                <span className="text-xs font-bold text-[#0A0A0A]/40 bg-[#0A0A0A]/10 px-2.5 py-1 rounded shrink-0 mt-0.5">6주 전</span>
+                <p className="text-base text-[#0A0A0A]/50 leading-[1.7] whitespace-pre-line">{speaker.before}</p>
+              </div>
+              <div className="flex items-center gap-2 my-4 ml-1">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-[#0A0A0A]/30"><path d="M7 2V12M7 12L3 8M7 12L11 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <div className="flex-1 h-px bg-[#0A0A0A]/10" />
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-xs font-bold text-[#0A0A0A] bg-[#E2E545] px-2.5 py-1 rounded shrink-0 mt-0.5">지금</span>
+                <p className="text-base text-[#0A0A0A] font-bold leading-[1.7] whitespace-pre-line">{speaker.after}</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2 my-4 ml-1">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-[#0A0A0A]/30"><path d="M7 2V12M7 12L3 8M7 12L11 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              <div className="flex-1 h-px bg-[#0A0A0A]/10" />
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-xs font-bold text-[#0A0A0A] bg-[#E2E545] px-2.5 py-1 rounded shrink-0 mt-0.5">지금</span>
-              <p className="text-base text-[#0A0A0A] font-bold leading-[1.7] whitespace-pre-line">{speaker.after}</p>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </FadeUp>
   );
