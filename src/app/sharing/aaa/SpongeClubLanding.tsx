@@ -291,6 +291,42 @@ export function SpongeClubLanding({ item }: Props) {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [pendingData, setPendingData] = useState<{
+    u_name: string;
+    u_phone: string;
+    u_email: string;
+    slug: string;
+    utm_source: string;
+    utm_medium: string;
+    utm_campaign: string;
+    utm_content: string;
+    utm_term: string;
+  } | null>(null);
+
+  const submitRegistration = async (data: NonNullable<typeof pendingData>) => {
+    setFormLoading(true);
+    setFormError("");
+    try {
+      const res = await fetch("/api/registrations/free", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
+      if (result.error) {
+        setFormError(result.error);
+      } else {
+        setFormSubmitted(true);
+      }
+    } catch {
+      setFormError("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+    } finally {
+      setFormLoading(false);
+      setShowConfirm(false);
+      setPendingData(null);
+    }
+  };
   const registerRef = useRef<HTMLDivElement>(null);
   const isRegisterVisible = useInView(registerRef, { margin: "0px" });
 
@@ -705,9 +741,8 @@ export function SpongeClubLanding({ item }: Props) {
           <FadeUp delay={0.1}>
             {!formSubmitted ? (
               <form
-                onSubmit={async (e) => {
+                onSubmit={(e) => {
                   e.preventDefault();
-                  setFormLoading(true);
                   setFormError("");
                   const form = e.currentTarget;
                   const params = new URLSearchParams(window.location.search);
@@ -722,23 +757,8 @@ export function SpongeClubLanding({ item }: Props) {
                     utm_content: params.get("utm_content") || "",
                     utm_term: params.get("utm_term") || "",
                   };
-                  try {
-                    const res = await fetch("/api/registrations/free", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify(data),
-                    });
-                    const result = await res.json();
-                    if (result.error) {
-                      setFormError(result.error);
-                    } else {
-                      setFormSubmitted(true);
-                    }
-                  } catch {
-                    setFormError("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
-                  } finally {
-                    setFormLoading(false);
-                  }
+                  setPendingData(data);
+                  setShowConfirm(true);
                 }}
                 className="space-y-3"
               >
@@ -760,15 +780,21 @@ export function SpongeClubLanding({ item }: Props) {
                 )}
               </form>
             ) : (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-lg p-10 text-center">
-                <p className="text-[#0A0A0A] font-medium text-lg mb-3">신청이 완료됐습니다!</p>
-                <p className="text-base text-[#0A0A0A]/50 leading-relaxed mb-3">라이브 링크는 행사 당일 이메일과 알림톡으로 보내드릴게요.</p>
-                <p className="text-sm text-[#0A0A0A]/70 font-bold leading-relaxed mb-5">📢 당일 카카오톡에서 셀피쉬클럽 알림톡 채팅창을 꼭 확인해주세요!</p>
-                <div className="bg-[#0A0A0A]/5 rounded-lg p-4 text-left">
-                  <p className="text-sm text-[#0A0A0A]/60 leading-[1.7]">
-                    셀피쉬클럽은 지금 AX의 일환으로 <strong className="text-[#0A0A0A]/80">홈페이지 리뉴얼도 진행 중</strong>에 있어요! 이번 공유회는 신청을 하셨더라도 기존 홈페이지의 마이페이지에서 신청내역이 보이지 않을 수 있어요. <strong className="text-[#0A0A0A]/80">이 페이지까지 오셨다면 신청은 정상적으로 접수</strong>됐으니 걱정 마시고, 궁금한 점은 <a href="http://pf.kakao.com/_dxmxixhG/chat" target="_blank" rel="noopener noreferrer" className="text-[#0A0A0A] font-bold underline">카카오 채널</a>로 편하게 문의해 주세요.
-                  </p>
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-lg p-8 text-center">
+                <p className="text-4xl mb-4">🎉</p>
+                <p className="text-[#0A0A0A] font-bold text-xl mb-2">신청 완료!</p>
+                <p className="text-sm text-[#0A0A0A]/50 leading-relaxed mb-6">행사 당일, 알림톡과 이메일로 라이브 링크를 보내드려요.</p>
+                <div className="space-y-3 text-left">
+                  <div className="flex items-start gap-3 bg-[#0A0A0A]/5 rounded-lg px-4 py-3">
+                    <span className="text-base mt-0.5">💬</span>
+                    <p className="text-sm text-[#0A0A0A]/70 leading-relaxed">당일 <strong className="text-[#0A0A0A]">카카오톡 셀피쉬클럽 알림톡</strong> 채팅창을 꼭 확인해주세요!</p>
+                  </div>
+                  <div className="flex items-start gap-3 bg-[#0A0A0A]/5 rounded-lg px-4 py-3">
+                    <span className="text-base mt-0.5">🔧</span>
+                    <p className="text-sm text-[#0A0A0A]/70 leading-relaxed">홈페이지 리뉴얼 중이라 기존 마이페이지에 신청내역이 안 보일 수 있어요. 신청은 정상 접수됐으니 걱정 마세요!</p>
+                  </div>
                 </div>
+                <a href="http://pf.kakao.com/_dxmxixhG/chat" target="_blank" rel="noopener noreferrer" className="inline-block mt-5 text-sm text-[#0A0A0A]/50 underline hover:text-[#0A0A0A]/70">궁금한 점은 카카오 채널로 문의</a>
               </motion.div>
             )}
             <div className="flex justify-center gap-4 pt-5">
@@ -776,6 +802,51 @@ export function SpongeClubLanding({ item }: Props) {
               <span className="text-xs text-[#0A0A0A]/20">|</span>
               <a href="https://sepia-quartz-81f.notion.site/22b5c0a0464680528d1ffb54dfd7eaeb" target="_blank" rel="noopener noreferrer" className="text-xs text-[#0A0A0A]/40 underline hover:text-[#0A0A0A]/60">개인정보처리방침</a>
             </div>
+
+            {showConfirm && pendingData && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" onClick={() => setShowConfirm(false)}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-white rounded-xl p-6 w-full max-w-sm shadow-2xl"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <p className="text-lg font-bold text-[#0A0A0A] mb-1">입력하신 정보를 체크해 주세요🫶</p>
+                  <p className="text-sm text-[#0A0A0A]/50 mb-4">잘못된 정보 입력 시 라이브 입장 링크를 못 받으실 수도 있어요</p>
+                  <div className="space-y-2 mb-6">
+                    <div className="flex justify-between py-2 border-b border-[#0A0A0A]/10">
+                      <span className="text-sm text-[#0A0A0A]/50">이름</span>
+                      <span className="text-sm font-medium text-[#0A0A0A]">{pendingData.u_name}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-[#0A0A0A]/10">
+                      <span className="text-sm text-[#0A0A0A]/50">전화번호</span>
+                      <span className="text-sm font-medium text-[#0A0A0A]">{pendingData.u_phone}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-[#0A0A0A]/10">
+                      <span className="text-sm text-[#0A0A0A]/50">이메일</span>
+                      <span className="text-sm font-medium text-[#0A0A0A]">{pendingData.u_email}</span>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirm(false)}
+                      className="flex-1 py-3 rounded-lg border border-[#0A0A0A]/20 text-sm font-medium text-[#0A0A0A] hover:bg-[#0A0A0A]/5 transition-colors"
+                    >
+                      수정하기
+                    </button>
+                    <button
+                      type="button"
+                      disabled={formLoading}
+                      onClick={() => submitRegistration(pendingData)}
+                      className="flex-1 py-3 rounded-lg bg-[#0A0A0A] text-[#E2E545] text-sm font-bold hover:bg-[#1a1a1a] transition-colors disabled:opacity-50"
+                    >
+                      {formLoading ? "신청 중..." : "신청 완료하기"}
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            )}
           </FadeUp>
         </div>
       </section>
