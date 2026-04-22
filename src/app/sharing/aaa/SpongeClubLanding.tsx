@@ -296,8 +296,8 @@ export function SpongeClubLanding({ item }: Props) {
 
   return (
     <>
-      {/* ═══ 탑띠배너 + 카운트다운 ═══ */}
-      <TopBanner />
+      {/* ═══ 탑띠배너 + 카운트다운 (임시 숨김) ═══ */}
+      {/* <TopBanner /> */}
 
       {/* ═══ HERO (다크) ═══ */}
       <section

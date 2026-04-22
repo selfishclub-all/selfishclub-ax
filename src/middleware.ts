@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 // 접근 허용 경로
 const ALLOWED = [
   "/sharing/aaa",
+  "/campaign",
   "/coming-soon",
   "/api/",
   "/_next/",

@@ -121,6 +121,11 @@ export async function POST(request: NextRequest) {
           slug,
           event_count: eventCount,
           is_new: isNew,
+          utm_source: utm_source || "",
+          utm_medium: utm_medium || "",
+          utm_campaign: utm_campaign || "",
+          utm_content: utm_content || "",
+          utm_term: utm_term || "",
         }),
       });
     } catch {
