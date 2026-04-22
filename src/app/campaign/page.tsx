@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-const CAMPAIGN_PASSWORD = "vjsznftprwhk";
+const CAMPAIGN_PASSWORD = "0428";
 
 interface CampaignData {
   total: number;
