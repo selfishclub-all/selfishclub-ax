@@ -33,10 +33,46 @@ interface CampaignData {
 interface ActionRecord {
   id: number;
   date: string;
-  channel: string;
-  audience: number;
-  cost: number;
   memo: string;
+  link: string;
+  sentCount: number;
+  utm: {
+    utm_source: string;
+    utm_medium: string;
+    utm_campaign: string;
+    utm_content: string;
+    utm_term: string;
+  };
+}
+
+function parseUtmFromLink(link: string): ActionRecord["utm"] {
+  try {
+    const url = new URL(link.startsWith("http") ? link : `https://${link}`);
+    return {
+      utm_source: url.searchParams.get("utm_source") || "",
+      utm_medium: url.searchParams.get("utm_medium") || "",
+      utm_campaign: url.searchParams.get("utm_campaign") || "",
+      utm_content: url.searchParams.get("utm_content") || "",
+      utm_term: url.searchParams.get("utm_term") || "",
+    };
+  } catch {
+    return { utm_source: "", utm_medium: "", utm_campaign: "", utm_content: "", utm_term: "" };
+  }
+}
+
+function countConversions(
+  action: ActionRecord,
+  events: CampaignData["events"]
+): number {
+  return events.filter((e) => {
+    const u = action.utm;
+    if (u.utm_source && (e.utm_source || "") !== u.utm_source) return false;
+    if (u.utm_medium && (e.utm_medium || "") !== u.utm_medium) return false;
+    if (u.utm_campaign && (e.utm_campaign || "") !== u.utm_campaign) return false;
+    if (u.utm_content && (e.utm_content || "") !== u.utm_content) return false;
+    if (u.utm_term && (e.utm_term || "") !== u.utm_term) return false;
+    return true;
+  }).length;
 }
 
 function UtmRanking({ ranking }: { ranking: { label: string; count: number }[] }) {
@@ -112,10 +148,10 @@ export default function CampaignDashboard() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"today" | "overview">("today");
 
-  // 액션 기록
+  // CRM 액션 기록
   const [actions, setActions] = useState<ActionRecord[]>([]);
   const [showActionForm, setShowActionForm] = useState(false);
-  const [actionForm, setActionForm] = useState({ date: "", channel: "", audience: "", cost: "", memo: "" });
+  const [actionForm, setActionForm] = useState({ date: "", memo: "", link: "", sentCount: "" });
 
   useEffect(() => {
     const saved = localStorage.getItem("campaign_actions");
@@ -152,19 +188,20 @@ export default function CampaignDashboard() {
   };
 
   const saveAction = () => {
-    if (!actionForm.date || !actionForm.channel || !actionForm.audience) return;
+    if (!actionForm.link || !actionForm.sentCount) return;
+    const utm = parseUtmFromLink(actionForm.link);
     const newAction: ActionRecord = {
       id: Date.now(),
-      date: actionForm.date,
-      channel: actionForm.channel,
-      audience: Number(actionForm.audience),
-      cost: Number(actionForm.cost) || 0,
+      date: actionForm.date || new Date().toISOString().slice(0, 10),
       memo: actionForm.memo,
+      link: actionForm.link,
+      sentCount: Number(actionForm.sentCount),
+      utm,
     };
     const updated = [newAction, ...actions];
     setActions(updated);
     localStorage.setItem("campaign_actions", JSON.stringify(updated));
-    setActionForm({ date: "", channel: "", audience: "", cost: "", memo: "" });
+    setActionForm({ date: "", memo: "", link: "", sentCount: "" });
     setShowActionForm(false);
   };
 
@@ -208,8 +245,6 @@ export default function CampaignDashboard() {
 
   const pct = Math.round((data.total / data.goal) * 100);
   const maxDaily = Math.max(...data.dailyTrend.map((d) => d.count), 1);
-  const totalActionCost = actions.reduce((s, a) => s + a.cost, 0);
-  const totalAudience = actions.reduce((s, a) => s + a.audience, 0);
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
@@ -306,7 +341,7 @@ export default function CampaignDashboard() {
       </div>
 
       {/* 날짜별 신청 추이 — 탭 밖 고정 영역 */}
-      <div className="px-4 pb-20">
+      <div className="px-4 pb-8">
         <h2 className="text-sm font-bold mb-3">날짜별 신청 추이</h2>
         <div className="bg-white/5 rounded-lg p-3 overflow-x-auto">
           <svg
@@ -354,6 +389,175 @@ export default function CampaignDashboard() {
             })}
           </svg>
         </div>
+      </div>
+
+      {/* CRM 액션 전환율 */}
+      <div className="px-4 pb-20">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-bold">CRM 액션 전환율</h2>
+          <button
+            onClick={() => setShowActionForm(!showActionForm)}
+            className="text-xs text-[#E2E545] border border-[#E2E545]/30 px-3 py-1.5 rounded"
+          >
+            {showActionForm ? "취소" : "+ 액션 등록"}
+          </button>
+        </div>
+
+        {showActionForm && (
+          <div className="bg-white/5 rounded-lg p-4 mb-4 space-y-3">
+            <div>
+              <label className="text-xs text-white/40 block mb-1">UTM 링크 *</label>
+              <input
+                type="text"
+                value={actionForm.link}
+                onChange={(e) => setActionForm({ ...actionForm, link: e.target.value })}
+                placeholder="http://selfishclub.xyz/sharing/aaa?utm_medium=crm&utm_source=..."
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#E2E545]/50"
+              />
+              {actionForm.link && (() => {
+                const parsed = parseUtmFromLink(actionForm.link);
+                const hasUtm = Object.values(parsed).some(Boolean);
+                return hasUtm ? (
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {Object.entries(parsed).filter(([, v]) => v).map(([k, v]) => (
+                      <span key={k} className="text-[10px] bg-[#E2E545]/10 text-[#E2E545] px-2 py-0.5 rounded">
+                        {k.replace("utm_", "")}: {v}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-[10px] text-red-400 mt-1">UTM 파라미터를 찾을 수 없습니다</p>
+                );
+              })()}
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs text-white/40 block mb-1">발송 모수 *</label>
+                <input
+                  type="number"
+                  value={actionForm.sentCount}
+                  onChange={(e) => setActionForm({ ...actionForm, sentCount: e.target.value })}
+                  placeholder="1000"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#E2E545]/50"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-white/40 block mb-1">발송일</label>
+                <input
+                  type="date"
+                  value={actionForm.date}
+                  onChange={(e) => setActionForm({ ...actionForm, date: e.target.value })}
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-sm text-white focus:outline-none focus:border-[#E2E545]/50"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="text-xs text-white/40 block mb-1">메모</label>
+              <input
+                type="text"
+                value={actionForm.memo}
+                onChange={(e) => setActionForm({ ...actionForm, memo: e.target.value })}
+                placeholder="예: 설문자 대상 우선신청 안내"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#E2E545]/50"
+              />
+            </div>
+            <button
+              onClick={saveAction}
+              disabled={!actionForm.link || !actionForm.sentCount}
+              className="w-full bg-[#E2E545] text-[#0A0A0A] font-bold text-sm py-2.5 rounded disabled:opacity-30"
+            >
+              등록
+            </button>
+          </div>
+        )}
+
+        {actions.length === 0 && !showActionForm && (
+          <div className="bg-white/5 rounded-lg p-6 text-center">
+            <p className="text-sm text-white/30">등록된 CRM 액션이 없습니다</p>
+            <p className="text-xs text-white/20 mt-1">UTM 링크와 발송 모수를 등록하면 전환율을 자동 계산합니다</p>
+          </div>
+        )}
+
+        {actions.length > 0 && (
+          <div className="space-y-3">
+            {/* 요약 */}
+            {actions.length >= 2 && (() => {
+              const totalSent = actions.reduce((s, a) => s + a.sentCount, 0);
+              const totalConv = actions.reduce((s, a) => s + countConversions(a, data.events), 0);
+              const avgRate = totalSent > 0 ? ((totalConv / totalSent) * 100).toFixed(2) : "0";
+              return (
+                <div className="bg-white/5 rounded-lg p-3 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-white/40">전체 CRM 평균</p>
+                    <p className="text-xs text-white/40 mt-0.5">
+                      발송 {totalSent.toLocaleString()}명 → 전환 {totalConv}명
+                    </p>
+                  </div>
+                  <p className="text-xl font-bold text-[#E2E545]">{avgRate}%</p>
+                </div>
+              );
+            })()}
+
+            {/* 개별 액션 카드 — 전환율 높은 순 */}
+            {[...actions]
+              .map((action) => ({
+                action,
+                conv: countConversions(action, data.events),
+                rate: action.sentCount > 0 ? (countConversions(action, data.events) / action.sentCount) * 100 : 0,
+              }))
+              .sort((a, b) => b.rate - a.rate)
+              .map(({ action, conv, rate: rateNum }) => {
+              const rate = rateNum.toFixed(2);
+              return (
+                <div key={action.id} className="bg-white/5 rounded-lg p-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-white truncate">
+                        {action.memo || action.utm.utm_content || "CRM 액션"}
+                      </p>
+                      <p className="text-xs text-white/30 mt-0.5">{action.date}</p>
+                    </div>
+                    <button
+                      onClick={() => deleteAction(action.id)}
+                      className="text-xs text-white/20 hover:text-red-400 ml-2 shrink-0"
+                    >
+                      삭제
+                    </button>
+                  </div>
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {Object.entries(action.utm).filter(([, v]) => v).map(([k, v]) => (
+                      <span key={k} className="text-[10px] bg-white/5 text-white/40 px-2 py-0.5 rounded">
+                        {k.replace("utm_", "")}: {v}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-end justify-between">
+                    <div className="flex gap-4">
+                      <div>
+                        <p className="text-[10px] text-white/30">발송</p>
+                        <p className="text-sm font-medium">{action.sentCount.toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-white/30">전환</p>
+                        <p className="text-sm font-medium">{conv}</p>
+                      </div>
+                    </div>
+                    <p className={`text-2xl font-bold ${Number(rate) >= 1 ? "text-[#E2E545]" : "text-white/60"}`}>
+                      {rate}%
+                    </p>
+                  </div>
+                  {/* 전환율 바 */}
+                  <div className="w-full bg-white/10 rounded-full h-1.5 mt-2">
+                    <div
+                      className="bg-[#E2E545] h-1.5 rounded-full transition-all"
+                      style={{ width: `${Math.min(Number(rate), 100)}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
