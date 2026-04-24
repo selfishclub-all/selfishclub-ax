@@ -660,7 +660,7 @@ export function SpongeClubLanding({ item }: Props) {
                 </div>
                 <div className="bg-white rounded-lg p-4 sm:p-5 text-center">
                   <p className="text-base font-extrabold text-[#0A0A0A] mb-1">📖 40페이지 분량 교안 제공</p>
-                  <p className="text-sm text-[#0A0A0A]/60">라이브 내용을 활용한 교안</p>
+                  <p className="text-sm text-[#0A0A0A]/60">후기 작성 시 라이브 내용을 활용한 교안</p>
                 </div>
               </div>
             </div>
