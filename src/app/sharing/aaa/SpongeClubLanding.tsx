@@ -733,7 +733,7 @@ export function SpongeClubLanding({ item }: Props) {
                 라이브에서 만나요
               </h2>
               <p className="text-base text-[#0A0A0A]/70 leading-[1.7] whitespace-pre-line">
-                {"공유회 당일 알림톡과 이메일로 라이브 링크를 보내드립니다.\nVOD가 제공되지 않으니 꼭 라이브에 참여해 주세요."}
+{"공유회 당일 알림톡과 이메일로 라이브 링크를 보내드립니다.\n선착순 1000명으로 입장이 제한됩니다."}
               </p>
             </div>
           </FadeUp>
@@ -773,7 +773,7 @@ export function SpongeClubLanding({ item }: Props) {
                   disabled={formLoading}
                   className="w-full bg-[#0A0A0A] text-[#E2E545] font-bold text-base py-4 rounded hover:bg-[#1a1a1a] transition-all duration-300 mt-3 disabled:opacity-50"
                 >
-                  {formLoading ? "신청 중..." : "마감되기 전에 신청하기"}
+                  {formLoading ? "신청 중..." : "지금 신청하기"}
                 </button>
                 {formError && (
                   <p className="text-sm text-red-600 text-center pt-2">{formError}</p>
@@ -887,7 +887,7 @@ export function SpongeClubLanding({ item }: Props) {
             href="#register"
             className="flex-1 font-bold text-base text-center py-4 rounded-full bg-[#E2E545] text-[#0A0A0A]"
           >
-            마감되기 전에 신청하기
+            지금 신청하기
           </a>
           <button
             onClick={() => {
