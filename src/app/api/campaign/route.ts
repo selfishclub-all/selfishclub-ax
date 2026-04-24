@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
 const TARGET_IID = "iid_1002";
-const TARGET_GOAL = 1500;
+const TARGET_GOAL = 2000;
 
 export async function GET() {
   // 전체 신청 데이터 조회
