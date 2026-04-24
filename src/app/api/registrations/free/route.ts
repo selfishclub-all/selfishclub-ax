@@ -71,16 +71,16 @@ export async function POST(request: NextRequest) {
   }
 
   // 4. item.i_event_count 증가
-  const { data: countData } = await supabase
+  const { count: eventCount } = await supabase
     .from("event")
-    .select("ID")
+    .select("*", { count: "exact", head: true })
     .eq("iid", item.iid);
 
-  const eventCount = countData?.length ?? 0;
+  const finalCount = eventCount ?? 0;
 
   await supabase
     .from("item")
-    .update({ i_event_count: eventCount })
+    .update({ i_event_count: finalCount })
     .eq("iid", item.iid);
 
   // 5. membership 테이블에 자동 가입 (이미 회원이면 스킵)
@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
           item_title: item.i_title_userside || item.i_title,
           item_schedule: item.i_full_schedule,
           slug,
-          event_count: eventCount,
+          event_count: finalCount,
           is_new: isNew,
           utm_source: utm_source || "",
           utm_medium: utm_medium || "",
@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
   }
 
   return NextResponse.json({
-    data: { message: "신청 완료", eventCount },
+    data: { message: "신청 완료", eventCount: finalCount },
     error: null,
   });
 }
