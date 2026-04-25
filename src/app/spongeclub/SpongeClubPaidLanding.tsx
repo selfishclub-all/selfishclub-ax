@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useInView } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import * as PortOne from "@portone/browser-sdk/v2";
 
 /* ─── 타입 ─── */
@@ -66,14 +66,16 @@ function FadeUp({
 /* ─── 네비게이션 데이터 ─── */
 const NAV_ITEMS = [
   { id: "pain-point", label: "문제" },
+  { id: "agentic", label: "에이전틱" },
   { id: "answer", label: "해답" },
-  { id: "target", label: "대상" },
   { id: "proof", label: "검증" },
   { id: "curriculum", label: "커리큘럼" },
   { id: "leadership", label: "운영진" },
+  { id: "after", label: "수료 후" },
   { id: "benefits", label: "1기 혜택" },
-  { id: "faq", label: "FAQ" },
+  { id: "target", label: "대상" },
   { id: "register", label: "신청" },
+  { id: "faq", label: "FAQ" },
 ] as const;
 
 /* ─── 데이터: 페인포인트 ─── */
@@ -168,13 +170,13 @@ const VOICE_CARDS = [
 
 /* ─── 데이터: 커리큘럼 ─── */
 const CURRICULUM_WEEKS = [
-  { week: "W1", date: "5/3 (일)", title: "오리엔테이션", desc: "조별 인사 + VOD 2편 + 인터뷰 스킬 + AAA팀 OS 소개" },
-  { week: "W2", date: "5/10 (일)", title: "나만의 OS 시작", desc: "Claude Code 준비 + OS 사례 공유 시작" },
-  { week: "W3", date: "5/17 (일)", title: "스킬 공유 + 제작 시작", desc: "필요한 스킬 논의 + 각자 유저 프로덕트 초안" },
-  { week: "W4", date: "5/24 (일)", title: "유저 프로덕트 기획", desc: "누구를 위해 왜 만드는가" },
-  { week: "W5", date: "5/31 (일)", title: "고도화 + 프로모션", desc: "실제 쓰이게 만드는 방법론 + 유저 5명 접촉" },
-  { week: "W6", date: "6/7 (토) or 6/8 (일)", title: "AI 시대 학습·생존 [오프라인]", desc: "커리어와 AI 활용 실행 방안" },
-  { week: "W7", date: "6/14 (일)", title: "마무리 & 공유", desc: "전원 결과물 · 회고 · 옵시디언 아카이브" },
+  { week: "W1", date: "5/3 (일)", emoji: "🎬", title: "첫 만남 · 조 편성 · 작업 환경 세팅", desc: "조별 인사 + GitHub·Obsidian·Claude Code 세팅 + AI 인터뷰 세션 + AAA팀 OS 둘러보기. 약 1.5시간." },
+  { week: "W2", date: "5/10 (일)", emoji: "🧩", title: "나만의 AI OS 만들기", desc: "스폰지클럽 OS 사례 공개 + 개인 OS 사례 3인 공유(다니·흐민·다다) + Claude 웹/Code에 OS 얹기" },
+  { week: "W3", date: "5/17 (일)", emoji: "🎨", title: "AI를 내 의도대로 · 이미지도 내 손으로", desc: "OS 상호 피드백 + 오케스트레이션·하네스 + 이미지 생성 실습(나노바나나 2.0·덱테이커)" },
+  { week: "W4", date: "5/24 (일)", emoji: "🎯", title: "유저가 쓸 프로덕트 만들기 시작", desc: "비비안·오웬 프로덕트 공유회 + 대상 유저·기획 근거·가치·초기 마케팅 정리 + 첫 버전 제작" },
+  { week: "W5", date: "5/31 (일)", emoji: "🚀", title: "유저 프로덕트 고도화 + 프로모션", desc: "유저 프로덕트 고도화 + 젬마의 프로모션 방법론 + 에밀리의 CRM 사례" },
+  { week: "W6", date: "6/7 (일)", emoji: "🏕️", title: "AI 시대의 커리어 — 오프라인 모임", desc: "7주 중 유일한 대면 모임. 젬마 오프닝 + 조별 크로스 토론 + 유저 반응 수집" },
+  { week: "W7", date: "6/14 (일)", emoji: "🎉", title: "7주의 결과물, 세상에 꺼내기", desc: "최종 발표 + 7주 회고 + Obsidian 아카이브 게재 + 스폰지클럽 크루 전환 안내" },
 ];
 
 /* ─── 데이터: 리더십 ─── */
@@ -184,58 +186,51 @@ const LEADER_GEMMA = {
   desc: "마케터·비개발자 170명의 페인포인트를 직접 듣고, AAA팀 6주 실험을 거쳐 스폰지 클럽을 설계했습니다. \"혼자 가면 빨리 가지만, 함께 가면 멀리 간다\"를 실천으로 증명합니다.",
 };
 
-const CREW_MEMBERS = [
-  { name: "다다", role: "PM · 팀 리더", photo: "/images/spongeclub/crew/다다.png", desc: "" },
-  { name: "다니", role: "콘텐츠 · 마케팅", photo: "/images/spongeclub/crew/다니.png", desc: "" },
-  { name: "오웬", role: "플랫폼 빌더", photo: "/images/spongeclub/crew/오웬.png", desc: "" },
-  { name: "띵크", role: "워크플로우 아키텍트", photo: "/images/spongeclub/crew/띵크.png", desc: "" },
-  { name: "비비안", role: "운영 · AX 디자인", photo: "/images/spongeclub/crew/비비안.png", desc: "" },
-  { name: "흐민", role: "AI 씽킹 파트너", photo: "/images/spongeclub/crew/흐민.png", desc: "" },
-  { name: "에밀리", role: "CRM · 멤버 관계", photo: "/images/spongeclub/crew/에밀리.png", desc: "" },
+const CREW_PAIRS = [
+  { leader: "오웬", leaderRole: "플랫폼 빌더 · 월 1개 유저 프로덕트 런칭", sub: "다니", leaderPhoto: "/images/spongeclub/crew/오웬.png", subPhoto: "/images/spongeclub/crew/다니.png" },
+  { leader: "비비안", leaderRole: "AX PM · 프로덕트 구조 설계", sub: "키니", leaderPhoto: "/images/spongeclub/crew/비비안.png", subPhoto: "" },
+  { leader: "띵크", leaderRole: "워크플로우 아키텍트 · Vercel 자동배포", sub: "위시", leaderPhoto: "/images/spongeclub/crew/띵크.png", subPhoto: "" },
+  { leader: "흐민", leaderRole: "AI 씽킹 파트너 · Sullivan 프로젝트", sub: "에밀리", leaderPhoto: "/images/spongeclub/crew/흐민.png", subPhoto: "/images/spongeclub/crew/에밀리.png" },
+  { leader: "다다", leaderRole: "팀 리더 · 운영 OS 설계자", sub: "루리", leaderPhoto: "/images/spongeclub/crew/다다.png", subPhoto: "" },
 ];
 
 /* ─── 데이터: 1기 혜택 ─── */
 const BENEFIT_CARDS = [
-  { emoji: "💰", title: "1기 한정 최저가", desc: "1차 55만 원 (3일간) · 2차 60만 원" },
-  { emoji: "🎓", title: "워크숍 2종 무료 (총 40만 원 상당)", desc: "그리터 기획자 + Claude 기초" },
-  { emoji: "🤝", title: "먼저 완주한 9명과 같은 조", desc: "AAA팀이 여러분과 함께합니다" },
-  { emoji: "🔑", title: "스폰지 인터뷰 스킬 + AAA OS 최초 공개", desc: "1기만 받는 배포 자료" },
-  { emoji: "📸", title: "1기 크루 = 2기 레퍼런스", desc: "옵시디언 아카이브 사이트 게재" },
-  { emoji: "🏅", title: "OB 멤버십 우선 자격", desc: "커뮤니티 다음 챕터 우선 참여" },
+  { emoji: "💰", title: "1기 한정 최저가", desc: "1차 55만 원 / 2차 65만 원" },
+  { emoji: "🎓", title: "GitHub + Claude Code 워크숍 편집 VOD", desc: "40만 원 상당" },
+  { emoji: "🤝", title: "5개 조 · 조당 8~10명의 빌딩 파트너", desc: "" },
+  { emoji: "🔑", title: "스폰지 인터뷰 스킬 + 스폰지클럽 OS 풀 액세스", desc: "" },
+  { emoji: "☕", title: "오픈 클로 셋업 데이", desc: "함께 모여 환경 세팅하는 자리" },
+  { emoji: "📸", title: "Obsidian 아카이브 공식 사이트 게재", desc: "" },
+  { emoji: "🏅", title: "수료 후 스폰지클럽 크루 전환", desc: "" },
+  { emoji: "💬", title: "2026 내부 크루용 이기적 공유 세션 무료 참여", desc: "" },
 ];
 
 /* ─── 데이터: FAQ ─── */
 const FAQ_CATEGORIES = [
   {
-    category: "대상 · 참여 조건",
+    category: "대상 · 참여",
     items: [
-      { q: "코딩을 전혀 몰라도 참여할 수 있나요?", a: "네, 가능합니다. 스폰지 클럽은 비개발자를 위해 설계되었습니다. Claude Code를 활용하면 코딩 경험 없이도 실제 서비스를 만들 수 있고, AAA팀 8명 중 대부분이 비개발자였습니다." },
-      { q: "마케터가 아니어도 참여할 수 있나요?", a: "물론입니다. 마케터, 기획자, 디자이너, 영업, 대표 등 비개발 직군이라면 누구든 환영합니다. 핵심은 'AI를 활용해 내 문제를 풀고 싶은 의지'입니다." },
-      { q: "⭐ 필요한 장비나 소프트웨어가 있나요?", a: "맥북 또는 윈도우 노트북이 필요합니다. Claude Code 구독(월 $20), 옵시디언(무료), GitHub 계정(무료)이 필요하며, 상세 세팅 가이드는 W1에서 제공합니다." },
+      { q: "코딩을 전혀 몰라도 괜찮나요?", a: "네. 비개발자를 위해 설계됐습니다. AAA팀도 대부분 비개발자였어요." },
+      { q: "⭐ 시간은 얼마나 드나요?", a: "매주 일요일 20:00~23:00 (W1은 1.5시간) + 주중 미션 수행 시간이 필요합니다. 7주 완주 프로그램이라 7주 동안 이 시간을 안정적으로 낼 수 있는 분만 신청해주세요." },
+      { q: "⭐ 필요한 장비는요?", a: "노트북 + Claude Code Max ($100 권장) + Obsidian(무료) + GitHub 계정(무료). Max 플랜을 권장드리는 이유는, 7주 커리큘럼 동안 Claude Code를 실무 수준으로 돌리기에 가장 안정적인 구독이기 때문입니다." },
     ],
   },
   {
     category: "프로그램 운영",
     items: [
-      { q: "매주 일요일 저녁 시간을 꼭 비워야 하나요?", a: "네, 매주 일요일 20:00~22:30은 필수 참석입니다. 7주 완주 프로그램이기 때문에 이 시간을 확보할 수 있는 분만 신청해주세요. 부득이한 사정으로 1~2회 불참 시 녹화본을 제공합니다." },
-      { q: "어떤 프로젝트를 만들게 되나요?", a: "본인이 원하는 프로젝트를 직접 정합니다. 마케팅 자동화, CRM 대시보드, 콘텐츠 OS, 사이드 프로젝트 등 무엇이든 가능합니다. W1에서 함께 방향을 설정합니다." },
-      { q: "팀으로 하나요, 개인으로 하나요?", a: "개인 프로젝트를 조별로 함께 진행합니다. 5~6명이 한 조가 되어 매주 진행 상황을 공유하고 피드백을 주고받습니다. 만드는 건 각자, 성장은 함께." },
-      { q: "오프라인 모임도 있나요?", a: "기본적으로 온라인(Zoom)으로 진행됩니다. 다만 데모데이(W7)는 오프라인으로 진행될 수 있으며, 별도 공지드립니다." },
-      { q: "⭐ Claude Code가 뭔가요? 꼭 써야 하나요?", a: "Claude Code는 Anthropic이 만든 AI 코딩 도구입니다. 자연어로 지시하면 코드를 작성해주어, 비개발자도 실제 서비스를 만들 수 있게 해줍니다. 스폰지 클럽의 핵심 도구이며, 사용법도 함께 배웁니다." },
-      { q: "수료 후에도 커뮤니티에 남을 수 있나요?", a: "네, 스폰지 클럽 동문 슬랙 채널은 수료 후에도 유지됩니다. 기수 간 네트워킹도 이어질 예정입니다." },
+      { q: "어디서 소통하나요?", a: "7주 전 기간 슬랙으로 운영됩니다. 공지·미션 배포·조별 채널·이기적 공유 모두 슬랙 한 곳에서." },
+      { q: "어떤 프로젝트를 만드나요?", a: "본인이 원하는 프로젝트를 직접 정합니다. 마케팅 자동화, CRM 대시보드, 콘텐츠 OS, 사이드 프로젝트 모두 가능. W1에서 방향을 잡습니다." },
+      { q: "조 구성은 어떻게 되나요?", a: "총 5개 조, 조당 8~10명으로 운영됩니다. 조장과 부조장이 한 팀으로 조를 이끌어요." },
+      { q: "⭐ 환경 세팅이 어렵게 느껴져요. 도움받을 수 있나요?", a: "네. 7주 안에 \"오픈 클로 셋업 데이\"가 별도로 열립니다. 함께 모여서 클로드 코드 환경을 같이 세팅하는 자리예요. 일정과 장소는 1기 슬랙에서 안내됩니다." },
+      { q: "Claude Code가 어려우면요?", a: "Codex로 진행해도 괜찮습니다." },
     ],
   },
   {
     category: "신청 · 결제",
     items: [
-      { q: "⭐ 정원은 몇 명인가요?", a: "1기는 소수 정예로 운영합니다. 조별 밀착 관리를 위해 정원을 제한하고 있으며, 정원이 마감되면 2기를 기다려야 합니다." },
-      { q: "⭐ 환불 정책은 어떻게 되나요?", a: "프로그램 시작 전까지 100% 환불 가능합니다. 시작 이후에는 환불이 불가하오니 신중하게 결정해주세요." },
-    ],
-  },
-  {
-    category: "기타",
-    items: [
-      { q: "AAA팀과 스폰지 클럽의 차이가 뭔가요?", a: "AAA팀은 셀피쉬클럽 내부에서 8명이 진행한 6주 실험이었습니다. 스폰지 클럽은 그 경험을 기반으로, 더 많은 분들이 참여할 수 있도록 체계화한 7주 프로그램입니다." },
+      { q: "⭐ 환불 정책은요?", a: "프로그램 시작 전까지 100% 환불 가능. 시작 이후는 환불 불가." },
+      { q: "7주 이후에도 활동이 이어지나요?", a: "네. 스폰지클럽 크루로 전환되어 AI 프로젝트 우선권과 2026 내부 크루용 이기적 공유 세션 무료 참여 권한을 갖습니다." },
     ],
   },
 ];
@@ -245,6 +240,9 @@ const FAQ_CATEGORIES = [
    ═══════════════════════════════════════════════ */
 export function SpongeClubPaidLanding({ item }: Props) {
   const heroRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
+  const spongeRotate = useTransform(scrollY, [0, 500], [0, 180]);
+  const spongeScale = useTransform(scrollY, [0, 300], [1, 1.3]);
   const registerRef = useRef<HTMLElement>(null);
   const [showNav, setShowNav] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -425,57 +423,68 @@ export function SpongeClubPaidLanding({ item }: Props) {
 
       {/* ═══ HERO ═══ */}
       <section ref={heroRef} className="relative flex flex-col items-center justify-center text-center px-4 sm:px-6 py-16 text-white overflow-hidden" style={{ background: "linear-gradient(180deg, #2EC4A5 0%, #1BA8C4 35%, #4A7BD4 70%, #7B5EA7 100%)" }}>
-        {/* 떠다니는 스폰지들 */}
-        {Array.from({ length: 20 }).map((_, i) => (
-          <motion.span
-            key={`sponge-${i}`}
-            className="absolute text-2xl sm:text-3xl pointer-events-none select-none"
-            style={{ left: `${(i * 5.3 + 2) % 100}%`, top: `-5%` }}
-            initial={{ y: -40, opacity: 0, rotate: 0 }}
-            animate={{
-              y: ["0vh", "110vh"],
-              opacity: [0, 1, 1, 0],
-              rotate: [0, (i % 2 === 0 ? 1 : -1) * 360],
-            }}
-            transition={{
-              duration: 8 + (i % 5) * 2,
-              delay: i * 0.7,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          >
-            🧽
-          </motion.span>
-        ))}
-        <FadeUp>
-          <p className="text-base sm:text-lg lg:text-xl tracking-widest font-medium mb-6">
-            스폰지 클럽 1기 모집
+        {/* 상단 카피 — 타이핑 효과 + 얇은 서체 */}
+        <FadeUp delay={0.15}>
+          <p className="text-3xl sm:text-4xl lg:text-6xl font-light leading-snug max-w-3xl">
+            {"딸깍 한 번으로는".split("").map((char, i) => (
+              <motion.span
+                key={`t1-${i}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 + i * 0.06 }}
+              >
+                {char}
+              </motion.span>
+            ))}
+            <br />
+            {"갈 수 없는 곳까지,".split("").map((char, i) => (
+              <motion.span
+                key={`t2-${i}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 + 0.48 + i * 0.06 }}
+              >
+                {char}
+              </motion.span>
+            ))}
           </p>
         </FadeUp>
 
-        <FadeUp delay={0.15}>
+        {/* 중간 오브제 — 스크롤 반응 */}
+        <motion.div
+          className="my-10 text-6xl sm:text-7xl lg:text-8xl"
+          style={{ rotate: spongeRotate, scale: spongeScale }}
+        >
+          🧽
+        </motion.div>
+
+        {/* 하단 카피 — 볼드 */}
+        <FadeUp delay={1.5}>
           <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black leading-snug max-w-3xl mb-10">
-            딸깍 한 번으로는<br />갈 수 없는 곳까지,<br />
             7주를 제대로 들여서<br />함께 도착합니다.
           </h1>
         </FadeUp>
 
-        <FadeUp delay={0.45}>
-          <div className="max-w-md mx-auto mb-8 space-y-2 text-xs sm:text-sm lg:text-base opacity-60">
-            <p>마케터·비개발자를 위한 AI 에이전트 풀사이클 빌딩 커뮤니티</p>
-            <p>1기 한정 구성 · 5/3 시작 · 7주 완주 프로그램</p>
-            <p>1차 오픈 최저가 55만 원 · 4/28~30 단 3일</p>
-          </div>
+        <FadeUp delay={0.3}>
+          <p className="max-w-xl mx-auto text-sm sm:text-base lg:text-lg opacity-80 leading-relaxed mb-8">
+            그동안 정말 많은 분들이 셀피쉬클럽의 &ldquo;AI 크루로 합류하고 싶다&rdquo;고 문의해 주셨고, 드디어 정식으로 외부에 문을 엽니다.
+          </p>
         </FadeUp>
 
-        <FadeUp delay={0.55}>
+        <FadeUp delay={0.5}>
           <button
             onClick={() => scrollTo("register")}
-            className="px-8 py-4 rounded-full text-lg font-bold mb-4 hover:scale-105 transition-transform animate-pulse"
+            className="px-8 py-4 rounded-full text-lg font-bold mb-6 hover:scale-105 transition-transform animate-pulse"
             style={{ backgroundColor: C.lime, color: "#1a1a1a" }}
           >
-            1기 신청하기 →
+            지금 얼리버드 최저가로 신청하기
           </button>
+        </FadeUp>
+
+        <FadeUp delay={0.6}>
+          <div className="max-w-xl mx-auto rounded-xl p-4 text-left text-xs sm:text-sm opacity-80 leading-relaxed" style={{ backgroundColor: "rgba(0,0,0,0.2)" }}>
+            ⚠️ 7주간 매주 일요일 저녁 3시간, 그리고 주중 미션 수행이 꾸준히 이어집니다. 시간을 집중적으로 낼 수 있는 분들과 함께하고 싶어요.
+          </div>
         </FadeUp>
       </section>
 
@@ -503,7 +512,8 @@ export function SpongeClubPaidLanding({ item }: Props) {
 
           <FadeUp delay={0.4}>
             <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm">
-              <p className="text-sm opacity-60 mb-6 text-center">마케터·비즈니스 실무자 170명 설문 결과</p>
+              <p className="text-base sm:text-lg font-bold mb-2 text-center">저희가 직접 물어봤습니다</p>
+              <p className="text-sm opacity-60 mb-6 text-center">마케터·비즈니스 실무자 170명에게 AI 사용 경험을 직접 설문했어요. 돌아온 답은 이랬습니다.</p>
               <div className="flex flex-col sm:flex-row justify-center gap-8">
                 <div className="flex-1 text-center">
                   <div className="relative w-24 h-24 mx-auto mb-3">
@@ -526,6 +536,9 @@ export function SpongeClubPaidLanding({ item }: Props) {
                   <p className="text-xs sm:text-sm opacity-70">&ldquo;함께 배울<br />동료가 없다&rdquo;</p>
                 </div>
               </div>
+              <p className="text-sm opacity-60 text-center mt-6 leading-relaxed">
+                숫자 뒤에 각자의 얼굴이 있었고, 대부분 위의 세 문장 중 하나를 꺼내 놓으셨어요.
+              </p>
             </div>
           </FadeUp>
 
@@ -533,6 +546,59 @@ export function SpongeClubPaidLanding({ item }: Props) {
             <p className="text-sm sm:text-base text-center mt-10 opacity-60 leading-relaxed">
               이 중 하나라도 내 얘기 같다면, 여기서 끝까지 읽어보세요.<br />
               이 페이지는 그 문제를 <strong>7주 안에 진짜로 통과해본 마케터·비개발자들</strong>이 만들었습니다.
+            </p>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ═══ AGENTIC ═══ */}
+      <section id="agentic" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#1a1a1a", color: "white" }}>
+        <div className="max-w-3xl mx-auto">
+          <FadeUp>
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-10">
+              진짜 질문은 이거였습니다
+            </h2>
+            <p className="text-sm sm:text-base lg:text-lg text-center opacity-70 mb-10">
+              AI를 잘 쓰는 사람과 그렇지 못한 사람의 차이는 어디서 오는 걸까요?<br />
+              답은 <strong>에이전틱(agentic)</strong>이라는 단어 안에 있어요.
+            </p>
+          </FadeUp>
+
+          <FadeUp delay={0.1}>
+            <div className="bg-white/10 rounded-2xl p-6 sm:p-8 mb-14">
+              <p className="text-sm sm:text-base lg:text-lg leading-[1.9] opacity-90">
+                에이전틱한 사람은 AI가 알아서 다 해주길 기다리지 않습니다. 자기 업무·삶의 맥락 안에서 &ldquo;이 AI를 어떻게 부려야 내 결과물이 더 나아질까&rdquo;를 직접 설계하는 사람이에요. 시키는 대로 따라가는 게 아니라, AI에게 무엇을 어떻게 시킬지 스스로 정하는 사람.
+              </p>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.2}>
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-10">
+              그래서 — 7주 뒤, 내 일과 삶은<br />어떻게 달라지나요?
+            </h3>
+            <p className="text-sm sm:text-base opacity-60 text-center mb-8">
+              스폰지클럽이 다른 강의들과 가장 다른 지점이 여기예요.<br />무언가를 배우는 데서 끝나지 않습니다. 7주 동안 만든 것이 진짜로 내 일상에 들어와 작동하기 시작해요.
+            </p>
+          </FadeUp>
+
+          <div className="space-y-4">
+            {[
+              { num: "①", title: "매일 반복되는 내 업무에, AI가 동료처럼 들어옵니다.", desc: "보고서·콘텐츠·CRM·고객 응대 — 그동안 내 시간만 갈아 넣던 일들이, AI를 단계마다 끼워 넣어 굴리는 흐름으로 바뀝니다. 7주가 끝났을 때 \"AI를 쓰는 사람\"이 아니라 \"AI와 함께 일하는 사람\"이 되어 있어요." },
+              { num: "②", title: "내 사고방식과 일상에도 AI가 자리잡습니다.", desc: "단순한 질의응답 도구가 아니라, 생각을 정리하고 결정을 거들어 주는 동료로. 내 OS가 한 번 에이전틱하게 짜이면 그 다음부턴 매일 그 위에서 일하게 돼요." },
+              { num: "③", title: "고객이 직접 쓸 프로덕트를 만들어 보는 경험을 가져갑니다.", desc: "내 업무를 바꾸는 것에서 그치지 않고, 유저가 손으로 만져보는 프로덕트까지 갑니다. AI를 내 일에 적용하는 감각과, AI로 누군가에게 가닿는 결과물을 만드는 감각, 두 가지를 모두 갖춘 사람이 됩니다." },
+            ].map((item, i) => (
+              <FadeUp key={i} delay={0.3 + i * 0.1}>
+                <div className="rounded-2xl p-5 sm:p-6 border border-white/20" style={{ backgroundColor: "rgba(255,255,255,0.05)" }}>
+                  <p className="text-lg font-bold mb-2" style={{ color: "#D4E600" }}>{item.num} {item.title}</p>
+                  <p className="text-sm sm:text-base opacity-70 leading-relaxed">{item.desc}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+
+          <FadeUp delay={0.6}>
+            <p className="text-sm sm:text-base text-center mt-10 opacity-50 leading-relaxed">
+              이게 스폰지클럽이 일반 AI 강의와 다른 점입니다.<br />배움을 가져가는 게 아니라, 7주 뒤의 새로운 일상을 가져가는 거예요.
             </p>
           </FadeUp>
         </div>
@@ -570,29 +636,38 @@ export function SpongeClubPaidLanding({ item }: Props) {
             ))}
           </div>
 
-          {/* 이기적 공유 설명 */}
+          {/* 스폰지클럽이 만드는 환경 */}
           <FadeUp delay={0.5}>
             <div className="max-w-3xl mx-auto">
               <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-8">
-                스폰지 클럽은 이기적 공유로<br />이 문제를 풀어냅니다.
+                스폰지클럽이 만드는 환경
               </h3>
               <div className="text-sm sm:text-base lg:text-lg leading-[1.9] opacity-80 space-y-6">
                 <p>
-                  누군가가 일방적으로 가르치는 구조가 아닙니다. 각자가 자기 업무에서 발견한 것을 공유하고, 그 과정에서 서로의 시야가 내 시야가 됩니다. 내가 방출한 경험이 동료의 출발점이 되고, 동료의 돌파가 다시 내 출발점이 됩니다.
+                  스폰지클럽은 매주 미션이 나가고, 조별로 이기적 공유를 돌리는 리듬으로 움직입니다. 이 리듬이 7주 동안 같은 속도로 유지돼요.
                 </p>
                 <p>
-                  결과적으로 모두가 각자의 성장과 이익을 위해 공유하지만, 그 공유가 모여 혼자서는 절대 도달할 수 없는 곳까지 함께 가게 됩니다.
+                  공유가 &ldquo;이기적&rdquo;인 이유는, 내가 꺼낸 만큼 나에게 돌아오기 때문입니다. 내가 한 주 동안 발견한 것을 조에 올려놓으면, 조원들도 각자 발견한 것을 돌려줍니다. 혼자서는 1주치 학습이지만, 조에서는 8~10주치가 돌아오는 구조예요.
                 </p>
-              <p>
-                혼자 하면 내 시야만큼만 AI를 보게 됩니다. 함께하면 조 전체의 시야가 내 시야가 됩니다.
-              </p>
+                <p>
+                  혼자서 만드는 건 혼자서의 최대치입니다. 조와 함께 만들면 조 전체의 시야가 내 시야가 돼요.
+                </p>
               </div>
             </div>
           </FadeUp>
 
           <FadeUp delay={0.6}>
+            <div className="rounded-2xl p-6 text-center mt-8" style={{ backgroundColor: "#1a1a1a", color: "white" }}>
+              <p className="text-sm sm:text-lg lg:text-xl font-bold leading-relaxed">
+                &ldquo;만드는 것도 중요하나, 이기적 공유가 더 중요하다.&rdquo;
+              </p>
+              <p className="text-xs opacity-50 mt-2">— 6주 베타의 결론</p>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.7}>
             <p className="text-xs sm:text-sm text-center mt-8 opacity-40">
-              170명 서베이에서 응답자의 85%가 "혼자서는 절대 안 된다"에 공감했습니다.
+              170명 서베이에서 응답자의 85%가 &ldquo;혼자서는 절대 안 된다&rdquo;에 공감했습니다.
             </p>
           </FadeUp>
         </div>
@@ -607,6 +682,12 @@ export function SpongeClubPaidLanding({ item }: Props) {
             </h2>
             <p className="text-center text-sm sm:text-base lg:text-lg opacity-60 mb-14">
               이미 내부에서 1년간 검증됐습니다.
+            </p>
+          </FadeUp>
+
+          <FadeUp delay={0.05}>
+            <p className="text-sm sm:text-base opacity-70 text-center mb-10 leading-relaxed max-w-3xl mx-auto">
+              이 운영 방식은 머릿속에서 만든 게 아니에요. 지난 1년, 셀피쉬클럽 내부에서 3개의 AI 크루 팀이 같은 리듬으로 움직였고, 각자의 자리에서 결과물을 만들어 냈습니다.
             </p>
           </FadeUp>
 
@@ -665,6 +746,12 @@ export function SpongeClubPaidLanding({ item }: Props) {
             </div>
           </FadeUp>
 
+          <FadeUp delay={0.55}>
+            <p className="text-sm sm:text-base opacity-70 text-center mb-6 leading-relaxed max-w-3xl mx-auto">
+              그동안 많은 분들이 &ldquo;AI 크루로 합류하고 싶다&rdquo;고 문의해 주셨는데, 그 요청에 응답하는 첫 번째 외부 기수가 바로 1기입니다. 스폰지클럽 1기는 양성 과정이자, 크루 커뮤니티의 시작점이에요.
+            </p>
+          </FadeUp>
+
           <FadeUp delay={0.7}>
             <div className="text-center">
               <p className="text-sm opacity-60 mb-4">1기 크루는 이 OS를 레퍼런스로 본인의 OS를 설계합니다.</p>
@@ -690,9 +777,9 @@ export function SpongeClubPaidLanding({ item }: Props) {
               7주 동안 무엇을 하나요?
             </h2>
             <p className="text-center text-sm sm:text-base lg:text-lg opacity-70 mb-4 leading-relaxed">
-              매주 일요일 저녁 20:00 ~ 22:30 라이브 세션.<br />
-              W1은 오리엔테이션, W6은 오프라인 모임.<br />
-              사이사이에 본인 업무에 적용하고, 서로의 과정을 이기적으로 공유합니다.
+              매주 일요일 저녁 20:00 ~ 23:00 (3시간) 라이브 세션.<br />
+              매주 미션이 하나씩 나갑니다. 주중에 각자 미션을 수행한 뒤, 다음 일요일 세션에서 조별 이기적 공유 → 전체 세션 순서로 진행돼요.<br />
+              7주 전 기간은 슬랙으로 운영됩니다.
             </p>
           </FadeUp>
 
@@ -702,6 +789,7 @@ export function SpongeClubPaidLanding({ item }: Props) {
               <FadeUp key={i} delay={i * 0.08}>
                 <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm flex gap-4 items-start">
                   <div className="shrink-0 pt-0.5">
+                    <p className="text-2xl">{w.emoji}</p>
                     <p className="text-sm font-black">{w.week}</p>
                     <p className="text-xs opacity-50">{w.date}</p>
                   </div>
@@ -713,6 +801,12 @@ export function SpongeClubPaidLanding({ item }: Props) {
               </FadeUp>
             ))}
           </div>
+
+          <FadeUp delay={0.6}>
+            <p className="text-xs opacity-50 text-center mt-6">
+              W1만 약 1.5시간, 나머지는 3시간. 커리큘럼은 진행 상황에 따라 일부 변경될 수 있습니다.
+            </p>
+          </FadeUp>
         </div>
       </section>
 
@@ -743,29 +837,72 @@ export function SpongeClubPaidLanding({ item }: Props) {
             </div>
           </FadeUp>
 
-          {/* 함께할 크루 */}
+          {/* 조장·부조장 페어링 */}
           <FadeUp delay={0.2}>
-            <p className="text-sm font-bold opacity-50 mb-3 ml-1">함께할 크루</p>
+            <p className="text-sm font-bold opacity-50 mb-3 ml-1">운영 구성 · 총 5개 조 · 조당 8~10명</p>
           </FadeUp>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {CREW_MEMBERS.map((m, i) => (
+          <div className="space-y-3">
+            {CREW_PAIRS.map((pair, i) => (
               <FadeUp key={i} delay={0.25 + i * 0.05}>
-                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm text-center">
-                  <div className="w-16 h-16 rounded-full mx-auto mb-3 overflow-hidden bg-gray-100">
-                    <img
-                      src={m.photo}
-                      alt={m.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                    />
+                <div className="bg-white rounded-xl p-4 shadow-sm flex items-center gap-4">
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex-shrink-0 ring-2 ring-amber-400">
+                      <img src={pair.leaderPhoto} alt={pair.leader} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm">{pair.leader} <span className="text-xs opacity-40 font-normal">조장</span></p>
+                      <p className="text-xs opacity-50">{pair.leaderRole}</p>
+                    </div>
                   </div>
-                  <p className="font-bold text-sm">{m.name}</p>
-                  <p className="text-xs opacity-50 mt-0.5">{m.role}</p>
-                  {m.desc && <p className="text-xs opacity-60 mt-2 leading-relaxed">{m.desc}</p>}
+                  <span className="text-xs opacity-30">×</span>
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex-shrink-0 ring-2 ring-gray-300">
+                      {pair.subPhoto ? <img src={pair.subPhoto} alt={pair.sub} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} /> : <div className="w-full h-full flex items-center justify-center text-sm font-bold opacity-30">{pair.sub[0]}</div>}
+                    </div>
+                    <p className="font-bold text-sm">{pair.sub} <span className="text-xs opacity-40 font-normal">부조장</span></p>
+                  </div>
                 </div>
               </FadeUp>
             ))}
           </div>
+          <FadeUp delay={0.5}>
+            <p className="text-xs opacity-40 mt-4 ml-1">페어링은 조 편성 시 확정됩니다.</p>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ═══ 수료 후 ═══ */}
+      <section id="after" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
+        <div className="max-w-4xl mx-auto">
+          <FadeUp>
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-4">
+              7주가 끝나도 계속됩니다
+            </h2>
+            <p className="text-center text-sm sm:text-base opacity-60 mb-14">
+              스폰지클럽 1기 수료생은 스폰지클럽 크루로 전환되어 활동을 이어갑니다.
+            </p>
+          </FadeUp>
+
+          <div className="grid sm:grid-cols-3 gap-5">
+            {[
+              { title: "AI 프로젝트 참여 우선권", desc: "앞으로 열리는 스폰지클럽 AI 프로젝트에 가장 먼저 제안을 받습니다." },
+              { title: "2026 이기적 공유 세션 무료 참여", desc: "셀피쉬클럽 내부 크루들만 참여하던 이기적 공유 세션을, 1기 수료생은 2026년 내내 무료로 참여할 수 있습니다." },
+              { title: "Obsidian 아카이브 사이트 게재", desc: "7주 기록이 스폰지클럽 공식 사이트에 게재되어 포트폴리오 자산으로 남습니다." },
+            ].map((item, i) => (
+              <FadeUp key={i} delay={i * 0.1}>
+                <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm h-full">
+                  <h3 className="font-bold text-sm sm:text-base mb-2">{item.title}</h3>
+                  <p className="text-xs sm:text-sm opacity-60 leading-relaxed">{item.desc}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+
+          <FadeUp delay={0.3}>
+            <p className="text-center mt-10 text-sm sm:text-base font-medium opacity-70">
+              7주 동안 같이 걸은 사람들은, 7주 뒤에도 같이 걷습니다.
+            </p>
+          </FadeUp>
         </div>
       </section>
 
@@ -829,9 +966,19 @@ export function SpongeClubPaidLanding({ item }: Props) {
 
           <FadeUp delay={0.4}>
             <p className="text-center mt-10 text-sm sm:text-base opacity-60 leading-relaxed">
-              셋 모두 <strong>"AI로 뭔가 해보고 싶은데 어떻게 시작할지 모르겠다"</strong>는 공통점을 갖고 있습니다.<br />
+              셋 모두 <strong>&ldquo;AI로 뭔가 해보고 싶은데 어떻게 시작할지 모르겠다&rdquo;</strong>는 공통점을 갖고 있습니다.<br />
               결이 같은 사람들이 필터링되어 모이는 것이 스폰지 클럽의 가장 큰 자산입니다.
             </p>
+          </FadeUp>
+
+          <FadeUp delay={0.5}>
+            <div className="mt-10 rounded-2xl p-5 sm:p-6 border-2 border-amber-400/50" style={{ backgroundColor: "rgba(255,193,7,0.05)" }}>
+              <h3 className="font-bold text-base sm:text-lg mb-3">그리고 — 이 7주에 진짜 시간을 낼 수 있는 분</h3>
+              <p className="text-sm sm:text-base opacity-70 leading-relaxed">
+                스폰지클럽 1기는 가볍게 들르는 강의가 아닙니다. 매주 일요일 저녁 3시간 라이브, 주중 미션 수행, 조별 이기적 공유 — 이 리듬을 7주 동안 함께 굴려야 결과물이 쌓이는 구조예요.<br /><br />
+                직장이 바쁜 시즌이거나, 7주 안에 출장·이사·중요한 개인 일정이 겹친다면 정말 솔직하게 한 번 더 생각해 봐주세요. 7주 동안 본인의 시간을 집중적으로 낼 수 있는 분들과 함께하고 싶습니다.
+              </p>
+            </div>
           </FadeUp>
         </div>
       </section>
@@ -861,9 +1008,7 @@ export function SpongeClubPaidLanding({ item }: Props) {
             <>
               <FadeUp>
                 <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-4 leading-snug">
-                  딸깍 한 번으로는 절대 갈 수 없는 곳까지,
-                  <br />
-                  함께 도착합시다.
+                  딸깍 한 번으로는 갈 수 없는 곳까지, 함께
                 </h2>
               </FadeUp>
 
@@ -877,25 +1022,40 @@ export function SpongeClubPaidLanding({ item }: Props) {
                   </div>
                   <div className="bg-white/50 rounded-2xl p-4 sm:p-6 text-center opacity-50">
                     <p className="text-xs opacity-50 mb-1">2차 오픈</p>
-                    <p className="text-3xl font-bold">60만 원</p>
+                    <p className="text-3xl font-bold">65만 원</p>
                     <p className="text-xs mt-1">예정</p>
                   </div>
                 </div>
               </FadeUp>
 
-              {/* 포함 사항 */}
+              {/* 1기 크루가 받는 것 */}
               <FadeUp delay={0.2}>
-                <div className="bg-white rounded-2xl p-4 sm:p-6 mb-10">
-                  <p className="text-sm font-bold mb-3 opacity-70">포함 사항</p>
-                  <ul className="space-y-2 text-sm opacity-80">
-                    <li>✓ 7주 라이브 세션 (매주 일 20:00~22:30)</li>
-                    <li>✓ 1:1 방향 설정 세션</li>
-                    <li>✓ 스폰지 클럽 전용 슬랙 채널</li>
-                    <li>✓ AAA OS 풀 액세스</li>
-                    <li>✓ 데모데이 발표 기회</li>
-                    <li>✓ 셀피쉬클럽 동문 네트워크</li>
-                  </ul>
+              <div className="bg-white rounded-2xl p-6 mb-10" style={{ color: "#1a1a1a" }}>
+                <p className="text-sm font-bold mb-4">🎁 1기 크루가 받는 것</p>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <p className="text-xs font-bold opacity-40 mb-2">7주 동안</p>
+                    <ul className="space-y-1.5 text-sm opacity-80">
+                      <li>✓ 7주 라이브 세션 (일 20:00~23:00)</li>
+                      <li>✓ 슬랙 운영 · 조별 + 전체 채널</li>
+                      <li>✓ GitHub + Claude Code 워크숍 VOD (40만 원 상당)</li>
+                      <li>✓ 스폰지 인터뷰 스킬 + OS 풀 액세스</li>
+                      <li>✓ 5개 조 · 조당 8~10명 빌딩 파트너</li>
+                      <li>✓ ☕ 오픈 클로 셋업 데이</li>
+                      <li>✓ W6 오프라인 모임 · W7 데모데이</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold opacity-40 mb-2">7주 이후</p>
+                    <ul className="space-y-1.5 text-sm opacity-80">
+                      <li>✓ 스폰지클럽 크루 전환</li>
+                      <li>✓ AI 프로젝트 참여 우선권</li>
+                      <li>✓ 2026 이기적 공유 세션 무료 참여</li>
+                      <li>✓ Obsidian 아카이브 사이트 게재</li>
+                    </ul>
+                  </div>
                 </div>
+              </div>
               </FadeUp>
 
               {/* 결제 폼 */}
@@ -967,15 +1127,14 @@ export function SpongeClubPaidLanding({ item }: Props) {
               {/* 마감 카피 */}
               <FadeUp delay={0.4}>
                 <div className="text-center mt-10 space-y-3">
-                  <p className="text-xs sm:text-sm opacity-40">
-                    이 프로그램은 170명의 마케터·1인 대표에게 직접 들은 페인포인트를 기반으로 설계됐습니다.
-                  </p>
                   <p className="text-base sm:text-lg font-bold">
-                    함께 가야 갈 수 있는 곳이 있습니다.<br />
-                    이번엔 혼자가 아닙니다.
+                    7주 동안 같이 걸은 사람들은, 7주 뒤에도 같이 걷습니다.
+                  </p>
+                  <p className="text-sm opacity-70">
+                    함께 가야 갈 수 있는 곳이 있습니다.<br />이번엔 혼자가 아닙니다.
                   </p>
                   <p className="text-sm opacity-60">
-                    🧽 스폰지 클럽 1기에서 만나요.
+                    🧽 스폰지클럽 1기에서 만나요.
                   </p>
                   <p className="text-xs opacity-30 italic">
                     이 창은 한 번만 열립니다.
