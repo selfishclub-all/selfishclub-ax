@@ -66,6 +66,13 @@ export const sitemap: SitemapPage[] = [
     ],
   },
   {
+    path: "/spongeclub",
+    name: "스폰지클럽 1기 랜딩 + 결제",
+    auth: "none",
+    status: "done",
+    phase: 3,
+  },
+  {
     path: "/challenge",
     name: "이기적챌린지/워크숍",
     auth: "none",
@@ -260,6 +267,8 @@ export const phases: PhaseInfo[] = [
       { id: "3-1b", title: "사이트 포인트 컬러 변경 + Pretendard 폰트", status: "done", phase: 3, category: "design" },
       { id: "3-1f", title: "Webflow → Vercel JS 리다이렉트 + UTM 캡처", status: "done", phase: 3, category: "setup" },
       { id: "3-1g", title: "슬러그 sponge-club → aaa 변경", status: "done", phase: 3, category: "setup" },
+      { id: "3-1h", title: "스폰지클럽 1기 랜딩페이지 + 결제 (포트원)", status: "done", phase: 3, category: "payment", page: "/spongeclub" },
+      { id: "3-1i", title: "스폰지클럽 v5.7 기획안 카피 반영", status: "done", phase: 3, category: "content", page: "/spongeclub" },
       { id: "3-1c", title: "커밍순 페이지 + 미들웨어 접근 제한", status: "done", phase: 3, category: "setup" },
       { id: "3-2", title: "홈 최종 완성", status: "todo", phase: 3, category: "design", page: "/" },
       { id: "3-3", title: "어드민 v3 — 크루/AI툴/파트너사 관리", status: "todo", phase: 3, category: "admin", page: "/admin" },
