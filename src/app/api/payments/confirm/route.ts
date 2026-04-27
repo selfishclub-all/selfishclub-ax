@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
   // 6. item 테이블 신청자 수 + 매출 업데이트
   const { data: current } = await supabase
     .from("item")
-    .select("i_event_count, i_total_revenue")
+    .select("i_event_count, i_total_revenue, i_type, i_title_userside, i_full_schedule")
     .eq("iid", item.iid)
     .single();
 
@@ -106,6 +106,82 @@ export async function POST(request: NextRequest) {
       i_total_revenue: (current?.i_total_revenue ?? 0) + payment.amount.total,
     })
     .eq("iid", item.iid);
+
+  const finalCount = (current?.i_event_count ?? 0) + 1;
+
+  // 7. 신규/재방문 판별
+  const u_name = payment.customer?.name || "";
+  const u_phone = (payment.customer?.phoneNumber || "").replace(/[-\s]/g, "");
+  const u_email = payment.customer?.email || "";
+
+  const { data: retentionData } = await supabase
+    .from("event")
+    .select("ID")
+    .eq("u_phone", u_phone)
+    .limit(1);
+
+  const isNew = !retentionData || retentionData.length === 0 ? "new" : "retention";
+
+  // 8. event 테이블에 INSERT
+  const submittedAt = new Date(Date.now() + 9 * 60 * 60 * 1000)
+    .toISOString()
+    .replace("Z", "");
+
+  await supabase.from("event").insert({
+    iid: item.iid,
+    e_created_at: submittedAt,
+    i_title: item.i_title,
+    i_type: current?.i_type || null,
+    u_name,
+    u_phone,
+    u_email,
+    e_marketingagree_tf: true,
+    e_infoagree_tf: true,
+    e_new_tf: isNew,
+  });
+
+  // 9. 신규 유저일 경우 membership 테이블에 자동 가입
+  if (isNew === "new") {
+    const { data: existingMember } = await supabase
+      .from("membership")
+      .select("ID")
+      .eq("u_phone", u_phone)
+      .limit(1);
+
+    if (!existingMember || existingMember.length === 0) {
+      await supabase.from("membership").insert({
+        signup_at: submittedAt,
+        u_name,
+        u_phone,
+        u_email,
+        u_membership_type: item.i_formid_webflow,
+      });
+    }
+  }
+
+  // 10. n8n 웹훅 트리거 (알림톡 + Slack — 실패해도 결제는 완료)
+  const n8nWebhookUrl = process.env.N8N_PURCHASE_WEBHOOK_URL;
+  if (n8nWebhookUrl) {
+    try {
+      await fetch(n8nWebhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          u_name,
+          u_phone,
+          u_email,
+          item_title: current?.i_title_userside || item.i_title,
+          item_schedule: current?.i_full_schedule || "",
+          slug: item.i_formid_webflow,
+          event_count: finalCount,
+          is_new: isNew,
+          p_amount: payment.amount.total,
+        }),
+      });
+    } catch {
+      // n8n 실패해도 결제·저장은 이미 완료됨
+    }
+  }
 
   return NextResponse.json({ data: { paymentId, status: "paid" }, error: null });
 }

@@ -269,6 +269,8 @@ export const phases: PhaseInfo[] = [
       { id: "3-1g", title: "슬러그 sponge-club → aaa 변경", status: "done", phase: 3, category: "setup" },
       { id: "3-1h", title: "스폰지클럽 1기 랜딩페이지 + 결제 (포트원)", status: "done", phase: 3, category: "payment", page: "/spongeclub" },
       { id: "3-1i", title: "스폰지클럽 v5.7 기획안 카피 반영", status: "done", phase: 3, category: "content", page: "/spongeclub" },
+      { id: "3-1j", title: "스폰지클럽 랜딩 콘텐츠+디자인 리뉴얼", status: "done", phase: 3, category: "design", page: "/spongeclub" },
+      { id: "3-1k", title: "결제 완료 후 event/membership 저장 + n8n 연동", status: "done", phase: 3, category: "payment", page: "/spongeclub" },
       { id: "3-1c", title: "커밍순 페이지 + 미들웨어 접근 제한", status: "done", phase: 3, category: "setup" },
       { id: "3-2", title: "홈 최종 완성", status: "todo", phase: 3, category: "design", page: "/" },
       { id: "3-3", title: "어드민 v3 — 크루/AI툴/파트너사 관리", status: "todo", phase: 3, category: "admin", page: "/admin" },
