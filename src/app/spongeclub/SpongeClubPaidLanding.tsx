@@ -202,13 +202,13 @@ const CREW_PAIRS = [
 
 /* ─── 데이터: 1기 혜택 ─── */
 const BENEFIT_CARDS = [
-  { emoji: "💰", title: "1기 한정 최저가", desc: "1차 55만 원 / 2차 65만 원" },
+  { emoji: "💰", title: "1기 한정 최저가", desc: "" },
   { emoji: "🏅", title: "수료 후 스폰지클럽 정식 크루로 전환", desc: "" },
   { emoji: "🎓", title: "GitHub + Claude Code 워크숍 편집 VOD", desc: "40만 원 상당" },
   { emoji: "🤝", title: "5개 조 · 조당 8~10명의 빌딩 파트너", desc: "" },
   { emoji: "🔑", title: "스폰지 인터뷰 스킬 + 스폰지클럽 OS 풀 액세스", desc: "" },
   { emoji: "📸", title: "Obsidian 아카이브 공식 사이트 게재", desc: "" },
-  { emoji: "💬", title: "2026 내부 크루용 이기적공유 세션 무료 참여", desc: "" },
+  { emoji: "💬", title: "이기적공유 세션 무료 참여", desc: "1기 활동 기간 내 진행되는 이기적공유 무료 참여" },
 ];
 
 /* ─── 데이터: FAQ ─── */
@@ -700,7 +700,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
           </FadeUp>
           <div className="space-y-3 mb-14">
             {[
-              { alone: "내가 아는 툴만 보게된다", together: "크루가 써본 툴들을 간접적으로 써볼 수 있다" },
+              { alone: "내가 아는 툴만 보게된다", together: "크루가 다른 툴을 써보고 상세하게 알려준다" },
               { alone: "막힐 때 쉽게 포기하게 된다", together: "이미 경험한 크루가 팁을 주고, 함께 고민해 준다" },
               { alone: "내 기준으로만 평가하게 된다", together: "크루가 유저 시점으로 경험하고, 피드백을 준다" },
             ].map((row, i) => (
