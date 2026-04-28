@@ -719,20 +719,20 @@ export function SpongeClubLanding({ item }: Props) {
         </div>
       </section>
 
-      {/* ═══ 신청 폼 (포인트 컬러 배경) ═══ */}
-      <section ref={registerRef} id="register" className="py-24 lg:py-40 bg-[#E2E545]">
+      {/* ═══ 신청 폼 (마감) ═══ */}
+      <section ref={registerRef} id="register" className="py-24 lg:py-40 bg-[#d0d0c8]">
         <div className="max-w-lg mx-auto px-5 lg:px-10">
           <FadeUp>
             <div className="text-center mb-12">
-              <p className="text-xs text-[#0A0A0A]/40 tracking-[0.3em] uppercase font-mono mb-5">
+              <p className="text-xs text-[#0A0A0A]/30 tracking-[0.3em] uppercase font-mono mb-5">
                 무료 · 온라인 라이브 · 선착순 · VOD 없음
               </p>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A0A0A] mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A0A0A]/40 mb-6">
                 4/28(화) 저녁 8:30,
                 <br />
                 라이브에서 만나요
               </h2>
-              <p className="text-base text-[#0A0A0A]/70 leading-[1.7] whitespace-pre-line">
+              <p className="text-base text-[#0A0A0A]/40 leading-[1.7] whitespace-pre-line">
 {"공유회 당일 알림톡과 이메일로 라이브 링크를 보내드립니다.\n선착순 1000명으로 입장이 제한됩니다."}
               </p>
             </div>
@@ -762,18 +762,18 @@ export function SpongeClubLanding({ item }: Props) {
                 }}
                 className="space-y-3"
               >
-                <input name="u_name" type="text" required placeholder="이름" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
-                <input name="u_phone" type="tel" required placeholder="전화번호 (010-0000-0000)" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
-                <input name="u_email" type="email" required placeholder="이메일" className="w-full px-4 py-4 bg-white border border-white rounded text-base text-[#0A0A0A] placeholder:text-[#0A0A0A]/35 focus:outline-none focus:border-[#0A0A0A]/30 focus:ring-2 focus:ring-[#0A0A0A]/10 transition-colors" />
-                <div className="bg-[#0A0A0A]/10 rounded-lg px-4 py-3 mt-3 text-center">
-                  <p className="text-sm font-bold text-[#0A0A0A]">🎁 해당 이기적공유회 신청 시, 이기적멤버십 2.0에도 무료로 자동가입됩니다.</p>
+                <input name="u_name" type="text" disabled placeholder="이름" className="w-full px-4 py-4 bg-white/50 border border-white/50 rounded text-base text-[#0A0A0A]/30 placeholder:text-[#0A0A0A]/20 cursor-not-allowed" />
+                <input name="u_phone" type="tel" disabled placeholder="전화번호 (010-0000-0000)" className="w-full px-4 py-4 bg-white/50 border border-white/50 rounded text-base text-[#0A0A0A]/30 placeholder:text-[#0A0A0A]/20 cursor-not-allowed" />
+                <input name="u_email" type="email" disabled placeholder="이메일" className="w-full px-4 py-4 bg-white/50 border border-white/50 rounded text-base text-[#0A0A0A]/30 placeholder:text-[#0A0A0A]/20 cursor-not-allowed" />
+                <div className="bg-[#0A0A0A]/5 rounded-lg px-4 py-3 mt-3 text-center">
+                  <p className="text-sm font-bold text-[#0A0A0A]/30">🎁 해당 이기적공유회 신청 시, 이기적멤버십 2.0에도 무료로 자동가입됩니다.</p>
                 </div>
                 <button
-                  type="submit"
-                  disabled={formLoading}
-                  className="w-full bg-[#0A0A0A] text-[#E2E545] font-bold text-base py-4 rounded hover:bg-[#1a1a1a] transition-all duration-300 mt-3 disabled:opacity-50"
+                  type="button"
+                  disabled
+                  className="w-full bg-[#0A0A0A]/30 text-white/50 font-bold text-base py-4 rounded cursor-not-allowed mt-3"
                 >
-                  {formLoading ? "신청 중..." : "지금 신청하기"}
+                  신청이 마감되었습니다
                 </button>
                 {formError && (
                   <p className="text-sm text-red-600 text-center pt-2">{formError}</p>
@@ -883,12 +883,11 @@ export function SpongeClubLanding({ item }: Props) {
         (isRegisterVisible || formSubmitted) ? "opacity-0 pointer-events-none translate-y-4" : "opacity-100 translate-y-0"
       }`}>
         <div className="max-w-lg mx-auto flex gap-2">
-          <a
-            href="#register"
-            className="flex-1 font-bold text-base text-center py-4 rounded-full bg-[#E2E545] text-[#0A0A0A]"
+          <span
+            className="flex-1 font-bold text-base text-center py-4 rounded-full bg-[#999] text-white/70 cursor-not-allowed"
           >
-            지금 신청하기
-          </a>
+            신청이 마감되었습니다
+          </span>
           <button
             onClick={() => {
               if (navigator.share) {
