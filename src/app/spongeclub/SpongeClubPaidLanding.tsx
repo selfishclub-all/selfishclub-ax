@@ -263,7 +263,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "processing" | "success" | "error">(previewSuccess ? "success" : "idle");
   const [paymentError, setPaymentError] = useState("");
-  const [soldOut, setSoldOut] = useState(false);
+  const [soldOut, setSoldOut] = useState(true); // 품절 수동 제어 — false로 바꾸면 신청 오픈
 
   /* 재고 확인 */
   useEffect(() => {
