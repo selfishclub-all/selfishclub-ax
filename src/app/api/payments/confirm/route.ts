@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
   }
 
   // 1-1. 재고 확인 (선착순 53명)
-  const STOCK_LIMIT = 53;
+  const STOCK_LIMIT = 100;
   const { count: soldCount } = await supabase
     .from("purchase")
     .select("*", { count: "exact", head: true })

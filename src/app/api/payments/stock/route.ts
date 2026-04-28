@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
-const STOCK_LIMIT = 53;
+const STOCK_LIMIT = 100;
 
 export async function GET(request: NextRequest) {
   const itemId = request.nextUrl.searchParams.get("itemId");
