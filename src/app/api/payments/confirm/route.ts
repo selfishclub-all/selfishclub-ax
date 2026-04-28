@@ -18,6 +18,38 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // 1-1. 재고 확인 (선착순 53명)
+  const STOCK_LIMIT = 53;
+  const { count: soldCount } = await supabase
+    .from("purchase")
+    .select("*", { count: "exact", head: true })
+    .eq("iid", itemId);
+
+  if ((soldCount ?? 0) >= STOCK_LIMIT) {
+    // 이미 결제된 경우 자동 환불 처리
+    const portoneSecret = process.env.PORTONE_API_SECRET!;
+    try {
+      await fetch(
+        `https://api.portone.io/payments/${encodeURIComponent(paymentId)}/cancel`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `PortOne ${portoneSecret}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ reason: "선착순 마감으로 인한 자동 환불" }),
+        }
+      );
+    } catch {
+      // 환불 실패 시에도 마감 메시지는 전달
+    }
+
+    return NextResponse.json(
+      { data: null, error: "선착순 신청이 마감되어 자동 환불됩니다" },
+      { status: 400 }
+    );
+  }
+
   // 2. 포트원 API로 결제 내역 조회 + 검증
   const portoneSecret = process.env.PORTONE_API_SECRET!;
 
