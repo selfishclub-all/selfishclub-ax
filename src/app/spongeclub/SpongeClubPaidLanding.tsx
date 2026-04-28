@@ -66,16 +66,18 @@ function FadeUp({
 
 /* ─── 네비게이션 데이터 ─── */
 const NAV_ITEMS = [
-  { id: "pain-point", label: "문제" },
-  { id: "answer", label: "해답" },
+  { id: "pain-point", label: "고민" },
+  { id: "agentic", label: "질문" },
+  { id: "answer", label: "비교" },
+  { id: "why", label: "왜" },
   { id: "proof", label: "검증" },
   { id: "curriculum", label: "커리큘럼" },
   { id: "leadership", label: "운영진" },
   { id: "after", label: "수료 후" },
   { id: "benefits", label: "1기 혜택" },
   { id: "target", label: "대상" },
-  { id: "register", label: "신청" },
   { id: "faq", label: "FAQ" },
+  { id: "register", label: "신청" },
 ] as const;
 
 /* ─── 데이터: 페인포인트 ─── */
@@ -131,18 +133,21 @@ const PERSONA_CARDS = [
 const PROOF_TEAMS = [
   {
     name: "AI 헌터스",
+    subtitle: "AI 영상으로 미국 시장 진출까지 성공",
     period: "2024.06~",
     desc: "1년간 200개 이상의 툴을 리뷰.\n비개발자들이 AI로 영상을 만들어 미국 시장에 진출해 판매. \"AI로 해외에 물건을 파는 것이 실제로 가능한가\"를 증명.",
     photo: "/images/spongeclub/team-aihunters.png",
   },
   {
-    name: "AI 크리에이티브",
-    period: "2024.09~",
+    name: "AI 크리에이터",
+    subtitle: "젝시믹스와 공식 협업 시작",
+    period: "2025.01~",
     desc: "AI를 활용한 콘텐츠 제작 워크플로우를 실험하는 팀.\nAI 크리에이터의 가능성을 증명하고 젝시믹스와 공식 협업. AI 생성 콘텐츠가 실제 브랜드 협업으로 연결되는 사례.",
     photo: "",
   },
   {
-    name: "AAA",
+    name: "AAA팀 · AI Agent AZA",
+    subtitle: "6주간 AI 에이전트 빌딩 완주",
     period: "2025.02~",
     desc: "AI 에이전트 시대에 비개발자가 할 수 있는 역할을 마케터 페르소나로 탐구, 실제 서비스에 적용 및 런칭까지 6주간 AI 에이전트 풀사이클 빌딩.\n\n레포 구조 · 자동화 명령어 · 어드민 · 아카이브 시스템 · 이기적 공유 루틴 — 6주를 시스템으로 돌린 실물이 지금 공개되어 있습니다.\n\nAAA팀이 6주 만에 만든 실제 OS를 구경해보세요.",
     photo: "",
@@ -154,39 +159,39 @@ const PROOF_TEAMS = [
 const VOICE_CARDS = [
   {
     name: "오웬",
-    role: "핀테크 대표 → AI 빌더",
+    role: "핀테크 대표",
     quote:
-      "3주 동안 혼자 방황했는데, 팀에서 공유하기 시작하니 4시간 만에 서비스를 런칭했어요. 혼자였으면 절대 불가능했습니다.",
+      "3주 동안 혼자 방황했는데, 팀에서 공유하기 시작하니 4시간 만에 서비스를 런칭했어요.",
   },
   {
     name: "비비안",
-    role: "마케터 → AX PM",
+    role: "마케터",
     quote:
-      "개발자 없이 DB 수집부터 결제 페이지까지 혼자 만들었어요. 매주 공유하면서 방향을 잃지 않은 게 컸습니다.",
+      "개발자 없이 DB 수집부터 결제 페이지까지 혼자 만들었어요.",
   },
   {
     name: "에밀리",
     role: "CRM 담당",
     quote:
-      "하루 3시간 걸리던 알림톡 발송이 5분으로 줄었어요. 팀원들의 피드백 덕에 '맥북 꺼지면 안 돼' 문제도 해결했습니다.",
+      "하루 3시간 걸리던 알림톡 발송이 5분으로 줄었어요.",
   },
   {
     name: "흐민",
     role: "콘텐츠 크리에이터",
     quote:
-      "AI한테 답을 구하다가 질문을 받기 시작했어요. 텔레그램에 한 줄 쓰면 3일 뒤 콘텐츠 초안이 되는 시스템을 만들었습니다.",
+      "AI한테 답을 구하다가 질문을 받기 시작했어요.",
   },
 ];
 
 /* ─── 데이터: 커리큘럼 ─── */
 const CURRICULUM_WEEKS = [
-  { week: "W1", date: "5/3 (일)", emoji: "🎬", title: "첫 만남 · 조 편성 · 작업 환경 세팅", desc: "조별 인사 + GitHub·Obsidian·Claude Code 세팅 + AI 인터뷰 세션 + AAA팀 OS 둘러보기. 약 1.5시간." },
-  { week: "W2", date: "5/10 (일)", emoji: "🧩", title: "나만의 AI OS 만들기", desc: "스폰지클럽 OS 사례 공개 + 개인 OS 사례 3인 공유(다니·흐민·다다) + Claude 웹/Code에 OS 얹기" },
-  { week: "W3", date: "5/17 (일)", emoji: "🎨", title: "AI를 내 의도대로 · 이미지도 내 손으로", desc: "OS 상호 피드백 + 오케스트레이션·하네스 + 이미지 생성 실습(나노바나나 2.0·덱테이커)" },
-  { week: "W4", date: "5/24 (일)", emoji: "🎯", title: "유저가 쓸 프로덕트 만들기 시작", desc: "비비안·오웬 프로덕트 공유회 + 대상 유저·기획 근거·가치·초기 마케팅 정리 + 첫 버전 제작" },
-  { week: "W5", date: "5/31 (일)", emoji: "🚀", title: "유저 프로덕트 고도화 + 프로모션", desc: "유저 프로덕트 고도화 + 젬마의 프로모션 방법론 + 에밀리의 CRM 사례" },
-  { week: "W6", date: "6/7 (일)", emoji: "🏕️", title: "AI 시대의 커리어 — 오프라인 모임", desc: "7주 중 유일한 대면 모임. 젬마 오프닝 + 조별 크로스 토론 + 유저 반응 수집" },
-  { week: "W7", date: "6/14 (일)", emoji: "🎉", title: "7주의 결과물, 세상에 꺼내기", desc: "최종 발표 + 7주 회고 + Obsidian 아카이브 게재 + 스폰지클럽 크루 전환 안내" },
+  { week: "1주차", date: "5/3 (일)", title: "7주 같이 갈 사람들과 만나고, 팀 OS의 감을 잡습니다", detail: "조 편성 발표, 작업 환경 같이 세팅, AI가 나를 인터뷰하면서 \"7주 뒤에 내가 뭘 만들고 있을까\"가 한 장으로 정리됩니다. 다다의 팀 OS 사례로 \"OS가 어떻게 굴러가는지\"의 감을 가장 먼저 잡아요.\n\n📦 학습 자료 패키지 제공: GitHub + Claude Code 워크숍 편집 VOD (40만 원 상당) · Claude Code · GitHub · OS 학습 자료 · Sponge Interview Skill" },
+  { week: "2주차", date: "5/10 (일)", title: "매일 켜질 나만의 AI 작업 환경을 직접 만들어 봅니다", detail: "매일 아침 켜져서 내 일을 같이 하는 작업 환경을 직접 만듭니다. 다니(업무 OS)와 흐민(삶 OS)의 두 갈래 사례를 봐요. 이 주가 끝나면 \"AI를 쓴다\"가 아니라 \"AI랑 같이 일한다\"의 첫 감각이 잡힙니다." },
+  { week: "3주차", date: "5/17 (일)", title: "AI를 내 의도대로 움직이게 하고, 이미지·상세페이지도 직접 뽑아냅니다", detail: "조원들이 내 OS를 직접 만져보고 피드백을 줍니다. AI가 엉뚱한 데로 새지 않게 잡는 법(하네스·오케스트레이션), 디자이너 없이 제품 컷·모델 컷 만드는 법, AI로 상세페이지 만드는 법까지. 젬마의 미니 세션이 가장 많이 등장하는 주." },
+  { week: "4주차", date: "5/24 (일)", title: "누구한테 줄 건지부터 정하고, 진짜 프로덕트를 시작합니다", detail: "\"누구한테, 왜\"부터 정리합니다. 비비안(개발자 없이 결제까지)과 오웬(월 1개 유저 프로덕트 런칭, 찜마켓 등)의 프로덕트 공유회. 내 프로덕트의 대상 유저·기획 근거·가치·초기 마케팅을 1페이지로 정리하고, 첫 버전 제작 시작." },
+  { week: "5주차", date: "5/31 (일)", title: "만든 걸 진짜 쓰이게 다듬고, 어떻게 알릴지까지 짭니다", detail: "W4에서 시작한 프로덕트를 실제 쓰일 수준까지 끌어올립니다. 젬마의 프로모션 방법론(유저가 다시 만나러 오는 가두리망 설계) + 에밀리의 CRM 사례(하루 3시간이 5분이 된 알림톡·배너·UTM 자동 생성)." },
+  { week: "6주차", date: "6/7 (일)", title: "얼굴 보고 만나서, AI 시대의 일과 커리어를 같이 이야기합니다", badge: "오프라인 모임", detail: "7주 중 유일한 대면 모임. 만들기를 잠시 멈추고 두 가지 큰 질문을 같이 이야기합니다.\n\n① AI 시대의 커리어 — 무엇을 더 깊이 파야 할지, 무엇은 AI에 넘기고 손을 떼도 되는지, 내 커리어의 다음 한 발을 어디에 둘지. 45명의 관점이 교차되는 자리.\n② 에이전틱한 워크플로우를 갖는다는 것 — 7주 동안 짠 워크플로우를 다시 꺼내놓고, \"계속 손볼 수 있는 살아있는 시스템\"으로 보는 시각을 잡습니다.\n\n오프라인 모임은 조 단위로 묶여서 진행될 예정이며, 정확한 운영 방식과 묶음 구성은 참석 현황에 따라 조정됩니다." },
+  { week: "7주차", date: "6/14 (일)", title: "7주의 결과물을 세상에 꺼내고, 정식 스폰지크루로 전환됩니다", detail: "7주의 결과물(내 OS + 프로덕트 + 이미지 + 유저 반응)을 발표하고, 다른 크루 40~50명의 결과물을 한 번에 흡수합니다. Obsidian 아카이브가 스폰지클럽 공식 사이트에 게재돼요. 이 주가 끝나는 순간, 모든 1기 멤버가 정식 스폰지크루로 전환됩니다." },
 ];
 
 /* ─── 데이터: 리더십 ─── */
@@ -221,26 +226,27 @@ const FAQ_CATEGORIES = [
   {
     category: "대상 · 참여",
     items: [
-      { q: "코딩을 전혀 몰라도 괜찮나요?", a: "네. 비개발자를 위해 설계됐습니다. AAA팀도 대부분 비개발자였어요." },
-      { q: "⭐ 시간은 얼마나 드나요?", a: "매주 일요일 20:00~23:00 (W1은 1.5시간) + 주중 미션 수행 시간이 필요합니다. 7주 완주 프로그램이라 7주 동안 이 시간을 안정적으로 낼 수 있는 분만 신청해주세요." },
-      { q: "⭐ 필요한 장비는요?", a: "노트북 + Claude Code Max ($100 권장) + Obsidian(무료) + GitHub 계정(무료). Max 플랜을 권장드리는 이유는, 7주 커리큘럼 동안 Claude Code를 실무 수준으로 돌리기에 가장 안정적인 구독이기 때문입니다." },
+      { q: "코딩을 전혀 몰라도 괜찮나요?", a: "네. 비개발자를 위해 설계됐습니다." },
+      { q: "시간은 얼마나 드나요?", a: "매주 일요일 20:00~23:00 (W1은 1.5시간) + 주중 미션. 7주 동안 안정적으로 시간을 낼 수 있는 분만 신청해 주세요." },
+      { q: "필요한 장비는?", a: "노트북 + Claude Code Max 플랜 권장 + Obsidian(무료) + GitHub(무료). 표준은 Claude Code, Codex는 바이브 코딩 보조용으로 활용 가능." },
     ],
   },
   {
     category: "프로그램 운영",
     items: [
-      { q: "어디서 소통하나요?", a: "7주 전 기간 슬랙으로 운영됩니다. 공지·미션 배포·조별 채널·이기적 공유 모두 슬랙 한 곳에서." },
-      { q: "어떤 프로젝트를 만드나요?", a: "본인이 원하는 프로젝트를 직접 정합니다. 마케팅 자동화, CRM 대시보드, 콘텐츠 OS, 사이드 프로젝트 모두 가능. W1에서 방향을 잡습니다." },
-      { q: "조 구성은 어떻게 되나요?", a: "총 5개 조, 조당 8~10명으로 운영됩니다. 조장과 부조장이 한 팀으로 조를 이끌어요." },
-      { q: "⭐ 환경 세팅이 어렵게 느껴져요. 도움받을 수 있나요?", a: "네. 7주 안에 \"오픈 클로 셋업 데이\"가 별도로 열립니다. 함께 모여서 클로드 코드 환경을 같이 세팅하는 자리예요. 일정과 장소는 1기 슬랙에서 안내됩니다." },
-      { q: "Claude Code가 어려우면요?", a: "Codex로 진행해도 괜찮습니다." },
+      { q: "라이브 세션은 어떻게 진행되나요?", a: "매주 ① 조별 이기적 공유 → ② 전체 세션 공유 → ③ 심화 공유 + 젬마 미니 세션 3단 구조로 진행됩니다. 조에서 먼저 발견을 꺼내고, 그중 공유할 만한 내용이 전체로 올라가는 흐름이에요." },
+      { q: "커리큘럼이 중간에 바뀔 수도 있나요?", a: "네. 큰 골격은 유지되지만, 세부 콘텐츠·미니 세션 주제·실습 도구는 진행 상황에 따라 조정됩니다. 변경 사항은 슬랙으로 안내됩니다." },
+      { q: "미션은 어떤 식으로 나가나요?", a: "매주 1~3개. 실제 구현 미션 + 답을 정해두지 않은 고민 아젠다 두 갈래로 같이 굴러요." },
+      { q: "어디서 소통하나요?", a: "7주 전 기간 슬랙. 과제 제출은 옵시디언, 체크인·자료 모음은 스프레드시트." },
+      { q: "어떤 프로젝트를 만드나요?", a: "본인이 직접 정합니다. 마케팅 자동화, CRM 대시보드, 콘텐츠 OS, 사이드 프로젝트 모두 가능. W1에서 방향을 잡아요." },
+      { q: "조 구성은?", a: "5개 조 · 조당 8~10명. 조장과 부조장이 한 팀으로 조를 이끕니다." },
     ],
   },
   {
     category: "신청 · 결제",
     items: [
-      { q: "⭐ 환불 정책은요?", a: "프로그램 시작 전까지 100% 환불 가능. 시작 이후는 환불 불가." },
-      { q: "7주 이후에도 활동이 이어지나요?", a: "네. 스폰지클럽 크루로 전환되어 AI 프로젝트 우선권과 2026 내부 크루용 이기적 공유 세션 무료 참여 권한을 갖습니다." },
+      { q: "7주 이후에도 활동이 이어지나요?", a: "네. 정식 스폰지크루로 전환되어 2026년까지 예정된 이기적 공유 세션 무료 참여 + 영상 프로젝트 등 다른 활동 참여까지 이어집니다." },
+      { q: "환불 정책은?", a: "4월 30일까지 환불 가능합니다. 이후로는 환불이 어려우니 신중하게 결정해 주세요." },
     ],
   },
 ];
@@ -263,6 +269,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
   const [formPhone, setFormPhone] = useState("");
   const [formEmail, setFormEmail] = useState("");
   const [formGoal, setFormGoal] = useState("");
+  const [formConfirm, setFormConfirm] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "processing" | "success" | "error">(previewSuccess ? "success" : "idle");
   const [paymentError, setPaymentError] = useState("");
@@ -270,13 +277,15 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
   /* FAQ 토글 */
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  /* 스크롤 → 네비게이션 표시 & 플로팅 CTA */
+  /* 커리큘럼 토글 */
+  const [openWeek, setOpenWeek] = useState<number | null>(null);
+
+  /* 스크롤 → 네비게이션 표시 */
   useEffect(() => {
     function handleScroll() {
       const scrollY = window.scrollY;
       const heroHeight = heroRef.current?.offsetHeight ?? 800;
       setShowNav(scrollY > heroHeight);
-      setShowFloatingCta(scrollY > 600);
     }
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -305,18 +314,37 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  /* register 섹션 가시성 체크 → 플로팅 CTA 숨김 */
+  /* 히어로 아래부터 플로팅 CTA 표시, register 섹션 보이면 숨김 */
   useEffect(() => {
-    const el = registerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
+    const heroEl = heroRef.current;
+    const registerEl = registerRef.current;
+    if (!heroEl || !registerEl) return;
+
+    let pastHero = false;
+    let registerVisible = false;
+
+    const heroObserver = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setShowFloatingCta(false);
+        pastHero = !entry.isIntersecting;
+        setShowFloatingCta(pastHero && !registerVisible);
+      },
+      { threshold: 0 }
+    );
+
+    const registerObserver = new IntersectionObserver(
+      ([entry]) => {
+        registerVisible = entry.isIntersecting;
+        setShowFloatingCta(pastHero && !registerVisible);
       },
       { threshold: 0.1 }
     );
-    observer.observe(el);
-    return () => observer.disconnect();
+
+    heroObserver.observe(heroEl);
+    registerObserver.observe(registerEl);
+    return () => {
+      heroObserver.disconnect();
+      registerObserver.disconnect();
+    };
   }, []);
 
   /* 스무스 스크롤 */
@@ -328,6 +356,10 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
   async function handlePayment() {
     if (!formName || !formPhone || !formEmail) {
       alert("이름, 전화번호, 이메일을 모두 입력해주세요.");
+      return;
+    }
+    if (!formConfirm) {
+      alert("안내 사항을 확인해주세요.");
       return;
     }
     setShowConfirmModal(true);
@@ -432,7 +464,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
       </motion.nav>
 
       {/* ═══ HERO ═══ */}
-      <section ref={heroRef} className="relative flex flex-col items-center justify-center text-center px-4 sm:px-6 py-24 sm:py-32 lg:py-40 text-white overflow-hidden" style={{ background: "linear-gradient(180deg, #2EC4A5 0%, #1BA8C4 35%, #4A7BD4 70%, #7B5EA7 100%)" }}>
+      <section ref={heroRef} className="relative flex flex-col items-center justify-center text-center px-4 sm:px-6 py-24 sm:py-32 lg:py-40 overflow-hidden" style={{ background: "#E9ED12", color: "#0A0A0A" }}>
         <FadeUp delay={0.1}>
           <img
             src="/images/spongeclub/selfishclub-logo-white.png"
@@ -442,22 +474,33 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         </FadeUp>
 
         <FadeUp delay={0.15}>
-          <p className="text-base sm:text-lg lg:text-xl font-bold tracking-wide mb-8 px-5 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm inline-block">
+          <p className="text-base sm:text-lg lg:text-xl font-bold tracking-wide mb-8 px-5 py-2 rounded-full border border-black/20 bg-black/5 inline-block">
             스폰지클럽 1기 모집 오픈!
           </p>
         </FadeUp>
 
         <FadeUp delay={0.3}>
-          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black leading-[1.2] max-w-5xl">
+          <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black leading-[1.15] max-w-5xl">
             딸깍, 한 번에 못 가는 그곳까지<br />함께 도착합니다
           </h1>
         </FadeUp>
 
-        {/* KEY_OBJECT 영역 */}
+        {/* 스폰지 로고 */}
         <div className="my-12 sm:my-16 lg:my-20 w-full flex items-center justify-center">
-          <div className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full border-2 border-dashed border-white/20 flex items-center justify-center text-white/20 text-xs">
-            KEY_OBJECT
-          </div>
+          <motion.img
+            src="/images/spongeclub/sponge-logo.png"
+            alt="SPONGE CLUB"
+            className="w-48 sm:w-64 lg:w-80 drop-shadow-2xl"
+            animate={{
+              y: [0, -12, 0],
+              rotate: [0, 3, -3, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
         </div>
 
         <FadeUp delay={0.5}>
@@ -471,7 +514,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
           <button
             onClick={() => scrollTo("register")}
             className="px-8 py-4 rounded-full text-lg font-bold hover:scale-105 transition-transform"
-            style={{ backgroundColor: C.lime, color: "#1a1a1a" }}
+            style={{ backgroundColor: "#0A0A0A", color: "#E9ED12" }}
           >
             지금 얼리버드 최저가로 신청하기
           </button>
@@ -479,15 +522,15 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
       </section>
 
       {/* ═══ PAIN POINT ═══ */}
-      <section id="pain-point" className="relative py-16 lg:py-24 px-4 sm:px-6 overflow-hidden" style={{ backgroundColor: "#1a1a1a", color: "white" }}>
+      <section id="pain-point" className="relative pt-16 lg:pt-24 px-4 sm:px-6 overflow-hidden" style={{ backgroundColor: "#1a1a1a", color: "white" }}>
         {/* 소셜 프루프 배경 이미지 */}
         <div className="absolute inset-0 opacity-[0.08]" style={{ mask: "linear-gradient(to bottom, white 0%, white 30%, transparent 70%)", WebkitMask: "linear-gradient(to bottom, white 0%, white 30%, transparent 70%)" }}>
           <img src="/images/spongeclub/social-proof-bg.png" alt="" className="w-full h-auto" />
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto">
+        <div className="relative z-10 max-w-5xl mx-auto">
           <FadeUp>
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-14 leading-[1.4] sm:leading-[1.5]">
-              약 4만 명을 대상으로<br />AI 프로그램을 운영하면서 알게된 것
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-14 leading-[1.4] sm:leading-[1.5]">
+              요즘 이런 생각,<br />혼자만 하고 계신가요?
             </h2>
           </FadeUp>
 
@@ -557,24 +600,50 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
           </div>
 
           <FadeUp delay={0.6}>
-            <p className="text-sm sm:text-base text-center mt-10 opacity-60 leading-relaxed">
-              이 중 하나라도 내 얘기 같다면, 여기서 끝까지 읽어보세요.<br />
-              이 페이지는 그 문제를 <strong>7주 안에 진짜로 통과해본 마케터·비개발자들</strong>이 만들었습니다.
-            </p>
+            <div className="text-center mt-12 mb-6">
+              <p className="text-xl sm:text-2xl lg:text-3xl font-bold leading-relaxed opacity-90">
+                내 얘기 같다면,
+              </p>
+              <p className="text-xl sm:text-2xl lg:text-3xl font-bold leading-relaxed opacity-90">
+                끝까지 읽어보세요.
+              </p>
+            </div>
+          </FadeUp>
+        </div>
+        {/* 그라데이션 전환 + 세로선 하나로 연결 */}
+        <div className="-mx-4 sm:-mx-6 flex flex-col items-center" style={{ background: "linear-gradient(to bottom, #1a1a1a, #0A0A0A)" }}>
+          <div className="w-px h-20 sm:h-28 bg-white/30" />
+        </div>
+      </section>
+
+      {/* ═══ AGENTIC ═══ */}
+      <section id="agentic" className="pt-6 pb-20 lg:pb-32 px-4 sm:px-6" style={{ backgroundColor: "#0A0A0A", color: "white" }}>
+        <div className="max-w-5xl mx-auto">
+          <FadeUp>
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-8 leading-[1.4] sm:leading-[1.5]">
+              7주 후 당신은<br />에이전틱한 사람이 됩니다
+            </h2>
+            <div className="max-w-2xl mx-auto text-center space-y-3">
+              <p className="text-base sm:text-lg lg:text-xl leading-relaxed opacity-90">
+                에이전틱<span className="opacity-60">(agentic)</span>하다는 건,<br />
+                AI에게 무엇을 어떻게 시킬지 스스로 정할 수 있어요
+              </p>
+              <p className="text-base sm:text-lg lg:text-xl leading-relaxed opacity-70">
+                업무·삶의 맥락 안에서 &ldquo;이 AI를 어떻게 부려야 내 결과물이 더 나아질까&rdquo;를 직접 설계하는 사람이에요.
+              </p>
+            </div>
           </FadeUp>
         </div>
       </section>
 
-      {/* ═══ AGENTIC — 삭제됨 ═══ */}
-
       {/* ═══ ANSWER ═══ */}
-      <section id="answer" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
-        <div className="max-w-4xl mx-auto">
+      <section id="answer" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-6">
               AI, 혼자서는 어려운 게 맞습니다
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-center opacity-70 leading-relaxed mb-14 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl lg:text-2xl text-center opacity-70 leading-relaxed mb-14 max-w-3xl mx-auto">
               기술은 너무 빠르게 움직입니다. 매일 새로운 모델과 에이전트, 워크플로우가 나옵니다.<br /><br />
               이걸 각자의 비즈니스에 맞게 다시 짜는 것은 더 어렵습니다. 콘텐츠, CRM, 광고, 데이터까지 영역마다 적용할 AI가 다른데, 혼자 디깅해서 내 것으로 만드는 일은 쉽지 않겠죠.
             </p>
@@ -584,26 +653,25 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
           <FadeUp>
             <div className="grid grid-cols-2 gap-3 mb-3">
               <div className="text-center py-3">
-                <p className="text-sm sm:text-base font-bold opacity-70">혼자 공부할 때</p>
+                <p className="text-sm sm:text-base font-bold opacity-70">혼자 할 때</p>
               </div>
-              <div className="text-center py-3 rounded-xl" style={{ backgroundColor: "#1BA8C4" }}>
-                <p className="text-sm sm:text-base font-bold text-white">스폰지클럽</p>
+              <div className="text-center py-3 rounded-xl" style={{ backgroundColor: "#0A0A0A" }}>
+                <p className="text-sm sm:text-base font-bold text-white">함께 할 때</p>
               </div>
             </div>
           </FadeUp>
           <div className="space-y-3 mb-14">
             {[
-              { alone: "좁은 시야 — 내가 아는 AI 툴만 본다", together: "시야의 교차 — 서로 다른 업무 영역에서 쓰는 AI가 나에게 오픈된다" },
-              { alone: "흐지부지되는 프로젝트 — 막히면 혼자 덮어버린다", together: "끝까지 가는 완주력 — 이미 그 지점을 통과한 동료가 길을 알려준다" },
-              { alone: "내 안에서만 평가하는 결과물 — 쓸지 말지 혼자 결정한다", together: "유저 시점의 검증 — 다른 사람이 경험하며 반응을 준다" },
-              { alone: "관념 속의 학습 — 아는 것 같은데 적용은 안 된다", together: "이기적 공유의 연쇄 — 내가 방출한 경험이 동료의 출발점이 되고, 동료의 돌파가 내 출발점이 된다" },
+              { alone: "내가 아는 툴만 보게된다", together: "크루가 써본 툴들을 간접적으로 써볼 수 있다" },
+              { alone: "막힐 때 쉽게 포기하게 된다", together: "이미 경험한 크루가 팁을 주고, 함께 고민해 준다" },
+              { alone: "내 기준으로만 평가하게 된다", together: "크루가 유저 시점으로 경험하고, 피드백을 준다" },
             ].map((row, i) => (
               <FadeUp key={i} delay={i * 0.1}>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-white/60 rounded-xl p-4 sm:p-5">
                     <p className="text-sm sm:text-base opacity-70">{row.alone}</p>
                   </div>
-                  <div className="rounded-xl p-4 sm:p-5 border-2" style={{ borderColor: "#1BA8C4", backgroundColor: "rgba(27,168,196,0.05)" }}>
+                  <div className="rounded-xl p-4 sm:p-5 border-2" style={{ borderColor: "#0A0A0A", backgroundColor: "rgba(10,10,10,0.03)" }}>
                     <p className="text-sm sm:text-base font-medium">{row.together}</p>
                   </div>
                 </div>
@@ -614,12 +682,62 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         </div>
       </section>
 
-      {/* ═══ PROOF + INSIDE VOICE (통합) ═══ */}
-      <section id="proof" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
-        <div className="max-w-4xl mx-auto">
+      {/* ═══ WHY ═══ */}
+      <section id="why" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#FFFFFF" }}>
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-14 leading-[1.4] sm:leading-[1.5]">
-              지난 1년 3개팀을 양성하며<br />준비해왔습니다
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-8 leading-[1.4] sm:leading-[1.5]">
+              왜 스폰지클럽이어야 하는가
+            </h2>
+          </FadeUp>
+
+          <FadeUp delay={0.1}>
+            <div className="max-w-3xl mx-auto text-center mb-14">
+              <p className="text-base sm:text-lg leading-relaxed opacity-70">
+                스폰지클럽은 매주 미션과 조별 이기적 공유의 패턴으로 7주 간 굴러갑니다.<br />
+                공유가 &ldquo;이기적&rdquo;인 이유는, 내가 꺼낸 만큼 나에게 돌아오기 때문이에요.<br />
+                만드는 것도 중요하나, 이기적 공유가 더 중요한 이유죠.
+              </p>
+            </div>
+          </FadeUp>
+
+          <div className="space-y-5">
+            <FadeUp delay={0.2}>
+              <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
+                <h3 className="text-base sm:text-lg font-bold mb-3">① AI를 직접 다루는 실전 중심의 경험</h3>
+                <p className="text-sm sm:text-base leading-relaxed opacity-70">
+                  이론 듣고 끝나지 않아요. 매주 라이브 세션마다 AI를 직접 켜서 내 업무·내 일상에 바로 적용해 봐요. &ldquo;이론은 이해됐는데 막상 내 일에 어떻게 쓰지?&rdquo;의 지점이 풀립니다.
+                </p>
+              </div>
+            </FadeUp>
+
+            <FadeUp delay={0.3}>
+              <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
+                <h3 className="text-base sm:text-lg font-bold mb-3">② 이기적 공유로 확장되는 유즈케이스</h3>
+                <p className="text-sm sm:text-base leading-relaxed opacity-70">
+                  마케터가 발견한 활용법이 1인 대표에게 흘러가고, CRM 담당자가 만든 자동화가 콘텐츠 담당자에게 닿아요. 출발점이 다 다른 8~10명의 유즈케이스가 매주 내 시야 안으로 들어옵니다.
+                </p>
+              </div>
+            </FadeUp>
+
+            <FadeUp delay={0.4}>
+              <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
+                <h3 className="text-base sm:text-lg font-bold mb-3">③ 7주 미션으로 체득되는 학습</h3>
+                <p className="text-sm sm:text-base leading-relaxed opacity-70">
+                  답을 정해두지 않은 고민 아젠다부터 실제로 만드는 구현 미션까지. 손으로만 따라 하는 워크숍도, 머리로만 굴리는 강의도 아닙니다.
+                </p>
+              </div>
+            </FadeUp>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PROOF + INSIDE VOICE (통합) ═══ */}
+      <section id="proof" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
+        <div className="max-w-5xl mx-auto">
+          <FadeUp>
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-14 leading-[1.4] sm:leading-[1.5]">
+              셀피쉬클럽이 1년 동안<br />검증한 방식입니다
             </h2>
           </FadeUp>
 
@@ -637,7 +755,10 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
                 <FadeUp key={i} delay={i * 0.1}>
                   <div className="border-l-2 border-black/15 pl-6 sm:pl-8">
                     <p className="text-sm font-mono opacity-60 mb-2">{team.period}</p>
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4">{team.name}</h3>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1">{team.name}</h3>
+                    {"subtitle" in team && team.subtitle && (
+                      <p className="text-sm sm:text-base opacity-60 mb-4">{team.subtitle}</p>
+                    )}
 
                     {/* 이미지: Hunters/Creative는 작게, AAA는 크게 */}
                     {team.photo ? (
@@ -653,7 +774,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
                     <p className={`leading-[1.8] whitespace-pre-line opacity-80 ${isAAA ? "text-base sm:text-lg" : "text-sm sm:text-base"}`}>{team.desc}</p>
                     {"hasLink" in team && team.hasLink && (
                       <a
-                        href="https://aaa.selfishclub.xyz"
+                        href="https://aaa-homepage.vercel.app/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-block mt-5 px-6 py-3 rounded-full text-base font-bold hover:scale-105 transition-transform"
@@ -668,16 +789,43 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
             })}
           </div>
 
+          {/* AAA 프로젝트 후기 */}
+          <div id="voice" className="mt-14">
+            <FadeUp>
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-8">
+                AAA 프로젝트 후기
+              </h3>
+            </FadeUp>
+
+            <div className="grid sm:grid-cols-2 gap-5">
+              {VOICE_CARDS.map((card, i) => (
+                <FadeUp key={i} delay={i * 0.1}>
+                  <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 flex-shrink-0">
+                        <img src={`/images/spongeclub/crew/${card.name}.png`} alt={card.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div>
+                        <p className="font-bold">{card.name}</p>
+                        <p className="text-sm opacity-60">{card.role}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm sm:text-base leading-relaxed opacity-80">&ldquo;{card.quote}&rdquo;</p>
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
+          </div>
 
         </div>
       </section>
 
       {/* ═══ CURRICULUM ═══ */}
-      <section id="curriculum" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#1BA8C4", color: "#1a1a1a" }}>
-        <div className="max-w-4xl mx-auto">
+      <section id="curriculum" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#0A0A0A", color: "white" }}>
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-3">
-              7주 동안 무엇을 하나요?
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-3">
+              7주 커리큘럼
             </h2>
             <p className="text-center text-sm sm:text-base lg:text-lg opacity-70 mb-4 leading-relaxed">
               매주 일요일 저녁 20:00 ~ 23:00 (3시간) 라이브 세션.<br />
@@ -690,35 +838,114 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
           <div className="space-y-3 mt-10">
             {CURRICULUM_WEEKS.map((w, i) => (
               <FadeUp key={i} delay={i * 0.08}>
-                <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm flex gap-4 items-start">
-                  <div className="shrink-0 pt-0.5">
-                    <p className="text-2xl">{w.emoji}</p>
-                    <p className="text-sm font-black">{w.week}</p>
-                    <p className="text-smopacity-70">{w.date}</p>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-sm sm:text-base">{w.title}</h3>
-                    <p className="text-sm sm:text-base opacity-60 mt-1">{w.desc}</p>
-                  </div>
+                <div className="bg-white rounded-2xl shadow-sm overflow-hidden" style={{ color: "#2D2D2D" }}>
+                  <button
+                    onClick={() => setOpenWeek(openWeek === i ? null : i)}
+                    className="w-full p-4 sm:p-5 flex gap-4 items-start text-left hover:bg-black/[0.02] transition-colors cursor-pointer"
+                  >
+                    <div className="shrink-0 pt-0.5">
+                      <p className="text-sm font-black">{w.week}</p>
+                      <p className="text-sm opacity-70">{w.date}</p>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-sm sm:text-base">{w.title}</h3>
+                      {"badge" in w && w.badge && (
+                        <span className="inline-block mt-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold" style={{ backgroundColor: "#E9ED12", color: "#1a1a1a" }}>
+                          {w.badge}
+                        </span>
+                      )}
+                    </div>
+                    <motion.span
+                      animate={{ rotate: openWeek === i ? 45 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="shrink-0 text-xl opacity-40 mt-0.5"
+                    >
+                      +
+                    </motion.span>
+                  </button>
+                  <motion.div
+                    initial={false}
+                    animate={{
+                      height: openWeek === i ? "auto" : 0,
+                      opacity: openWeek === i ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <p className="px-4 sm:px-5 pb-4 sm:pb-5 pl-[calc(1rem+3.5rem)] sm:pl-[calc(1.25rem+3.5rem)] text-sm sm:text-base leading-relaxed opacity-70 whitespace-pre-line">
+                      {w.detail}
+                    </p>
+                  </motion.div>
                 </div>
               </FadeUp>
             ))}
           </div>
 
           <FadeUp delay={0.6}>
-            <p className="text-smopacity-70 text-center mt-6">
-              W1만 약 1.5시간, 나머지는 3시간. 커리큘럼은 진행 상황에 따라 일부 변경될 수 있습니다.
+            <p className="text-sm opacity-70 text-center mt-6">
+              W1만 약 1.5시간, 나머지는 일요일 20:00–23:00 (3시간). 커리큘럼은 진행 상황에 따라 일부 변경될 수 있습니다.
             </p>
+          </FadeUp>
+
+          {/* 주간 운영 캘린더 */}
+          <FadeUp delay={0.7}>
+            <div className="mt-14">
+              <h3 className="text-xl sm:text-2xl font-bold text-center mb-6">일주일 운영 구조</h3>
+              {/* 세로 캘린더 */}
+              <div className="rounded-2xl overflow-hidden border border-black/10">
+                {/* 월~토 합쳐서 한 행 */}
+                <div className="flex border-b border-black/10">
+                  <div className="w-16 sm:w-20 shrink-0 flex items-center justify-center font-bold text-sm" style={{ backgroundColor: "#1a1a1a", color: "white" }}>
+                    월~토
+                  </div>
+                  <div className="flex-1 bg-white p-4 sm:p-5">
+                    <p className="font-bold text-sm sm:text-base mb-2">💬 슬랙 활동 · 미션 · 질문</p>
+                    <p className="text-sm leading-relaxed opacity-70">
+                      7주 전 기간은 슬랙으로 운영됩니다. 매주의 활동, 미션 수행, 막힌 지점 질문, 조원 간 발견 공유 — &ldquo;우리가 이야기하는 것들&rdquo;은 모두 슬랙에서 진행돼요. 공지·미션 배포·조별 채널·과제 공유까지 한 곳에서 굴러갑니다.
+                    </p>
+                  </div>
+                </div>
+                {/* 일요일 */}
+                <div className="flex">
+                  <div className="w-16 sm:w-20 shrink-0 flex items-center justify-center font-bold text-sm" style={{ backgroundColor: "#E9ED12", color: "#1a1a1a" }}>
+                    일
+                  </div>
+                  <div className="flex-1 p-4 sm:p-5" style={{ backgroundColor: "rgba(233,237,18,0.08)" }}>
+                    <p className="font-bold text-sm sm:text-base mb-1">🎙️ 라이브 세션 · 20:00–23:00</p>
+                    <p className="text-sm leading-relaxed opacity-70 mb-4">
+                      라이브 세션은 매주 다음 3단 구조로 진행됩니다.
+                    </p>
+                    <div className="space-y-3">
+                      <div className="pl-4 border-l-2" style={{ borderColor: "#E9ED12" }}>
+                        <p className="text-sm font-bold mb-1">① 조별 이기적 공유</p>
+                        <p className="text-sm leading-relaxed opacity-70">먼저 조별로 한 주 동안의 발견·막힘·돌파를 꺼내 놓습니다. 조원 한 명씩 본인의 한 주를 풀고, 그 안에서 전체 세션에 공유할 만한 내용을 조에서 선정해요.</p>
+                      </div>
+                      <div className="pl-4 border-l-2" style={{ borderColor: "#E9ED12" }}>
+                        <p className="text-sm font-bold mb-1">② 전체 세션 공유</p>
+                        <p className="text-sm leading-relaxed opacity-70">조에서 선정된 내용을 전체 세션에서 함께 공유합니다. 마케터 조에서 나온 발견이 1인 대표 조에 닿고, CRM 조의 자동화가 콘텐츠 조로 흘러가는 자리예요. 5개 조의 시야가 한 자리에서 교차합니다.</p>
+                      </div>
+                      <div className="pl-4 border-l-2" style={{ borderColor: "#E9ED12" }}>
+                        <p className="text-sm font-bold mb-1">③ 심화 공유 + 젬마 미니 세션</p>
+                        <p className="text-sm leading-relaxed opacity-70">전체 공유에서 더 깊이 들어가야 할 주제가 있을 때 젬마의 미니 세션이 열리거나, 조장이 본인 사례를 풀어내는 심화 공유가 진행됩니다.</p>
+                      </div>
+                    </div>
+                    <p className="text-xs opacity-50 mt-4">
+                      1기 젬마 미니 세션: 이미지 생성 · 상세페이지 제작 · 하네스와 오케스트레이션 · 프로모션 방법론. 조 진행 상황에 따라 추가 주제가 더해질 수 있습니다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </FadeUp>
         </div>
       </section>
 
       {/* ═══ LEADERSHIP ═══ */}
-      <section id="leadership" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
-        <div className="max-w-4xl mx-auto">
+      <section id="leadership" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-14">
-              누구랑 하는가
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-14">
+              완주하도록 이끌어줄<br />크루들을 소개합니다
             </h2>
           </FadeUp>
 
@@ -740,8 +967,8 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
             </div>
           </FadeUp>
 
-          {/* 운영진 — 젬마와 동일 위계 */}
-          <div className="space-y-4">
+          {/* 운영진 — 2열 그리드 */}
+          <div className="grid sm:grid-cols-2 gap-4">
             {[
               { name: "오웬", role: "플랫폼 빌더 · 월 1개 유저 프로덕트 런칭", photo: "/images/spongeclub/crew/오웬.png" },
               { name: "비비안", role: "AX PM · 프로덕트 구조 설계", photo: "/images/spongeclub/crew/비비안.png" },
@@ -770,67 +997,49 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
       </section>
 
       {/* ═══ 수료 후 ═══ */}
-      <section id="after" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
-        <div className="max-w-4xl mx-auto">
+      <section id="after" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#FFFFFF" }}>
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-4">
-              7주가 끝나도 계속됩니다
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-4">
+              7주가 끝나면 정식 스폰지크루로
             </h2>
-            <p className="text-center text-sm sm:text-base opacity-60 mb-14">
-              스폰지클럽 1기 수료생은 스폰지클럽 크루로 전환되어 활동을 이어갑니다.
+            <p className="text-center text-base sm:text-lg leading-relaxed opacity-70 mb-14 max-w-3xl mx-auto">
+              7주 완주한 1기 멤버는 정식 스폰지크루가 됩니다.<br />
+              강의 수료증이 아니라, 셀피쉬클럽 안에서 함께 움직이는 동료의 자격이에요.
             </p>
           </FadeUp>
 
-          <div className="grid sm:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 gap-5">
             {[
-              { title: "AI 프로젝트 참여 우선권", desc: "앞으로 열리는 스폰지클럽 AI 프로젝트에 가장 먼저 제안을 받습니다." },
-              { title: "2026 이기적 공유 세션 무료 참여", desc: "셀피쉬클럽 내부 크루들만 참여하던 이기적 공유 세션을, 1기 수료생은 2026년 내내 무료로 참여할 수 있습니다." },
-              { title: "Obsidian 아카이브 사이트 게재", desc: "7주 기록이 스폰지클럽 공식 사이트에 게재되어 포트폴리오 자산으로 남습니다." },
+              { emoji: "🎫", title: "이기적 공유 세션 무료 참여", desc: "2026년까지 예정된 내부 이기적 공유 세션에 계속 참여" },
+              { emoji: "🎬", title: "영상 프로젝트 등 다른 활동 참여", desc: "AI 헌터스·AI 크리에이터 팀 흐름에 합류하거나 새 프로젝트 진입" },
+              { emoji: "🤝", title: "1기 멤버끼리 다음 챕터", desc: "스폰지크루의 이름을 달고 새 활동을 전개하는 것도 가능" },
+              { emoji: "📸", title: "Obsidian 아카이브 공식 사이트 게재", desc: "7주 기록이 스폰지클럽 공식 사이트에 포트폴리오로 남습니다" },
             ].map((item, i) => (
               <FadeUp key={i} delay={i * 0.1}>
                 <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm h-full">
+                  <span className="text-2xl mb-2 block">{item.emoji}</span>
                   <h3 className="font-bold text-sm sm:text-base mb-2">{item.title}</h3>
                   <p className="text-sm sm:text-base opacity-60 leading-relaxed">{item.desc}</p>
                 </div>
               </FadeUp>
             ))}
           </div>
-
-          <FadeUp delay={0.3}>
-            <p className="text-center mt-10 text-sm sm:text-base font-medium opacity-70">
-              7주 동안 같이 걸은 사람들은, 7주 뒤에도 같이 걷습니다.
-            </p>
-          </FadeUp>
         </div>
       </section>
 
       {/* ═══ 1기 특별함 ═══ */}
-      <section id="benefits" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
-        <div className="max-w-4xl mx-auto">
-          {/* 중요 공지 박스 */}
+      <section id="benefits" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <div
-              className="rounded-2xl p-4 sm:p-6 mb-10 border-2"
-              style={{ borderColor: C.red, backgroundColor: `${C.red}0A` }}
-            >
-              <p className="font-bold text-sm sm:text-base lg:text-lg" style={{ color: C.red }}>
-                중요 안내
-              </p>
-              <p className="text-sm mt-2 leading-relaxed opacity-80">
-                스폰지 클럽 1기는 외부에서 시작되는 첫 번째 기수입니다. 1기 이후의 프로그램 구성·기간·가격·혜택은 아직 확정되지 않았습니다.
-              </p>
-            </div>
-          </FadeUp>
-
-          <FadeUp delay={0.1}>
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-14">
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-14">
               1기만의 특별함
             </h2>
           </FadeUp>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {BENEFIT_CARDS.map((card, i) => (
-              <FadeUp key={i} delay={0.15 + i * 0.08}>
+              <FadeUp key={i} delay={0.1 + i * 0.08}>
                 <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm h-full">
                   <span className="text-3xl mb-3 block">{card.emoji}</span>
                   <h3 className="font-bold text-sm sm:text-base mb-2">{card.title}</h3>
@@ -839,46 +1048,48 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
               </FadeUp>
             ))}
           </div>
+
+          <FadeUp delay={0.8}>
+            <div
+              className="rounded-2xl p-4 sm:p-6 mt-10 border-2"
+              style={{ borderColor: C.red, backgroundColor: `${C.red}0A` }}
+            >
+              <p className="font-bold text-sm sm:text-base lg:text-lg" style={{ color: C.red }}>
+                중요 안내
+              </p>
+              <p className="text-sm mt-2 leading-relaxed opacity-80">
+                1기 이후의 프로그램 구성·기간·가격·혜택은 아직 확정되지 않았습니다.
+              </p>
+            </div>
+          </FadeUp>
         </div>
       </section>
 
       {/* ═══ TARGET ═══ */}
-      <section id="target" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
-        <div className="max-w-4xl mx-auto">
+      <section id="target" className="py-24 lg:py-36 px-4 sm:px-6" style={{ backgroundColor: "#0A0A0A", color: "white" }}>
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-14">
-              이런 분들과 함께 가고 싶습니다.
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-20 leading-tight">
+              이런 분들께<br />적극 추천해요!
             </h2>
           </FadeUp>
 
-          <div className="grid sm:grid-cols-3 gap-5">
+          <div className="space-y-8">
             {PERSONA_CARDS.map((card, i) => (
-              <FadeUp key={i} delay={i * 0.15}>
-                <div className="flex flex-col items-center gap-4">
-                  {/* 페르소나 카드 */}
-                  <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm w-full border-t-4" style={{ borderColor: card.color }}>
-                    <span className="text-3xl mb-3 block">{card.icon}</span>
-                    <h3 className="text-base sm:text-lg font-bold mb-3">{card.title}</h3>
-                    <p className="text-sm sm:text-base leading-relaxed opacity-70">{card.desc}</p>
-                  </div>
-                  {/* 화살표 */}
-                  <svg width="20" height="24" viewBox="0 0 20 24" fill="none" className="shrink-0 opacity-60">
-                    <path d="M10 0V20M10 20L3 13M10 20L17 13" stroke={card.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  {/* 결과 카드 */}
-                  <div className="rounded-2xl p-4 sm:p-5 w-full text-center border-2" style={{ borderColor: card.color, backgroundColor: `${card.color}10` }}>
-                    <p className="text-sm sm:text-base font-bold">{card.result}</p>
-                  </div>
+              <FadeUp key={i} delay={i * 0.12}>
+                <div className="rounded-3xl p-6 sm:p-8 lg:p-10" style={{ backgroundColor: "rgba(255,255,255,0.05)" }}>
+                  <h3 className="text-2xl sm:text-3xl font-black mb-4">{card.title}</h3>
+                  <p className="text-base sm:text-lg leading-relaxed opacity-50 mb-6">{card.desc}</p>
+                  <p className="text-base sm:text-lg font-bold" style={{ color: "#E9ED12" }}>→ {card.result}</p>
                 </div>
               </FadeUp>
             ))}
           </div>
 
-
           <FadeUp delay={0.5}>
-            <div className="mt-10 rounded-2xl p-5 sm:p-6 border-2 border-amber-400/50" style={{ backgroundColor: "rgba(255,193,7,0.05)" }}>
-              <h3 className="font-bold text-base sm:text-lg mb-3">그리고 — 이 7주에 진짜 시간을 낼 수 있는 분</h3>
-              <p className="text-sm sm:text-base opacity-70 leading-relaxed">
+            <div className="mt-16 rounded-3xl p-6 sm:p-8 lg:p-10" style={{ backgroundColor: "rgba(233,237,18,0.08)", borderLeft: "4px solid #E9ED12" }}>
+              <h3 className="font-bold text-xl sm:text-2xl mb-4" style={{ color: "#E9ED12" }}>그리고 — 이 7주에 진짜 시간을 낼 수 있는 분</h3>
+              <p className="text-base sm:text-lg opacity-60 leading-relaxed">
                 스폰지클럽 1기는 가볍게 들르는 강의가 아닙니다. 매주 일요일 저녁 3시간 라이브, 주중 미션 수행, 조별 이기적 공유 — 이 리듬을 7주 동안 함께 굴려야 결과물이 쌓이는 구조예요.<br /><br />
                 직장이 바쁜 시즌이거나, 7주 안에 출장·이사·중요한 개인 일정이 겹친다면 정말 솔직하게 한 번 더 생각해 봐주세요. 7주 동안 본인의 시간을 집중적으로 낼 수 있는 분들과 함께하고 싶습니다.
               </p>
@@ -887,209 +1098,81 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         </div>
       </section>
 
-      {/* ═══ FINAL CTA + Payment ═══ */}
-      <section
-        id="register"
-        ref={registerRef}
-        className="py-16 lg:py-24 px-4 sm:px-6"
-        style={{ backgroundColor: C.lime, color: C.text }}
-      >
-        <div className="max-w-3xl mx-auto">
-          {paymentStatus === "success" ? (
-            /* 결제 완료 화면 */
-            <div className="py-16">
-              <FadeUp>
-                <div className="text-center mb-10">
-                  <p className="text-6xl mb-6">🎉</p>
-                  <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black mb-4">결제 완료!</h2>
-                  <p className="text-lg sm:text-xl lg:text-2xl font-bold">
-                    스폰지클럽 1기 크루가 되신 것을 환영합니다
-                  </p>
-                </div>
+      {/* ═══ TOOLS ═══ */}
+      <section id="notes" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#FFFFFF" }}>
+        <div className="max-w-5xl mx-auto">
+          <FadeUp>
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-14">
+              사용 툴
+            </h2>
+          </FadeUp>
 
-                <div className="bg-white rounded-2xl p-6 sm:p-8 mb-6 text-left" style={{ color: "#1a1a1a" }}>
-                  <div className="flex items-start gap-3 mb-5">
-                    <span className="text-2xl mt-0.5">💬</span>
-                    <div>
-                      <p className="text-base sm:text-lg font-bold mb-1">카카오톡으로 상세 안내를 보내드려요</p>
-                      <p className="text-sm sm:text-base opacity-70">참여 방법, 슬랙 초대, 사전 준비사항 등을 안내해 드립니다.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 mb-5">
-                    <span className="text-2xl mt-0.5">⚠️</span>
-                    <div>
-                      <p className="text-base sm:text-lg font-bold mb-1">카카오톡 채널 추가는 필수입니다</p>
-                      <p className="text-sm sm:text-base opacity-70">채널이 추가되어 있지 않으면 안내 알림톡을 받을 수 없어요.</p>
-                    </div>
-                  </div>
-                  <a
-                    href="http://pf.kakao.com/_dxmxixhG"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-4 rounded-xl text-base font-bold transition-all hover:scale-[1.02]"
-                    style={{ backgroundColor: "#FEE500", color: "#1a1a1a" }}
-                  >
-                    카카오톡 채널 추가하기
-                  </a>
-                </div>
-
-                <div className="text-center space-y-3">
-                  <p className="text-base sm:text-lg font-bold">
-                    딸깍, 한 번에 못 가는 그곳까지 — 이제 함께 갑니다.
-                  </p>
-                  <p className="text-sm sm:text-base opacity-70">
-                    궁금한 점은 카카오 채널로 문의해주세요.
-                  </p>
-                </div>
-              </FadeUp>
-            </div>
-          ) : (
-            <>
-              <FadeUp>
-                <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-4 leading-snug">
-                  딸깍 한 번으로는 갈 수 없는 곳까지, 함께
-                </h2>
-              </FadeUp>
-
-              {/* 가격 구조 */}
-              <FadeUp delay={0.1}>
-                <div className="flex justify-center gap-4 my-10">
-                  <div className="bg-white rounded-2xl p-4 sm:p-6 text-center border-2 border-black/10">
-                    <p className="text-smopacity-70 mb-1">1차 오픈 최저가</p>
-                    <p className="text-3xl font-bold">55만 원</p>
-                    <p className="text-smmt-1 opacity-60">4/28~30</p>
-                  </div>
-                  <div className="bg-white/50 rounded-2xl p-4 sm:p-6 text-center opacity-70">
-                    <p className="text-smopacity-70 mb-1">2차 오픈</p>
-                    <p className="text-3xl font-bold">65만 원</p>
-                    <p className="text-smmt-1">예정</p>
-                  </div>
-                </div>
-              </FadeUp>
-
-              {/* 1기 크루가 받는 것 */}
-              <FadeUp delay={0.2}>
-              <div className="bg-white rounded-2xl p-6 mb-10" style={{ color: "#1a1a1a" }}>
-                <p className="text-sm font-bold mb-4">🎁 1기 크루가 받는 것</p>
-                <div className="grid sm:grid-cols-2 gap-6">
+          {/* 유료 필수 */}
+          <FadeUp delay={0.1}>
+            <div className="mb-6">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3" style={{ backgroundColor: "#E53935", color: "white" }}>유료 필수</span>
+              <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                <div className="flex items-center justify-between p-4 sm:p-5">
                   <div>
-                    <p className="text-smfont-bold opacity-60 mb-2">7주 동안</p>
-                    <ul className="space-y-1.5 text-sm opacity-80">
-                      <li>✓ 7주 라이브 세션 (일 20:00~23:00)</li>
-                      <li>✓ 슬랙 운영 · 조별 + 전체 채널</li>
-                      <li>✓ GitHub + Claude Code 워크숍 VOD (40만 원 상당)</li>
-                      <li>✓ 스폰지 인터뷰 스킬 + OS 풀 액세스</li>
-                      <li>✓ 5개 조 · 조당 8~10명 빌딩 파트너</li>
-                      <li>✓ ☕ 오픈 클로 셋업 데이</li>
-                      <li>✓ W6 오프라인 모임 · W7 데모데이</li>
-                    </ul>
+                    <p className="font-bold text-sm sm:text-base">Claude (Max 플랜)</p>
+                    <p className="text-sm opacity-60 mt-0.5">7주의 표준 도구 · 클로드 코드가 아니라 claude.ai로 진입</p>
                   </div>
-                  <div>
-                    <p className="text-smfont-bold opacity-60 mb-2">7주 이후</p>
-                    <ul className="space-y-1.5 text-sm opacity-80">
-                      <li>✓ 스폰지클럽 크루 전환</li>
-                      <li>✓ AI 프로젝트 참여 우선권</li>
-                      <li>✓ 2026 이기적 공유 세션 무료 참여</li>
-                      <li>✓ Obsidian 아카이브 사이트 게재</li>
-                    </ul>
-                  </div>
+                  <p className="text-sm font-medium opacity-50 shrink-0 ml-4">월 $100</p>
                 </div>
               </div>
-              </FadeUp>
+            </div>
+          </FadeUp>
 
-              {/* 결제 폼 */}
-              <FadeUp delay={0.3}>
-                <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8">
-                  <h3 className="text-base sm:text-lg font-bold mb-6">신청 정보</h3>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm opacity-60 mb-1">이름 *</label>
-                      <input
-                        type="text"
-                        value={formName}
-                        onChange={(e) => setFormName(e.target.value)}
-                        placeholder="홍길동"
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm opacity-60 mb-1">전화번호 *</label>
-                      <input
-                        type="tel"
-                        value={formPhone}
-                        onChange={(e) => setFormPhone(e.target.value)}
-                        placeholder="010-0000-0000"
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm opacity-60 mb-1">이메일 *</label>
-                      <input
-                        type="email"
-                        value={formEmail}
-                        onChange={(e) => setFormEmail(e.target.value)}
-                        placeholder="email@example.com"
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm opacity-60 mb-1">7주 동안 만들고 싶은 것 (한 줄)</label>
-                      <input
-                        type="text"
-                        value={formGoal}
-                        onChange={(e) => setFormGoal(e.target.value)}
-                        placeholder="예: 마케팅 자동화 대시보드"
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition"
-                      />
-                    </div>
+          {/* 보조 유료 */}
+          <FadeUp delay={0.2}>
+            <div className="mb-6">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3" style={{ backgroundColor: "#F59E0B", color: "white" }}>보조 유료</span>
+              <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                <div className="flex items-center justify-between p-4 sm:p-5">
+                  <div>
+                    <p className="font-bold text-sm sm:text-base">Codex</p>
+                    <p className="text-sm opacity-60 mt-0.5">바이브 코딩 보조용 · Plus 플랜 사용 시</p>
                   </div>
-
-                  {paymentStatus === "error" && (
-                    <div className="mt-4 p-3 rounded-xl bg-red-100 text-red-600 text-sm">
-                      {paymentError}
-                    </div>
-                  )}
-
-                  <button
-                    onClick={handlePayment}
-                    disabled={paymentStatus === "processing"}
-                    className="w-full mt-6 py-4 rounded-full text-lg font-bold transition-all hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed"
-                    style={{ backgroundColor: "#1a1a1a", color: C.lime }}
-                  >
-                    {paymentStatus === "processing"
-                      ? "결제 처리 중..."
-                      : "1기 신청하기 · 55만 원"}
-                  </button>
+                  <p className="text-sm font-medium opacity-50 shrink-0 ml-4">월 $20</p>
                 </div>
-              </FadeUp>
+              </div>
+            </div>
+          </FadeUp>
 
-              {/* 마감 카피 */}
-              <FadeUp delay={0.4}>
-                <div className="text-center mt-10 space-y-3">
-                  <p className="text-base sm:text-lg font-bold">
-                    7주 동안 같이 걸은 사람들은, 7주 뒤에도 같이 걷습니다.
-                  </p>
-                  <p className="text-sm opacity-70">
-                    함께 가야 갈 수 있는 곳이 있습니다.<br />이번엔 혼자가 아닙니다.
-                  </p>
-                  <p className="text-sm opacity-60">
-                    🧽 스폰지클럽 1기에서 만나요.
-                  </p>
-                  <p className="text-smopacity-60 italic">
-                    이 창은 한 번만 열립니다.
-                  </p>
+          {/* 무료 사용 가능 */}
+          <FadeUp delay={0.3}>
+            <div>
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3" style={{ backgroundColor: "#22C55E", color: "white" }}>무료 사용 가능</span>
+              <div className="bg-white rounded-2xl shadow-sm overflow-hidden divide-y divide-black/5">
+                <div className="p-4 sm:p-5">
+                  <p className="font-bold text-sm sm:text-base">스프레드시트</p>
+                  <p className="text-sm opacity-60 mt-0.5">주차별 체크인 + 자료 모음</p>
                 </div>
-              </FadeUp>
-            </>
-          )}
+                <div className="p-4 sm:p-5">
+                  <p className="font-bold text-sm sm:text-base">옵시디언 (Obsidian)</p>
+                  <p className="text-sm opacity-60 mt-0.5">과제 제출 + 7주 기록 아카이브</p>
+                </div>
+                <div className="flex items-center justify-between p-4 sm:p-5">
+                  <div>
+                    <p className="font-bold text-sm sm:text-base">나노바나나 2.0 / 덕테이프</p>
+                    <p className="text-sm opacity-60 mt-0.5">W3 이미지 생성 · 유료 권장하지만 무료로도 가능</p>
+                  </div>
+                </div>
+                <div className="p-4 sm:p-5">
+                  <p className="font-bold text-sm sm:text-base">후커블 (Hookable)</p>
+                  <p className="text-sm opacity-60 mt-0.5">W3 상세페이지 제작 · 무료 크레딧 제공</p>
+                </div>
+              </div>
+            </div>
+          </FadeUp>
         </div>
       </section>
 
       {/* ═══ FAQ ═══ */}
-      <section id="faq" className="py-16 lg:py-24 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
+      <section id="faq" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
         <div className="max-w-3xl mx-auto">
           <FadeUp>
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-center mb-14">
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-14">
               자주 묻는 질문
             </h2>
           </FadeUp>
@@ -1142,6 +1225,143 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         </div>
       </section>
 
+      {/* ═══ FINAL CTA + Payment ═══ */}
+      <section
+        id="register"
+        ref={registerRef}
+        className="py-20 lg:py-32 px-4 sm:px-6"
+        style={{ backgroundColor: C.lime, color: C.text }}
+      >
+        <div className="max-w-3xl mx-auto">
+          {paymentStatus === "success" ? (
+            <div className="py-16">
+              <FadeUp>
+                <div className="text-center mb-10">
+                  <p className="text-6xl mb-6">🎉</p>
+                  <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black mb-4">결제 완료!</h2>
+                  <p className="text-lg sm:text-xl lg:text-2xl font-bold">
+                    스폰지클럽 1기 크루가 되신 것을 환영합니다
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-2xl p-6 sm:p-8 mb-6 text-left" style={{ color: "#1a1a1a" }}>
+                  <div className="flex items-start gap-3 mb-5">
+                    <span className="text-2xl mt-0.5">💬</span>
+                    <div>
+                      <p className="text-base sm:text-lg font-bold mb-1">카카오톡으로 상세 안내를 보내드려요</p>
+                      <p className="text-sm sm:text-base opacity-70">참여 방법, 슬랙 초대, 사전 준비사항 등을 안내해 드립니다.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 mb-5">
+                    <span className="text-2xl mt-0.5">⚠️</span>
+                    <div>
+                      <p className="text-base sm:text-lg font-bold mb-1">카카오톡 채널 추가는 필수입니다</p>
+                      <p className="text-sm sm:text-base opacity-70">채널이 추가되어 있지 않으면 안내 알림톡을 받을 수 없어요.</p>
+                    </div>
+                  </div>
+                  <a
+                    href="http://pf.kakao.com/_dxmxixhG"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-4 rounded-xl text-base font-bold transition-all hover:scale-[1.02]"
+                    style={{ backgroundColor: "#FEE500", color: "#1a1a1a" }}
+                  >
+                    카카오톡 채널 추가하기
+                  </a>
+                </div>
+
+                <div className="text-center space-y-3">
+                  <p className="text-base sm:text-lg font-bold">
+                    딸깍, 한 번에 못 가는 그곳까지 — 이제 함께 갑니다.
+                  </p>
+                  <p className="text-sm sm:text-base opacity-70">
+                    궁금한 점은 카카오 채널로 문의해주세요.
+                  </p>
+                </div>
+              </FadeUp>
+            </div>
+          ) : (
+            <>
+              <FadeUp>
+                <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-4 leading-snug">
+                  딸깍 한 번으로는 갈 수 없는 곳까지, 함께
+                </h2>
+              </FadeUp>
+
+              <FadeUp delay={0.1}>
+                <div className="flex justify-center gap-4 my-10">
+                  <div className="bg-white rounded-2xl p-4 sm:p-6 text-center border-2 border-black/10">
+                    <p className="text-sm opacity-70 mb-1">1차 오픈 최저가</p>
+                    <p className="text-3xl font-bold">55만 원</p>
+                    <p className="text-sm mt-1 opacity-60">4/28~30</p>
+                  </div>
+                  <div className="bg-white/50 rounded-2xl p-4 sm:p-6 text-center opacity-70">
+                    <p className="text-sm opacity-70 mb-1">2차 오픈</p>
+                    <p className="text-3xl font-bold">65만 원</p>
+                    <p className="text-sm mt-1">예정</p>
+                  </div>
+                </div>
+              </FadeUp>
+
+              <FadeUp delay={0.2}>
+                <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8">
+                  <h3 className="text-base sm:text-lg font-bold mb-6">신청 정보</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm opacity-60 mb-1">이름 *</label>
+                      <input type="text" value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="홍길동" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition" />
+                    </div>
+                    <div>
+                      <label className="block text-sm opacity-60 mb-1">전화번호 *</label>
+                      <input type="tel" value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder="010-0000-0000" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition" />
+                    </div>
+                    <div>
+                      <label className="block text-sm opacity-60 mb-1">이메일 *</label>
+                      <input type="email" value={formEmail} onChange={(e) => setFormEmail(e.target.value)} placeholder="email@example.com" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition" />
+                    </div>
+                    <div>
+                      <label className="block text-sm opacity-60 mb-1">7주 동안 만들고 싶은 것 (한 줄)</label>
+                      <input type="text" value={formGoal} onChange={(e) => setFormGoal(e.target.value)} placeholder="예: 마케팅 자동화 대시보드" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-center mt-4 opacity-60">
+                    🎁 해당 이기적공유회 신청 시, 이기적멤버십 2.0에도 무료로 자동가입됩니다.
+                  </p>
+
+                  <div className="mt-5 p-4 rounded-xl bg-gray-50 border border-gray-200">
+                    <p className="text-sm opacity-70 mb-3">
+                      신청 및 결제 완료 시 4/30(목) 참여자 대상 상세 안내를 보내드립니다.
+                    </p>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={formConfirm}
+                        onChange={(e) => setFormConfirm(e.target.checked)}
+                        className="w-4 h-4 rounded accent-black"
+                      />
+                      <span className="text-sm font-medium">확인했습니다 <span className="text-red-500">*</span></span>
+                    </label>
+                  </div>
+
+                  {paymentStatus === "error" && (
+                    <div className="mt-4 p-3 rounded-xl bg-red-100 text-red-600 text-sm">{paymentError}</div>
+                  )}
+
+                  <button
+                    onClick={handlePayment}
+                    disabled={paymentStatus === "processing"}
+                    className="w-full mt-6 py-4 rounded-full text-lg font-bold transition-all hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed"
+                    style={{ backgroundColor: "#0A0A0A", color: "#E9ED12" }}
+                  >
+                    {paymentStatus === "processing" ? "결제 처리 중..." : "선착순 신청하기"}
+                  </button>
+                </div>
+              </FadeUp>
+            </>
+          )}
+        </div>
+      </section>
+
       {/* ─── 확인 모달 ─── */}
       {showConfirmModal && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center px-6">
@@ -1189,22 +1409,15 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: showFloatingCta ? 0 : 100, opacity: showFloatingCta ? 1 : 0 }}
         transition={{ duration: 0.3 }}
-        className="fixed bottom-0 left-0 right-0 z-40 px-4 pb-4 pointer-events-none"
+        className="fixed bottom-0 left-0 right-0 z-40 px-4 pb-6 pointer-events-none"
       >
-        <div
-          className="max-w-lg mx-auto rounded-2xl p-3 flex items-center justify-between pointer-events-auto"
-          style={{ backgroundColor: `${"#1a1a1a"}ee`, backdropFilter: "blur(12px)" }}
-        >
-          <div className="text-white text-sm pl-2">
-            <p className="font-bold">스폰지 클럽 1기</p>
-            <p className="text-smopacity-60">55만 원 · 7주 프로그램</p>
-          </div>
+        <div className="max-w-lg mx-auto pointer-events-auto">
           <button
             onClick={() => scrollTo("register")}
-            className="px-5 py-2.5 rounded-full text-sm font-bold shrink-0 hover:scale-105 transition-transform"
-            style={{ backgroundColor: C.lime, color: C.text }}
+            className="w-full py-4 rounded-full text-lg font-bold hover:scale-[1.02] transition-all shadow-2xl"
+            style={{ backgroundColor: "#0A0A0A", color: "#E9ED12" }}
           >
-            1기 신청하기
+            선착순 신청하기
           </button>
         </div>
       </motion.div>
