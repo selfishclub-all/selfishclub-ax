@@ -149,40 +149,40 @@ const PROOF_TEAMS = [
 /* ─── 데이터: 내부 후기 ─── */
 const VOICE_CARDS = [
   {
-    name: "오웬",
-    role: "핀테크 대표",
-    quote:
-      "3주 동안 혼자 방황했는데, 팀에서 공유하기 시작하니 4시간 만에 서비스를 런칭했어요.",
-  },
-  {
     name: "비비안",
     role: "마케터",
     quote:
-      "개발자 없이 DB 수집부터 결제 페이지까지 혼자 만들었어요.",
+      "삽질 과정과 인사이트를 공유하는 게 필수인데, 이 부분이 저에게 많은 도움이 됐어요. <hl>공유하면서 정리가 되고, 안 풀렸던 부분을 다른 크루들의 인사이트에서 얻어가기도</hl> 해요. 혼자였다면 해내지 못했을 것들과 두 배로 들었을 리소스를 줄이는 데에도 도움이 많이 됩니다. <hl>함께 나아가고 있는 동료가 옆에 있다는 것</hl> 하나만으로도 힘이 많이 될 때가 있어요.",
+  },
+  {
+    name: "오웬",
+    role: "핀테크 대표",
+    quote:
+      "AI 공부는 시작도 끝도 알지 못하는 영역이고, 매일 새로운 것들이 쏟아지니까 동기부여도 점점 떨어지게 돼요. <hl>'팀'으로 공부하는 환경 안에서는 어쩔 수 없이 하게 되는 순간</hl>이 있고, 그것들을 토대로 기초를 만드는 과정을 가질 수 있었어요. <hl>그 기초 위에서 방향성을 잡고 앞으로 나아갈 수 있는 기회</hl>를 얻었어요!",
   },
   {
     name: "에밀리",
     role: "CRM 담당",
     quote:
-      "하루 3시간 걸리던 알림톡 발송이 5분으로 줄었어요.",
+      "AI Native 시대의 경쟁력은 '개인의 독창성'이라고 생각하는데요, 팀으로 AI를 함께 배워나가면 나만의 독창성만 기르는 것이 아닌, <hl>팀원들의 독창성을 직접 경험하고 다양한 영감과 인사이트를 얻을 수 있어요.</hl> <hl>팀으로서 함께 성장하는 것은 선택이 아니라 필수</hl>라고 생각합니다.",
   },
   {
     name: "흐민",
     role: "콘텐츠 크리에이터",
     quote:
-      "AI한테 답을 구하다가 질문을 받기 시작했어요.",
+      "매니아가 아니라면 딥다이브해서 공부하는 것도 쉽지 않죠. 팀으로 공부하는 환경 안에서는 <hl>어쩔 수 없이 하게 되는 순간, 시간들이 있고 그것들을 토대로 기초를 만드는 과정</hl>을 가질 수 있었어요. 그 기초 위에서 내가 할 방향성을 잡고 앞으로 나아갈 수 있는 기회를 얻었어요!",
   },
 ];
 
 /* ─── 데이터: 커리큘럼 ─── */
 const CURRICULUM_WEEKS = [
-  { week: "1주차", title: "첫 만남 · 셋업 · 팀 OS의 감 잡기", detail: "조 편성 발표, 작업 환경 같이 세팅, AI가 나를 인터뷰하면서 \"7주 뒤에 내가 뭘 만들고 있을까\"가 한 장으로 정리됩니다. 다다의 팀 OS 사례로 \"OS가 어떻게 굴러가는지\"의 감을 가장 먼저 잡아요.\n\n📦 학습 자료 패키지 제공: GitHub + Claude Code 워크숍 편집 VOD (40만 원 상당) · Claude Code · GitHub · OS 학습 자료 · Sponge Interview Skill" },
-  { week: "2주차", title: "나만의 AI OS 만들기", detail: "매일 아침 켜져서 내 일을 같이 하는 작업 환경을 직접 만듭니다. 다니(업무 OS)와 흐민(삶 OS)의 두 갈래 사례를 봐요. 이 주가 끝나면 \"AI를 쓴다\"가 아니라 \"AI랑 같이 일한다\"의 첫 감각이 잡힙니다." },
-  { week: "3주차", title: "의도대로 움직이는 AI · 이미지 · 상세페이지", detail: "조원들이 내 OS를 직접 만져보고 피드백을 줍니다. AI가 엉뚱한 데로 새지 않게 잡는 법(하네스·오케스트레이션), 디자이너 없이 제품 컷·모델 컷 만드는 법, AI로 상세페이지 만드는 법까지. 젬마의 미니 세션이 가장 많이 등장하는 주." },
-  { week: "4주차", title: "유저가 쓸 프로덕트 시작", detail: "\"누구한테, 왜\"부터 정리합니다. 비비안(개발자 없이 결제까지)과 오웬(월 1개 유저 프로덕트 런칭, 찜마켓 등)의 프로덕트 공유회. 내 프로덕트의 대상 유저·기획 근거·가치·초기 마케팅을 1페이지로 정리하고, 첫 버전 제작 시작." },
-  { week: "5주차", title: "고도화 + 프로모션", detail: "W4에서 시작한 프로덕트를 실제 쓰일 수준까지 끌어올립니다. 젬마의 프로모션 방법론(유저가 다시 만나러 오는 가두리망 설계) + 에밀리의 CRM 사례(하루 3시간이 5분이 된 알림톡·배너·UTM 자동 생성)." },
-  { week: "6주차", title: "AI 시대의 커리어 (오프라인)", badge: "오프라인 모임", detail: "7주 중 유일한 대면 모임. 만들기를 잠시 멈추고 두 가지 큰 질문을 같이 이야기합니다.\n\n① AI 시대의 커리어 — 무엇을 더 깊이 파야 할지, 무엇은 AI에 넘기고 손을 떼도 되는지, 내 커리어의 다음 한 발을 어디에 둘지. 45명의 관점이 교차되는 자리.\n② 에이전틱한 워크플로우를 갖는다는 것 — 7주 동안 짠 워크플로우를 다시 꺼내놓고, \"계속 손볼 수 있는 살아있는 시스템\"으로 보는 시각을 잡습니다.\n\n오프라인은 조 단위로 묶여 진행될 예정이며, 정확한 운영 방식은 참석 현황에 따라 조정됩니다." },
-  { week: "7주차", title: "결과물 발표 · 정식 스폰지크루 전환", detail: "7주의 결과물(내 OS + 프로덕트 + 이미지 + 유저 반응)을 발표하고, 다른 크루 40~50명의 결과물을 한 번에 흡수합니다. Obsidian 아카이브가 스폰지클럽 공식 사이트에 게재돼요. 이 주가 끝나는 순간, 모든 1기 멤버가 정식 스폰지크루로 전환됩니다." },
+  { week: "1주차", title: "첫 만남 · 셋업 · 팀 OS의 감 잡기", detail: "· 조 편성 발표 + 조별 첫 인사\n· 작업 환경 같이 세팅 — <hl>GitHub · Obsidian · Claude Code</hl> 기본기\n· AI 인터뷰로 <hl>\"7주 뒤에 내가 뭘 만들고 있을까\"</hl> 한 장 정리\n· 팀 OS 사례 공유 — 다다의 옵시디언 + GitHub 기반 팀 아카이빙 시스템\n· AAA팀 OS 사이트를 같이 둘러보면서 감 잡기\n\n📦 1기 크루 제공 학습 자료\n· <hl>GitHub + Claude Code 워크숍 VOD</hl> (40만 원 상당, 타임스탬프·자막 포함)\n· Claude Code 학습 자료 — 무엇을 시킬 수 있는지, 어떻게 시키는지\n· GitHub 학습 자료 — 비개발자가 헷갈리는 지점만 모은 가이드\n· OS 학습 자료 — AI OS 사례 모음\n· <hl>Sponge Interview Skill</hl> — 1기 전용 인터뷰 스킬" },
+  { week: "2주차", title: "나만의 AI OS 만들기", detail: "· 이기적 공유 세션 — 1주차 셋업하면서 어디서 막혔는지\n· <hl>스폰지클럽 OS 구조 공개</hl>\n· 개인 OS 사례 2인\n  다니 · <hl>캐러셀 에디터 + 콘텐츠 OS</hl> — 업무에 직접 꽂히는 OS\n  흐민 · <hl>텔레그램 → 위키 → 콘텐츠 자동 초안</hl> — 삶 전반에 AI가 얹히는 OS\n· 만든 OS를 <hl>Claude 웹과 Claude Code 양쪽에 얹는 방법</hl>" },
+  { week: "3주차", title: "하네스와 오케스트레이션, AI 콘텐츠 생성", detail: "· 이기적 공유 세션 — \"나만의 OS\" 상호 피드백 (조원이 직접 시연하고 코멘트)\n· 젬마 미니 세션 · <hl>하네스와 오케스트레이션</hl> — AI가 엉뚱한 데로 새지 않게 잡는 규칙 + 여러 단계를 하나의 결과물로 엮는 법\n· 젬마 미니 세션 · <hl>이미지 생성</hl> — 나노바나나 2.0 · 덕테이프로 제품 컷·모델 컷 제작\n· 젬마 미니 세션 · <hl>AI로 상세페이지 만들기</hl> — 후커블(Hookable)로 직접" },
+  { week: "4주차", title: "실제 유저가 있는 프로덕트 만들기", detail: "· 이기적 공유 세션 — 3주차 결과물 상호 공유\n· 비비안 · <hl>개발자 없이 결제까지 가능한 프로덕트</hl>를 만든 구조\n· 오웬 · <hl>한 달에 1개씩 유저 프로덕트를 런칭</hl>하는 흐름 (찜마켓 등)\n· 내 프로덕트의 대상 유저 · 왜 만드는지 · 어떤 가치를 주는지 · 어떻게 알릴지 정리\n· 조별로 방향 검증하고 <hl>첫 버전 제작 시작</hl>" },
+  { week: "5주차", title: "프로덕트 다듬고, 프로모션 준비하기", detail: "· 이기적 공유 세션 — 4주차 진행 상황 교차 공유\n· 유저 프로덕트 고도화 작업\n· 젬마 미니 세션 · <hl>프로모션 방법론</hl> — 유저가 한 번 만나면 다시 만나게 하는 가두리망 설계\n· 에밀리의 CRM 사례 — <hl>알림톡·배너·카피·UTM 자동 생성으로 하루 3시간 → 5분</hl>" },
+  { week: "6주차", title: "AI 시대의 커리어", badge: "오프라인 모임", detail: "<hl>유일한 대면 모임.</hl> 만들기를 잠시 멈추고, 어떻게 일할지·어떻게 살아갈지를 같이 이야기합니다.\n\n① AI 시대의 커리어\n· 무엇을 더 깊이 파야 할지\n· 무엇은 AI에 넘기고 <hl>손을 떼도 되는지</hl>\n· <hl>내 커리어의 다음 한 발</hl>을 어디에 둘지\n\n② 에이전틱한 워크플로우를 갖는다는 것\n· 어떤 단계에서 AI에게 무엇을 맡겼는가\n· 어디서 내 의도가 흐려지고, 어디서 단단했는가\n· 이 흐름이 <hl>7주 뒤에도 계속 굴러가려면</hl> 뭐가 필요한가" },
+  { week: "7주차", title: "결과물 발표 · 정식 스폰지크루 전환", detail: "· 이기적 공유 세션 — 7주 결과물 전원 공유\n· <hl>최종 프로젝트 발표</hl> — 내 OS + 유저 프로덕트 + 이미지 생성물 + 유저 반응\n· 7주 회고 · 조별·전체 피드백\n· <hl>Obsidian 아카이브 스폰지클럽 공식 사이트 게재</hl>\n· <hl>정식 스폰지크루 전환</hl> 안내" },
 ];
 
 /* ─── 데이터: 리더십 ─── */
@@ -218,7 +218,7 @@ const FAQ_CATEGORIES = [
     category: "대상 · 참여",
     items: [
       { q: "코딩을 전혀 몰라도 괜찮나요?", a: "네. 비개발자를 위해 설계됐습니다." },
-      { q: "시간은 얼마나 드나요?", a: "매주 일요일 20:00~23:00 (W1은 1.5시간) + 주중 미션. 7주 동안 안정적으로 시간을 낼 수 있는 분만 신청해 주세요." },
+      { q: "시간은 얼마나 드나요?", a: "매주 일요일 20:00~23:00 (1주차는 1.5시간) + 주중 미션. 7주 동안 안정적으로 시간을 낼 수 있는 분만 신청해 주세요." },
       { q: "필요한 장비는?", a: "노트북 + Claude Code Max 플랜 권장 + Obsidian(무료) + GitHub(무료). 표준은 Claude Code, Codex는 바이브 코딩 보조용으로 활용 가능." },
     ],
   },
@@ -229,7 +229,7 @@ const FAQ_CATEGORIES = [
       { q: "커리큘럼이 중간에 바뀔 수도 있나요?", a: "네. 큰 골격은 유지되지만, 세부 콘텐츠·미니 세션 주제·실습 도구는 진행 상황에 따라 조정됩니다. 변경 사항은 슬랙으로 안내됩니다." },
       { q: "미션은 어떤 식으로 나가나요?", a: "매주 1~3개. 실제 구현 미션 + 답을 정해두지 않은 고민 아젠다 두 갈래로 같이 굴러요." },
       { q: "어디서 소통하나요?", a: "7주 전 기간 슬랙. 과제 제출은 옵시디언, 체크인·자료 모음은 스프레드시트." },
-      { q: "어떤 프로젝트를 만드나요?", a: "본인이 직접 정합니다. 마케팅 자동화, CRM 대시보드, 콘텐츠 OS, 사이드 프로젝트 모두 가능. W1에서 방향을 잡아요." },
+      { q: "어떤 프로젝트를 만드나요?", a: "본인이 직접 정합니다. 마케팅 자동화, CRM 대시보드, 콘텐츠 OS, 사이드 프로젝트 모두 가능. 1주차에서 방향을 잡아요." },
       { q: "조 구성은?", a: "5개 조 · 조당 8~10명. 조장과 부조장이 한 팀으로 조를 이끕니다." },
     ],
   },
@@ -537,7 +537,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
           <button
             onClick={() => scrollTo("register")}
             className="px-8 py-4 rounded-full text-lg font-bold hover:scale-105 transition-transform"
-            style={{ backgroundColor: "#E9ED12", color: "#0A0A0A" }}
+            style={{ backgroundColor: "#0A0A0A", color: "#FFFFFF" }}
           >
             지금 얼리버드 최저가로 신청하기
           </button>
@@ -826,7 +826,12 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
                         <p className="text-sm opacity-60">{card.role}</p>
                       </div>
                     </div>
-                    <p className="text-sm sm:text-base leading-relaxed opacity-80">&ldquo;{card.quote}&rdquo;</p>
+                    <p className="text-sm sm:text-base leading-relaxed opacity-80">&ldquo;{card.quote.split(/(<hl>.*?<\/hl>)/g).map((part: string, j: number) => {
+                      if (part.startsWith("<hl>") && part.endsWith("</hl>")) {
+                        return <span key={j} className="font-bold underline decoration-[#E9ED12] decoration-2 underline-offset-4">{part.slice(4, -5)}</span>;
+                      }
+                      return <span key={j}>{part}</span>;
+                    })}&rdquo;</p>
                   </div>
                 </FadeUp>
               ))}
@@ -856,17 +861,20 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
                   <button
                     onClick={() => setOpenWeek(openWeek === i ? null : i)}
                     className="w-full p-4 sm:p-5 flex gap-4 items-start text-left hover:bg-black/[0.02] transition-colors cursor-pointer"
+                    style={openWeek === i ? { backgroundColor: "#E9ED12" } : {}}
                   >
                     <div className="shrink-0 pt-0.5">
-                      <p className="text-sm font-black">{w.week}</p>
+                      <p className="text-base sm:text-lg font-black">{w.week}</p>
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-sm sm:text-base">{w.title}</h3>
-                      {"badge" in w && w.badge && (
-                        <span className="inline-block mt-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold" style={{ backgroundColor: "#E9ED12", color: "#1a1a1a" }}>
-                          {w.badge}
-                        </span>
-                      )}
+                      <h3 className="font-bold text-base sm:text-lg flex items-center gap-2 flex-wrap">
+                        {"badge" in w && w.badge && (
+                          <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold" style={{ backgroundColor: "#E9ED12", color: "#1a1a1a" }}>
+                            {w.badge}
+                          </span>
+                        )}
+                        {w.title}
+                      </h3>
                     </div>
                     <motion.svg
                       width="20"
@@ -889,9 +897,27 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <p className="px-4 sm:px-5 pb-4 sm:pb-5 pl-[calc(1rem+3.5rem)] sm:pl-[calc(1.25rem+3.5rem)] text-sm sm:text-base leading-relaxed opacity-70 whitespace-pre-line">
-                      {w.detail}
-                    </p>
+                    <div className="border-t border-black/5 mx-6 sm:mx-8 mb-5 sm:mb-6 pt-4 sm:pt-5 text-base sm:text-lg leading-relaxed" style={{ color: "#2D2D2D" }}>
+                      {w.detail.split("\n").map((line: string, li: number) => {
+                        const trimmed = line.trimStart();
+                        const renderHL = (text: string) => text.split(/(<hl>.*?<\/hl>)/g).map((part: string, pi: number) => {
+                          if (part.startsWith("<hl>") && part.endsWith("</hl>")) {
+                            return <span key={pi} className="font-bold underline decoration-[#E9ED12] decoration-2 underline-offset-4">{part.slice(4, -5)}</span>;
+                          }
+                          return <span key={pi}>{part}</span>;
+                        });
+                        if (trimmed.startsWith("·")) {
+                          return (
+                            <div key={li} className="flex gap-1.5 mt-1.5">
+                              <span className="shrink-0">·</span>
+                              <span>{renderHL(trimmed.slice(1).trimStart())}</span>
+                            </div>
+                          );
+                        }
+                        if (trimmed === "") return <div key={li} className="h-3" />;
+                        return <p key={li} className="mt-1.5">{renderHL(line)}</p>;
+                      })}
+                    </div>
                   </motion.div>
                 </div>
               </FadeUp>
@@ -972,7 +998,14 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
                   <img src="/images/spongeclub/crew/젬마.png" alt="젬마" className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <p className="text-lg sm:text-xl font-bold">{LEADER_GEMMA.name}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-lg sm:text-xl font-bold">{LEADER_GEMMA.name}</p>
+                    <div className="flex items-center gap-1.5">
+                      <a href="https://www.linkedin.com/in/zemma/" target="_blank" rel="noopener noreferrer" className="opacity-40 hover:opacity-80 transition-opacity"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                      <a href="https://www.threads.com/@zemma.selfishclub" target="_blank" rel="noopener noreferrer" className="opacity-40 hover:opacity-80 transition-opacity"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.276 3.242-.892 1.083-2.118 1.673-3.636 1.752-1.2.063-2.334-.25-3.197-.882-.95-.696-1.517-1.73-1.596-2.912-.074-1.103.35-2.14 1.196-2.923.795-.735 1.897-1.178 3.283-1.317.927-.093 1.87-.062 2.81.093-.132-.73-.393-1.292-.783-1.664-.49-.467-1.228-.703-2.195-.703h-.054c-.75.008-1.383.209-1.882.598l-1.326-1.59c.782-.652 1.81-1.002 3.07-1.044h.085c1.47 0 2.622.434 3.425 1.29.716.765 1.146 1.816 1.278 3.122.481.107.937.238 1.36.399 1.17.444 2.106 1.116 2.788 2.003.793 1.03 1.1 2.27 1.1 3.597.002 1.98-.825 3.907-2.33 5.422C18.69 23.11 15.97 23.98 12.186 24zM10.8 13.404c-.474.044-.862.183-1.125.403-.322.269-.486.636-.462 1.035.05.757.634 1.3 1.524 1.348h.048c.98-.04 2.023-.675 2.212-3.058-.668-.104-1.413-.14-2.197-.073z"/></svg></a>
+                      <a href="https://www.instagram.com/zemma.selfishclub/" target="_blank" rel="noopener noreferrer" className="opacity-40 hover:opacity-80 transition-opacity"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                    </div>
+                  </div>
                   <p className="text-sm sm:text-base opacity-60">{LEADER_GEMMA.role}</p>
                 </div>
               </div>
@@ -985,13 +1018,13 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
           {/* 운영진 — 2열 그리드 */}
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { name: "오웬", role: "플랫폼 빌더 · 월 1개 유저 프로덕트 런칭", photo: "/images/spongeclub/crew/오웬.png" },
-              { name: "비비안", role: "AX PM · 프로덕트 구조 설계", photo: "/images/spongeclub/crew/비비안.png" },
-              { name: "띵크", role: "워크플로우 아키텍트 · Vercel 자동배포", photo: "/images/spongeclub/crew/띵크.png" },
-              { name: "흐민", role: "AI 씽킹 파트너 · Sullivan 프로젝트", photo: "/images/spongeclub/crew/흐민.png" },
-              { name: "다다", role: "팀 리더 · 운영 OS 설계자", photo: "/images/spongeclub/crew/다다.png" },
-              { name: "다니", role: "콘텐츠 · 마케팅", photo: "/images/spongeclub/crew/다니.png" },
-              { name: "에밀리", role: "CRM · 멤버 릴레이션", photo: "/images/spongeclub/crew/에밀리.png" },
+              { name: "오웬", role: "플랫폼 빌더 · 월 1개 유저 프로덕트 런칭", photo: "/images/spongeclub/crew/오웬.png", linkedin: "https://www.linkedin.com/in/owenleesunghyun", threads: "", instagram: "https://www.instagram.com/0_thought/" },
+              { name: "비비안", role: "AX PM · 프로덕트 구조 설계", photo: "/images/spongeclub/crew/비비안.png", linkedin: "https://www.linkedin.com/in/%EC%A0%95%EC%9D%80-%EB%B0%95-b60ab0350/", threads: "https://www.threads.com/@vivien.selfishclub", instagram: "https://www.instagram.com/vivien.selfishclub/" },
+              { name: "띵크", role: "워크플로우 아키텍트 · Vercel 자동배포", photo: "/images/spongeclub/crew/띵크.png", linkedin: "https://www.linkedin.com/in/thinkys/", threads: "https://www.threads.com/@think.ys", instagram: "https://www.instagram.com/think.ys/" },
+              { name: "흐민", role: "AI 씽킹 파트너 · Sullivan 프로젝트", photo: "/images/spongeclub/crew/흐민.png", linkedin: "https://www.linkedin.com/in/hyunmin-kim-77142a264/", threads: "https://www.threads.com/@_h_minnn", instagram: "https://www.instagram.com/_h_minnn/" },
+              { name: "다다", role: "팀 리더 · 운영 OS 설계자", photo: "/images/spongeclub/crew/다다.png", linkedin: "https://www.linkedin.com/in/%EB%8B%A4%EC%86%94-%EA%B9%80-5327a6228/", threads: "https://www.threads.com/@to_most_?hl=ko", instagram: "https://www.instagram.com/to_most_" },
+              { name: "다니", role: "콘텐츠 · 마케팅", photo: "/images/spongeclub/crew/다니.png", linkedin: "https://www.linkedin.com/in/dani-%EC%86%A1%EB%8B%A4%EC%9D%80-0795a1394/", threads: "https://www.threads.com/@dani.selfishclub?hl=ko", instagram: "https://www.instagram.com/dani.selfishclub/" },
+              { name: "에밀리", role: "CRM · 멤버 릴레이션", photo: "/images/spongeclub/crew/에밀리.png", linkedin: "https://www.linkedin.com/in/%EC%A3%BC%ED%9D%AC-%EB%AC%B8-0ab3843b9/", threads: "https://www.threads.com/@emily.selfishclub", instagram: "https://www.instagram.com/emily.selfishclub/" },
             ].map((crew, i) => (
               <FadeUp key={i} delay={0.25 + i * 0.05}>
                 <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
@@ -1000,7 +1033,14 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
                       <img src={crew.photo} alt={crew.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <p className="text-lg sm:text-xl font-bold">{crew.name}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-lg sm:text-xl font-bold">{crew.name}</p>
+                        <div className="flex items-center gap-1.5">
+                          {crew.linkedin && <a href={crew.linkedin} target="_blank" rel="noopener noreferrer" className="opacity-40 hover:opacity-80 transition-opacity"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>}
+                          {crew.threads && <a href={crew.threads} target="_blank" rel="noopener noreferrer" className="opacity-40 hover:opacity-80 transition-opacity"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.276 3.242-.892 1.083-2.118 1.673-3.636 1.752-1.2.063-2.334-.25-3.197-.882-.95-.696-1.517-1.73-1.596-2.912-.074-1.103.35-2.14 1.196-2.923.795-.735 1.897-1.178 3.283-1.317.927-.093 1.87-.062 2.81.093-.132-.73-.393-1.292-.783-1.664-.49-.467-1.228-.703-2.195-.703h-.054c-.75.008-1.383.209-1.882.598l-1.326-1.59c.782-.652 1.81-1.002 3.07-1.044h.085c1.47 0 2.622.434 3.425 1.29.716.765 1.146 1.816 1.278 3.122.481.107.937.238 1.36.399 1.17.444 2.106 1.116 2.788 2.003.793 1.03 1.1 2.27 1.1 3.597.002 1.98-.825 3.907-2.33 5.422C18.69 23.11 15.97 23.98 12.186 24zM10.8 13.404c-.474.044-.862.183-1.125.403-.322.269-.486.636-.462 1.035.05.757.634 1.3 1.524 1.348h.048c.98-.04 2.023-.675 2.212-3.058-.668-.104-1.413-.14-2.197-.073z"/></svg></a>}
+                          {crew.instagram && <a href={crew.instagram} target="_blank" rel="noopener noreferrer" className="opacity-40 hover:opacity-80 transition-opacity"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>}
+                        </div>
+                      </div>
                       <p className="text-sm sm:text-base opacity-70">{crew.role}</p>
                     </div>
                   </div>
@@ -1168,12 +1208,12 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
                 <div className="flex items-center justify-between p-4 sm:p-5">
                   <div>
                     <p className="font-bold text-sm sm:text-base">나노바나나 2.0 / 덕테이프</p>
-                    <p className="text-sm opacity-60 mt-0.5">W3 이미지 생성 · 유료 권장하지만 무료로도 가능</p>
+                    <p className="text-sm opacity-60 mt-0.5">3주차 이미지 생성 · 유료 권장하지만 무료로도 가능</p>
                   </div>
                 </div>
                 <div className="p-4 sm:p-5">
                   <p className="font-bold text-sm sm:text-base">후커블 (Hookable)</p>
-                  <p className="text-sm opacity-60 mt-0.5">W3 상세페이지 제작 · 무료 크레딧 제공</p>
+                  <p className="text-sm opacity-60 mt-0.5">3주차 상세페이지 제작 · 무료 크레딧 제공</p>
                 </div>
               </div>
             </div>
