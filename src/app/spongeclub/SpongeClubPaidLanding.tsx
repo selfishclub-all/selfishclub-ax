@@ -176,13 +176,13 @@ const VOICE_CARDS = [
 
 /* ─── 데이터: 커리큘럼 ─── */
 const CURRICULUM_WEEKS = [
-  { week: "1주차", title: "첫 만남 · 셋업 · 팀 OS의 감 잡기", detail: "· 조 편성 발표 + 조별 첫 인사\n· 작업 환경 같이 세팅 — <hl>GitHub · Obsidian · Claude Code</hl> 기본기\n· AI 인터뷰로 <hl>\"7주 뒤에 내가 뭘 만들고 있을까\"</hl> 한 장 정리\n· 팀 OS 사례 공유 — 다다의 옵시디언 + GitHub 기반 팀 아카이빙 시스템\n· AAA팀 OS 사이트를 같이 둘러보면서 감 잡기\n\n📦 1기 크루 제공 학습 자료\n· <hl>GitHub + Claude Code 워크숍 VOD</hl> (40만 원 상당, 타임스탬프·자막 포함)\n· Claude Code 학습 자료 — 무엇을 시킬 수 있는지, 어떻게 시키는지\n· GitHub 학습 자료 — 비개발자가 헷갈리는 지점만 모은 가이드\n· OS 학습 자료 — AI OS 사례 모음\n· <hl>Sponge Interview Skill</hl> — 1기 전용 인터뷰 스킬" },
-  { week: "2주차", title: "나만의 AI OS 만들기", detail: "· 이기적 공유 세션 — 1주차 셋업하면서 어디서 막혔는지\n· <hl>스폰지클럽 OS 구조 공개</hl>\n· 개인 OS 사례 2인\n  다니 · <hl>캐러셀 에디터 + 콘텐츠 OS</hl> — 업무에 직접 꽂히는 OS\n  흐민 · <hl>텔레그램 → 위키 → 콘텐츠 자동 초안</hl> — 삶 전반에 AI가 얹히는 OS\n· 만든 OS를 <hl>Claude 웹과 Claude Code 양쪽에 얹는 방법</hl>" },
-  { week: "3주차", title: "하네스와 오케스트레이션, AI 콘텐츠 생성", detail: "· 이기적 공유 세션 — \"나만의 OS\" 상호 피드백 (조원이 직접 시연하고 코멘트)\n· 젬마 미니 세션 · <hl>하네스와 오케스트레이션</hl> — AI가 엉뚱한 데로 새지 않게 잡는 규칙 + 여러 단계를 하나의 결과물로 엮는 법\n· 젬마 미니 세션 · <hl>이미지 생성</hl> — 나노바나나 2.0 · 덕테이프로 제품 컷·모델 컷 제작\n· 젬마 미니 세션 · <hl>AI로 상세페이지 만들기</hl> — 후커블(Hookable)로 직접" },
-  { week: "4주차", title: "실제 유저가 있는 프로덕트 만들기", detail: "· 이기적 공유 세션 — 3주차 결과물 상호 공유\n· 비비안 · <hl>개발자 없이 결제까지 가능한 프로덕트</hl>를 만든 구조\n· 오웬 · <hl>한 달에 1개씩 유저 프로덕트를 런칭</hl>하는 흐름 (찜마켓 등)\n· 내 프로덕트의 대상 유저 · 왜 만드는지 · 어떤 가치를 주는지 · 어떻게 알릴지 정리\n· 조별로 방향 검증하고 <hl>첫 버전 제작 시작</hl>" },
-  { week: "5주차", title: "프로덕트 다듬고, 프로모션 준비하기", detail: "· 이기적 공유 세션 — 4주차 진행 상황 교차 공유\n· 유저 프로덕트 고도화 작업\n· 젬마 미니 세션 · <hl>프로모션 방법론</hl> — 유저가 한 번 만나면 다시 만나게 하는 가두리망 설계\n· 에밀리의 CRM 사례 — <hl>알림톡·배너·카피·UTM 자동 생성으로 하루 3시간 → 5분</hl>" },
+  { week: "1주차", title: "첫 만남 · 셋업 · 팀 OS의 감 잡기", detail: "· 조 편성 발표 + 조별 첫 인사\n· 작업 환경 같이 세팅: <hl>GitHub · Obsidian · Claude Code</hl> 기본기\n· AI 인터뷰로 <hl>\"7주 뒤에 내가 뭘 만들고 있을까\"</hl> 한 장 정리\n· 팀 OS 사례 공유: 다다의 옵시디언 + GitHub 기반 팀 아카이빙 시스템\n· AAA팀 OS 사이트를 같이 둘러보면서 감 잡기\n\n📦 1기 크루 제공 학습 자료\n· <hl>GitHub + Claude Code 워크숍 VOD</hl> (40만 원 상당, 타임스탬프·자막 포함)\n· Claude Code 학습 자료: 무엇을 시킬 수 있는지, 어떻게 시키는지\n· GitHub 학습 자료: 비개발자가 헷갈리는 지점만 모은 가이드\n· OS 학습 자료: AI OS 사례 모음\n· <hl>Sponge Interview Skill</hl>: 1기 전용 인터뷰 스킬" },
+  { week: "2주차", title: "나만의 AI OS 만들기", detail: "· 이기적 공유 세션: 1주차 셋업하면서 어디서 막혔는지\n· <hl>스폰지클럽 OS 구조 공개</hl>\n· 개인 OS 사례 2인\n  다니 · <hl>캐러셀 에디터 + 콘텐츠 OS</hl>: 업무에 직접 꽂히는 OS\n  흐민 · <hl>텔레그램 → 위키 → 콘텐츠 자동 초안</hl>: 삶 전반에 AI가 얹히는 OS\n· 만든 OS를 <hl>Claude 웹과 Claude Code 양쪽에 얹는 방법</hl>" },
+  { week: "3주차", title: "하네스와 오케스트레이션, AI 콘텐츠 생성", detail: "· 이기적 공유 세션: \"나만의 OS\" 상호 피드백 (조원이 직접 시연하고 코멘트)\n· 젬마 미니 세션 · <hl>하네스와 오케스트레이션</hl>: AI가 엉뚱한 데로 새지 않게 잡는 규칙 + 여러 단계를 하나의 결과물로 엮는 법\n· 젬마 미니 세션 · <hl>이미지 생성</hl>: 나노바나나 2.0 · 덕테이프로 제품 컷·모델 컷 제작\n· 젬마 미니 세션 · <hl>AI로 상세페이지 만들기</hl>: 후커블(Hookable)로 직접" },
+  { week: "4주차", title: "실제 유저가 있는 프로덕트 만들기", detail: "· 이기적 공유 세션: 3주차 결과물 상호 공유\n· 비비안 · <hl>개발자 없이 결제까지 가능한 프로덕트</hl>를 만든 구조\n· 오웬 · <hl>한 달에 1개씩 유저 프로덕트를 런칭</hl>하는 흐름 (찜마켓 등)\n· 내 프로덕트의 대상 유저 · 왜 만드는지 · 어떤 가치를 주는지 · 어떻게 알릴지 정리\n· 조별로 방향 검증하고 <hl>첫 버전 제작 시작</hl>" },
+  { week: "5주차", title: "프로덕트 다듬고, 프로모션 준비하기", detail: "· 이기적 공유 세션: 4주차 진행 상황 교차 공유\n· 유저 프로덕트 고도화 작업\n· 젬마 미니 세션 · <hl>프로모션 방법론</hl>: 유저가 한 번 만나면 다시 만나게 하는 가두리망 설계\n· 에밀리의 CRM 사례: <hl>알림톡·배너·카피·UTM 자동 생성으로 하루 3시간 → 5분</hl>" },
   { week: "6주차", title: "AI 시대의 커리어", badge: "오프라인 모임", detail: "<hl>유일한 대면 모임.</hl> 만들기를 잠시 멈추고, 어떻게 일할지·어떻게 살아갈지를 같이 이야기합니다.\n\n① AI 시대의 커리어\n· 무엇을 더 깊이 파야 할지\n· 무엇은 AI에 넘기고 <hl>손을 떼도 되는지</hl>\n· <hl>내 커리어의 다음 한 발</hl>을 어디에 둘지\n\n② 에이전틱한 워크플로우를 갖는다는 것\n· 어떤 단계에서 AI에게 무엇을 맡겼는가\n· 어디서 내 의도가 흐려지고, 어디서 단단했는가\n· 이 흐름이 <hl>7주 뒤에도 계속 굴러가려면</hl> 뭐가 필요한가" },
-  { week: "7주차", title: "결과물 발표 · 정식 스폰지크루 전환", detail: "· 이기적 공유 세션 — 7주 결과물 전원 공유\n· <hl>최종 프로젝트 발표</hl> — 내 OS + 유저 프로덕트 + 이미지 생성물 + 유저 반응\n· 7주 회고 · 조별·전체 피드백\n· <hl>Obsidian 아카이브 스폰지클럽 공식 사이트 게재</hl>\n· <hl>정식 스폰지크루 전환</hl> 안내" },
+  { week: "7주차", title: "결과물 발표 · 정식 스폰지크루 전환", detail: "· 이기적 공유 세션: 7주 결과물 전원 공유\n· <hl>최종 프로젝트 발표</hl>: 내 OS + 유저 프로덕트 + 이미지 생성물 + 유저 반응\n· 7주 회고 · 조별·전체 피드백\n· <hl>Obsidian 아카이브 스폰지클럽 공식 사이트 게재</hl>\n· <hl>정식 스폰지크루 전환</hl> 안내" },
 ];
 
 /* ─── 데이터: 리더십 ─── */
@@ -520,7 +520,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
       <section ref={heroRef} className="relative flex flex-col items-center justify-center text-center px-4 sm:px-6 py-24 sm:py-32 lg:py-40 overflow-hidden" style={{ background: "#E9ED12", color: "#0A0A0A" }}>
         <FadeUp delay={0.15}>
           <p className="text-base sm:text-lg lg:text-xl font-bold tracking-wide mb-8 px-5 py-2 rounded-full border border-black/20 bg-black/5 inline-block">
-            스폰지클럽 1기 모집 오픈!
+            스폰지클럽 1기 선착순 50명 모집!
           </p>
         </FadeUp>
 
@@ -740,29 +740,44 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
 
           <div className="space-y-5">
             <FadeUp delay={0.2}>
-              <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
-                <h3 className="text-base sm:text-lg font-bold mb-3">① 실전 중심</h3>
-                <p className="text-sm sm:text-base leading-relaxed opacity-70">
-                  이론이 아니라 매주 직접 만듭니다. 내 업무에 바로 적용해요.
-                </p>
+              <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm">
+                <div className="flex items-start gap-4 sm:gap-5">
+                  <span className="text-4xl sm:text-5xl font-black shrink-0" style={{ color: "#E9ED12" }}>1</span>
+                  <div>
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">실전 중심</h3>
+                    <p className="text-base sm:text-lg leading-relaxed opacity-70">
+                      이론이 아니라 매주 직접 만듭니다. 내 업무에 바로 적용해요.
+                    </p>
+                  </div>
+                </div>
               </div>
             </FadeUp>
 
             <FadeUp delay={0.3}>
-              <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
-                <h3 className="text-base sm:text-lg font-bold mb-3">② 이기적 공유</h3>
-                <p className="text-sm sm:text-base leading-relaxed opacity-70">
-                  출발점이 다른 8~10명의 유즈케이스가 매주 내 시야로 들어옵니다.
-                </p>
+              <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm">
+                <div className="flex items-start gap-4 sm:gap-5">
+                  <span className="text-4xl sm:text-5xl font-black shrink-0" style={{ color: "#E9ED12" }}>2</span>
+                  <div>
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">이기적 공유</h3>
+                    <p className="text-base sm:text-lg leading-relaxed opacity-70">
+                      출발점이 다른 8~10명의 유즈케이스가 매주 내 시야로 들어옵니다.
+                    </p>
+                  </div>
+                </div>
               </div>
             </FadeUp>
 
             <FadeUp delay={0.4}>
-              <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
-                <h3 className="text-base sm:text-lg font-bold mb-3">③ 7주 미션</h3>
-                <p className="text-sm sm:text-base leading-relaxed opacity-70">
-                  고민 아젠다 + 구현 미션. 따라하는 워크숍이 아니라 직접 만드는 구조입니다.
-                </p>
+              <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm">
+                <div className="flex items-start gap-4 sm:gap-5">
+                  <span className="text-4xl sm:text-5xl font-black shrink-0" style={{ color: "#E9ED12" }}>3</span>
+                  <div>
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">7주 미션</h3>
+                    <p className="text-base sm:text-lg leading-relaxed opacity-70">
+                      고민 아젠다 + 구현 미션. 따라하는 워크숍이 아니라 직접 만드는 구조입니다.
+                    </p>
+                  </div>
+                </div>
               </div>
             </FadeUp>
           </div>
@@ -1112,13 +1127,13 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
             </h2>
           </FadeUp>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-2 gap-4 sm:gap-5">
             {BENEFIT_CARDS.map((card, i) => (
               <FadeUp key={i} delay={0.1 + i * 0.08}>
-                <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm h-full">
-                  <span className="text-3xl mb-3 block">{card.emoji}</span>
-                  <h3 className="font-bold text-sm sm:text-base mb-2">{card.title}</h3>
-                  <p className="text-sm sm:text-base opacity-70">{card.desc}</p>
+                <div className="bg-white rounded-2xl p-5 sm:p-7 shadow-sm h-full">
+                  <span className="text-4xl mb-4 block">{card.emoji}</span>
+                  <h3 className="font-bold text-base sm:text-lg lg:text-xl mb-2">{card.title}</h3>
+                  {card.desc && <p className="text-sm sm:text-base opacity-70">{card.desc}</p>}
                 </div>
               </FadeUp>
             ))}
@@ -1242,63 +1257,6 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         </div>
       </section>
 
-      {/* ═══ FAQ ═══ */}
-      <section id="faq" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
-        <div className="max-w-3xl mx-auto">
-          <FadeUp>
-            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-14">
-              자주 묻는 질문
-            </h2>
-          </FadeUp>
-
-          <div className="space-y-10">
-            {FAQ_CATEGORIES.map((cat, ci) => {
-              const offset = FAQ_CATEGORIES.slice(0, ci).reduce((sum, c) => sum + c.items.length, 0);
-              return (
-                <FadeUp key={ci} delay={ci * 0.1}>
-                  <p className="text-sm sm:text-base font-bold opacity-60 uppercase tracking-wider mb-3">{cat.category}</p>
-                  <div className="space-y-3">
-                    {cat.items.map((faq, fi) => {
-                      const idx = offset + fi;
-                      return (
-                        <div key={fi} className="bg-white rounded-xl shadow-sm overflow-hidden">
-                          <button
-                            onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                            className="w-full flex items-center justify-between px-5 py-4 text-left"
-                          >
-                            <span className="font-medium text-sm sm:text-base pr-4">{faq.q}</span>
-                            <motion.span
-                              animate={{ rotate: openFaq === idx ? 45 : 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="shrink-0 text-xl opacity-60"
-                            >
-                              +
-                            </motion.span>
-                          </button>
-                          <motion.div
-                            initial={false}
-                            animate={{
-                              height: openFaq === idx ? "auto" : 0,
-                              opacity: openFaq === idx ? 1 : 0,
-                            }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            <p className="px-5 pb-4 text-sm leading-relaxed opacity-70">
-                              {faq.a}
-                            </p>
-                          </motion.div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </FadeUp>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* ═══ FINAL CTA + Payment ═══ */}
       <section
         id="register"
@@ -1378,21 +1336,21 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
             <>
               <FadeUp>
                 <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-4 leading-snug">
-                  딸깍 한 번으로는 갈 수 없는 곳까지, 함께
+                  지금 얼리버드로<br />신청하세요
                 </h2>
               </FadeUp>
 
               <FadeUp delay={0.1}>
                 <div className="flex justify-center gap-4 my-10">
-                  <div className="bg-white rounded-2xl p-4 sm:p-6 text-center border-2 border-black/10">
-                    <p className="text-sm opacity-70 mb-1">1차 오픈 최저가</p>
-                    <p className="text-3xl font-bold">55만 원</p>
-                    <p className="text-sm mt-1 opacity-60">4/28~30</p>
-                  </div>
-                  <div className="bg-white/50 rounded-2xl p-4 sm:p-6 text-center opacity-70">
-                    <p className="text-sm opacity-70 mb-1">2차 오픈</p>
-                    <p className="text-3xl font-bold">65만 원</p>
-                    <p className="text-sm mt-1">예정</p>
+                  <div className="flex justify-center gap-4">
+                    <div className="bg-white rounded-2xl p-4 sm:p-6 text-center border-2 border-black/10">
+                      <p className="text-sm opacity-40 line-through mb-1">정가 100만 원</p>
+                      <p className="text-3xl sm:text-4xl font-black">55만 원</p>
+                    </div>
+                    <div className="bg-white/30 rounded-2xl p-4 sm:p-6 text-center opacity-40">
+                      <p className="text-sm opacity-60 line-through mb-1">정가 100만 원</p>
+                      <p className="text-3xl sm:text-4xl font-black">65만 원</p>
+                    </div>
                   </div>
                 </div>
               </FadeUp>
@@ -1453,6 +1411,63 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
               </FadeUp>
             </>
           )}
+        </div>
+      </section>
+
+      {/* ═══ FAQ ═══ */}
+      <section id="faq" className="py-20 lg:py-32 px-4 sm:px-6" style={{ backgroundColor: "#F5F5F3" }}>
+        <div className="max-w-3xl mx-auto">
+          <FadeUp>
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-14">
+              자주 묻는 질문
+            </h2>
+          </FadeUp>
+
+          <div className="space-y-10">
+            {FAQ_CATEGORIES.map((cat, ci) => {
+              const offset = FAQ_CATEGORIES.slice(0, ci).reduce((sum, c) => sum + c.items.length, 0);
+              return (
+                <FadeUp key={ci} delay={ci * 0.1}>
+                  <p className="text-sm sm:text-base font-bold opacity-60 uppercase tracking-wider mb-3">{cat.category}</p>
+                  <div className="space-y-3">
+                    {cat.items.map((faq, fi) => {
+                      const idx = offset + fi;
+                      return (
+                        <div key={fi} className="bg-white rounded-xl shadow-sm overflow-hidden">
+                          <button
+                            onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                            className="w-full flex items-center justify-between px-5 py-4 text-left"
+                          >
+                            <span className="font-medium text-sm sm:text-base pr-4">{faq.q}</span>
+                            <motion.span
+                              animate={{ rotate: openFaq === idx ? 45 : 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="shrink-0 text-xl opacity-60"
+                            >
+                              +
+                            </motion.span>
+                          </button>
+                          <motion.div
+                            initial={false}
+                            animate={{
+                              height: openFaq === idx ? "auto" : 0,
+                              opacity: openFaq === idx ? 1 : 0,
+                            }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            <p className="px-5 pb-4 text-sm leading-relaxed opacity-70">
+                              {faq.a}
+                            </p>
+                          </motion.div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </FadeUp>
+              );
+            })}
+          </div>
         </div>
       </section>
 
