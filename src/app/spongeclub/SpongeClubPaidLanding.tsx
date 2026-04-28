@@ -436,7 +436,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         totalAmount: 550000,
         currency: "CURRENCY_KRW",
         payMethod: "CARD",
-        redirectUrl: `${window.location.origin}/spongeclub?paymentId=${paymentId}`,
+        redirectUrl: `${window.location.origin}/spongeclub/success-preview?paymentId=${paymentId}&itemId=${item.iid}`,
         customer: {
           fullName: formName,
           phoneNumber: formPhone,

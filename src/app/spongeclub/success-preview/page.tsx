@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -19,6 +19,33 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
 }
 
 export default function SuccessPreviewPage() {
+  /* 모바일 결제 복귀 시 서버 검증 (백그라운드) */
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paymentId = params.get("paymentId") || params.get("payment_id");
+    if (!paymentId) return;
+
+    async function confirmInBackground(retries = 3, delay = 2000) {
+      for (let attempt = 0; attempt < retries; attempt++) {
+        if (attempt > 0) await new Promise((r) => setTimeout(r, delay));
+        try {
+          const res = await fetch("/api/payments/confirm", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ paymentId, itemId: params.get("itemId") || "" }),
+          });
+          const result = await res.json();
+          if (!result.error || result.error.includes("이미") || result.error.includes("저장 실패")) return;
+          if (result.error.includes("완료되지 않") && attempt < retries - 1) continue;
+        } catch {
+          // 실패해도 결제 자체는 이미 완료됨
+        }
+      }
+    }
+
+    confirmInBackground();
+  }, []);
+
   return (
     <div className="min-h-screen font-[Pretendard]" style={{ backgroundColor: "#D4E600", color: "#2D2D2D" }}>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16">
