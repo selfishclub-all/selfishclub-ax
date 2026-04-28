@@ -66,18 +66,9 @@ function FadeUp({
 
 /* ─── 네비게이션 데이터 ─── */
 const NAV_ITEMS = [
-  { id: "pain-point", label: "고민" },
-  { id: "agentic", label: "질문" },
-  { id: "answer", label: "비교" },
-  { id: "why", label: "왜" },
-  { id: "proof", label: "검증" },
   { id: "curriculum", label: "커리큘럼" },
-  { id: "leadership", label: "운영진" },
-  { id: "after", label: "수료 후" },
   { id: "benefits", label: "1기 혜택" },
-  { id: "target", label: "대상" },
   { id: "faq", label: "FAQ" },
-  { id: "register", label: "신청" },
 ] as const;
 
 /* ─── 데이터: 페인포인트 ─── */
@@ -430,9 +421,8 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
     <div style={{ backgroundColor: "#F5F5F3", color: C.text }} className="min-h-screen font-[Pretendard] overflow-x-hidden">
       {/* ─── Sticky Section Navigation ─── */}
       <motion.nav
-        initial={{ y: -80 }}
-        animate={{ y: showNav ? 0 : -80 }}
-        transition={{ duration: 0.3 }}
+        initial={{ y: 0 }}
+        animate={{ y: 0 }}
         className="fixed top-0 left-0 right-0 z-50 border-b border-black/5"
         style={{ backgroundColor: "rgba(245,245,243,0.9)", backdropFilter: "blur(12px)" }}
       >
