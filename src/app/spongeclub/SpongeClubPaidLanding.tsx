@@ -872,7 +872,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
               7주 커리큘럼
             </h2>
             <p className="text-center text-sm sm:text-base lg:text-lg opacity-70 mb-4 leading-relaxed">
-              5월 3일부터 7주간 매주 일요일 8:00-11:00<br /><span className="opacity-50">(1주차만 8:00-9:30, 1.5시간 진행)</span>
+              5월 3일부터 7주간, 매주 일요일 20:00 - 23:00<br /><span className="opacity-50">(1주차만 20:00-21:30, 1.5시간 진행)</span>
             </p>
           </FadeUp>
 
