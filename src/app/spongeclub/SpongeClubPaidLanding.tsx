@@ -284,29 +284,50 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
 
     setPaymentStatus("processing");
 
-    fetch("/api/payments/confirm", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ paymentId: returnedPaymentId, itemId: item.iid }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        if (result.error) {
-          // 이미 처리된 결제(중복)도 성공으로 간주
-          if (result.error.includes("이미") || result.error.includes("already")) {
+    async function confirmWithRetry(retries = 3, delay = 2000) {
+      for (let attempt = 0; attempt < retries; attempt++) {
+        if (attempt > 0) {
+          await new Promise((r) => setTimeout(r, delay));
+        }
+        try {
+          const res = await fetch("/api/payments/confirm", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ paymentId: returnedPaymentId, itemId: item.iid }),
+          });
+          const result = await res.json();
+
+          if (!result.error) {
             setPaymentStatus("success");
-          } else {
+            return;
+          }
+
+          // 이미 처리된 결제 → 성공
+          if (result.error.includes("이미") || result.error.includes("already") || result.error.includes("저장 실패")) {
+            setPaymentStatus("success");
+            return;
+          }
+
+          // 결제 미완료 → 재시도
+          if (result.error.includes("완료되지 않") && attempt < retries - 1) {
+            continue;
+          }
+
+          // 마지막 시도에서도 실패
+          if (attempt === retries - 1) {
             setPaymentStatus("error");
             setPaymentError(result.error);
           }
-        } else {
-          setPaymentStatus("success");
+        } catch {
+          if (attempt === retries - 1) {
+            setPaymentStatus("error");
+            setPaymentError("결제 확인 중 오류가 발생했습니다.");
+          }
         }
-      })
-      .catch(() => {
-        setPaymentStatus("error");
-        setPaymentError("결제 확인 중 오류가 발생했습니다.");
-      });
+      }
+    }
+
+    confirmWithRetry();
   }, []);
 
   /* FAQ 토글 */
@@ -415,7 +436,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         totalAmount: 550000,
         currency: "CURRENCY_KRW",
         payMethod: "CARD",
-        redirectUrl: `${window.location.origin}/spongeclub`,
+        redirectUrl: `${window.location.origin}/spongeclub?paymentId=${paymentId}`,
         customer: {
           fullName: formName,
           phoneNumber: formPhone,
