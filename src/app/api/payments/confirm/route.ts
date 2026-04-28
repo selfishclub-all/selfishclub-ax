@@ -4,6 +4,17 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   const { paymentId, itemId } = await request.json();
 
+  // 0. 이미 처리된 결제인지 확인 (모바일 복귀 시 중복 호출 방지)
+  const { data: existingPurchase } = await supabase
+    .from("purchase")
+    .select("ID")
+    .ilike("p_custom_data", `%${paymentId}%`)
+    .limit(1);
+
+  if (existingPurchase && existingPurchase.length > 0) {
+    return NextResponse.json({ data: { paymentId, status: "paid" }, error: null });
+  }
+
   // 1. item 테이블에서 실제 가격 조회
   const { data: item, error: itemError } = await supabase
     .from("item")

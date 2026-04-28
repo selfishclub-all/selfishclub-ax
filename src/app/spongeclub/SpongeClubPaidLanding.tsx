@@ -279,7 +279,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
   /* 모바일 결제 복귀: URL에 paymentId가 있으면 서버 검증 후 성공 화면 표시 */
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const returnedPaymentId = params.get("paymentId");
+    const returnedPaymentId = params.get("paymentId") || params.get("payment_id");
     if (!returnedPaymentId || paymentStatus === "success") return;
 
     setPaymentStatus("processing");
@@ -415,7 +415,7 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         totalAmount: 550000,
         currency: "CURRENCY_KRW",
         payMethod: "CARD",
-        redirectUrl: `${window.location.origin}/spongeclub?paymentId=${paymentId}`,
+        redirectUrl: `${window.location.origin}/spongeclub`,
         customer: {
           fullName: formName,
           phoneNumber: formPhone,
