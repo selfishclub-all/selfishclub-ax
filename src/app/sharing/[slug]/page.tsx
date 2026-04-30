@@ -177,7 +177,11 @@ async function getReviews(programName: string) {
 
 function isPast(dateStr: string | null): boolean {
   if (!dateStr) return false;
-  return new Date(dateStr) < new Date();
+  // 행사 당일 끝(KST 23:59:59)까지는 종료 아님
+  // "2026-04-30" → KST 다음날 00:00 = UTC 당일 15:00
+  const [y, m, d] = dateStr.split("-").map(Number);
+  const endKST = new Date(Date.UTC(y, m - 1, d, 15, 0, 0)); // KST 다음날 0시 = UTC 15시
+  return new Date() >= endKST;
 }
 
 function Stars({ rating }: { rating: number }) {
