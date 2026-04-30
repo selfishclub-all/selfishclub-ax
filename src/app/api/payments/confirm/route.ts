@@ -15,10 +15,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ data: { paymentId, status: "paid" }, error: null });
   }
 
-  // 1. item 테이블에서 실제 가격 조회
+  // 1. item 테이블에서 실제 가격 + 정원 조회
   const { data: item, error: itemError } = await supabase
     .from("item")
-    .select("iid, i_title, i_formid_webflow, i_price, i_paid_tf")
+    .select("iid, i_title, i_formid_webflow, i_price, i_paid_tf, i_live_count_max")
     .eq("iid", itemId)
     .single();
 
@@ -29,14 +29,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 1-1. 재고 확인 (선착순 53명)
-  const STOCK_LIMIT = 0;
+  // 1-1. 재고 확인 (정원이 null이면 무제한)
   const { count: soldCount } = await supabase
     .from("purchase")
     .select("*", { count: "exact", head: true })
     .eq("iid", itemId);
 
-  if ((soldCount ?? 0) >= STOCK_LIMIT) {
+  if (item.i_live_count_max != null && (soldCount ?? 0) >= item.i_live_count_max) {
     // 이미 결제된 경우 자동 환불 처리
     const portoneSecret = process.env.PORTONE_API_SECRET!;
     try {
