@@ -218,6 +218,7 @@ export const phases: PhaseInfo[] = [
       { id: "1-15", title: "VOD 업데이트 알림톡", status: "todo", phase: 1, category: "crm", page: "/admin" },
       { id: "1-T5", title: "[테스트] 알림톡 3종 발송 + 솔라피 바이트 제한 확인", status: "todo", phase: 1, category: "test", page: "/admin" },
       { id: "1-16", title: "어드민 v1 — 프로그램 등록", status: "done", phase: 1, category: "admin", page: "/admin" },
+      { id: "1-16b", title: "프로그램별 정원 관리 (STOCK_LIMIT → DB)", status: "done", phase: 1, category: "payment", page: "/sharing" },
       { id: "1-16a", title: "어드민 v1 — 프로그램 수정/삭제", status: "todo", phase: 1, category: "admin", page: "/admin" },
       { id: "1-17", title: "Claude API 상세페이지 자동 생성", status: "todo", phase: 1, category: "admin", page: "/admin" },
       { id: "1-18", title: "알림톡 문구 자동 생성 + 승인 발송", status: "todo", phase: 1, category: "admin", page: "/admin" },
