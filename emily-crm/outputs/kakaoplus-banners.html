@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Noto Sans KR', sans-serif; background: #e8e4de; padding: 40px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+h1 { font-size: 20px; color: #666; margin-bottom: -10px; letter-spacing: 0.05em; }
+.banner { width: 800px; height: 400px; position: relative; overflow: hidden; border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+.label { font-size: 13px; color: #999; margin-top: -8px; }
+</style>
+</head>
+<body>
+
+<h1>오픈 배너</h1>
+<!-- ===== 오픈 배너 ===== -->
+<div class="banner" id="open" style="background: linear-gradient(135deg, #141B2D 0%, #1E2337 100%);">
+  <!-- 글로우 -->
+  <div style="position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(74,123,247,0.2) 0%,transparent 70%);top:-180px;right:-120px;"></div>
+  <div style="position:absolute;width:350px;height:350px;background:radial-gradient(circle,rgba(245,166,35,0.1) 0%,transparent 70%);bottom:-120px;left:-80px;"></div>
+
+  <!-- 태그 -->
+  <div style="position:absolute;top:24px;left:32px;display:flex;gap:8px;">
+    <span style="background:#4A7BF7;color:#fff;padding:5px 14px;border-radius:14px;font-size:12px;font-weight:700;">셀피쉬클럽</span>
+    <span style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);padding:5px 14px;border-radius:14px;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,0.08);">이기적공유회</span>
+  </div>
+
+  <!-- 서브 카피 -->
+  <div style="position:absolute;top:64px;left:32px;">
+    <p style="font-size:15px;color:rgba(255,255,255,0.35);">크리에이터 4명의 실전 워크플로우 전격 공개 🎬</p>
+  </div>
+
+  <!-- 메인 카피 -->
+  <div style="position:absolute;top:100px;left:32px;">
+    <h1 style="font-size:72px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-0.04em;">촬영 0원.</h1>
+    <h1 style="font-size:72px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-0.04em;">모델 0원.</h1>
+    <h1 style="font-size:72px;font-weight:900;color:#F5A623;line-height:1.1;letter-spacing:-0.04em;">납품 완료.</h1>
+  </div>
+
+  <!-- 하단 -->
+  <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,0.03);padding:18px 32px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);">
+    <div style="display:flex;gap:14px;align-items:center;">
+      <span style="color:rgba(255,255,255,0.4);font-size:15px;">3/16(월) 저녁 8시 ZOOM 라이브</span>
+      <span style="background:rgba(245,166,35,0.15);color:#F5A623;padding:4px 12px;border-radius:8px;font-size:15px;font-weight:700;">₩9,900</span>
+    </div>
+    <span style="color:rgba(255,255,255,0.15);font-size:12px;font-weight:700;letter-spacing:0.15em;">SELFISH CLUB</span>
+  </div>
+</div>
+<div class="label">800 × 400 · 오픈 Phase</div>
+
+<h1>리마인드 배너</h1>
+<!-- ===== 리마인드 배너 ===== -->
+<div class="banner" id="remind" style="background: #FFF8F0;">
+  <!-- 좌측 영역 -->
+  <div style="position:absolute;top:0;left:0;width:55%;height:100%;padding:28px 0 28px 32px;">
+    <!-- 태그 -->
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <span style="background:#4A7BF7;color:#fff;padding:5px 14px;border-radius:14px;font-size:12px;font-weight:700;">셀피쉬클럽</span>
+      <span style="background:rgba(0,0,0,0.06);color:#888;padding:5px 14px;border-radius:14px;font-size:12px;font-weight:500;">이기적공유회</span>
+    </div>
+
+    <!-- 서브 -->
+    <p style="font-size:13px;color:#aaa;margin-bottom:8px;">AI 비즈니스 영상 편</p>
+
+    <!-- 메인 카피 -->
+    <h2 style="font-size:34px;font-weight:900;color:#1A1A2E;line-height:1.25;letter-spacing:-0.03em;">"AI 티 나서<br/>못 쓰겠어요"</h2>
+    <div style="width:50px;height:3px;background:#F5A623;margin:14px 0;border-radius:2px;"></div>
+    <h2 style="font-size:36px;font-weight:900;color:#F5A623;line-height:1.2;letter-spacing:-0.03em;">그 벽을 넘었습니다.</h2>
+
+    <!-- 하단 정보 -->
+    <div style="position:absolute;bottom:28px;left:32px;">
+      <span style="font-size:14px;color:#aaa;">3/16(월) 저녁 8시 ZOOM · </span>
+      <span style="font-size:14px;color:#F5A623;font-weight:700;">₩9,900</span>
+    </div>
+  </div>
+
+  <!-- 우측 다크 카드 -->
+  <div style="position:absolute;top:20px;right:20px;width:42%;bottom:20px;background:#1A1F35;border-radius:20px;padding:28px 24px;display:flex;flex-direction:column;justify-content:center;">
+    <p style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:20px;letter-spacing:0.05em;">실전 워크플로우 4가지</p>
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div style="min-width:28px;height:28px;background:#4A7BF7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;">✓</div>
+      <div><span style="font-size:15px;font-weight:700;color:#fff;">AI 크리에이터 영상</span><br/><span style="font-size:12px;color:rgba(255,255,255,0.4);">인플루언서 섭외 0원</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div style="min-width:28px;height:28px;background:#F5A623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:#1A1A1A;">✓</div>
+      <div><span style="font-size:15px;font-weight:700;color:#fff;">뷰티 기작영상</span><br/><span style="font-size:12px;color:rgba(255,255,255,0.4);">촬영 없이 완성</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div style="min-width:28px;height:28px;background:#4CAF50;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;">✓</div>
+      <div><span style="font-size:15px;font-weight:700;color:#fff;">3D 제품 모션</span><br/><span style="font-size:12px;color:rgba(255,255,255,0.4);">사진만으로 완성</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="min-width:28px;height:28px;background:#FF6B5A;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;">✓</div>
+      <div><span style="font-size:15px;font-weight:700;color:#fff;">바디 콘텐츠</span><br/><span style="font-size:12px;color:rgba(255,255,255,0.4);">모델 없이 AI로 해결</span></div>
+    </div>
+  </div>
+</div>
+<div class="label">800 × 400 · 리마인드 Phase</div>
+
+<h1>마감 배너</h1>
+<!-- ===== 마감 배너 ===== -->
+<div class="banner" id="close" style="background: #0F1117;">
+  <!-- 글로우 -->
+  <div style="position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(255,90,79,0.15) 0%,transparent 70%);top:-150px;right:-80px;"></div>
+  <div style="position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(255,216,77,0.08) 0%,transparent 70%);bottom:-100px;left:-60px;"></div>
+
+  <!-- 마감 바 -->
+  <div style="position:absolute;top:0;left:0;right:0;height:56px;background:linear-gradient(135deg,#FF5A4F,#E8433A);display:flex;align-items:center;justify-content:center;gap:8px;">
+    <span style="font-size:18px;">🚨</span>
+    <span style="font-size:20px;font-weight:900;color:#fff;letter-spacing:0.02em;">오늘 저녁 6시 마감</span>
+  </div>
+
+  <!-- 프로그램명 -->
+  <div style="position:absolute;top:72px;left:32px;">
+    <span style="font-size:14px;color:rgba(255,255,255,0.3);">이기적공유회 &lt;AI 비즈니스 영상 편&gt;</span>
+  </div>
+
+  <!-- 메인 카피 -->
+  <div style="position:absolute;top:108px;left:32px;">
+    <h1 style="font-size:52px;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-0.04em;">진짜 비즈니스에서 쓰이는</h1>
+    <h1 style="font-size:52px;font-weight:900;color:#FFD84D;line-height:1.15;letter-spacing:-0.04em;text-shadow:0 0 40px rgba(255,216,77,0.25);">AI 영상 워크플로우</h1>
+    <h1 style="font-size:52px;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-0.04em;">공개</h1>
+  </div>
+
+  <!-- 하단 -->
+  <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,0.03);padding:18px 32px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);">
+    <span style="font-size:15px;color:rgba(255,255,255,0.35);">촬영 0원 · 모델 0원 · 9,900원으로 전부 공개</span>
+    <span style="font-size:16px;color:#fff;font-weight:700;">오늘 저녁 8시 ZOOM</span>
+  </div>
+</div>
+<div class="label">800 × 400 · 마감 Phase</div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+.env
+.omc/
+!.claude/
+
+# PPTX 빌드 로컬 디렉토리 (node_modules 제외, 소스는 커밋)
+outputs/aaa-deck/node_modules/
+outputs/aaa-deck/package-lock.json
+outputs/~$*.pptx
+
+# PPTX 빌드 임시 파일
+outputs/aaappt_design_handoff_aaa_deck/_slide_pngs/
+outputs/aaappt_design_handoff_aaa_deck/_standalone_patched.html
+outputs/aaappt_design_handoff_aaa_deck/aaa___.pptx
+
+# 개인정보 (전화번호/이메일 실명단) — 절대 커밋 금지
+outputs/crm/rosters_*/
+outputs/crm/*.xlsx
+outputs/crm/*_phone_seg.json
+outputs/crm/~$*
+scripts/*phones*.txt
+scripts/*phones*.csv
+scripts/member_only_phones*
+scripts/member_phones_all*
+scripts/membership_phones*
+scripts/survey_send.js

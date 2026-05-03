@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>AAA 발표 덱 v7 — 에밀리</title>
+<style>
+/* AAA 발표 덱 v7 — 1920×1080 deck styles
+   Design tokens: 검정(#0A0A0A) · 흰색 · 옐로우(#E9ED12)
+   Font: Pretendard Variable
+*/
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+:root {
+  --ink: #0A0A0A;
+  --paper: #FFFFFF;
+  --yellow: #E9ED12;
+  --yellow-ink: #3a3b00;
+  --mute: #8A8A8A;
+  --mute-2: #C9C9C9;
+  --surface: #F5F5F5;
+  --rule: #E6E6E6;
+  --rule-dark: rgba(255, 255, 255, 0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+deck-stage {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+  color: var(--ink);
+}
+
+.slide {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+  letter-spacing: -0.02em;
+  display: flex;
+  flex-direction: column;
+}
+.slide.dark { background: var(--ink); color: #fff; }
+.slide.yellow { background: var(--yellow); color: var(--ink); }
+
+/* ── Top / Bottom meta frame ───────────────────────────── */
+.slide-top, .slide-bot {
+  position: absolute; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 36px 64px;
+  font-size: 22px; letter-spacing: 0.18em; font-weight: 600;
+  text-transform: uppercase;
+  color: #888;
+}
+.slide-top { top: 0; }
+.slide-bot { bottom: 0; }
+.slide.dark .slide-top, .slide.dark .slide-bot { color: rgba(255,255,255,0.4); }
+.slide.yellow .slide-top, .slide.yellow .slide-bot { color: var(--yellow-ink); opacity: 0.65; }
+
+.slide-top .stamp::before {
+  content: ""; display: inline-block; vertical-align: middle;
+  width: 10px; height: 10px; background: var(--yellow); border-radius: 2px;
+  margin-right: 12px; margin-top: -2px;
+}
+.slide.yellow .slide-top .stamp::before { background: var(--ink); }
+
+/* ── Core content area ─────────────────────────────────── */
+.slide-body {
+  flex: 1;
+  padding: 140px 140px 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Typography ────────────────────────────────────────── */
+.kicker {
+  font-size: 26px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #777;
+  margin-bottom: 32px;
+}
+.slide.dark .kicker { color: rgba(255,255,255,0.55); }
+.slide.yellow .kicker { color: var(--yellow-ink); opacity: 0.8; }
+
+.h-hero { font-size: 128px; line-height: 1.02; letter-spacing: -0.04em; font-weight: 700; }
+.h-xl   { font-size: 100px; line-height: 1.06; letter-spacing: -0.04em; font-weight: 700; }
+.h-l    { font-size: 76px;  line-height: 1.15; letter-spacing: -0.035em; font-weight: 700; }
+.h-m    { font-size: 56px;  line-height: 1.2;  letter-spacing: -0.03em; font-weight: 600; }
+.h-s    { font-size: 42px;  line-height: 1.3;  letter-spacing: -0.02em; font-weight: 600; }
+.body   { font-size: 32px;  line-height: 1.5;  font-weight: 400; color: #444; }
+.cap    { font-size: 22px;  line-height: 1.4;  font-weight: 400; color: #777; }
+.slide.dark .body { color: #d0d0d0; }
+.slide.dark .cap  { color: rgba(255,255,255,0.55); }
+
+.mono { font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace; letter-spacing: 0; }
+
+/* ── Highlights ────────────────────────────────────────── */
+.hl {
+  background: var(--yellow); color: var(--ink);
+  padding: 0 0.12em; line-height: 1;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  font-weight: 700;
+}
+/* Thin yellow underline — lighter alternative to .hl, esp on dark bg */
+.u-y {
+  background: linear-gradient(to top, var(--yellow) 0 10px, transparent 10px 100%);
+  padding: 0 0.02em;
+}
+/* Dark-bg friendly: yellow text color only, no fill */
+.y-text { color: var(--yellow); }
+.ink-chip {
+  display: inline-block;
+  padding: 4px 16px; background: var(--ink); color: var(--yellow);
+  border-radius: 6px; font-weight: 700;
+}
+
+/* ── Big number ────────────────────────────────────────── */
+.bignum { font-size: 220px; line-height: 1; letter-spacing: -0.05em; font-weight: 900; }
+.bignum-unit { font-size: 64px; font-weight: 700; color: #666; margin-left: 8px; }
+.slide.dark .bignum-unit { color: rgba(255,255,255,0.6); }
+
+/* ── Cards ─────────────────────────────────────────────── */
+.card {
+  background: var(--surface); border-radius: 16px;
+  padding: 40px 40px;
+}
+.card.k { background: var(--ink); color: #fff; }
+.card.y { background: var(--yellow); }
+.card.outline { background: transparent; border: 2px solid var(--rule); }
+.slide.dark .card { background: rgba(255,255,255,0.06); color: #fff; }
+.slide.dark .card.outline { border-color: rgba(255,255,255,0.2); }
+
+/* ── Phone frame (for channel mocks) ──────────────────── */
+.phone {
+  width: 300px; height: 600px;
+  background: #1a1a1a;
+  border-radius: 36px;
+  padding: 8px;
+  position: relative;
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.5);
+}
+.phone-screen {
+  width: 100%; height: 100%;
+  background: #fff;
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  font-size: 12px;
+}
+
+/* ── Utilities ─────────────────────────────────────────── */
+.row { display: flex; }
+.col { display: flex; flex-direction: column; }
+.gap-8 { gap: 8px; } .gap-16 { gap: 16px; } .gap-24 { gap: 24px; }
+.gap-32 { gap: 32px; } .gap-48 { gap: 48px; } .gap-64 { gap: 64px; }
+.f1 { flex: 1; }
+.center { align-items: center; justify-content: center; }
+.between { justify-content: space-between; }
+.mt-24 { margin-top: 24px; } .mt-48 { margin-top: 48px; } .mt-64 { margin-top: 64px; }
+.mb-24 { margin-bottom: 24px; } .mb-48 { margin-bottom: 48px; } .mb-64 { margin-bottom: 64px; }
+
+/* ── Arrow ─────────────────────────────────────────────── */
+.arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 300; color: #bbb;
+  font-size: 80px;
+}
+.slide.dark .arrow { color: rgba(255,255,255,0.35); }
+
+/* ── Numbered list ─────────────────────────────────────── */
+.nlist { display: flex; flex-direction: column; gap: 36px; }
+.nlist-item { display: flex; gap: 32px; align-items: flex-start; }
+.nlist-num {
+  flex: 0 0 auto;
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--ink); color: var(--yellow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: 900;
+}
+.slide.dark .nlist-num { background: var(--yellow); color: var(--ink); }
+.nlist-t { font-size: 42px; font-weight: 800; letter-spacing: -0.025em; }
+.nlist-d { font-size: 26px; color: #666; margin-top: 6px; font-weight: 500; }
+.slide.dark .nlist-d { color: rgba(255,255,255,0.65); }
+
+/* ── Tag ──────────────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  padding: 8px 18px;
+  font-size: 20px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  background: var(--ink); color: var(--yellow);
+  border-radius: 4px;
+}
+.slide.dark .tag { background: var(--yellow); color: var(--ink); }
+
+/* ── Code block ───────────────────────────────────────── */
+.code {
+  background: #111; color: #eaeaea;
+  font-family: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 18px; line-height: 1.55;
+  padding: 28px 32px; border-radius: 12px;
+  white-space: pre;
+}
+.code .kw { color: #ff7e8a; }
+.code .st { color: #ffd67a; }
+.code .cm { color: #6a6a6a; }
+.code .fn { color: #8fdbff; }
+.code .y  { color: var(--yellow); font-weight: 700; }
+
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script>
+/**
+ * <deck-stage> — reusable web component for HTML decks.
+ *
+ * Handles:
+ *  (a) speaker notes — reads <script type="application/json" id="speaker-notes">
+ *      and posts {slideIndexChanged: N} to the parent window on nav.
+ *  (b) keyboard navigation — ←/→, PgUp/PgDn, Space, Home/End, number keys.
+ *  (c) press R to reset to slide 0 (with a tasteful keyboard hint).
+ *  (d) bottom-center overlay showing slide count + hints, fades out on idle.
+ *  (e) auto-scaling — inner canvas is a fixed design size (default 1920×1080)
+ *      scaled with `transform: scale()` to fit the viewport, letterboxed.
+ *      Set the `noscale` attribute to render at authored size (1:1) — the
+ *      PPTX exporter sets this so its DOM capture sees unscaled geometry.
+ *  (f) print — `@media print` lays every slide out as its own page at the
+ *      design size, so the browser's Print → Save as PDF produces a clean
+ *      one-page-per-slide PDF with no extra setup.
+ *
+ * Slides are HIDDEN, not unmounted. Non-active slides stay in the DOM with
+ * `visibility: hidden` + `opacity: 0`, so their state (videos, iframes,
+ * form inputs, React trees) is preserved across navigation.
+ *
+ * Lifecycle event — the component dispatches a `slidechange` CustomEvent on
+ * itself whenever the active slide changes (including the initial mount).
+ * The event bubbles and composes out of shadow DOM, so you can listen on
+ * the <deck-stage> element or on document:
+ *
+ *   document.querySelector('deck-stage').addEventListener('slidechange', (e) => {
+ *     e.detail.index         // new 0-based index
+ *     e.detail.previousIndex // previous index, or -1 on init
+ *     e.detail.total         // total slide count
+ *     e.detail.slide         // the new active slide element
+ *     e.detail.previousSlide // the prior slide element, or null on init
+ *     e.detail.reason        // 'init' | 'keyboard' | 'click' | 'tap' | 'api'
+ *   });
+ *
+ * Persistence: current slide index is saved to localStorage keyed by the
+ * document path, so refresh returns you to the same place.
+ *
+ * Usage:
+ *   <deck-stage width="1920" height="1080">
+ *     <section data-label="Title">...</section>
+ *     <section data-label="Agenda">...</section>
+ *   </deck-stage>
+ *
+ * Slides are the direct element children of <deck-stage>. Each slide is
+ * automatically tagged with:
+ *   - data-screen-label="NN Label"   (1-indexed, for comment flow)
+ *   - data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text"
+ */
+
+(() => {
+  const DESIGN_W_DEFAULT = 1920;
+  const DESIGN_H_DEFAULT = 1080;
+  const STORAGE_PREFIX = 'deck-stage:slide:';
+  const OVERLAY_HIDE_MS = 1800;
+  const VALIDATE_ATTR = 'no_overflowing_text,no_overlapping_text,slide_sized_text';
+
+  const pad2 = (n) => String(n).padStart(2, '0');
+
+  const stylesheet = `
+    :host {
+      position: fixed;
+      inset: 0;
+      display: block;
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .canvas {
+      position: relative;
+      transform-origin: center center;
+      flex-shrink: 0;
+      background: #fff;
+      will-change: transform;
+    }
+
+    /* Slides live in light DOM (via <slot>) so authored CSS still applies.
+       We absolutely position each slotted child to stack them. */
+    ::slotted(*) {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      box-sizing: border-box !important;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    ::slotted([data-deck-active]) {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    /* Tap zones for mobile — back/forward thirds like Stories.
+       Transparent, no visible UI, don't block the overlay. */
+    .tapzones {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      z-index: 2147482000;
+      pointer-events: none;
+    }
+    .tapzone {
+      flex: 1;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Only activate tap zones on coarse pointers (touch devices). */
+    @media (hover: hover) and (pointer: fine) {
+      .tapzones { display: none; }
+    }
+
+    .overlay {
+      display: none !important;
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translate(-50%, 6px) scale(0.92);
+      filter: blur(6px);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      background: #000;
+      color: #fff;
+      border-radius: 999px;
+      font-size: 12px;
+      font-feature-settings: "tnum" 1;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 260ms ease, transform 260ms cubic-bezier(.2,.8,.2,1), filter 260ms ease;
+      transform-origin: center bottom;
+      z-index: 2147483000;
+      user-select: none;
+    }
+    .overlay[data-visible] {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, 0) scale(1);
+      filter: blur(0);
+    }
+
+    .btn {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      color: inherit;
+      font: inherit;
+      cursor: default;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 28px;
+      min-width: 28px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.72);
+      transition: background 140ms ease, color 140ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .btn:active { background: rgba(255,255,255,0.18); }
+    .btn:focus { outline: none; }
+    .btn:focus-visible { outline: none; }
+    .btn::-moz-focus-inner { border: 0; }
+    .btn svg { width: 14px; height: 14px; display: block; }
+    .btn.reset {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 0 10px 0 12px;
+      gap: 6px;
+      color: rgba(255,255,255,0.72);
+    }
+    .btn.reset .kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 10px;
+      line-height: 1;
+      color: rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+    }
+
+    .count {
+      font-variant-numeric: tabular-nums;
+      color: #fff;
+      font-weight: 500;
+      padding: 0 8px;
+      min-width: 42px;
+      text-align: center;
+      font-size: 12px;
+    }
+    .count .sep { color: rgba(255,255,255,0.45); margin: 0 3px; font-weight: 400; }
+    .count .total { color: rgba(255,255,255,0.55); }
+
+    .divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255,255,255,0.18);
+      margin: 0 2px;
+    }
+
+    /* ── Print: one page per slide, no chrome ────────────────────────────
+       The screen layout stacks every slide at inset:0 inside a scaled
+       canvas; for print we want them in document flow at the authored
+       design size so the browser paginates one slide per sheet. The
+       @page size is set from the width/height attributes via the inline
+       <style id="deck-stage-print-page"> that connectedCallback injects
+       into <head> (the @page at-rule has no effect inside shadow DOM). */
+    @media print {
+      :host {
+        position: static;
+        inset: auto;
+        background: none;
+        overflow: visible;
+        color: inherit;
+      }
+      .stage { position: static; display: block; }
+      .canvas {
+        transform: none !important;
+        width: auto !important;
+        height: auto !important;
+        background: none;
+        will-change: auto;
+      }
+      ::slotted(*) {
+        position: relative !important;
+        inset: auto !important;
+        width: var(--deck-design-w) !important;
+        height: var(--deck-design-h) !important;
+        box-sizing: border-box !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto;
+        break-after: page;
+        page-break-after: always;
+        break-inside: avoid;
+        overflow: hidden;
+      }
+      ::slotted(*:last-child) {
+        break-after: auto;
+        page-break-after: auto;
+      }
+      .overlay, .tapzones { display: none !important; }
+    }
+  `;
+
+  class DeckStage extends HTMLElement {
+    static get observedAttributes() { return ['width', 'height', 'noscale']; }
+
+    constructor() {
+      super();
+      this._root = this.attachShadow({ mode: 'open' });
+      this._index = 0;
+      this._slides = [];
+      this._notes = [];
+      this._hideTimer = null;
+      this._mouseIdleTimer = null;
+      this._storageKey = STORAGE_PREFIX + (location.pathname || '/');
+
+      this._onKey = this._onKey.bind(this);
+      this._onResize = this._onResize.bind(this);
+      this._onSlotChange = this._onSlotChange.bind(this);
+      this._onMouseMove = this._onMouseMove.bind(this);
+      this._onTapBack = this._onTapBack.bind(this);
+      this._onTapForward = this._onTapForward.bind(this);
+    }
+
+    get designWidth() {
+      return parseInt(this.getAttribute('width'), 10) || DESIGN_W_DEFAULT;
+    }
+    get designHeight() {
+      return parseInt(this.getAttribute('height'), 10) || DESIGN_H_DEFAULT;
+    }
+
+    connectedCallback() {
+      this._render();
+      this._loadNotes();
+      this._syncPrintPageRule();
+      window.addEventListener('keydown', this._onKey);
+      window.addEventListener('resize', this._onResize);
+      window.addEventListener('mousemove', this._onMouseMove, { passive: true });
+      // Initial collection + layout happens via slotchange, which fires on mount.
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('keydown', this._onKey);
+      window.removeEventListener('resize', this._onResize);
+      window.removeEventListener('mousemove', this._onMouseMove);
+      if (this._hideTimer) clearTimeout(this._hideTimer);
+      if (this._mouseIdleTimer) clearTimeout(this._mouseIdleTimer);
+    }
+
+    attributeChangedCallback() {
+      if (this._canvas) {
+        this._canvas.style.width = this.designWidth + 'px';
+        this._canvas.style.height = this.designHeight + 'px';
+        this._canvas.style.setProperty('--deck-design-w', this.designWidth + 'px');
+        this._canvas.style.setProperty('--deck-design-h', this.designHeight + 'px');
+        this._fit();
+        this._syncPrintPageRule();
+      }
+    }
+
+    _render() {
+      const style = document.createElement('style');
+      style.textContent = stylesheet;
+
+      const stage = document.createElement('div');
+      stage.className = 'stage';
+
+      const canvas = document.createElement('div');
+      canvas.className = 'canvas';
+      canvas.style.width = this.designWidth + 'px';
+      canvas.style.height = this.designHeight + 'px';
+      canvas.style.setProperty('--deck-design-w', this.designWidth + 'px');
+      canvas.style.setProperty('--deck-design-h', this.designHeight + 'px');
+
+      const slot = document.createElement('slot');
+      slot.addEventListener('slotchange', this._onSlotChange);
+      canvas.appendChild(slot);
+      stage.appendChild(canvas);
+
+      // Tap zones (mobile): left third = back, right third = forward.
+      const tapzones = document.createElement('div');
+      tapzones.className = 'tapzones export-hidden';
+      tapzones.setAttribute('aria-hidden', 'true');
+      const tzBack = document.createElement('div');
+      tzBack.className = 'tapzone tapzone--back';
+      const tzMid = document.createElement('div');
+      tzMid.className = 'tapzone tapzone--mid';
+      tzMid.style.pointerEvents = 'none';
+      const tzFwd = document.createElement('div');
+      tzFwd.className = 'tapzone tapzone--fwd';
+      tzBack.addEventListener('click', this._onTapBack);
+      tzFwd.addEventListener('click', this._onTapForward);
+      tapzones.append(tzBack, tzMid, tzFwd);
+
+      // Overlay: compact, solid black, with clickable controls.
+      const overlay = document.createElement('div');
+      overlay.className = 'overlay export-hidden';
+      overlay.setAttribute('role', 'toolbar');
+      overlay.setAttribute('aria-label', 'Deck controls');
+      overlay.innerHTML = `
+        <button class="btn prev" type="button" aria-label="Previous slide" title="Previous (←)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <span class="count" aria-live="polite"><span class="current">1</span><span class="sep">/</span><span class="total">1</span></span>
+        <button class="btn next" type="button" aria-label="Next slide" title="Next (→)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+        </button>
+        <span class="divider"></span>
+        <button class="btn reset" type="button" aria-label="Reset to first slide" title="Reset (R)">Reset<span class="kbd">R</span></button>
+      `;
+
+      overlay.querySelector('.prev').addEventListener('click', () => this._go(this._index - 1, 'click'));
+      overlay.querySelector('.next').addEventListener('click', () => this._go(this._index + 1, 'click'));
+      overlay.querySelector('.reset').addEventListener('click', () => this._go(0, 'click'));
+
+      this._root.append(style, stage, tapzones, overlay);
+      this._canvas = canvas;
+      this._slot = slot;
+      this._overlay = overlay;
+      this._countEl = overlay.querySelector('.current');
+      this._totalEl = overlay.querySelector('.total');
+    }
+
+    /** @page must live in the document stylesheet — it's a no-op inside
+     *  shadow DOM. Inject/update a single <head> style tag so the print
+     *  sheet matches the design size and Save-as-PDF yields one slide per
+     *  page with no margins. */
+    _syncPrintPageRule() {
+      const id = 'deck-stage-print-page';
+      let tag = document.getElementById(id);
+      if (!tag) {
+        tag = document.createElement('style');
+        tag.id = id;
+        document.head.appendChild(tag);
+      }
+      tag.textContent =
+        '@page { size: ' + this.designWidth + 'px ' + this.designHeight + 'px; margin: 0; } ' +
+        '@media print { html, body { margin: 0 !important; padding: 0 !important; background: none !important; overflow: visible !important; height: auto !important; } ' +
+        '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }';
+    }
+
+    _onSlotChange() {
+      this._collectSlides();
+      this._restoreIndex();
+      this._applyIndex({ showOverlay: false, broadcast: true, reason: 'init' });
+      this._fit();
+    }
+
+    _collectSlides() {
+      const assigned = this._slot.assignedElements({ flatten: true });
+      this._slides = assigned.filter((el) => {
+        // Skip template/style/script nodes even if someone slots them.
+        const tag = el.tagName;
+        return tag !== 'TEMPLATE' && tag !== 'SCRIPT' && tag !== 'STYLE';
+      });
+
+      this._slides.forEach((slide, i) => {
+        const n = i + 1;
+        // Determine a label for comment flow: prefer explicit data-label,
+        // then an existing data-screen-label, then first heading, else "Slide".
+        let label = slide.getAttribute('data-label');
+        if (!label) {
+          const existing = slide.getAttribute('data-screen-label');
+          if (existing) {
+            // Strip any leading number the author may have included.
+            label = existing.replace(/^\s*\d+\s*/, '').trim() || existing;
+          }
+        }
+        if (!label) {
+          const h = slide.querySelector('h1, h2, h3, [data-title]');
+          if (h) label = (h.textContent || '').trim().slice(0, 40);
+        }
+        if (!label) label = 'Slide';
+        slide.setAttribute('data-screen-label', `${pad2(n)} ${label}`);
+
+        // Validation attribute for comment flow / auto-checks.
+        if (!slide.hasAttribute('data-om-validate')) {
+          slide.setAttribute('data-om-validate', VALIDATE_ATTR);
+        }
+
+        slide.setAttribute('data-deck-slide', String(i));
+      });
+
+      if (this._totalEl) this._totalEl.textContent = String(this._slides.length || 1);
+      if (this._index >= this._slides.length) this._index = Math.max(0, this._slides.length - 1);
+    }
+
+    _loadNotes() {
+      const tag = document.getElementById('speaker-notes');
+      if (!tag) { this._notes = []; return; }
+      try {
+        const parsed = JSON.parse(tag.textContent || '[]');
+        if (Array.isArray(parsed)) this._notes = parsed;
+      } catch (e) {
+        console.warn('[deck-stage] Failed to parse #speaker-notes JSON:', e);
+        this._notes = [];
+      }
+    }
+
+    _restoreIndex() {
+      try {
+        const raw = localStorage.getItem(this._storageKey);
+        if (raw != null) {
+          const n = parseInt(raw, 10);
+          if (Number.isFinite(n) && n >= 0 && n < this._slides.length) {
+            this._index = n;
+          }
+        }
+      } catch (e) { /* ignore */ }
+    }
+
+    _persistIndex() {
+      try { localStorage.setItem(this._storageKey, String(this._index)); }
+      catch (e) { /* ignore */ }
+    }
+
+    _applyIndex({ showOverlay = true, broadcast = true, reason = 'init' } = {}) {
+      if (!this._slides.length) return;
+      const prev = this._prevIndex == null ? -1 : this._prevIndex;
+      const curr = this._index;
+      this._slides.forEach((s, i) => {
+        if (i === curr) s.setAttribute('data-deck-active', '');
+        else s.removeAttribute('data-deck-active');
+      });
+      if (this._countEl) this._countEl.textContent = String(curr + 1);
+      this._persistIndex();
+
+      if (broadcast) {
+        // (1) Legacy: host-window postMessage for speaker-notes renderers.
+        try { window.postMessage({ slideIndexChanged: curr }, '*'); } catch (e) {}
+
+        // (2) In-page CustomEvent on the <deck-stage> element itself.
+        //     Bubbles and composes out of shadow DOM so slide code can listen:
+        //       document.querySelector('deck-stage').addEventListener('slidechange', e => {
+        //         e.detail.index, e.detail.previousIndex, e.detail.total, e.detail.slide, e.detail.reason
+        //       });
+        const detail = {
+          index: curr,
+          previousIndex: prev,
+          total: this._slides.length,
+          slide: this._slides[curr] || null,
+          previousSlide: prev >= 0 ? (this._slides[prev] || null) : null,
+          reason: reason, // 'init' | 'keyboard' | 'click' | 'tap' | 'api'
+        };
+        this.dispatchEvent(new CustomEvent('slidechange', {
+          detail,
+          bubbles: true,
+          composed: true,
+        }));
+      }
+
+      this._prevIndex = curr;
+      if (showOverlay) this._flashOverlay();
+    }
+
+    _flashOverlay() {
+      if (!this._overlay) return;
+      this._overlay.setAttribute('data-visible', '');
+      if (this._hideTimer) clearTimeout(this._hideTimer);
+      this._hideTimer = setTimeout(() => {
+        this._overlay.removeAttribute('data-visible');
+      }, OVERLAY_HIDE_MS);
+    }
+
+    _fit() {
+      if (!this._canvas) return;
+      // PPTX export sets noscale so the DOM capture sees authored-size
+      // geometry — the scaled canvas is in shadow DOM, so the exporter's
+      // resetTransformSelector can't reach .canvas.style.transform directly.
+      if (this.hasAttribute('noscale')) {
+        this._canvas.style.transform = 'none';
+        return;
+      }
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const s = Math.min(vw / this.designWidth, vh / this.designHeight);
+      this._canvas.style.transform = `scale(${s})`;
+    }
+
+    _onResize() { this._fit(); }
+
+    _onMouseMove() {
+      // Keep overlay visible while mouse moves; hide after idle.
+      this._flashOverlay();
+    }
+
+    _onTapBack(e) {
+      e.preventDefault();
+      this._go(this._index - 1, 'tap');
+    }
+
+    _onTapForward(e) {
+      e.preventDefault();
+      this._go(this._index + 1, 'tap');
+    }
+
+    _onKey(e) {
+      // Ignore when the user is typing.
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      const key = e.key;
+      let handled = true;
+
+      if (key === 'ArrowRight' || key === 'PageDown' || key === ' ' || key === 'Spacebar') {
+        this._go(this._index + 1, 'keyboard');
+      } else if (key === 'ArrowLeft' || key === 'PageUp') {
+        this._go(this._index - 1, 'keyboard');
+      } else if (key === 'Home') {
+        this._go(0, 'keyboard');
+      } else if (key === 'End') {
+        this._go(this._slides.length - 1, 'keyboard');
+      } else if (key === 'r' || key === 'R') {
+        this._go(0, 'keyboard');
+      } else if (/^[0-9]$/.test(key)) {
+        // 1..9 jump to that slide; 0 jumps to 10.
+        const n = key === '0' ? 9 : parseInt(key, 10) - 1;
+        if (n < this._slides.length) this._go(n, 'keyboard');
+      } else {
+        handled = false;
+      }
+
+      if (handled) {
+        e.preventDefault();
+        this._flashOverlay();
+      }
+    }
+
+    _go(i, reason = 'api') {
+      if (!this._slides.length) return;
+      const clamped = Math.max(0, Math.min(this._slides.length - 1, i));
+      if (clamped === this._index) {
+        this._flashOverlay();
+        return;
+      }
+      this._index = clamped;
+      this._applyIndex({ showOverlay: true, broadcast: true, reason });
+    }
+
+    // Public API ------------------------------------------------------------
+
+    /** Current slide index (0-based). */
+    get index() { return this._index; }
+    /** Total slide count. */
+    get length() { return this._slides.length; }
+    /** Programmatically navigate. */
+    goTo(i) { this._go(i, 'api'); }
+    next() { this._go(this._index + 1, 'api'); }
+    prev() { this._go(this._index - 1, 'api'); }
+    reset() { this._go(0, 'api'); }
+  }
+
+  if (!customElements.get('deck-stage')) {
+    customElements.define('deck-stage', DeckStage);
+  }
+})();
+
+</script>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; height: 100%; overflow: hidden; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+// AAA 발표 덱 v7 — Slide Core Components
+// Frame + 공통 컴포넌트
+
+const TopBar = ({ left = "", right = "EMILY · SELFISH CLUB · AAA" }) => (
+  <div className="slide-top">
+    <div className="stamp">{left}</div>
+    <div>{right}</div>
+  </div>
+);
+
+const BotBar = ({ left = "", right = "" }) => (
+  <div className="slide-bot">
+    <div>{left}</div>
+    <div>{right}</div>
+  </div>
+);
+
+const Slide = ({ theme = "light", topLeft, topRight, botLeft, botRight, children, bodyStyle = {} }) => (
+  <section className={`slide ${theme === "dark" ? "dark" : theme === "yellow" ? "yellow" : ""}`}>
+    <TopBar left={topLeft} right={topRight} />
+    <div className="slide-body" style={bodyStyle}>{children}</div>
+    <BotBar left={botLeft} right={botRight} />
+  </section>
+);
+
+// Arrow between two blocks
+const Arr = ({ size = 80 }) => (
+  <div className="arrow" style={{ fontSize: size, margin: "0 24px" }}>→</div>
+);
+
+// Simple phone bezel
+const Phone = ({ children, style = {} }) => (
+  <div className="phone" style={style}>
+    <div className="phone-screen">{children}</div>
+  </div>
+);
+
+window.TopBar = TopBar;
+window.BotBar = BotBar;
+window.Slide = Slide;
+window.Arr = Arr;
+window.Phone = Phone;
+
+</script>
+<script type="text/babel">
+// Slides 01-06 — INTRO + 01·지난 여정 훅 (v8 rev2)
+
+// ── 01 · Cover ─────────────────────────────────────────
+const S01 = () => (
+  <Slide theme="light"
+    topLeft="INTRO" topRight="EMILY · SELFISH CLUB · AAA">
+    <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', height:'100%' }}>
+      <div className="h-hero" style={{ fontSize: 150, fontWeight: 600, lineHeight: 1.12, letterSpacing:'-0.04em' }}>
+        <div>매일 아침,</div>
+        <div style={{ fontWeight: 700 }}>
+          AI가{' '}
+          <span style={{
+            background:'var(--yellow)',
+            padding:'0 0.08em',
+            boxDecorationBreak:'clone',
+            WebkitBoxDecorationBreak:'clone'
+          }}>알림톡</span>을
+        </div>
+        <div>들고 옵니다.</div>
+      </div>
+      <div style={{ marginTop: 80, fontSize: 28, color:'#a8a8a8', fontWeight: 400, letterSpacing:'-0.01em' }}>
+        에밀리 · 셀피쉬클럽 CRM PM &nbsp;·&nbsp; AAA 공유회 · 2026.04.28
+      </div>
+    </div>
+  </Slide>
+);
+
+// ── 02 · ABOUT ─────────────────────────────────────────
+const S02 = () => (
+  <Slide theme="light"
+    topLeft="INTRO · ABOUT" topRight="EMILY · SELFISH CLUB · AAA">
+    <div style={{ display:'flex', gap: 80, alignItems:'center', height:'100%' }}>
+      <div style={{ flex: 1 }}>
+        <div className="h-hero" style={{ fontSize: 180, fontWeight: 700, lineHeight: 1, letterSpacing:'-0.04em' }}>
+          에밀리<span style={{ color:'var(--yellow)' }}>.</span>
+        </div>
+        <div style={{ marginTop: 64, fontSize: 44, fontWeight: 500, lineHeight: 1.35, letterSpacing:'-0.02em' }}>
+          <div>셀피쉬클럽 CRM PM</div>
+          <div style={{ color:'#000' }}>인하우스 풀스택 마케터</div>
+        </div>
+        <div style={{ display:'flex', flexWrap:'wrap', gap: 12, marginTop: 56 }}>
+          {[
+            {t:'퍼포먼스'}, {t:'그로스'}, {t:'ops'},
+            {t:'효율충', hl: true}, {t:'데이터자동화'},
+          ].map(tag =>
+            <span key={tag.t} style={{
+              padding:'12px 24px',
+              border: tag.hl ? 'none' : '1.5px solid #e0e0e0',
+              background: tag.hl ? 'var(--yellow)' : 'transparent',
+              borderRadius: 999,
+              fontSize: 24, fontWeight: 500,
+              color: tag.hl ? 'var(--yellow-ink)' : '#666'
+            }}>#{tag.t}</span>
+          )}
+        </div>
+      </div>
+      <div style={{ flex: '0 0 480px' }}>
+        <div style={{
+          width: 480, height: 580, borderRadius: 24,
+          background: 'var(--surface)', overflow:'hidden',
+          display:'flex', alignItems:'center', justifyContent:'center', position:'relative'
+        }}>
+          <img src="assets/emily.png" alt="emily" style={{ width:'100%', height:'100%', objectFit:'cover' }}
+               onError={(e) => e.target.style.display='none'} />
+          <div style={{ position:'absolute', bottom: 24, left: 24, fontSize: 18, letterSpacing:'0.24em', fontWeight: 600, color:'#fff' }}>EMILY</div>
+        </div>
+      </div>
+    </div>
+  </Slide>
+);
+
+// ── 03 · AAA 참여 이유 (카피 단문화) ──────────────────
+const S03 = () => (
+  <Slide theme="light"
+    topLeft="INTRO · AAA" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">AAA팀에 온 이유,</div>
+    <div className="h-xl" style={{ marginTop: 16, marginBottom: 80, fontWeight: 700 }}>
+      6주 동안 <span style={{ fontWeight: 800, borderBottom: '6px solid var(--yellow)', paddingBottom: 4 }}>뭘</span> 했냐면.
+    </div>
+    <div style={{ display:'flex', gap: 24 }}>
+      {[
+        { t: <><b>반복 업무</b>를<br/>AI한테 넘겨보려고.</> },
+        { t: <>클로드 코드,<br/><b>어디까지 되는지</b> 보려고.</> },
+        { t: <>팀에서 다른 방식 보고<br/><b>내 작업에 접목</b>하려고.</> },
+      ].map((c,i) => (
+        <div key={i} className="card" style={{ flex: 1, minHeight: 380, padding:'48px 44px', display:'flex', alignItems:'center' }}>
+          <div className="h-m" style={{ fontSize: 40, lineHeight: 1.4, fontWeight: 600 }}>{c.t}</div>
+        </div>
+      ))}
+    </div>
+  </Slide>
+);
+
+// ── 04 · 목차 ─────────────────────────────────────────
+const S04 = () => (
+  <Slide theme="light" topLeft="CONTENTS" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="h-xl" style={{ marginBottom: 80, fontWeight: 700 }}>목차<span style={{ color:'var(--yellow)' }}>.</span></div>
+    <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap: 32, rowGap: 24 }}>
+      {[
+        {n:'01', k:'지난 여정',          t:'처음에 어떻게 기획하게 됐는지'},
+        {n:'02', k:'자동화 구조 설계',    t:'Claude Code + n8n 으로 만든 워크플로우'},
+        {n:'03', k:'하네스',              t:'AI한테 내 맥락 심는 법'},
+        {n:'04', k:'마무리',              t:'팀과 일했던 이야기'},
+      ].map((r,i)=>(
+        <div key={i} style={{ display:'flex', gap: 28, padding:'28px 0', borderTop:'1px solid #e0e0e0', alignItems:'baseline' }}>
+          <div style={{ fontSize: 72, fontWeight: 400, color:'#bbb', letterSpacing:'-0.04em', minWidth: 110 }}>{r.n}</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 20, letterSpacing:'0.22em', fontWeight: 600, color:'#888', textTransform:'uppercase', marginBottom: 8 }}>{r.k}</div>
+            <div className="h-s" style={{ fontSize: 32, fontWeight: 600 }}>{r.t}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Slide>
+);
+
+// ── 05 · 가져가실 수 있는 3가지 ────────────────────────
+const S05 = () => (
+  <Slide theme="light" topLeft="INTRO" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">오늘 제 세션이 끝나면,</div>
+    <div className="h-xl" style={{ marginBottom: 72, fontWeight: 700 }}>
+      <span style={{ background:'var(--yellow)', padding:'0 0.1em', boxDecorationBreak:'clone', WebkitBoxDecorationBreak:'clone' }}>가져가실 수 있는 3가지</span>
+    </div>
+    <div style={{ display:'flex', flexDirection:'column' }}>
+      {[
+        { n:'01', t:'AI랑 같이 기획하는 법' },
+        { n:'02', t:'자동화 구조 설계' },
+        { n:'03', t:'내 규칙을 AI가 읽게 만드는 법' },
+      ].map((r,i)=>(
+        <div key={i} style={{ display:'flex', gap: 40, padding:'36px 0', borderTop:'1px solid #e0e0e0', alignItems:'baseline' }}>
+          <div style={{ fontSize: 80, fontWeight: 400, color:'#bbb', letterSpacing:'-0.04em', minWidth: 130 }}>{r.n}</div>
+          <div className="h-m" style={{ fontSize: 60, fontWeight: 700, letterSpacing:'-0.02em' }}>{r.t}</div>
+        </div>
+      ))}
+    </div>
+  </Slide>
+);
+
+// ── 06 · 채널 훅 (5개 복구 · 카플친 · 사이즈 축소) ────
+const ChannelBadge = ({ kind }) => {
+  const base = {
+    width: 22, height: 22, borderRadius: 6,
+    display:'flex', alignItems:'center', justifyContent:'center',
+    fontSize: 12, fontWeight: 800, color:'#fff', flex:'0 0 22px'
+  };
+  if (kind === 'kakao') return <div style={{ ...base, background:'#FEE500', color:'#3C1E1E' }}>K</div>;
+  if (kind === 'instagram') return (
+    <div style={{ ...base, background:'linear-gradient(135deg,#f09433 0%,#dc2743 50%,#bc1888 100%)' }}>
+      <div style={{ width: 12, height: 12, border:'2px solid #fff', borderRadius: 4, position:'relative' }}>
+        <div style={{ position:'absolute', top: 1, right: 1, width: 2, height: 2, borderRadius:'50%', background:'#fff' }}/>
+      </div>
+    </div>
+  );
+  if (kind === 'openchat') return <div style={{ ...base, background:'#B2C7D9', color:'#fff' }}>#</div>;
+  if (kind === 'gmail') return (
+    <div style={{ ...base, background:'#fff', border:'1px solid #eee', color:'#EA4335', fontSize: 14 }}>M</div>
+  );
+  return <div style={{ ...base, background:'#FEE500', color:'#3C1E1E' }}>알</div>;
+};
+
+const AppChrome = ({ brand }) => {
+  if (brand === 'instagram') return (
+    <>
+      <div style={{ height: 18, display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0 10px', fontSize: 8, fontWeight: 600, color:'#111' }}>
+        <span>9:41</span><span>●●●</span>
+      </div>
+      <div style={{ padding:'4px 10px 6px', borderBottom:'1px solid #efefef', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+        <span style={{ fontFamily:'"Dancing Script", cursive, serif', fontSize: 14, fontWeight: 700, color:'#111' }}>Instagram</span>
+        <div style={{ fontSize: 10, color:'#111' }}>♡ ✈</div>
+      </div>
+    </>
+  );
+  if (brand === 'openchat') return (
+    <>
+      <div style={{ height: 18, display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0 10px', fontSize: 8, fontWeight: 600, color:'#111' }}>
+        <span>9:41</span><span>●●●</span>
+      </div>
+      <div style={{ padding:'4px 10px 6px', background:'#B2C7D9', display:'flex', alignItems:'center', gap: 6 }}>
+        <span style={{ fontSize: 11, color:'#111' }}>‹</span>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 9, fontWeight: 700, color:'#111' }}>셀피쉬클럽 오픈채팅</div>
+          <div style={{ fontSize: 7, color:'#333' }}>참여자 412명</div>
+        </div>
+      </div>
+    </>
+  );
+  if (brand === 'gmail') return (
+    <>
+      <div style={{ height: 18, display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0 10px', fontSize: 8, fontWeight: 600, color:'#111' }}>
+        <span>9:41</span><span>●●●</span>
+      </div>
+      <div style={{ padding:'4px 10px 6px', display:'flex', alignItems:'center', gap: 8, borderBottom:'1px solid #efefef', background:'#fff' }}>
+        <span style={{ fontSize: 10, color:'#5f6368' }}>←</span>
+        <div style={{ display:'flex', alignItems:'center', gap: 3 }}>
+          <span style={{ fontSize: 11, fontWeight: 700, color:'#4285F4' }}>G</span>
+          <span style={{ fontSize: 11, fontWeight: 700, color:'#EA4335' }}>m</span>
+          <span style={{ fontSize: 11, fontWeight: 700, color:'#FBBC04' }}>a</span>
+          <span style={{ fontSize: 11, fontWeight: 700, color:'#4285F4' }}>i</span>
+          <span style={{ fontSize: 11, fontWeight: 700, color:'#34A853' }}>l</span>
+        </div>
+      </div>
+    </>
+  );
+  // kakao
+  return (
+    <>
+      <div style={{ height: 18, display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0 10px', fontSize: 8, fontWeight: 600, color:'#111' }}>
+        <span>9:41</span><span>●●●</span>
+      </div>
+      <div style={{ padding:'4px 10px 6px', display:'flex', alignItems:'center', gap: 6, borderBottom:'1px solid #efefef', background:'#fff' }}>
+        <span style={{ fontSize: 11, color:'#111' }}>‹</span>
+        <div style={{ width: 14, height: 14, borderRadius: 4, background:'#FEE500', color:'#3C1E1E', fontSize: 9, fontWeight: 800, display:'flex', alignItems:'center', justifyContent:'center' }}>K</div>
+        <span style={{ fontSize: 10, fontWeight: 700, color:'#111' }}>카카오톡</span>
+      </div>
+    </>
+  );
+};
+
+const ChannelCard = ({ n, label, src, alt, brand }) => (
+  <div style={{ flex: '0 0 200px', display:'flex', flexDirection:'column' }}>
+    <div style={{ display:'flex', alignItems:'center', gap: 8, marginBottom: 10 }}>
+      <span style={{ fontSize: 14, fontWeight: 500, color:'#bbb' }}>{n}</span>
+      <ChannelBadge kind={brand} />
+      <span style={{ fontSize: 15, fontWeight: 700, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--ink)' }}>{label}</span>
+    </div>
+    <div style={{
+      width:'100%', aspectRatio:'9 / 18',
+      background:'#1a1a1a', borderRadius: 28, padding: 6,
+      border:'2px solid #2a2a2a',
+      boxShadow:'0 4px 16px rgba(0,0,0,0.12)', position:'relative',
+    }}>
+      <div style={{
+        position:'absolute', top: 8, left:'50%', transform:'translateX(-50%)',
+        width: 60, height: 16, background:'#000', borderRadius: 999, zIndex: 2
+      }}/>
+      <div style={{
+        width:'100%', height:'100%',
+        background:'#fff', borderRadius: 22, overflow:'hidden',
+        display:'flex', flexDirection:'column',
+      }}>
+        <AppChrome brand={brand} />
+        <div style={{ flex: 1, minHeight: 0, display:'flex', alignItems:'center', justifyContent:'center', background:'#fff' }}>
+          <img src={src} alt={alt}
+               style={{ width:'100%', height:'100%', objectFit:'contain', background:'#fff' }}
+               onError={(e)=>{ e.target.style.display='none'; e.target.parentElement.innerHTML='<div style="color:#999;padding:16px;font-size:12px;text-align:center">'+alt+'</div>'; }} />
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const S06 = () => (
+  <Slide theme="light" topLeft="01 · 지난 여정" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">근데 그 전에.</div>
+    <div className="h-xl" style={{ fontSize: 88, marginBottom: 72, fontWeight: 700, lineHeight: 1.1 }}>
+      여러분은 어떤 <span className="u-y" style={{ fontWeight: 800 }}>채널·메시지</span>로<br/>이 공유회에 오게 되셨나요?
+    </div>
+    <div style={{ display:'flex', gap: 20, justifyContent:'center', alignItems:'flex-start' }}>
+      <ChannelCard n="01" label="알림톡" brand="kakao"     src="assets/alimtalk.png"   alt="알림톡" />
+      <ChannelCard n="02" label="카플친" brand="kakao"     src="assets/kakaoplus.png"  alt="카플친" />
+      <ChannelCard n="03" label="인스타" brand="instagram" src="assets/insta_main.png" alt="인스타" />
+      <ChannelCard n="04" label="오카방" brand="openchat"  src="assets/oka.png"        alt="오카방" />
+      <ChannelCard n="05" label="이메일" brand="gmail"     src="assets/Email.png"      alt="이메일" />
+    </div>
+  </Slide>
+);
+
+window.S01 = S01; window.S02 = S02; window.S03 = S03;
+window.S04 = S04; window.S05 = S05; window.S06 = S06;
+
+</script>
+<script type="text/babel">
+// Slides 07-12 — 01·지난 여정 본편 + 02·자동화 구조 설계 커버 (v8 rev2)
+
+// ── 07 · 공유회 1건 스케일 (콘텐츠 많음, 오픈채팅) ─────
+const S07 = () => (
+  <Slide theme="light" topLeft="01 · 지난 여정" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">공유회 1건이 열리면,</div>
+    <div className="h-xl" style={{ marginBottom: 56, fontWeight: 700 }}>
+      채널 <span style={{ fontWeight: 800, borderBottom:'6px solid var(--yellow)', paddingBottom: 4 }}>4개</span>, 콘텐츠 <span style={{ fontWeight: 800, borderBottom:'6px solid var(--yellow)', paddingBottom: 4 }}>수십 개</span>.
+    </div>
+    <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap: 24, marginBottom: 56 }}>
+      {[
+        {n:'01', t:'알림톡',   d:'템플릿 9종 · 타깃별 발송'},
+        {n:'02', t:'카플친',   d:'플러스친구 소식 · 쿠폰'},
+        {n:'03', t:'이메일',   d:'Stibee · 뉴스레터'},
+        {n:'04', t:'오픈채팅', d:'공지 · 안내 · FAQ'},
+      ].map((c,i) => (
+        <div key={i} className="card" style={{ padding:'40px 36px', minHeight: 240, display:'flex', flexDirection:'column', justifyContent:'space-between' }}>
+          <div>
+            <div style={{ fontSize: 20, fontWeight: 500, color:'#bbb', marginBottom: 8 }}>{c.n}</div>
+            <div className="h-m" style={{ fontSize: 46, fontWeight: 700 }}>{c.t}</div>
+          </div>
+          <div className="cap" style={{ fontSize: 22 }}>{c.d}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{ padding:'28px 36px', background:'var(--yellow)', borderRadius: 14, fontSize: 36, fontWeight: 800, letterSpacing:'-0.02em' }}>
+      가장 핵심인 <span style={{ background:'var(--ink)', color:'var(--yellow)', padding:'4px 18px', borderRadius: 8 }}>알림톡</span> 부터 자동화 시작.
+    </div>
+  </Slide>
+);
+
+// ── 08 · 알림톡 CRM 워크플로우 (시각화 키움) ───────────
+const TemplateDot = ({ d, n, label, filter, hl }) => (
+  <div style={{ flex: 1, display:'flex', flexDirection:'column', alignItems:'center', gap: 12, position:'relative' }}>
+    <div style={{ fontSize: 18, fontWeight: 800, color:'#999', letterSpacing:'0.14em' }}>{d}</div>
+    <div style={{
+      width: 92, height: 92, borderRadius: '50%',
+      background: hl ? 'var(--yellow)' : 'var(--ink)',
+      color: hl ? 'var(--ink)' : '#fff',
+      display:'flex', alignItems:'center', justifyContent:'center',
+      fontSize: 36, fontWeight: 800,
+      boxShadow:'0 10px 24px rgba(0,0,0,0.14)', zIndex: 2,
+    }}>{n}</div>
+    <div style={{ fontSize: 20, fontWeight: 700, textAlign:'center', lineHeight: 1.25, marginTop: 4 }}>{label}</div>
+    <div style={{
+      padding:'6px 12px', background: hl ? 'rgba(233,237,18,0.22)' : '#f3f3f3',
+      borderRadius: 999, fontSize: 13, fontFamily:'"JetBrains Mono", monospace',
+      color:'#555', whiteSpace:'nowrap',
+    }}>{filter}</div>
+  </div>
+);
+
+const S08 = () => (
+  <Slide theme="light" topLeft="01 · 지난 여정" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">알림톡 CRM 워크플로우.</div>
+    <div className="h-l" style={{ fontSize: 72, marginBottom: 56, fontWeight: 700 }}>
+      <span style={{ background:'var(--yellow)', padding:'0 0.1em' }}>5일</span>, <span style={{ background:'var(--yellow)', padding:'0 0.1em' }}>9번</span>, 매번 바뀌는 타겟.
+    </div>
+
+    {/* 타임라인 바 */}
+    <div style={{ position:'relative', margin:'20px 0 16px', height: 420 }}>
+      <div style={{
+        position:'absolute', top: 58, left: '4%', right: '4%', height: 6,
+        background:'linear-gradient(to right, #e0e0e0 0%, #111 100%)', borderRadius: 3, zIndex: 1,
+      }}/>
+      <div style={{ display:'flex', gap: 4, position:'relative', zIndex: 2 }}>
+        <TemplateDot d="D-5" n="①" label="오픈알림"     filter="전체 수신동의자" />
+        <TemplateDot d="D-4" n="②" label="오픈리마인드" filter="− ①수신자" />
+        <TemplateDot d="D-3" n="③" label="D-1 안내"     filter="신청자만" />
+        <TemplateDot d="D-2" n="④" label="당일리마인드" filter="신청자만" />
+        <TemplateDot d="D-2" n="⑤" label="할인쿠폰"     filter="미신청자만" />
+        <TemplateDot d="D-1" n="⑥" label="입장링크"     filter="결제자만" />
+        <TemplateDot d="D-0" n="⑦" label="시작알림"     filter="결제자만" hl />
+        <TemplateDot d="D-0" n="⑧" label="혜택안내"     filter="참석자만" />
+        <TemplateDot d="D+2" n="⑨" label="VOD발송"     filter="참석자만" />
+      </div>
+    </div>
+
+    <div style={{ display:'flex', gap: 32, alignItems:'center', padding:'24px 32px', background:'var(--ink)', color:'#fff', borderRadius: 12 }}>
+      <div style={{ fontSize: 28, fontWeight: 800, color:'var(--yellow)' }}>9번 발송 · 매번 다른 타겟.</div>
+      <div style={{ fontSize: 22, color:'#ddd', marginLeft:'auto' }}>예전엔 이걸 매번 — <b style={{ color:'#fff' }}>수동 SQL</b>로.</div>
+    </div>
+  </Slide>
+);
+
+// ── 09 · 그래서 자동화 ─────────────────────────────────
+const S09 = () => (
+  <Slide theme="light" topLeft="01 · 지난 여정" topRight="EMILY · SELFISH CLUB · AAA">
+    <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', height:'100%', alignItems:'flex-start' }}>
+      <div className="kicker">그래서,</div>
+      <div className="h-hero" style={{ fontSize: 220, fontWeight: 800, lineHeight: 1.05, letterSpacing:'-0.04em' }}>
+        <span style={{ background:'var(--yellow)', padding:'0 0.08em', boxDecorationBreak:'clone', WebkitBoxDecorationBreak:'clone' }}>자동화</span>.
+      </div>
+      <div className="body" style={{ fontSize: 36, marginTop: 48, fontWeight: 500 }}>
+        한 번의 승인으로 — 9번 발송.
+      </div>
+    </div>
+  </Slide>
+);
+
+// ── 10 · 자동화 이후 지금 (슬랙 모달 크게) ─────────────
+const SlackModalMock = ({ scale = 1 }) => (
+  <div style={{
+    width: 820 * scale,
+    background: '#fff', borderRadius: 18, overflow:'hidden',
+    boxShadow: '0 40px 80px -20px rgba(0,0,0,0.28)',
+    border:'1px solid #e4e4e4',
+  }}>
+    <div style={{ padding:'22px 28px', borderBottom:'1px solid #eee', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+      <div style={{ fontWeight: 800, fontSize: 22 }}># 오늘의 알림톡 · 승인 요청</div>
+      <div style={{ color:'#999', fontSize: 18 }}>✕</div>
+    </div>
+    <div style={{ padding:'24px 28px', display:'flex', gap: 14, alignItems:'center', background:'#f9f9f9' }}>
+      <div style={{ width: 44, height: 44, borderRadius: 10, background:'var(--yellow)', display:'flex', alignItems:'center', justifyContent:'center', fontSize: 24 }}>🌟</div>
+      <div>
+        <div style={{ fontWeight: 700, fontSize: 18 }}>알림톡봇 <span style={{ fontSize: 13, background:'#eee', padding:'2px 8px', borderRadius: 4, marginLeft: 6, color:'#666' }}>앱</span></div>
+        <div style={{ color:'#888', fontSize: 14 }}>오전 10:00</div>
+      </div>
+    </div>
+    <div style={{ padding:'28px' }}>
+      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 14 }}>🔗 [#6 입장링크] 비개발자를 위한 클로드코드앱 &amp; 깃헙 실전 정복기 <span style={{ color:'#888', fontWeight: 400, fontSize: 16 }}>— 수정됨 ✏️</span></div>
+      <div style={{ fontSize: 17, color:'#444', lineHeight: 1.6, marginBottom: 14 }}>
+        <b>대상:</b> 86명 &nbsp; <b>⏰ 발송시간:</b> 19:30 &nbsp; <b>🔗 URL:</b> sepia-quartz-81f.notion.site/3305c...
+      </div>
+      <div style={{ background:'#f5f5f5', borderRadius: 10, padding:'18px 22px', fontSize: 16, lineHeight: 1.7, color:'#333' }}>
+        <div style={{ fontWeight: 700, marginBottom: 8 }}>📋 수정된 미리보기:</div>
+        {'{이름}'}님께서 신청하신 <b>이기적공유회</b>가 <span style={{ background:'var(--yellow)', padding:'0 6px', fontWeight:700 }}>20:00</span>에 시작됩니다 😊 늦지 않게 입장해주세요!
+      </div>
+      <div style={{ marginTop: 16, fontSize: 14, color:'#999' }}>⚠️ 승인 시 예약 발송이 확정됩니다. 카피·링크·시간을 반드시 확인 후 승인해주세요.</div>
+      <div style={{ marginTop: 20, display:'flex', gap: 10 }}>
+        <button style={{ padding:'12px 24px', background:'#2eb67d', color:'#fff', border:'none', borderRadius: 8, fontSize: 16, fontWeight: 700 }}>✅ 이대로 발송</button>
+        <button style={{ padding:'12px 24px', background:'#fff', border:'1px solid #ccc', borderRadius: 8, fontSize: 16, fontWeight: 600 }}>✏️ 수정</button>
+        <button style={{ padding:'12px 24px', background:'#fff', border:'1px solid #ccc', borderRadius: 8, fontSize: 16, fontWeight: 600, color:'#c4343b' }}>❌ 취소</button>
+      </div>
+    </div>
+  </div>
+);
+
+const S10 = () => (
+  <Slide theme="light" topLeft="01 · 지난 여정" topRight="EMILY · SELFISH CLUB · AAA">
+    <div style={{ display:'flex', gap: 80, alignItems:'center', height:'100%' }}>
+      <div style={{ flex:'0 0 36%' }}>
+        <div className="kicker">지금은,</div>
+        <div className="h-l" style={{ fontSize: 78, fontWeight: 700, lineHeight: 1.15 }}>
+          슬랙 <span style={{ background:'var(--yellow)', padding:'0 0.1em' }}>승인 한 번</span>.
+        </div>
+        <div className="body" style={{ fontSize: 26, marginTop: 40, lineHeight: 1.55 }}>
+          오늘 나갈 알림톡 리스트가 슬랙으로 와요.<br/>
+          카피·시간·링크 확인 후 <b>이대로 발송</b> 누르면 끝.
+        </div>
+      </div>
+      <div style={{ flex: 1, display:'flex', justifyContent:'center' }}>
+        <SlackModalMock />
+      </div>
+    </div>
+  </Slide>
+);
+
+// ── 11 · 3h → 5min (Before/After) ─────────────────────
+const S11 = () => (
+  <Slide theme="light" topLeft="01 · 지난 여정" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">그래서 바뀐 것.</div>
+    <div className="h-l" style={{ fontSize: 56, marginBottom: 64, fontWeight: 600 }}>
+      공유회 1건에 드는 시간.
+    </div>
+    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap: 80, marginTop: 40 }}>
+      <div style={{ textAlign:'center' }}>
+        <div style={{ fontSize: 22, fontWeight: 800, letterSpacing:'0.22em', color:'#999', marginBottom: 24 }}>BEFORE</div>
+        <div style={{ fontSize: 280, fontWeight: 900, color:'#bbb', letterSpacing:'-0.05em', lineHeight: 1 }}>3h</div>
+        <div style={{ fontSize: 24, color:'#888', marginTop: 16 }}>하루 3시간, 수동 SQL + 발송</div>
+      </div>
+      <div style={{ fontSize: 140, color:'#ddd', fontWeight: 200 }}>→</div>
+      <div style={{ textAlign:'center' }}>
+        <div style={{ fontSize: 22, fontWeight: 800, letterSpacing:'0.22em', color:'var(--ink)', marginBottom: 24 }}>AFTER</div>
+        <div style={{
+          fontSize: 280, fontWeight: 900, letterSpacing:'-0.05em', lineHeight: 1,
+          background:'var(--yellow)', padding:'0 0.08em',
+          display:'inline-block', color:'var(--ink)',
+        }}>5min</div>
+        <div style={{ fontSize: 24, color:'var(--ink)', fontWeight: 600, marginTop: 16 }}>슬랙 승인 한 번, 끝.</div>
+      </div>
+    </div>
+  </Slide>
+);
+
+// ── 12 · 02 섹션 커버 ─────────────────────────────────
+const S12 = () => (
+  <Slide theme="dark" topLeft="02 · 자동화 구조 설계" topRight="EMILY · SELFISH CLUB · AAA">
+    <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', height:'100%' }}>
+      <div style={{ color:'#888', fontSize: 32, fontWeight: 700, letterSpacing:'0.22em', marginBottom: 28 }}>02</div>
+      <div className="h-hero" style={{ fontSize: 96, fontWeight: 700, letterSpacing:'-0.03em' }}>
+        <span style={{ color:'var(--yellow)', fontWeight: 800 }}>자동화 구조</span> 설계.
+      </div>
+      <div className="body" style={{ fontSize: 30, marginTop: 48, color:'#bbb', fontWeight: 400 }}>
+        퇴근한 뒤에도 메시지가 나가려면, 구조가 있어야 했어요.
+      </div>
+    </div>
+  </Slide>
+);
+
+window.S07 = S07; window.S08 = S08; window.S09 = S09;
+window.S10 = S10; window.S11 = S11; window.S12 = S12;
+
+</script>
+<script type="text/babel">
+// Slides 13-18 — 02·자동화 구조 설계 본편 (v8 rev2)
+
+// ── 13 · 셀피쉬가 쓰는 스택 ────────────────────────────
+const S13 = () => (
+  <Slide theme="dark" topLeft="02 · 자동화 구조 설계" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">셀피쉬가 쓰는 스택.</div>
+    <div className="h-xl" style={{ marginBottom: 24, fontSize: 80 }}>
+      세 개로 만들었어요.
+    </div>
+    <div className="body" style={{ fontSize: 26, marginBottom: 56, color:'#bbb' }}>
+      슬랙 · 수파베이스 · n8n, 이 조합으로 <b style={{ color:'#fff' }}>알림톡 자동화</b>를 돌려요.
+    </div>
+    <div style={{ display:'flex', gap: 28 }}>
+      {[
+        {n:'01', t:'Slack',    d1:'커뮤니케이션 · 승인', d2:'매일 아침 승인 모달이 여기로.'},
+        {n:'02', t:'Supabase', d1:'데이터베이스',        d2:'멤버·신청·일정이 한 곳에.'},
+        {n:'03', t:'n8n',      d1:'자동화 워크플로우',    d2:'서버에서 24시간 돌아요.',
+                               note:'왜 n8n? — Make/Zapier 대비 조건 분기·DB 직접 접속·자체 호스팅 자유.'},
+      ].map((c,i) => (
+        <div key={i} style={{
+          flex: 1, padding:'40px 36px',
+          background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.12)',
+          borderRadius: 16, minHeight: 440
+        }}>
+          <div style={{ fontSize: 20, fontWeight: 900, color:'rgba(255,255,255,0.4)' }}>{c.n}</div>
+          <div style={{ fontSize: 56, fontWeight: 800, marginTop: 8, letterSpacing:'-0.03em' }}>{c.t}</div>
+          <div style={{ fontSize: 18, color:'rgba(255,255,255,0.55)', textTransform:'uppercase', letterSpacing:'0.18em', fontWeight: 700, marginTop: 32 }}>{c.d1}</div>
+          <div style={{ fontSize: 22, color:'#ddd', marginTop: 10 }}>{c.d2}</div>
+          {c.note && (
+            <div style={{
+              marginTop: 18, padding:'14px 16px',
+              background:'rgba(233,237,18,0.12)', border:'1px dashed var(--yellow)', borderRadius: 10,
+              fontSize: 16, color:'var(--yellow)', lineHeight: 1.5,
+            }}>{c.note}</div>
+          )}
+        </div>
+      ))}
+    </div>
+  </Slide>
+);
+
+// ── 14 · 기획 단계 (Claude와 상의) ─────────────────────
+const S14 = () => (
+  <Slide theme="light" topLeft="02 · 자동화 구조 설계" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">먼저 Claude와 기획부터.</div>
+    <div className="h-l" style={{ fontSize: 72, marginBottom: 48, fontWeight: 700 }}>
+      <span className="u-y">상황부터</span> 얘기하고, <span className="u-y">자동화 방법</span>을 같이 설계.
+    </div>
+    <div style={{ display:'flex', gap: 40, alignItems:'stretch' }}>
+      {/* 나의 요청 */}
+      <div style={{ flex: 1, padding:'36px 32px', background:'#f5f5f5', borderRadius: 16 }}>
+        <div style={{ fontSize: 16, fontWeight: 900, letterSpacing:'0.2em', color:'#999', marginBottom: 16 }}>TO: CLAUDE</div>
+        <div style={{ fontSize: 22, fontWeight: 500, lineHeight: 1.65, color:'#222' }}>
+          "공유회 1건에 알림톡 9개가 나가.<br/>
+          타깃은 매번 달라 (신청자, 미신청자, 결제자…).<br/>
+          카카오 알림톡 템플릿은 이미 있고,<br/>
+          승인받은 걸 <b>타이밍 맞춰 발송</b>하고 싶어.<br/>
+          어떻게 자동화할 수 있을까?"
+        </div>
+      </div>
+      {/* Claude 답변 체크리스트 */}
+      <div style={{ flex: 1, padding:'36px 32px', background:'var(--ink)', color:'#fff', borderRadius: 16 }}>
+        <div style={{ fontSize: 16, fontWeight: 900, letterSpacing:'0.2em', color:'var(--yellow)', marginBottom: 16 }}>CLAUDE →</div>
+        <div style={{ fontSize: 20, lineHeight: 1.8 }}>
+          <div>✓ Supabase에 <b>타깃 조건을 SQL</b>로 정의</div>
+          <div>✓ <b>SOLAPI</b>로 카카오 알림톡 발송</div>
+          <div>✓ <b>스케줄러</b>가 시각마다 실행</div>
+          <div>✓ 승인 모달은 <b>Slack 인터랙티브</b>로</div>
+          <div style={{ marginTop: 20, color:'var(--yellow)', fontWeight: 700 }}>→ 설계 초안부터 같이 짜볼게요.</div>
+        </div>
+      </div>
+    </div>
+  </Slide>
+);
+
+// ── 15 · 퇴근 대화 (반말 통일, Claude 답변 크게) ──────
+const S15 = () => (
+  <Slide theme="light" topLeft="02 · 자동화 구조 설계" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">근데 얘기하다 보니,</div>
+    <div style={{ display:'flex', flexDirection:'column', gap: 16, maxWidth: 1200, marginTop: 24, marginBottom: 48 }}>
+      {[
+        {who:'나',     side:'L', t:'나 6시 퇴근이거든. 근데 7시에 발송인데…'},
+        {who:'나',     side:'L', t:'맥북 닫고 가도 돼?'},
+      ].map((m,i)=>(
+        <div key={i} style={{ display:'flex', justifyContent: m.side==='L'?'flex-start':'flex-end' }}>
+          <div style={{ maxWidth: '72%' }}>
+            <div style={{ fontSize: 14, fontWeight: 800, letterSpacing:'0.16em', color:'#999', marginBottom: 4, textAlign: m.side==='R'?'right':'left' }}>{m.who}</div>
+            <div style={{
+              padding:'18px 26px',
+              background: m.side==='L' ? '#f1f1f1' : 'var(--ink)',
+              color: m.side==='L' ? 'var(--ink)' : '#fff',
+              borderRadius: 18,
+              fontSize: 26, fontWeight: 500, lineHeight: 1.4
+            }}>{m.t}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+    {/* Claude 답변 — 크게 */}
+    <div style={{ display:'flex', justifyContent:'flex-end', marginBottom: 40 }}>
+      <div style={{ maxWidth: '85%' }}>
+        <div style={{ fontSize: 14, fontWeight: 800, letterSpacing:'0.16em', color:'#999', marginBottom: 8, textAlign:'right' }}>CLAUDE</div>
+        <div style={{
+          padding:'40px 48px',
+          background: 'var(--ink)', color:'#fff',
+          borderRadius: 22, fontSize: 56, fontWeight: 800, lineHeight: 1.25, letterSpacing:'-0.03em',
+          boxShadow:'0 20px 40px -10px rgba(0,0,0,0.3)',
+        }}>
+          "아, 노트북이 꺼지면<br/>
+          <span style={{ color:'var(--yellow)' }}>저는 못 보내요.</span>"
+        </div>
+      </div>
+    </div>
+    <div style={{ fontSize: 32, fontWeight: 700, color:'#222' }}>
+      → <span className="hl">알아서 돌아갈</span> 구조가 필요했어요.
+    </div>
+  </Slide>
+);
+
+// ── 16 · n8n 설계 (만드는 Claude, 돌리는 n8n) ──────────
+const S16 = () => (
+  <Slide theme="light" topLeft="02 · 자동화 구조 설계" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">그래서,</div>
+    <div className="h-xl" style={{ marginBottom: 48, fontWeight: 700 }}>
+      만드는 건 <span className="hl">Claude</span>, 돌리는 건 <span className="hl">n8n</span>.
+    </div>
+    <div style={{ display:'flex', gap: 32, alignItems:'stretch' }}>
+      {/* Claude */}
+      <div className="card" style={{ flex: 1, padding:'44px 40px', minHeight: 340 }}>
+        <div className="tag">만드는 역할</div>
+        <div style={{ fontSize: 64, fontWeight: 800, marginTop: 20 }}>Claude Code</div>
+        <div className="body" style={{ fontSize: 24, marginTop: 24, lineHeight: 1.5 }}>
+          대화하면서 <b>워크플로우 JSON</b>을 만들어요.<br/>
+          내가 말로 설명하면 <b>조건·시각·변수</b>가 설계됨.
+        </div>
+      </div>
+      {/* Arrow */}
+      <div style={{ display:'flex', alignItems:'center', color:'#bbb', fontSize: 48, fontWeight: 300 }}>→</div>
+      {/* n8n */}
+      <div className="card k" style={{ flex: 1, padding:'44px 40px', minHeight: 340 }}>
+        <div className="tag" style={{ background:'var(--yellow)', color:'var(--ink)' }}>돌리는 역할</div>
+        <div style={{ fontSize: 64, fontWeight: 800, marginTop: 20 }}>n8n</div>
+        <div className="body" style={{ fontSize: 24, marginTop: 24, color:'#ddd', lineHeight: 1.5 }}>
+          설계된 JSON을 <b style={{ color:'var(--yellow)' }}>서버</b>에 올려두면,<br/>
+          내가 없어도 <b style={{ color:'var(--yellow)' }}>시각에 맞춰 실행</b>돼요.
+        </div>
+      </div>
+    </div>
+    <div style={{ marginTop: 48, padding:'20px 28px', background:'#f5f5f5', borderRadius: 12, fontSize: 22, color:'#444' }}>
+      <b>Claude가 n8n 워크플로우를 설계 → 서버에 업로드 → 예약된 시각에 자동 실행.</b>
+    </div>
+  </Slide>
+);
+
+// ── 17 · 리스크 → 확인 알림 구조 ──────────────────────
+const S17 = () => (
+  <Slide theme="light" topLeft="02 · 자동화 구조 설계" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">근데 또 불안했어요.</div>
+    <div className="h-l" style={{ fontSize: 64, marginBottom: 48, fontWeight: 700 }}>
+      완전 자동은 <span className="hl">무서워요</span>.
+    </div>
+    <div style={{ display:'flex', gap: 24, marginBottom: 40 }}>
+      {[
+        {t:'카피 오타',  d:'= 수백명이 동시에 봄'},
+        {t:'시간 실수',  d:'= 엉뚱한 시각에 발송'},
+        {t:'링크 깨짐',  d:'= 유입 제로'},
+      ].map((c,i)=>(
+        <div key={i} className="card" style={{ flex:1, padding:'32px 28px', minHeight: 180 }}>
+          <div style={{ fontSize: 32, fontWeight: 800, marginBottom: 10 }}>{c.t}</div>
+          <div style={{ fontSize: 22, color:'#555' }}>{c.d}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{ padding:'28px 36px', background:'var(--yellow)', borderRadius: 14, fontSize: 34, fontWeight: 800, letterSpacing:'-0.02em' }}>
+      발송 전에 <span style={{ background:'var(--ink)', color:'var(--yellow)', padding:'4px 16px', borderRadius: 6 }}>나에게 먼저 확인</span>이 오게.
+    </div>
+    <div style={{ marginTop: 24, fontSize: 22, color:'#555' }}>
+      → 슬랙으로 오늘 나갈 리스트가 모달로 떠요. 내가 <b>이대로 발송 / 수정 / 취소</b>.
+    </div>
+  </Slide>
+);
+
+// ── 18 · 최종 워크플로우 (+ DB 연동 마무리) ────────────
+const FlowStep = ({ n, time, who, title, sub, hl }) => (
+  <div style={{
+    flex: 1, padding:'20px 22px',
+    background: hl ? 'var(--yellow)' : '#f5f5f5',
+    borderRadius: 14,
+    minHeight: 180,
+    display:'flex', flexDirection:'column', justifyContent:'space-between',
+  }}>
+    <div>
+      <div style={{ fontSize: 13, fontWeight: 900, letterSpacing:'0.18em', color: hl?'var(--yellow-ink)':'#999' }}>{n} · {who}</div>
+      <div style={{ fontSize: 22, fontWeight: 800, marginTop: 8, lineHeight: 1.25 }}>{title}</div>
+      <div style={{ fontSize: 14, color: hl?'var(--yellow-ink)':'#666', marginTop: 8, lineHeight: 1.4 }}>{sub}</div>
+    </div>
+    {time && (
+      <div style={{ fontSize: 13, fontWeight: 700, color: hl?'var(--yellow-ink)':'#888', marginTop: 10 }}>{time}</div>
+    )}
+  </div>
+);
+
+const S18 = () => (
+  <Slide theme="light" topLeft="02 · 자동화 구조 설계" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">정리하면 이렇게 돌아가요.</div>
+    <div className="h-l" style={{ fontSize: 60, marginBottom: 48, fontWeight: 700 }}>
+      최종 <span className="u-y">알림톡 자동화 워크플로우</span>.
+    </div>
+    <div style={{ display:'flex', gap: 12, alignItems:'stretch' }}>
+      <FlowStep n="STEP 1" time="매일 10:00" who="n8n"      title="스케줄 실행" sub="예약된 시각마다 자동 기동" />
+      <div style={{ display:'flex', alignItems:'center', color:'#ccc', fontSize: 28 }}>→</div>
+      <FlowStep n="STEP 2" who="Supabase"                  title="DB에서 타겟 조회" sub="오늘 나갈 대상자 · 신청/미신청/결제 분리" />
+      <div style={{ display:'flex', alignItems:'center', color:'#ccc', fontSize: 28 }}>→</div>
+      <FlowStep n="STEP 3" who="Slack"                     title="승인 모달 발송" sub="오늘 리스트 · 카피 · 시간 미리보기" hl />
+      <div style={{ display:'flex', alignItems:'center', color:'#ccc', fontSize: 28 }}>→</div>
+      <FlowStep n="STEP 4" who="나"                        title="확인 · 승인" sub="이대로 발송 / 수정 / 취소" hl />
+      <div style={{ display:'flex', alignItems:'center', color:'#ccc', fontSize: 28 }}>→</div>
+      <FlowStep n="STEP 5" who="SOLAPI"                    title="카카오 알림톡 발송" sub="예약 시각에 전송" />
+    </div>
+
+    <div style={{ display:'flex', gap: 24, marginTop: 40 }}>
+      <div style={{ flex: 1, padding:'20px 24px', background:'var(--ink)', color:'#fff', borderRadius: 12, fontSize: 20, lineHeight: 1.55 }}>
+        ✓ <b style={{ color:'var(--yellow)' }}>DB 연동까지</b> — 신청 전·결제 전 데이터 모두 조회해서 타겟팅.
+      </div>
+      <div style={{ flex: 1, padding:'20px 24px', background:'#f5f5f5', borderRadius: 12, fontSize: 20, lineHeight: 1.55, color:'#333' }}>
+        ✓ <b>내가 승인하지 않으면 발송 안 됨</b> — 리스크 차단 구조.
+      </div>
+    </div>
+  </Slide>
+);
+
+window.S13 = S13; window.S14 = S14; window.S15 = S15;
+window.S16 = S16; window.S17 = S17; window.S18 = S18;
+
+</script>
+<script type="text/babel">
+// Slides 19-23
+
+// ── 19 · 걔한테 물어봄 ──────────────────────────────────
+const S19 = () => (
+  <Slide theme="light" topLeft="§ 3 · STEP 2" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">그래서 그냥 걔한테 물어봤어요.</div>
+    <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', flex: 1 }}>
+      <div style={{ fontSize: 22, fontWeight: 900, letterSpacing:'0.2em', color:'#999', marginBottom: 24 }}>TO: CLAUDE</div>
+      <div className="h-hero" style={{ fontSize: 120, lineHeight: 1.15 }}>
+        "너한테 기억 잘 주려면<br/>뭘 가져야 해?<br/>
+        …네가 생각하는 <span className="hl">하네스</span>는 뭐야?"
+      </div>
+      <div className="body" style={{ fontSize: 28, marginTop: 64, color:'#666' }}>
+        AAA팀에서 '하네스'라는 단어만 언뜻 들었던 참이었거든요.
+      </div>
+    </div>
+  </Slide>
+);
+
+// ── 20 · 하네스 3축 ─────────────────────────────────────
+const S20 = () => (
+  <Slide theme="light" topLeft="§ 3 · STEP 2" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">걔가 답해준 거 정리해보니</div>
+    <div className="h-l" style={{ fontSize: 68, marginBottom: 72 }}>세 가지로 모이더라고요.</div>
+    <div style={{ display:'flex', gap: 28 }}>
+      {[
+        {n:'01', k:'SPACE',    ko:'공간', t:<>기록이 <span className="hl">쌓일 자리</span>를 만들어주기.</>, d:'폴더 구조 · 파일 네이밍 규칙'},
+        {n:'02', k:'MEMORY',   ko:'기억', t:<>세션 시작할 때 <span className="hl">자동으로 읽게</span> 만들기.</>, d:'MEMORY.md · 자동 로드'},
+        {n:'03', k:'LEARNING', ko:'학습', t:<>규칙을 안 지키면 <span className="hl">막게</span> 만들기.</>, d:'pre-commit 훅 · 커밋 차단'},
+      ].map((c,i)=>(
+        <div key={i} className="card" style={{ flex:1, padding:'48px 40px', minHeight: 440 }}>
+          <div style={{ fontSize: 22, fontWeight: 900, color:'#aaa', marginBottom: 8 }}>{c.n} / {c.k}</div>
+          <div style={{ fontSize: 56, fontWeight: 900 }}>{c.ko}</div>
+          <div style={{ fontSize: 28, fontWeight: 600, marginTop: 28, lineHeight: 1.4 }}>{c.t}</div>
+          <div style={{ fontSize: 20, color:'#777', marginTop: 20 }}>{c.d}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{ marginTop: 40, fontSize: 28 }}>적용해보니 잘 돌더라고요. 알고 보니 이게 <b>'하네스'</b>였던 거예요.</div>
+  </Slide>
+);
+
+// ── 21 · 하네스 작동 예 (인트로) ────────────────────────
+const S21 = () => (
+  <Slide theme="dark" topLeft="§ 3 · STEP 2" topRight="EMILY · SELFISH CLUB · AAA">
+    <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', height:'100%' }}>
+      <div className="kicker">근데 이게 말로만 들으면 감이 안 와요.</div>
+      <div className="h-hero" style={{ fontSize: 180, marginTop: 32 }}>
+        실제로는 이렇게<br/><span className="hl">작동</span>해요.
+      </div>
+      <div className="body" style={{ fontSize: 32, marginTop: 56, color:'#bbb' }}>
+        MEMORY.md 인덱스 갱신 — 한 장면에 3축이 다 걸려 있어요.
+      </div>
+    </div>
+  </Slide>
+);
+
+// ── 22 · 세션저장 → 커밋차단 → 인덱스추가 ──────────────
+const S22 = () => (
+  <Slide theme="light" topLeft="§ 3 · STEP 2" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">세션 저장 → 커밋 차단 → 인덱스 추가.</div>
+    <div className="h-l" style={{ fontSize: 56, marginBottom: 40 }}>
+      이 한 <span className="hl">사이클</span>이 곧 하네스가 돌아가는 모습이에요.
+    </div>
+    <div style={{ display:'flex', gap: 20, marginBottom: 32 }}>
+      <div className="card" style={{ flex: 1, padding:'28px 32px', background:'#f8f8f8' }}>
+        <div style={{ fontSize: 18, fontWeight: 800, letterSpacing:'0.2em', color:'#888', textTransform:'uppercase', marginBottom: 14 }}>공간 · 폴더 구조</div>
+        <pre className="mono" style={{ fontSize: 16, lineHeight: 1.6, color:'#222' }}>
+📁 memory/{'\n'}
+├─ <b>MEMORY.md</b>   ← 인덱스{'\n'}
+├─ session_0418_aaa.md{'\n'}
+├─ session_0421_crm.md  <span style={{ background:'var(--yellow)', padding:'1px 6px', borderRadius: 3, fontSize: 12, fontWeight: 800 }}>new</span>{'\n'}
+├─ feedback_0419.md{'\n'}
+└─ ...{'\n'}{'\n'}
+📁 .husky/{'\n'}
+└─ <b>pre-commit</b>   ← 검사
+        </pre>
+        <div style={{ fontSize: 18, color:'#666', marginTop: 14 }}>세션 파일이 쌓이면 MEMORY.md에도 한 줄 추가돼야 함.</div>
+      </div>
+      <div style={{ flex: 1, padding:'28px 32px', background:'#111', borderRadius: 16, color:'#eee' }}>
+        <div style={{ fontSize: 18, fontWeight: 800, letterSpacing:'0.2em', color:'var(--yellow)', textTransform:'uppercase', marginBottom: 14 }}>학습 · PRE-COMMIT 훅이 막음</div>
+        <pre className="mono" style={{ fontSize: 16, lineHeight: 1.7 }}>
+<span style={{ color:'#aaa' }}>$</span> git commit -m "add session_0421"{'\n'}{'\n'}
+<span style={{ color:'#888' }}>running pre-commit…</span>{'\n'}
+<span style={{ color:'#7ecc7a' }}>✓ lint</span>{'\n'}
+<span style={{ color:'#7ecc7a' }}>✓ type-check</span>{'\n'}
+<span style={{ color:'#ff5a5a' }}>✗ memory-index</span>{'\n'}{'\n'}
+<span style={{ color:'#ff5a5a' }}>❌ 인덱스 누락 1건</span> — <b style={{ color:'var(--yellow)' }}>MEMORY.md</b>에 추가 필요{'\n'}
+<span style={{ color:'#bbb' }}>· memory/session_0421_crm.md</span>{'\n'}{'\n'}
+<span style={{ color:'#ff5a5a' }}>commit aborted.</span>
+        </pre>
+      </div>
+    </div>
+    <div style={{ display:'flex', gap: 20 }}>
+      {[
+        {k:'SPACE',    d:'폴더 구조가 자리를 만듦'},
+        {k:'MEMORY',   d:'MEMORY.md가 매 세션 자동 로드'},
+        {k:'LEARNING', d:'훅이 규칙을 강제함'},
+      ].map((c,i)=>(
+        <div key={i} style={{ flex:1, padding:'16px 20px', background:'var(--yellow)', borderRadius: 10 }}>
+          <div style={{ fontSize: 18, fontWeight: 900, letterSpacing:'0.18em', color:'var(--yellow-ink)' }}>{c.k}</div>
+          <div style={{ fontSize: 22, fontWeight: 700, color:'var(--ink)', marginTop: 2 }}>{c.d}</div>
+        </div>
+      ))}
+    </div>
+  </Slide>
+);
+
+// ── 23 · USE CASE ① PRD 분리 ──────────────────────────
+const S23 = () => (
+  <Slide theme="light" topLeft="§ 4 · 유즈케이스" topRight="EMILY · SELFISH CLUB · AAA">
+    <div style={{ display:'flex', alignItems:'baseline', gap: 20, marginBottom: 8 }}>
+      <div className="tag">USE CASE ①</div>
+    </div>
+    <div className="h-l" style={{ fontSize: 72, marginTop: 12, marginBottom: 16 }}>
+      규칙을 <span className="hl">md 파일</span>로 빼서 AI가 읽게.
+    </div>
+    <div className="body" style={{ fontSize: 28, marginBottom: 56, color:'#666' }}>353줄 CLAUDE.md → 역할별 PRD로 분리.</div>
+    <div style={{ display:'flex', gap: 28, alignItems:'stretch' }}>
+      <div className="card" style={{ flex: 1, padding:'36px 32px' }}>
+        <div className="tag" style={{ background:'#ddd', color:'#444' }}>BEFORE</div>
+        <div style={{ fontSize: 28, fontWeight: 800, marginTop: 20 }}>CLAUDE.md 하나에 다 박음</div>
+        <div style={{ marginTop: 24, padding:'20px 24px', background:'#fff', borderRadius: 10, border:'1px solid #e4e4e4' }}>
+          <div style={{ fontSize: 22, fontWeight: 700 }}>📄 CLAUDE.md <span style={{ color:'#aaa', fontWeight: 500 }}>353 lines</span></div>
+          <div className="mono" style={{ fontSize: 16, lineHeight: 1.7, color:'#555', marginTop: 14 }}>
+            톤 · 타이밍 · 타겟 · 링크 ·<br/>
+            변수 · 예외 · 채널별 규칙…<br/>
+            <span style={{ color:'#999' }}>(전부 한 파일)</span>
+          </div>
+        </div>
+        <div style={{ marginTop: 18, fontSize: 20, color:'#c4343b' }}>→ 길어서 AI가 끝까지 안 읽음</div>
+      </div>
+      <div style={{ display:'flex', alignItems:'center' }}><Arr /></div>
+      <div className="card k" style={{ flex: 1, padding:'36px 32px' }}>
+        <div className="tag" style={{ background:'var(--yellow)', color:'var(--ink)' }}>AFTER</div>
+        <div style={{ fontSize: 28, fontWeight: 800, marginTop: 20 }}>역할별 PRD로 쪼갬</div>
+        <pre className="mono" style={{ marginTop: 24, padding:'20px 24px', background:'rgba(255,255,255,0.08)', borderRadius: 10, fontSize: 18, lineHeight: 1.8, color:'#eee' }}>
+📁 prd/{'\n'}
+├─ <b style={{ color:'var(--yellow)' }}>alimtalk.md</b>   알림톡 규칙{'\n'}
+├─ <b style={{ color:'var(--yellow)' }}>tone.md</b>         톤앤매너{'\n'}
+├─ <b style={{ color:'var(--yellow)' }}>targeting.md</b>  예외 규칙{'\n'}
+└─ <b style={{ color:'var(--yellow)' }}>links.md</b>        UTM · 단축
+        </pre>
+        <div style={{ marginTop: 18, fontSize: 20, color:'var(--yellow)' }}>→ AI가 그때그때 필요한 것만 로드</div>
+      </div>
+    </div>
+  </Slide>
+);
+
+window.S19 = S19; window.S20 = S20; window.S21 = S21; window.S22 = S22; window.S23 = S23;
+
+</script>
+<script type="text/babel">
+// Slides 24-28
+
+// ── 24 · USE CASE ② 에이전트 8개 ──────────────────────
+const S24 = () => (
+  <Slide theme="light" topLeft="§ 4 · 유즈케이스" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="tag">USE CASE ②</div>
+    <div className="h-l" style={{ fontSize: 72, marginTop: 12, marginBottom: 12 }}>
+      <span className="hl">에이전트 8개</span>, 역할을 쪼갰어요.
+    </div>
+    <div className="body" style={{ fontSize: 26, marginBottom: 40, color:'#666' }}>한 명이 다 하는 대신, 직원 여덟 명처럼.</div>
+    <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap: 18 }}>
+      {[
+        {n:'01', t:'director',      d:'전체 흐름 지휘'},
+        {n:'02', t:'copywriter',    d:'카피 초안 작성'},
+        {n:'03', t:'data-collector', d:'DB에서 타겟 조회'},
+        {n:'04', t:'dispatcher',    d:'실제 발송 트리거'},
+        {n:'05', t:'verifier',      d:'링크·변수 검수'},
+        {n:'06', t:'scheduler',     d:'예약 시점 관리'},
+        {n:'07', t:'reporter',      d:'발송 리포트'},
+        {n:'08', t:'code-reviewer', d:'검수 게이트', hl: true},
+      ].map((c,i)=>(
+        <div key={i} className="card" style={{ padding:'24px 24px', minHeight: 140, background: c.hl?'var(--yellow)':'var(--surface)' }}>
+          <div style={{ fontSize: 18, fontWeight: 900, color: c.hl?'var(--yellow-ink)':'#999' }}>{c.n}</div>
+          <div className="mono" style={{ fontSize: 22, fontWeight: 800, marginTop: 8 }}>{c.t}</div>
+          <div style={{ fontSize: 18, color: c.hl?'var(--yellow-ink)':'#666', marginTop: 8 }}>{c.d}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{ marginTop: 40, fontSize: 24, color:'#666' }}>
+      ↑ <b>code-reviewer</b>는 AAA 과제 중에 '검수가 필요하다'는 걸 깨닫고 뒤늦게 추가한 역할이에요.
+    </div>
+  </Slide>
+);
+
+// ── 25 · USE CASE ③ 릴레이 ───────────────────────────
+const S25 = () => (
+  <Slide theme="light" topLeft="§ 4 · 유즈케이스" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="tag">USE CASE ③</div>
+    <div className="h-l" style={{ fontSize: 68, marginTop: 12, marginBottom: 12 }}>
+      발송이 <span className="hl">다음 발송</span>을 만들어요.
+    </div>
+    <div className="body" style={{ fontSize: 26, marginBottom: 48, color:'#666' }}>알림톡 한 번 나가면, 그다음이 자동으로 세팅돼요.</div>
+    <div style={{ display:'flex', gap: 14, alignItems:'stretch' }}>
+      <div style={{ flex:'0 0 200px', padding:'24px 22px', background:'var(--yellow)', borderRadius: 12 }}>
+        <div style={{ fontSize: 16, fontWeight: 900, letterSpacing:'0.16em', color:'var(--yellow-ink)' }}>STEP 1 · 내가 누름</div>
+        <div style={{ fontSize: 24, fontWeight: 800, marginTop: 20, lineHeight: 1.3 }}>알림톡 ①<br/>발송</div>
+      </div>
+      <div style={{ display:'flex', alignItems:'center', color:'#bbb', fontSize: 40 }}>→</div>
+      <div style={{ flex: 1, padding:'24px 22px', background:'#f3f3f3', borderRadius: 12 }}>
+        <div style={{ fontSize: 14, fontWeight: 900, letterSpacing:'0.18em', color:'#888' }}>AGENT</div>
+        <div className="mono" style={{ fontSize: 20, fontWeight: 800, marginTop: 14 }}>data-collector</div>
+        <div style={{ fontSize: 18, color:'#555', marginTop: 8 }}>신청자 조회</div>
+      </div>
+      <div style={{ display:'flex', alignItems:'center', color:'#bbb', fontSize: 40 }}>→</div>
+      <div style={{ flex: 1, padding:'24px 22px', background:'#f3f3f3', borderRadius: 12 }}>
+        <div style={{ fontSize: 14, fontWeight: 900, letterSpacing:'0.18em', color:'#888' }}>AGENT</div>
+        <div className="mono" style={{ fontSize: 20, fontWeight: 800, marginTop: 14 }}>dispatcher</div>
+        <div style={{ fontSize: 18, color:'#555', marginTop: 8 }}>신청자 제외 세팅</div>
+      </div>
+      <div style={{ display:'flex', alignItems:'center', color:'#bbb', fontSize: 40 }}>→</div>
+      <div style={{ flex:'0 0 220px', padding:'24px 22px', background:'var(--ink)', color:'#fff', borderRadius: 12 }}>
+        <div style={{ fontSize: 16, fontWeight: 900, letterSpacing:'0.16em', color:'var(--yellow)' }}>STEP 2 · 자동</div>
+        <div style={{ fontSize: 24, fontWeight: 800, marginTop: 20, lineHeight: 1.3 }}>미신청자 전용<br/>알림톡 ② 발송</div>
+      </div>
+    </div>
+    <div style={{ marginTop: 40, padding:'22px 28px', background:'var(--ink)', color:'#fff', borderRadius: 10, fontSize: 24 }}>
+      <b style={{ color:'var(--yellow)' }}>STEP 1만 내가 승인하면 돼요</b> — 나머지는 에이전트끼리 릴레이로 STEP 2를 만들어요.
+    </div>
+    <div style={{ marginTop: 24, display:'flex', gap: 32, fontSize: 20, color:'#666' }}>
+      <div><b style={{ color:'#c4343b' }}>옛날엔</b> 알림톡 ① 보내고 → 다음 날 수동으로 신청자 빼고 → 미신청자만 추려서 ② 보냄.</div>
+      <div><b style={{ color:'var(--ink)' }}>지금은</b> 알림톡 ① 발송 직후에 에이전트끼리 자동으로 다음 타겟을 재조회.</div>
+    </div>
+  </Slide>
+);
+
+// ── 26 · IMPACT ───────────────────────────────────────
+const S26 = () => (
+  <Slide theme="light" topLeft="§ 5 · IMPACT" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">그래서 뭐가 바뀌었냐면.</div>
+    <div style={{ display:'flex', flexDirection:'column', gap: 20 }}>
+      {[
+        {label:'알림톡 1건', a:'3h', b:'5min', note:'매일 아침 슬랙 모달 한 번.'},
+        {label:'공유회 준비', a:'2d', b:'1h',   note:'채널별 발송 세팅 전체.'},
+        {label:'리스크',      a:'오타·링크 실수', b:'검수 단계에서 차단.', long:true},
+      ].map((r,i)=>(
+        <div key={i} style={{ display:'flex', alignItems:'center', gap: 32, padding:'28px 0', borderTop:'1px solid #eee' }}>
+          <div style={{ flex:'0 0 200px', fontSize: 22, fontWeight: 800, letterSpacing:'0.16em', textTransform:'uppercase', color:'#888' }}>{r.label}</div>
+          <div style={{ flex: 1, display:'flex', alignItems:'center', gap: 32 }}>
+            <div style={{ fontSize: r.long?48:110, fontWeight: 900, color:'#999', letterSpacing:'-0.03em' }}>{r.a}</div>
+            <div style={{ fontSize: 60, color:'#bbb', fontWeight: 300 }}>→</div>
+            <div style={{ fontSize: r.long?48:110, fontWeight: 900, color:'var(--ink)', letterSpacing:'-0.03em' }}>
+              <span className="hl" style={{ padding:'0 0.12em' }}>{r.b}</span>
+            </div>
+          </div>
+          <div style={{ flex:'0 0 380px', fontSize: 22, color:'#555' }}>{r.note}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{ marginTop: 48, fontSize: 32, fontWeight: 700, lineHeight: 1.4 }}>
+      퇴근 직전 카피 쓰다 지쳤던 제가,<br/>
+      <span className="hl">맥북 닫고 집에 가도 메시지가 나가요.</span>
+    </div>
+  </Slide>
+);
+
+// ── 27 · 팀 ────────────────────────────────────────────
+const S27 = () => (
+  <Slide theme="light" topLeft="§ 6 · 팀" topRight="EMILY · SELFISH CLUB · AAA">
+    <div className="kicker">혼자 한 거 아니에요.</div>
+    <div className="h-l" style={{ fontSize: 60, marginBottom: 48 }}>AAA 6주, 옆자리에서 이렇게 영향받았어요.</div>
+    <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap: 20 }}>
+      {[
+        {who:'비비안',        t:<>전체 대시보드 크루랑 협업하면서,<br/>내 CRM이 전체 어디에 들어가는지 <b>감 잡음</b>.</>},
+        {who:'다니',          t:<>마케팅 OS 보면서 영향받아,<br/><b>CLAUDE.md → PRD 구조</b> 차용.</>},
+        {who:'code-reviewer', t:<>AAA 과제로 <b>하네스 서로 공유</b>하다 "검수가 필요하다" 깨닫고 만든 에이전트.</>, mono:true},
+        {who:'흐민 · 오웬',    t:<>흐민의 <b>'질문하는 AI'</b>, 오웬의 <b>'찜마켓'</b> 보면서 활용 범위 확장.</>},
+      ].map((c,i)=>(
+        <div key={i} className="card" style={{ padding:'28px 24px', minHeight: 260 }}>
+          <div style={{ fontSize: 24, fontWeight: 900, letterSpacing: c.mono?0:'-0.02em', fontFamily: c.mono?'"JetBrains Mono", monospace':'inherit' }}>{c.who}</div>
+          <div style={{ height: 1, background:'#ddd', margin:'16px 0' }}/>
+          <div style={{ fontSize: 20, lineHeight: 1.55, color:'#333' }}>{c.t}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{ marginTop: 64, padding:'32px 40px', background:'var(--yellow)', borderRadius: 14 }}>
+      <div style={{ fontSize: 40, fontWeight: 900 }}>그래서 <span style={{ textDecoration:'underline', textDecorationThickness: 4 }}>스폰지클럽</span>.</div>
+      <div style={{ fontSize: 24, marginTop: 12, color:'var(--yellow-ink)' }}>빨아들이고, 내보내고, 또 누군가가 빨아들이고.</div>
+    </div>
+  </Slide>
+);
+
+// ── 28 · 아웃트로 ──────────────────────────────────────
+const S28 = () => (
+  <Slide theme="dark" topLeft="OUTRO" topRight="EMILY · SELFISH CLUB · AAA" botLeft="에밀리 · 셀피쉬클럽 CRM PM" botRight="AAA 공유회 · 2026.04.28">
+    <div className="kicker">여러분은 이렇게 해보세요.</div>
+    <div className="h-xl" style={{ marginBottom: 56 }}>
+      내일부터 <span className="hl">세 가지</span>만.
+    </div>
+    <div style={{ display:'flex', flexDirection:'column', gap: 20, marginBottom: 56 }}>
+      {[
+        {n:'01', t:'한 파일로 시작하기.',       d:'CLAUDE.md에 내 규칙부터 적어보기.'},
+        {n:'02', t:'걔한테 먼저 물어보기.',     d:'"내 맥락 잘 기억하려면 뭘 줘야 해?"'},
+        {n:'03', t:'사람 관문 하나 남겨두기.',  d:'완전 자동 말고, 승인 한 번.'},
+      ].map((r,i)=>(
+        <div key={i} style={{ display:'flex', gap: 28, alignItems:'baseline' }}>
+          <div style={{ fontSize: 44, fontWeight: 900, color:'var(--yellow)', minWidth: 80 }}>{r.n}</div>
+          <div>
+            <div style={{ fontSize: 40, fontWeight: 800 }}>{r.t}</div>
+            <div style={{ fontSize: 24, color:'#bbb', marginTop: 6 }}>{r.d}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div style={{ borderTop:'1px solid rgba(255,255,255,0.2)', paddingTop: 32, display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>
+      <div className="h-hero" style={{ fontSize: 120 }}>감사합니다. <span className="hl">Q & A.</span></div>
+    </div>
+  </Slide>
+);
+
+window.S24 = S24; window.S25 = S25; window.S26 = S26; window.S27 = S27; window.S28 = S28;
+
+</script>
+
+<script type="text/babel" data-presets="env,react">
+  // wait for all slides
+  const tryMount = () => {
+    const need = ['S01','S02','S03','S04','S05','S06','S07','S08','S09','S10','S11','S12','S13','S14','S15','S16','S17','S18','S19','S20','S21','S22','S23','S24','S25','S26','S27','S28'];
+    if (!need.every(k => window[k])) { setTimeout(tryMount, 50); return; }
+    const App = () => (
+      <deck-stage width="1920" height="1080">
+        {need.map(k => {
+          const C = window[k];
+          return <C key={k} />;
+        })}
+      </deck-stage>
+    );
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  };
+  tryMount();
+</script>
+</body>
+</html>

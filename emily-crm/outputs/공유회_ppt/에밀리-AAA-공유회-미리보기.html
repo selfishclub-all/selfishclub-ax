@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>에밀리 AAA 공유회 — 25장</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<style>
+:root {
+  --accent: #E9ED12;
+  --accentPale: #FBFDC7;
+  --accentMid: #F5F7B0;
+  --dark: #0F0F0F;
+  --bg: #FFFFFF;
+  --muted: #6B6B6B;
+  --divider: #E5E5E5;
+  --grayBg: #F8F8F8;
+  --grayBg2: #F8FAFC;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #111;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  color: var(--dark);
+  line-height: 1.4;
+}
+body { padding: 40px 0; }
+.nav {
+  position: fixed; top: 16px; left: 16px; z-index: 100;
+  background: #222; color: #fff; padding: 8px 14px; border-radius: 20px;
+  font-size: 13px; display: flex; gap: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.nav span { color: #888; }
+
+.slide {
+  width: 1280px;
+  height: 720px;
+  background: var(--bg);
+  margin: 30px auto;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  border-radius: 8px;
+}
+.slide-num {
+  position: absolute;
+  top: -26px; left: 0;
+  color: #666; font-size: 12px; font-weight: 600;
+}
+.dark-bg { background: var(--dark); color: #fff; }
+
+/* 공용 */
+.section-label {
+  position: absolute; top: 40px; left: 64px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; font-weight: 700; letter-spacing: 3px;
+}
+.section-label .bar { width: 10px; height: 24px; background: var(--accent); }
+.section-label .num { color: var(--accent); }
+.section-label .txt { color: var(--muted); letter-spacing: 2px; }
+.page-num {
+  position: absolute; bottom: 32px; right: 56px;
+  font-size: 11px; color: var(--muted); font-weight: 600;
+}
+
+.title-lg { font-size: 40px; font-weight: 800; color: var(--dark); line-height: 1.25; }
+.title-md { font-size: 32px; font-weight: 800; color: var(--dark); line-height: 1.3; }
+.title-sm { font-size: 22px; font-weight: 700; color: var(--dark); }
+.sub { font-size: 15px; color: var(--muted); font-style: italic; }
+.tag { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+
+.card { border-radius: 14px; padding: 28px; }
+.card.accent { background: var(--accent); color: var(--dark); }
+.card.pale { background: var(--accentPale); color: var(--dark); }
+.card.gray { background: var(--grayBg); }
+.card.dark { background: var(--dark); color: #fff; }
+.card.outline { background: #fff; border: 2px solid var(--accent); }
+
+.footer-bar {
+  position: absolute; left: 64px; right: 64px; bottom: 70px;
+  background: var(--dark); color: var(--accent);
+  padding: 14px; text-align: center; font-weight: 800; font-size: 17px;
+  border-radius: 6px;
+}
+.footer-bar.accent { background: var(--accent); color: var(--dark); }
+
+/* 타이틀 P1 */
+.p1 { padding: 72px 90px; position: relative; }
+.p1 .eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  color: #CBD5E1; font-size: 13px; letter-spacing: 4px; font-weight: 700;
+}
+.p1 .eyebrow::before { content: ""; width: 10px; height: 22px; background: var(--accent); }
+.p1 h1 { color: #fff; font-size: 82px; font-weight: 900; line-height: 1.08; margin-top: 90px; }
+.p1 h1 .yellow { color: var(--accent); display: block; }
+.p1 .subtitle { color: #E5E7EB; font-size: 28px; font-style: italic; margin-top: 44px; }
+.p1 .author { color: #CBD5E1; margin-top: 64px; padding-top: 16px; border-top: 3px solid var(--accent); display: inline-block; font-size: 16px; }
+
+/* P2 */
+.p2 { padding: 70px 80px; }
+.p2 .greeting { font-size: 34px; color: var(--muted); }
+.p2 .name { font-size: 78px; font-weight: 900; color: var(--dark); margin-top: 10px; line-height: 1; }
+.p2 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 80px; }
+.p2 .card h3 { font-size: 26px; margin: 10px 0 14px; }
+
+/* P3 */
+.p3 { padding: 70px 80px; }
+.p3 .col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 54px; }
+.p3 .col .card { min-height: 320px; }
+.p3 .col .card p { font-size: 21px; font-weight: 700; line-height: 1.45; margin-top: 8px; }
+
+/* P4 — crew */
+.p4 { padding: 70px 80px; }
+.crew-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 30px; }
+.crew-card { padding: 16px 22px; border-radius: 10px; background: var(--grayBg); border: 1px solid var(--divider); }
+.crew-card.me { background: var(--accent); border-color: var(--accent); }
+.crew-card .n { font-weight: 800; font-size: 18px; }
+.crew-card .r { font-size: 13px; color: var(--muted); font-style: italic; margin-top: 4px; }
+.crew-card.me .r { color: var(--dark); }
+
+/* P5 AGENDA */
+.p5 { padding: 50px 64px; }
+.for-pill {
+  background: var(--dark); color: var(--accent);
+  text-align: center; padding: 14px; font-weight: 800; font-size: 15px;
+  letter-spacing: 2px; border-radius: 40px; margin-bottom: 30px;
+}
+.flow-list { margin-top: 30px; }
+.flow-item { display: flex; align-items: center; gap: 20px; padding: 12px 0; }
+.flow-item .num-circle {
+  width: 52px; height: 52px; background: var(--accent);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 15px;
+}
+.flow-item p { font-size: 17px; font-weight: 500; }
+.p5 .split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; }
+.take-card ol { list-style: none; }
+.take-card li { font-weight: 800; font-size: 18px; margin: 18px 0; }
+
+/* P6 */
+.p6 { padding: 100px 80px 70px; }
+.channels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 40px; }
+.channel { background: var(--accentPale); border: 2px solid var(--accent); border-radius: 14px;
+  padding: 30px 20px; text-align: center; min-height: 340px; display: flex; flex-direction: column; justify-content: space-between; }
+.channel .icon { font-size: 60px; }
+.channel .cap { font-size: 14px; color: var(--muted); font-style: italic; }
+.channel .label { font-size: 17px; font-weight: 800; }
+
+/* P7 timeline */
+.p7 { padding: 100px 64px 60px; }
+.timeline-wrap { position: relative; margin-top: 80px; height: 200px; }
+.timeline-line { position: absolute; left: 4%; right: 4%; top: 100px; height: 3px; background: #CBD5E1; }
+.tp { position: absolute; top: 0; transform: translateX(-50%); text-align: center; width: 150px; }
+.tp .day { font-size: 16px; font-weight: 800; color: var(--dark); }
+.tp .tpl { font-size: 13px; font-weight: 700; margin-top: 4px; color: var(--dark); }
+.tp .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); border: 2px solid var(--dark); margin: 14px auto 8px; }
+.tp .target { background: var(--accentPale); padding: 6px 10px; font-size: 12px; font-weight: 800; border-radius: 6px; display: inline-block; }
+
+/* P8 DB */
+.p8 { padding: 100px 64px 70px; }
+.p8 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+.p8 .db-cap { background: var(--grayBg2); border: 2px dashed var(--accent); border-radius: 10px; padding: 40px; text-align: center; min-height: 360px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.p8 .db-cap .icon { font-size: 56px; }
+.sql-box { background: var(--dark); color: #fff; padding: 32px; border-radius: 10px; min-height: 360px; }
+.sql-box h4 { color: var(--accent); font-size: 14px; letter-spacing: 2px; font-weight: 800; margin-bottom: 20px; }
+.sql-box pre { font-family: Menlo, monospace; color: #E5E7EB; font-size: 17px; line-height: 1.6; }
+.sql-box pre .hl { color: var(--accent); }
+.sql-box .note { margin-top: 24px; padding-top: 16px; border-top: 1px solid #333; font-style: italic; font-size: 14px; color: #E5E7EB; }
+
+/* P9 BEFORE/AFTER */
+.p9 { padding: 90px 64px 70px; }
+.p9 .ba { display: grid; grid-template-columns: 1fr 50px 1fr; align-items: center; gap: 20px; margin-top: 40px; }
+.p9 .arrow { font-size: 60px; color: var(--accent); text-align: center; font-weight: 800; }
+.ba-box { border-radius: 16px; padding: 40px; min-height: 400px; display: flex; flex-direction: column; gap: 10px; }
+.ba-box .big { font-size: 130px; font-weight: 900; line-height: 1; }
+.ba-box .small { font-size: 22px; }
+.ba-box.before { background: var(--grayBg); border: 1px solid var(--divider); color: var(--dark); }
+.ba-box.after { background: var(--accent); color: var(--dark); }
+
+/* P10 Slack */
+.p10 { padding: 100px 64px 70px; text-align: center; }
+.slack-cap {
+  width: 640px; margin: 50px auto; background: var(--grayBg2);
+  border: 2px dashed var(--accent); border-radius: 12px;
+  padding: 50px; min-height: 300px;
+}
+
+/* P11, P12 삽질 */
+.dig { padding: 100px 64px 70px; }
+.dig h2 { margin-top: 8px; }
+.dig .tag-red { color: var(--accent); font-weight: 800; letter-spacing: 3px; font-size: 14px; }
+.dig .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+.dig .card { min-height: 340px; }
+
+/* P13 도구 */
+.p13 { padding: 90px 64px 70px; }
+.tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
+.tool-card { border: 2px solid var(--accent); border-radius: 14px; padding: 30px; text-align: center; min-height: 360px; }
+.tool-card .emoji { font-size: 52px; }
+.tool-card h4 { font-size: 28px; font-weight: 800; margin: 14px 0 10px; }
+.tool-card .role { color: var(--accent); font-weight: 800; letter-spacing: 1px; font-size: 16px; padding-bottom: 14px; border-bottom: 2px solid var(--accent); display: inline-block; }
+.tool-card .sub { margin-top: 16px; font-size: 15px; color: var(--dark); font-style: normal; }
+.tool-card .ans { margin-top: 14px; color: var(--muted); font-size: 13px; font-style: italic; }
+
+/* P14 플로우 */
+.p14 { padding: 100px 64px 70px; }
+.flow-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 36px; }
+.flow-node { background: var(--accentPale); border: 1.5px solid var(--accent); border-radius: 10px; padding: 16px 10px; width: 140px; text-align: center; }
+.flow-node .ic { font-size: 32px; }
+.flow-node .lb { font-weight: 800; font-size: 15px; margin-top: 6px; }
+.flow-row .sep { color: var(--accent); font-size: 24px; font-weight: 800; }
+.p14 .captures { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+.capture { background: var(--grayBg2); border: 2px dashed var(--accent); border-radius: 10px; padding: 28px; text-align: center; min-height: 230px; }
+
+/* P15 CLAUDE.md */
+.p15 { padding: 90px 64px 70px; }
+.p15 .split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 50px; }
+.rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.rules-grid .rule { font-size: 17px; }
+.md-box { background: var(--grayBg2); border: 1px solid var(--divider); border-radius: 12px; padding: 30px; text-align: center; }
+.md-box h5 { font-family: Menlo, monospace; color: var(--muted); font-size: 15px; margin-bottom: 20px; }
+.md-box .lines { display: flex; flex-direction: column; gap: 10px; align-items: center; margin-bottom: 24px; }
+.md-box .lines span { height: 5px; background: #CBD5E1; border-radius: 3px; display: block; }
+.md-box .count { font-size: 44px; font-weight: 900; color: var(--accent); }
+
+/* P16 */
+.p16 { padding: 90px 64px 70px; }
+.p16 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+.p16 .episode { background: var(--grayBg); padding: 30px; border-radius: 12px; min-height: 320px; }
+.p16 .episode .tag { margin-bottom: 18px; }
+.p16 .episode blockquote { font-size: 22px; font-weight: 700; font-style: italic; line-height: 1.5; }
+.p16 .episode .conclude { margin-top: 24px; font-size: 18px; font-weight: 800; }
+.p16 .episode .conclude.hl { color: var(--dark); background: var(--accent); padding: 10px 14px; border-radius: 6px; display: inline-block; }
+
+/* P17 대화 */
+.p17 { padding: 90px 64px 70px; text-align: center; }
+.speech {
+  margin: 40px auto 0; max-width: 960px;
+  background: var(--accentPale); border: 2px solid var(--accent);
+  border-radius: 20px; padding: 44px 50px; text-align: left;
+}
+.speech .from { font-size: 12px; letter-spacing: 3px; font-weight: 800; color: var(--muted); }
+.speech q { display: block; font-size: 23px; font-weight: 800; margin: 18px 0; line-height: 1.45; }
+
+/* P18 */
+.p18 { padding: 90px 64px 70px; }
+.p18 .triad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+.p18 .tri-card { background: var(--accentPale); border: 1.5px solid var(--accent); border-radius: 14px; padding: 24px; text-align: center; min-height: 360px; }
+.p18 .tri-card .ic { font-size: 44px; }
+.p18 .tri-card h4 { font-size: 26px; font-weight: 800; margin: 12px 0 16px; }
+.p18 .tri-card .prob { color: var(--muted); font-style: italic; font-size: 15px; line-height: 1.5; }
+.p18 .tri-card .line { width: 40px; height: 2px; background: var(--accent); margin: 14px auto; }
+.p18 .tri-card .sol { font-weight: 800; font-size: 15px; }
+
+/* P19 PRD */
+.p19 { padding: 90px 64px 70px; }
+.p19 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+.prd-file { background: var(--grayBg2); border: 2px dashed var(--accent); border-radius: 12px; padding: 30px; min-height: 360px; }
+.prd-file h5 { font-family: Menlo, monospace; font-size: 16px; text-align: center; font-weight: 800; margin-bottom: 8px; }
+.prd-file p { font-style: italic; color: var(--muted); text-align: center; font-size: 13px; margin-bottom: 16px; }
+.prd-file .lines { display: flex; flex-direction: column; gap: 9px; }
+.prd-file .lines span { height: 4px; background: #CBD5E1; border-radius: 2px; }
+.prd-rhs { background: var(--accent); border-radius: 12px; padding: 34px; min-height: 360px; }
+.prd-rhs h5 { font-size: 13px; letter-spacing: 2px; font-weight: 800; margin-bottom: 24px; }
+.prd-rhs ol { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+.prd-rhs li { font-size: 18px; font-weight: 800; line-height: 1.35; }
+
+/* P20 agents */
+.p20 { padding: 90px 64px 70px; }
+.agents { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; }
+.agent { background: var(--accentPale); border: 1.5px solid var(--accent); border-radius: 10px; padding: 16px; min-height: 110px; }
+.agent .name { font-family: Menlo, monospace; font-weight: 800; font-size: 14px; }
+.agent .role { font-size: 13px; color: var(--muted); font-style: italic; margin-top: 6px; }
+
+/* P21 flow */
+.p21 { padding: 90px 64px 70px; }
+.p21 .triplet { display: grid; grid-template-columns: 1fr 20px 1fr 20px 1fr; align-items: stretch; gap: 10px; margin-top: 40px; }
+.p21 .tri-step { border-radius: 14px; padding: 26px; min-height: 280px; }
+.p21 .tri-step.mid { background: var(--accent); }
+.p21 .tri-step.side { background: var(--accentPale); }
+.p21 .tri-step .head { display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px; }
+.p21 .tri-step .num { font-size: 13px; letter-spacing: 3px; font-weight: 800; }
+.p21 .tri-step .emo { font-size: 30px; }
+.p21 .tri-step h4 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+.p21 .tri-step p { font-size: 15px; line-height: 1.5; }
+.p21 .arrow-sep { font-size: 24px; font-weight: 900; color: var(--dark); align-self: center; text-align: center; }
+
+/* P22 impact */
+.p22 { padding: 90px 64px 70px; }
+.p22 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 36px; }
+.impact-quant { background: var(--dark); color: #fff; border-radius: 14px; padding: 32px; }
+.impact-quant h4 { color: var(--accent); font-size: 13px; letter-spacing: 3px; font-weight: 800; margin-bottom: 22px; }
+.impact-quant .row { margin-bottom: 22px; }
+.impact-quant .big { color: var(--accent); font-size: 26px; font-weight: 900; }
+.impact-quant .sm { color: #CBD5E1; font-size: 14px; font-style: italic; margin-top: 4px; }
+.impact-qual { background: var(--accentPale); border-radius: 14px; padding: 32px; }
+.impact-qual h4 { font-size: 13px; letter-spacing: 3px; font-weight: 800; margin-bottom: 22px; }
+.impact-qual q { display: block; font-size: 17px; font-style: italic; line-height: 1.6; margin-bottom: 22px; }
+
+/* P23 team */
+.p23 { padding: 90px 64px 70px; }
+.team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 36px; }
+.team-card {
+  background: var(--accentPale); border: 1.5px solid var(--accent);
+  border-left: 8px solid var(--accent);
+  padding: 20px 26px; border-radius: 10px;
+}
+.team-card h5 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+.team-card p { font-size: 14px; line-height: 1.55; }
+
+/* P24 스폰지 */
+.p24 { padding: 110px 80px 70px; }
+.p24 .lead { color: var(--muted); font-size: 26px; }
+.p24 h2 { font-size: 54px; font-weight: 900; margin-top: 14px; line-height: 1.15; }
+.p24 .divider { width: 100px; height: 4px; background: var(--accent); margin: 30px 0; }
+.p24 .line { font-size: 28px; font-weight: 800; line-height: 1.5; }
+
+/* P25 outro */
+.p25 { padding: 80px 80px 70px; }
+.actions { margin-top: 40px; display: flex; flex-direction: column; gap: 28px; }
+.action { display: flex; align-items: center; gap: 28px; }
+.action .c {
+  width: 64px; height: 64px; border-radius: 50%; background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 900;
+}
+.action p { font-size: 23px; font-weight: 800; }
+.thanks {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: var(--dark); padding: 46px; text-align: center;
+  border-top: 6px solid var(--accent);
+}
+.thanks h3 { color: var(--accent); font-size: 34px; font-weight: 900; }
+
+/* Prompt slide */
+.prompt-slide { width: 1280px; margin: 30px auto; background: #0b0b0b; color: #eee; padding: 40px 50px; border-radius: 8px; position: relative; }
+.prompt-slide h2 { color: var(--accent); font-size: 24px; margin-bottom: 20px; }
+.prompt-slide pre { background: #1a1a1a; padding: 24px; border-radius: 6px; font-family: Menlo, monospace; font-size: 13px; line-height: 1.6; white-space: pre-wrap; max-height: 560px; overflow-y: auto; }
+.prompt-slide .copy { position: absolute; top: 30px; right: 40px; background: var(--accent); color: var(--dark); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; border: none; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <span>에밀리 AAA 공유회 · 25장 미리보기</span>
+  <a href="#p1">1</a><a href="#p5">5</a><a href="#p10">10</a><a href="#p15">15</a><a href="#p20">20</a><a href="#p25">25</a>
+  <a href="#prompt">프롬프트</a>
+</div>
+
+<!-- P1 -->
+<section class="slide dark-bg p1" id="p1">
+  <div class="eyebrow">SELFISH CLUB · AAA PROJECT</div>
+  <h1>매일 아침,<span class="yellow">AI가 알림톡을 들고 옵니다</span></h1>
+  <div class="subtitle">"오늘 이 카피로 오후 3시에 보낼까요?"</div>
+  <div class="author">에밀리 · 셀피쉬클럽 CRM PM · AAA 크루</div>
+</section>
+
+<!-- P2 -->
+<section class="slide p2" id="p2">
+  <div class="greeting">안녕하세요,</div>
+  <div class="name">에밀리입니다</div>
+  <div class="cards">
+    <div class="card accent">
+      <div class="tag" style="color:#0F0F0F">본업</div>
+      <h3>셀피쉬클럽 CRM PM</h3>
+      <p style="font-size:16px">이기적멤버십 6,800명<br/>공유회 CRM 혼자 담당</p>
+    </div>
+    <div class="card gray" style="border:1px solid var(--divider)">
+      <div class="tag">AAA 크루</div>
+      <h3>에밀리</h3>
+      <p style="font-size:16px;color:var(--muted)">6주간 Claude Code로<br/>업무 에이전트 만드는 크루</p>
+    </div>
+  </div>
+  <div class="page-num">2 / 25</div>
+</section>
+
+<!-- P3 -->
+<section class="slide p3" id="p3">
+  <h2 class="title-md" style="margin-top:20px">왜 AAA에 왔냐면요</h2>
+  <div class="col">
+    <div class="card gray">
+      <div class="tag">이때 제가 있던 자리</div>
+      <p>공유회 월 4~6번.</p>
+      <p>알림톡 9종 매번 수동 발송.</p>
+      <p>퇴근 직전까지 DB 뽑고 있었어요.</p>
+    </div>
+    <div class="card accent">
+      <div class="tag" style="color:#0F0F0F">그래서</div>
+      <p>혼자 해보다 한계 느꼈고,</p>
+      <p>크루들이랑 같이 해보려고<br/>AAA에 왔어요.</p>
+    </div>
+  </div>
+  <div class="page-num">3 / 25</div>
+</section>
+
+<!-- P4 -->
+<section class="slide p4" id="p4">
+  <h2 class="title-md">AAA팀 — 8명의 크루</h2>
+  <div class="sub" style="margin-top:10px">각자 다른 일 · 같은 고민 — 내 업무에 AI 진짜로 적용하기</div>
+  <div class="crew-grid">
+    <div class="crew-card"><div class="n">젬마</div><div class="r">AAA 오프닝·리드</div></div>
+    <div class="crew-card"><div class="n">다다</div><div class="r">옵시디언 + Claude Code 아카이브 웹</div></div>
+    <div class="crew-card"><div class="n">다니</div><div class="r">마케터 실무 자동화 OS</div></div>
+    <div class="crew-card"><div class="n">흐민</div><div class="r">질문하는 AI — Sullivan 프로젝트</div></div>
+    <div class="crew-card"><div class="n">비비안</div><div class="r">셀피쉬 AX 전체 대시보드</div></div>
+    <div class="crew-card"><div class="n">오웬</div><div class="r">찜마켓 서비스 실제 출시</div></div>
+    <div class="crew-card"><div class="n">띵크</div><div class="r">결제·예약·CRM 통합 대시보드</div></div>
+    <div class="crew-card me"><div class="n">에밀리 (나)</div><div class="r">CRM 자동화 — 오늘 발표</div></div>
+  </div>
+  <div class="sub" style="text-align:center; margin-top:32px">6주 동안 Claude Code로 각자 자기 업무에 AI 에이전트를 만들었어요</div>
+  <div class="page-num">4 / 25</div>
+</section>
+
+<!-- P5 AGENDA -->
+<section class="slide p5" id="p5">
+  <div class="for-pill">FOR · 반복 업무에 치여 본질에 집중 못 하는 마케터 · PM · 운영 담당자</div>
+  <div class="tag">오늘 이야기 흐름</div>
+  <h2 class="title-md" style="margin-top:4px">순서</h2>
+  <div class="split">
+    <div class="flow-list">
+      <div class="flow-item"><div class="num-circle">01</div><p>지난한 여정 — 공유회 1건의 CRM이 왜 보통일이 아니었는지</p></div>
+      <div class="flow-item"><div class="num-circle">02</div><p>STEP 1 · 자동화 구조 짜기 (삽질 2가지 + 3 도구)</p></div>
+      <div class="flow-item"><div class="num-circle">03</div><p>STEP 2 · 하네스 엔지니어링 (내 상황에서 귀납된 결과)</p></div>
+      <div class="flow-item"><div class="num-circle">04</div><p>팀 · 배운 것 · 스폰지클럽</p></div>
+    </div>
+    <div class="card pale take-card" style="align-self:center">
+      <div class="tag">가져가실 3가지</div>
+      <ol>
+        <li>① AI랑 같이 기획하는 법</li>
+        <li>② 자동화 구조 설계</li>
+        <li>③ 내 규칙을 AI가 읽게 만드는 법</li>
+      </ol>
+    </div>
+  </div>
+  <div class="footer-bar">한마디로 — "AI한테 일 잘 시키는 법"</div>
+</section>
+
+<!-- P6 -->
+<section class="slide p6" id="p6">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 1 / 4</div><div class="txt">WHY · 지난한 여정</div></div>
+  <h2 class="title-md">여러분 이거 받고 오셨죠?</h2>
+  <div class="sub" style="margin-top:8px">공유회 1건 열리면 이게 다 나가요</div>
+  <div class="channels">
+    <div class="channel"><div class="icon">📱</div><div class="cap">캡처 자리</div><div class="label">카카오 알림톡</div></div>
+    <div class="channel"><div class="icon">📲</div><div class="cap">캡처 자리</div><div class="label">카플친 배너</div></div>
+    <div class="channel"><div class="icon">💬</div><div class="cap">캡처 자리</div><div class="label">오픈채팅 공지</div></div>
+    <div class="channel"><div class="icon">📸</div><div class="cap">캡처 자리</div><div class="label">인스타 캐러셀</div></div>
+  </div>
+  <div class="page-num">6 / 25</div>
+</section>
+
+<!-- P7 timeline -->
+<section class="slide p7" id="p7">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 1 / 4</div><div class="txt">WHY · 지난한 여정</div></div>
+  <h2 class="title-md">공유회 1건 = 10일 × 9번 알림톡</h2>
+  <div class="sub" style="margin-top:8px">그리고 매번 대상이 달라집니다</div>
+  <div class="timeline-wrap">
+    <div class="timeline-line"></div>
+    <div class="tp" style="left:8%"><div class="day">D-7</div><div class="tpl">① 오픈알림</div><div class="dot"></div><span class="target">전체</span></div>
+    <div class="tp" style="left:25%"><div class="day">D-5</div><div class="tpl">② 리마인드</div><div class="dot"></div><span class="target">미신청자</span></div>
+    <div class="tp" style="left:42%"><div class="day">D-1</div><div class="tpl">③ D-1</div><div class="dot"></div><span class="target">신청자</span></div>
+    <div class="tp" style="left:65%"><div class="day">D-day</div><div class="tpl">④⑤⑥⑦⑧</div><div class="dot"></div><span class="target">교차</span></div>
+    <div class="tp" style="left:90%"><div class="day">D+3</div><div class="tpl">⑨ VOD</div><div class="dot"></div><span class="target">신청자</span></div>
+  </div>
+  <div class="footer-bar" style="bottom:110px">→ 매 시점마다 DB 조건이 바뀝니다</div>
+  <div class="sub" style="text-align:center; position:absolute; bottom:60px; left:0; right:0">촘촘히 짜진 CRM이에요 — 무지성으로 많이 쏘는 게 아니라</div>
+</section>
+
+<!-- P8 DB -->
+<section class="slide p8" id="p8">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 1 / 4</div><div class="txt">WHY · 지난한 여정</div></div>
+  <h2 class="title-md">이 조건들을 매번 수동으로 뽑았어요</h2>
+  <div class="sub" style="margin-top:8px">발송마다 다른 대상자 — 예전엔 사람이 손으로 골라냈습니다</div>
+  <div class="split">
+    <div class="db-cap">
+      <div class="icon">🗄️</div>
+      <div style="font-weight:800; font-size:18px">Supabase 쿼리 결과</div>
+      <div style="color:var(--muted); font-style:italic; font-size:13px">(캡처 자리 — 신청자 명단 테이블)</div>
+    </div>
+    <div class="sql-box">
+      <h4>예: ② 리마인드 보낼 때</h4>
+      <pre><span class="hl">WHERE</span> paid_at <span class="hl">IS NULL</span>
+  <span class="hl">AND</span> created_at &lt; NOW()
+  <span class="hl">AND</span> user <span class="hl">NOT IN</span> (①발송자)</pre>
+      <div class="note">→ 이 조건을 9번 다 손으로 뽑았어요</div>
+    </div>
+  </div>
+  <div class="page-num">8 / 25</div>
+</section>
+
+<!-- P9 BEFORE AFTER -->
+<section class="slide p9" id="p9">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 1 / 4</div><div class="txt">WHY · 지난한 여정</div></div>
+  <div style="color:var(--muted); font-size:24px; margin-top:40px">그래서 바뀐 건,</div>
+  <div class="ba">
+    <div class="ba-box before">
+      <div class="tag">BEFORE</div>
+      <div class="small">하루</div>
+      <div class="big">3시간</div>
+      <div>수동 세팅 + 수동 발송</div>
+      <div class="sub" style="color:var(--muted)">공유회 1건당 이틀 꼬박</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="ba-box after">
+      <div class="tag">AFTER</div>
+      <div class="small">하루</div>
+      <div class="big">5분</div>
+      <div style="font-weight:800">슬랙에서 확인·승인</div>
+      <div style="font-style:italic">맥북 꺼도 정시에 나감</div>
+    </div>
+  </div>
+  <div class="sub" style="text-align:center; margin-top:24px">지금부터 이게 어떻게 가능했는지 말씀드릴게요</div>
+</section>
+
+<!-- P10 -->
+<section class="slide p10" id="p10">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 1 / 4</div><div class="txt">WHY · 지난한 여정</div></div>
+  <h2 class="title-md">이게 제일 신기한 부분이에요</h2>
+  <div style="color:var(--accent); font-style:italic; font-size:20px; margin-top:8px">오늘 아침, 제 슬랙엔 이게 와요</div>
+  <div class="slack-cap">
+    <div style="font-size:60px">💬</div>
+    <div style="font-weight:800; font-size:20px; margin-top:12px">슬랙 승인 모달 실제 캡처</div>
+    <div style="color:var(--muted); font-style:italic; font-size:14px; margin-top:8px">(카피 · 대상자 수 · 발송 시각 + ✅ 승인 / ❌ 취소 버튼)</div>
+  </div>
+  <div class="footer-bar">AI가 카피 써 놓고 → ✅ 승인만 누르면 정시 발송 · 맥북 꺼도 나감</div>
+</section>
+
+<!-- P11 삽질 ① -->
+<section class="slide dig" id="p11">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 2 / 4</div><div class="txt">STEP 1 · 자동화 구조 짜기</div></div>
+  <div class="tag-red" style="margin-top:10px">😰 삽질 ①</div>
+  <h2 class="title-md">Claude Code는 맥북이 켜져 있어야 돎</h2>
+  <div class="split">
+    <div class="card gray">
+      <div class="tag">상황</div>
+      <p style="font-size:22px; font-weight:700; margin-top:14px">퇴근하면 맥북 닫음</p>
+      <p style="font-size:22px; font-weight:700">→ Claude Code 멈춤</p>
+      <p style="font-size:22px; font-weight:700">→ 저녁 7시 발송 못 나감 📵</p>
+    </div>
+    <div class="card accent">
+      <div class="tag" style="color:var(--dark)">💡 그래서</div>
+      <p style="font-size:30px; font-weight:800; margin-top:18px">서버에서 혼자 도는</p>
+      <p style="font-size:30px; font-weight:800">도구가 필요했어요</p>
+      <p style="font-size:16px; font-style:italic; margin-top:24px">→ n8n 등장</p>
+    </div>
+  </div>
+  <div class="page-num">11 / 25</div>
+</section>
+
+<!-- P12 -->
+<section class="slide dig" id="p12">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 2 / 4</div><div class="txt">STEP 1 · 자동화 구조 짜기</div></div>
+  <div class="tag-red" style="margin-top:10px">😰 삽질 ②</div>
+  <h2 class="title-md">완전 자동 발송은 무서웠어요</h2>
+  <div class="split">
+    <div class="card gray">
+      <div class="tag">상황</div>
+      <p style="font-size:22px; font-weight:700; margin-top:14px">크론으로 시간 맞춰 자동?</p>
+      <p style="font-size:17px; font-weight:700; margin-top:22px">🚨 카피 오타 1번 → 6,800명 민원</p>
+      <p style="font-size:17px; font-weight:700">🚨 줌링크 틀리면 라이브 말림</p>
+    </div>
+    <div class="card accent">
+      <div class="tag" style="color:var(--dark)">💡 그래서</div>
+      <p style="font-size:30px; font-weight:800; margin-top:18px">보내기 전엔</p>
+      <p style="font-size:30px; font-weight:800">사람이 한 번 봐야 해요</p>
+      <p style="font-size:16px; font-style:italic; margin-top:24px">→ Slack 승인 모달 등장</p>
+    </div>
+  </div>
+  <div class="page-num">12 / 25</div>
+</section>
+
+<!-- P13 3 도구 -->
+<section class="slide p13" id="p13">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 2 / 4</div><div class="txt">STEP 1 · 자동화 구조 짜기</div></div>
+  <h2 class="title-md" style="margin-top:10px">그래서 셋을 조합했어요</h2>
+  <div class="sub" style="margin-top:8px">하나로는 안 돼서, 각자 역할만 하게 했어요</div>
+  <div class="tools">
+    <div class="tool-card">
+      <div class="emoji">🤖</div>
+      <h4>n8n</h4>
+      <div class="role">스케줄 + 서버 실행</div>
+      <div class="sub">맥북 꺼도 돎</div>
+      <div class="ans">← 삽질 ① 해결</div>
+    </div>
+    <div class="tool-card">
+      <div class="emoji">🗄️</div>
+      <h4>Supabase</h4>
+      <div class="role">대상자 DB</div>
+      <div class="sub">신청자·미신청자 자동 조회</div>
+      <div class="ans">(데이터 역할)</div>
+    </div>
+    <div class="tool-card">
+      <div class="emoji">💬</div>
+      <h4>Slack</h4>
+      <div class="role">사람 승인 관문</div>
+      <div class="sub">승인 전엔 발송 안 됨</div>
+      <div class="ans">← 삽질 ② 해결</div>
+    </div>
+  </div>
+  <div class="page-num">13 / 25</div>
+</section>
+
+<!-- P14 -->
+<section class="slide p14" id="p14">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 2 / 4</div><div class="txt">STEP 1 · 자동화 구조 짜기</div></div>
+  <h2 class="title-md">지금 돌아가는 전체 모습</h2>
+  <div class="flow-row">
+    <div class="flow-node"><div class="ic">⏰</div><div class="lb">n8n</div></div>
+    <div class="sep">→</div>
+    <div class="flow-node"><div class="ic">🗄️</div><div class="lb">Supabase</div></div>
+    <div class="sep">→</div>
+    <div class="flow-node"><div class="ic">✍️</div><div class="lb">AI 카피</div></div>
+    <div class="sep">→</div>
+    <div class="flow-node"><div class="ic">💬</div><div class="lb">Slack 승인</div></div>
+    <div class="sep">→</div>
+    <div class="flow-node"><div class="ic">📤</div><div class="lb">SOLAPI</div></div>
+  </div>
+  <div class="captures">
+    <div class="capture">
+      <div style="font-size:48px">🗄️</div>
+      <div style="font-weight:800; margin-top:10px">Supabase 테이블 캡처</div>
+      <div style="color:var(--muted); font-style:italic; font-size:13px; margin-top:4px">(발송 대상자 DB)</div>
+    </div>
+    <div class="capture">
+      <div style="font-size:48px">🤖</div>
+      <div style="font-weight:800; margin-top:10px">n8n 워크플로우 캡처</div>
+      <div style="color:var(--muted); font-style:italic; font-size:13px; margin-top:4px">(전체 자동화 플로우)</div>
+    </div>
+  </div>
+  <div style="color:var(--accent); font-style:italic; text-align:center; margin-top:18px; font-size:15px">자고 있어도 돌고, 보내기 전엔 사람이 한 번 확인</div>
+</section>
+
+<!-- P15 -->
+<section class="slide p15" id="p15">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 3 / 4</div><div class="txt">STEP 2 · 하네스 엔지니어링</div></div>
+  <div style="color:var(--muted); font-size:20px; margin-top:20px">근데 또 다른 문제가 생겼어요</div>
+  <h2 class="title-md" style="margin-top:8px">규칙이 너무 많더라고요</h2>
+  <div class="split">
+    <div class="rules-grid">
+      <div class="rule">🎨 카피 톤·금지어·길이</div>
+      <div class="rule">🔗 UTM 파라미터 21개</div>
+      <div class="rule">📱 템플릿 9종 구조</div>
+      <div class="rule">⏰ 각 템플릿 발송 시간</div>
+      <div class="rule">👥 대상자 조건</div>
+      <div class="rule">💰 가격 표기 규칙</div>
+      <div class="rule">🎁 혜택 카피 포맷</div>
+      <div class="rule">📋 공유회별 맞춤 변수</div>
+    </div>
+    <div class="md-box">
+      <h5>CLAUDE.md</h5>
+      <div class="lines">
+        <span style="width:220px"></span>
+        <span style="width:260px"></span>
+        <span style="width:180px"></span>
+        <span style="width:240px"></span>
+        <span style="width:210px"></span>
+        <span style="width:250px"></span>
+        <span style="width:190px"></span>
+        <span style="width:230px"></span>
+      </div>
+      <div class="count">353줄</div>
+    </div>
+  </div>
+  <div class="sub" style="text-align:center; margin-top:24px">이걸 한 파일에 다 박았어요</div>
+</section>
+
+<!-- P16 -->
+<section class="slide p16" id="p16">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 3 / 4</div><div class="txt">STEP 2 · 하네스 엔지니어링</div></div>
+  <div class="sub" style="margin-top:20px">아니나 다를까,</div>
+  <h2 class="title-md" style="margin-top:4px">기억도 안 되고, 규칙도 안 읽혀요</h2>
+  <div class="split">
+    <div class="episode">
+      <div class="tag">😩 규칙이 안 읽혀요</div>
+      <blockquote>"어제 말한 가격 표기 규칙,<br/>왜 또 틀려?"</blockquote>
+      <div class="conclude">→ AI가 또 까먹음</div>
+    </div>
+    <div class="episode">
+      <div class="tag">💻 맥북 2개 기억 사고</div>
+      <p style="font-size:18px; margin:16px 0 8px">내일 당장 이거 해야 해서</p>
+      <p style="font-size:18px; margin-bottom:20px">다른 맥북 켰더니...</p>
+      <div class="conclude hl">일주일 전 기억이 마지막 😱</div>
+    </div>
+  </div>
+  <div class="page-num">16 / 25</div>
+</section>
+
+<!-- P17 하네스 질문 -->
+<section class="slide p17" id="p17">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 3 / 4</div><div class="txt">STEP 2 · 하네스 엔지니어링</div></div>
+  <h2 class="title-md" style="margin-top:16px">그러다 '하네스'라는 걸 들었어요</h2>
+  <div class="sub" style="margin-top:8px">AAA팀 안에서 언뜻 듣고 → 클로드한테 질문해봤어요</div>
+  <div class="speech">
+    <div class="from">나 → Claude</div>
+    <q>"너한테 기억 잘 주려면 뭘 가지고 있어야 해?"</q>
+    <q>"네가 생각하는 하네스는 뭐야?"</q>
+    <q>"내가 이 프로젝트에서 가져가야 할 하네스는 뭐야?"</q>
+  </div>
+  <div class="footer-bar" style="bottom:40px">→ 클로드가 3가지를 줬어요</div>
+</section>
+
+<!-- P18 -->
+<section class="slide p18" id="p18">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 3 / 4</div><div class="txt">STEP 2 · 하네스 엔지니어링</div></div>
+  <h2 class="title-md" style="margin-top:12px">적용해보니 실제로 잘 굴러가더라고요</h2>
+  <div class="triad">
+    <div class="tri-card">
+      <div class="ic">📂</div>
+      <h4>공간</h4>
+      <div class="prob">CLAUDE.md 너무 커서<br/>쪼갰어요</div>
+      <div class="line"></div>
+      <div class="sol">에이전트 · PRD · 스킬로 나눔</div>
+    </div>
+    <div class="tri-card">
+      <div class="ic">🧠</div>
+      <h4>기억</h4>
+      <div class="prob">맥북 바꿔도 이어지게<br/>하려고요</div>
+      <div class="line"></div>
+      <div class="sol">메모리 · 프로젝트 상태 파일</div>
+    </div>
+    <div class="tri-card">
+      <div class="ic">🔁</div>
+      <h4>학습</h4>
+      <div class="prob">자꾸 틀리니까 검수를<br/>붙였어요</div>
+      <div class="line"></div>
+      <div class="sol">검수 레이어 + 피드백 루프</div>
+    </div>
+  </div>
+  <div class="footer-bar accent" style="bottom:50px">이게 있으니까 잘 돌아가더라 — 알고 보니 이게 '하네스'였더라</div>
+</section>
+
+<!-- P19 PRD -->
+<section class="slide p19" id="p19">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 3 / 4</div><div class="txt">STEP 2 · 하네스 엔지니어링</div></div>
+  <h2 class="title-md">예를 들어 이런 거예요 — 알림톡 PRD</h2>
+  <div class="sub" style="margin-top:8px">제가 매번 말하던 규칙을, 이제 얘가 읽고 씁니다</div>
+  <div class="split">
+    <div class="prd-file">
+      <h5>📄 prd/01-알림톡.md</h5>
+      <p>(실제 파일 스크린샷 자리)</p>
+      <div class="lines">
+        <span style="width:95%"></span>
+        <span style="width:72%"></span>
+        <span style="width:85%"></span>
+        <span style="width:60%"></span>
+        <span style="width:90%"></span>
+        <span style="width:70%"></span>
+        <span style="width:80%"></span>
+        <span style="width:55%"></span>
+        <span style="width:92%"></span>
+        <span style="width:68%"></span>
+      </div>
+    </div>
+    <div class="prd-rhs">
+      <h5>이 안에 들어있는 것</h5>
+      <ol>
+        <li>① 템플릿 9종 구조 + SOLAPI ID</li>
+        <li>② 발송 시점·시간·대상자 조건</li>
+        <li>③ 변수 매핑 + 금지어 · 길이 규칙</li>
+      </ol>
+    </div>
+  </div>
+  <div class="page-num">19 / 25</div>
+</section>
+
+<!-- P20 agents -->
+<section class="slide p20" id="p20">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 3 / 4</div><div class="txt">STEP 2 · 하네스 엔지니어링</div></div>
+  <h2 class="title-md">그리고 역할을 나눈 에이전트들</h2>
+  <div class="sub" style="margin-top:8px">에이전트 = 하나의 역할만 맡는 작은 AI 일꾼</div>
+  <div class="agents">
+    <div class="agent"><div class="name">director</div><div class="role">전체 지휘</div></div>
+    <div class="agent"><div class="name">timeline-planner</div><div class="role">타임라인 설계</div></div>
+    <div class="agent"><div class="name">data-collector</div><div class="role">DB 조회 / URL 크롤</div></div>
+    <div class="agent"><div class="name">copywriter</div><div class="role">카피 쓰는 애</div></div>
+    <div class="agent"><div class="name">media-ops</div><div class="role">배너 · UTM</div></div>
+    <div class="agent"><div class="name">dispatcher</div><div class="role">슬랙 전달 · 발송</div></div>
+    <div class="agent"><div class="name">verifier</div><div class="role">검수하는 애</div></div>
+    <div class="agent"><div class="name">code-reviewer</div><div class="role">코드 리뷰</div></div>
+  </div>
+  <div class="footer-bar">director가 지휘 → 나머지가 각자 담당 → verifier가 마지막에 검수</div>
+</section>
+
+<!-- P21 flow -->
+<section class="slide p21" id="p21">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 3 / 4</div><div class="txt">STEP 2 · 하네스 엔지니어링</div></div>
+  <h2 class="title-md">수동으로 하던 촘촘한 조건들,</h2>
+  <div style="color:var(--accent); font-style:italic; font-size:17px; margin-top:8px">이제 얘가 알아서 DB까지 발라냅니다</div>
+  <div class="triplet">
+    <div class="tri-step side">
+      <div class="head"><div class="num">01</div><div class="emo">📤</div></div>
+      <h4>알림톡 ① 발송</h4>
+      <p>오픈알림 전체 멤버에게 나감</p>
+    </div>
+    <div class="arrow-sep">→</div>
+    <div class="tri-step mid">
+      <div class="head"><div class="num">02</div><div class="emo">🔍</div></div>
+      <h4>data-collector 작동</h4>
+      <p>① 이후 신청자 자동 조회</p>
+    </div>
+    <div class="arrow-sep">→</div>
+    <div class="tri-step side">
+      <div class="head"><div class="num">03</div><div class="emo">✉️</div></div>
+      <h4>dispatcher 발송</h4>
+      <p>그 사람들 제외하고 ② 리마인드</p>
+    </div>
+  </div>
+  <div class="sub" style="text-align:center; margin-top:24px">예전엔 제가 SQL 짜서 엑셀로 뽑던 일이에요</div>
+</section>
+
+<!-- P22 impact -->
+<section class="slide p22" id="p22">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 4 / 4</div><div class="txt">IMPACT · 팀 · 배운 것</div></div>
+  <h2 class="title-md" style="margin-top:20px">그래서 바뀐 것들</h2>
+  <div class="split">
+    <div class="impact-quant">
+      <h4>정량</h4>
+      <div class="row"><div class="big">3시간 → 5분</div><div class="sm">하루 발송 세팅</div></div>
+      <div class="row"><div class="big">이틀 → 1시간</div><div class="sm">공유회 1건 전체 세팅</div></div>
+      <div class="row"><div class="big">오타·링크 리스크</div><div class="sm">검수단계로 차단</div></div>
+    </div>
+    <div class="impact-qual">
+      <h4>정성</h4>
+      <q>"퇴근 직전 카피 쓰다 질려있었는데, 이젠 퇴근해요"</q>
+      <q>"맥북 닫아도 정시에 나가요"</q>
+      <q>"본질(개인화·품질)에 시간 쓸 수 있어요"</q>
+    </div>
+  </div>
+  <div class="page-num">22 / 25</div>
+</section>
+
+<!-- P23 team -->
+<section class="slide p23" id="p23">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 4 / 4</div><div class="txt">IMPACT · 팀 · 배운 것</div></div>
+  <h2 class="title-md" style="margin-top:20px">이거, 혼자였으면 못 만들었어요</h2>
+  <div class="sub" style="margin-top:8px">팀이었어서 뾰족하게 유익했던 지점들</div>
+  <div class="team-grid">
+    <div class="team-card">
+      <h5>비비안 ↔ 에밀리</h5>
+      <p>비비안이 전체 대시보드를 만들고 있어서, 내 CRM이 어디 들어가는지 감 잡힘. 같이 논의하면서 구조가 나아짐</p>
+    </div>
+    <div class="team-card">
+      <h5>다니 → 에밀리</h5>
+      <p>마케팅 OS(CLAUDE.md를 규칙 책으로) 개념 차용 — 내 알림톡 PRD에 그대로 적용</p>
+    </div>
+    <div class="team-card">
+      <h5>피드백 루프</h5>
+      <p>code-reviewer 에이전트는 AAA 과제에서 하네스 공유하다가 '검수 필요하네' 깨닫고 만듦</p>
+    </div>
+    <div class="team-card">
+      <h5>타 크루 프로덕트</h5>
+      <p>흐민의 질문하는 AI, 오웬의 찜마켓 보면서 내 활용 범위가 넓어짐</p>
+    </div>
+  </div>
+  <div class="page-num">23 / 25</div>
+</section>
+
+<!-- P24 sponge -->
+<section class="slide p24" id="p24">
+  <div class="section-label"><div class="bar"></div><div class="num">SECTION 4 / 4</div><div class="txt">IMPACT · 팀 · 배운 것</div></div>
+  <div class="lead" style="margin-top:40px">그래서 스폰지클럽,</div>
+  <h2>같이 이기적공유하며 성장합니다</h2>
+  <div class="divider"></div>
+  <div class="line">스폰지처럼 빨아들이고 → 내 것으로 내보내고</div>
+  <div class="line">→ 그걸 또 누군가가 빨아들이고</div>
+  <div class="footer-bar accent" style="bottom:40px">그게 셀피쉬클럽이 되게 하려는 바예요</div>
+</section>
+
+<!-- P25 outro -->
+<section class="slide p25" id="p25">
+  <h2 class="title-md" style="margin-top:20px">여러분은 이렇게 해보세요</h2>
+  <div class="actions">
+    <div class="action"><div class="c">①</div><p>내 반복 업무 쪼개서 AI한테 상황 설명부터 해보세요</p></div>
+    <div class="action"><div class="c">②</div><p>완전 자동 대신 승인 단계 하나 두세요</p></div>
+    <div class="action"><div class="c">③</div><p>내 규칙을 한 파일에 모으고, 커지면 쪼개세요</p></div>
+  </div>
+  <div class="thanks">
+    <h3>감사합니다 · Q&amp;A 환영해요</h3>
+  </div>
+</section>
+
+<!-- Claude Design Prompt -->
+<section class="prompt-slide" id="prompt">
+  <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('pbody').innerText).then(()=>{this.innerText='✓ 복사됨';setTimeout(()=>this.innerText='📋 복사',1500)})">📋 복사</button>
+  <h2>Claude Design용 프롬프트 (복붙)</h2>
+  <pre id="pbody"># 프로젝트
+셀피쉬클럽 AAA팀 공유회 발표자료 (25장, 16:9, 20~25분 발표용)
+
+발표 제목: "매일 아침, AI가 알림톡을 들고 옵니다"
+부제: "오늘 이 카피로 오후 3시에 보낼까요?"
+발표자: 에밀리 · 셀피쉬클럽 CRM PM · AAA 크루
+타겟: 반복 업무에 치여 본질에 집중 못 하는 마케터·PM·운영 담당자
+
+# 디자인 시스템
+- 포인트 컬러: #E9ED12 (셀피쉬 형광 연두)
+- 다크: #0F0F0F
+- 배경: #FFFFFF
+- 연한 틴트: #FBFDC7
+- 중간 틴트: #F5F7B0
+- 뮤티드 텍스트: #6B6B6B
+- 디바이더: #E5E5E5
+- 회색 박스: #F8F8F8 / #F8FAFC
+- 폰트: Pretendard
+- 코드체: Menlo
+- 원칙: 한 슬라이드 = 한 포인트 = 시각 1요소 + 텍스트 최소
+- 포인트 컬러는 슬라이드당 1~2곳만
+- 섹션 라벨: 상단 "SECTION N / 4 · 제목"
+
+# 페이지별 상세 (25장)
+[이 HTML 파일에 렌더된 25장 그대로 참고 — 각 페이지 레이아웃·텍스트·시각요소 유지하면서 디자인 완성도만 올려주세요]
+
+P1 타이틀, P2 자기소개, P3 AAA 참여 이유, P4 크루 8명,
+P5 AGENDA (타겟 pill + 순서 01~04 + 가져갈 3가지),
+P6 4채널, P7 시간축 타임라인, P8 DB 발라내기 + SQL,
+P9 BEFORE 3시간/AFTER 5분, P10 슬랙 승인 모달 자리,
+P11 삽질 ① 맥북, P12 삽질 ② 무서움, P13 3 도구 카드, P14 5단계 플로우 + 캡처 2장,
+P15 규칙 8개 + CLAUDE.md 353줄, P16 AI 또 틀림 + 맥북 2개 기억 사고,
+P17 하네스 질문 말풍선, P18 공간/기억/학습 귀납 3카드,
+P19 알림톡 PRD, P20 에이전트 8개, P21 촘촘 CRM 자동화 3단 플로우,
+P22 임팩트 정량+정성, P23 팀 케이스 4장, P24 스폰지클럽, P25 액셔너블 + 감사.
+
+# 지침
+1. 첨부한 HTML / pptx를 구조·텍스트 유지하며 디자인 완성도만 올려줘
+2. 포인트 컬러 과용 금지 (슬라이드당 1~2곳)
+3. 캡처 플레이스홀더는 회색 배경 + 연두 dashed 테두리
+4. 16:9로 export, 최종 PPTX
+</pre>
+</section>
+
+</body>
+</html>

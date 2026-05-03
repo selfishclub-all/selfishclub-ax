@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>AAA 발표 덱 v14 — 에밀리 · 셀피쉬클럽 CRM AX</title>
+<link rel="stylesheet" href="deck-styles.css?v=14">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script src="deck-stage.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; height: 100%; overflow: hidden; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="slides-core-v12.jsx"></script>
+<script type="text/babel" src="slides-1-v14.jsx"></script>
+<script type="text/babel" src="slides-2-v14.jsx"></script>
+<script type="text/babel" src="slides-3-v14.jsx"></script>
+<script type="text/babel" src="slides-4-v14.jsx"></script>
+
+<script type="text/babel" data-presets="env,react">
+  const tryMount = () => {
+    const need = ['S01','S02','S03','S04','S05','S06','S07','S08','S09',
+                  'S10','S11','S12','S13','S14','S15','S16','S17','S18',
+                  'S19','S20','S21','S22','S23','S24','S25','S26','S27',
+                  'S28','S29'];
+    if (!need.every(k => window[k])) { setTimeout(tryMount, 50); return; }
+    const App = () => (
+      <deck-stage width="1920" height="1080">
+        {need.map(k => {
+          const C = window[k];
+          return <C key={k} />;
+        })}
+      </deck-stage>
+    );
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  };
+  tryMount();
+</script>
+</body>
+</html>

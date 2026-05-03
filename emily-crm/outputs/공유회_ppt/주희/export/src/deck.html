@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>AAA 발표 덱 v8 — 에밀리</title>
+<meta name="ext-resource-dependency" content="assets/emily.png" data-resource-id="emily" />
+<meta name="ext-resource-dependency" content="assets/alimtalk.png" data-resource-id="ch_alimtalk" />
+<meta name="ext-resource-dependency" content="assets/kakaoplus.png" data-resource-id="ch_kakaoplus" />
+<meta name="ext-resource-dependency" content="assets/Email.png" data-resource-id="ch_email" />
+<meta name="ext-resource-dependency" content="assets/insta_main.png" data-resource-id="ch_insta" />
+<meta name="ext-resource-dependency" content="alimtalk/1.png" data-resource-id="at_1" />
+<meta name="ext-resource-dependency" content="alimtalk/2.png" data-resource-id="at_2" />
+<meta name="ext-resource-dependency" content="alimtalk/3.png" data-resource-id="at_3" />
+<meta name="ext-resource-dependency" content="alimtalk/4.png" data-resource-id="at_4" />
+<meta name="ext-resource-dependency" content="alimtalk/5.png" data-resource-id="at_5" />
+<meta name="ext-resource-dependency" content="alimtalk/6.png" data-resource-id="at_6" />
+<meta name="ext-resource-dependency" content="alimtalk/7.png" data-resource-id="at_7" />
+<meta name="ext-resource-dependency" content="alimtalk/8.png" data-resource-id="at_8" />
+<meta name="ext-resource-dependency" content="alimtalk/9.png" data-resource-id="at_9" />
+<meta name="ext-resource-dependency" content="assets/n8n.png" data-resource-id="n8n" />
+<meta name="ext-resource-dependency" content="assets/slack-approval.png" data-resource-id="slack_approval" />
+<link rel="stylesheet" href="deck-styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="deck-stage.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; height: 100%; overflow: hidden; }
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#FFE600">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#FFE600"/>
+    <text x="600" y="380" text-anchor="middle" font-family="ui-monospace, monospace" font-size="180" font-weight="900" fill="#0a0a0a" letter-spacing="-8">AAA</text>
+    <text x="600" y="470" text-anchor="middle" font-family="ui-monospace, monospace" font-size="44" font-weight="700" fill="#0a0a0a" letter-spacing="6">EMILY · v8</text>
+  </svg>
+</template>
+<div id="root"></div>
+
+<script type="text/babel" src="slides-core.jsx"></script>
+<script type="text/babel" src="slides-1-v8.jsx"></script>
+<script type="text/babel" src="slides-2-v8.jsx"></script>
+<script type="text/babel" src="slides-3-v8.jsx"></script>
+<script type="text/babel" src="slides-4-v8.jsx"></script>
+<script type="text/babel" src="slides-5-v8.jsx"></script>
+
+<script type="text/babel" data-presets="env,react">
+  // wait for all slides
+  const tryMount = () => {
+    const need = ['S01','S02','S03','S04','S05','S06','S07','S08','S09','S10','S11','S12','S13','S14','S15','S16','S17','S18','S19','S20','S20b','S25','S26','S20c2','S20d1','S20d2','S20d3','S24a','S24b','S24','S28','S29','S30'];
+    if (!need.every(k => window[k])) { setTimeout(tryMount, 50); return; }
+    const App = () => (
+      <deck-stage width="1920" height="1080">
+        {need.map(k => {
+          const C = window[k];
+          return <C key={k} />;
+        })}
+      </deck-stage>
+    );
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  };
+  tryMount();
+</script>
+</body>
+</html>

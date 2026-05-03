@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+.banner {
+  width:1346px; height:734px;
+  background: linear-gradient(145deg, #1a0a0a 0%, #2a0a0a 30%, #1a0505 60%, #0f0505 100%);
+  position:relative; overflow:hidden;
+  font-family:'Noto Sans KR',sans-serif; color:#fff;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+/* 붉은 글로우 */
+.banner::before {
+  content:''; position:absolute; top:40%; left:50%; transform:translate(-50%,-50%);
+  width:700px; height:500px; border-radius:50%;
+  background: radial-gradient(circle, rgba(255,59,48,0.12) 0%, transparent 60%);
+}
+/* 깜빡이는 느낌의 상단 바 */
+.deco-line {
+  position:absolute; top:0; left:0; right:0; height:5px;
+  background: linear-gradient(90deg, transparent 10%, #FF3B30 30%, #FF6B5A 50%, #FF3B30 70%, transparent 90%);
+}
+.content { position:relative; z-index:1; text-align:center; padding:0 60px; }
+.alarm-badge {
+  display:inline-block; padding:12px 32px; border-radius:28px;
+  background: rgba(255,59,48,0.2); border:2px solid rgba(255,59,48,0.5);
+  font-size:20px; font-weight:900; color:#FF6B5A;
+  margin-bottom:32px; letter-spacing:1px;
+}
+.main {
+  font-size:76px; font-weight:900; line-height:1.2; margin-bottom:16px;
+  text-shadow: 0 0 60px rgba(255,59,48,0.3);
+}
+.main .red { color:#FF3B30; }
+.sub-msg {
+  font-size:24px; font-weight:500; color:rgba(255,255,255,0.6); margin-bottom:12px;
+}
+.program-name {
+  font-size:18px; font-weight:400; color:rgba(255,255,255,0.35); margin-bottom:40px;
+}
+.cta-btn {
+  display:inline-block; padding:18px 56px; border-radius:32px;
+  background: linear-gradient(135deg, #FF3B30, #FF5A4F);
+  color:#fff; font-size:22px; font-weight:900;
+  box-shadow: 0 4px 30px rgba(255,59,48,0.4);
+  letter-spacing:0.5px;
+}
+.timer-row {
+  display:flex; gap:20px; justify-content:center; margin-bottom:36px;
+}
+.timer-box {
+  width:80px; height:80px; border-radius:12px;
+  background:rgba(255,59,48,0.08); border:1px solid rgba(255,59,48,0.2);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.timer-box .num { font-size:32px; font-weight:900; color:#FF6B5A; }
+.timer-box .unit { font-size:11px; color:rgba(255,255,255,0.4); margin-top:2px; }
+.bottom-bar {
+  position:absolute; bottom:0; left:0; right:0; height:44px;
+  background:rgba(255,59,48,0.08); display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:600; color:rgba(255,107,90,0.5);
+}
+</style></head><body>
+<div class="banner">
+  <div class="deco-line"></div>
+  <div class="content">
+    <div class="alarm-badge">🚨 오늘 마감</div>
+    <div class="main">
+      <span class="red">오늘</span> 지나면<br>
+      할인가 끝
+    </div>
+    <div class="sub-msg">지금 신청하면 최대 할인가로 참여 가능!</div>
+    <div class="program-name">비개발자를 위한 클로드코드앱 & 깃헙 실전 정복기</div>
+    <div class="timer-row">
+      <div class="timer-box"><div class="num">0</div><div class="unit">일</div></div>
+      <div class="timer-box"><div class="num">6</div><div class="unit">시간</div></div>
+      <div class="timer-box"><div class="num">0</div><div class="unit">분</div></div>
+    </div>
+    <div class="cta-btn">지금 바로 신청 ›</div>
+  </div>
+  <div class="bottom-bar">마감 후 할인가 신청 불가 — SELFISH CLUB</div>
+</div>
+</body></html>

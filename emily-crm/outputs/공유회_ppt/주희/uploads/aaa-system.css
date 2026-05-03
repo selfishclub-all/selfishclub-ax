@@ -1,0 +1,192 @@
+/* =========================================================
+   AAA Selfmarketing — Design System
+   Tokens · Components · Rules
+   v1.0 · 2026
+   ========================================================= */
+
+/* ── Tokens ─────────────────────────────────────────────── */
+:root{
+  /* Core palette */
+  --ink:        #0A0A0A;
+  --paper:      #FFFFFF;
+  --accent:     #E9ED12;   /* default yellow — swappable via theme */
+  --accent-ink: #3a3b00;   /* legible text on accent bg */
+
+  /* Neutrals */
+  --mute:       #8A8A8A;
+  --mute-2:     #C9C9C9;
+  --surface:    #F3F3F3;
+  --rule:       #E6E6E6;
+  --rule-dark:  rgba(255,255,255,0.18);
+
+  /* Slide geometry — 1080×1350 Instagram 4:5 */
+  --w:          1080px;
+  --h:          1350px;
+  --pad-x:      88px;
+  --pad-y:      96px;
+
+  /* Density scale — editable via Tweaks */
+  --density:    1;
+
+  /* Type scale */
+  --t-hero:     170px;
+  --t-xl:       120px;
+  --t-l:        92px;
+  --t-m:        64px;
+  --t-s:        46px;
+  --t-body:     38px;
+  --t-cap:      32px;
+  --t-kicker:   34px;
+
+  /* Radii & borders */
+  --r-card:     14px;
+  --r-chip:     999px;
+  --r-tag:      6px;
+  --u-thick:    6px;  /* yellow underline thickness */
+}
+
+/* ── Base slide frame ───────────────────────────────────── */
+.ig{
+  width:var(--w); height:var(--h);
+  position:relative; overflow:hidden;
+  font-family:"Pretendard Variable","Pretendard",-apple-system,sans-serif;
+  color:var(--ink); background:var(--paper);
+  letter-spacing:-0.02em;
+}
+.ig.dark   { background:var(--ink);    color:#fff; }
+.ig.accent { background:var(--accent); color:var(--ink); }
+
+.pad{
+  position:absolute; inset:0;
+  padding: calc(var(--pad-y) * var(--density)) calc(var(--pad-x) * var(--density));
+  box-sizing:border-box;
+  display:flex; flex-direction:column;
+}
+
+/* ── Typography classes ─────────────────────────────────── */
+.h-hero{ font-size:var(--t-hero); line-height:0.94; letter-spacing:-0.045em; font-weight:800; }
+.h-xl  { font-size:var(--t-xl);   line-height:1.00; letter-spacing:-0.04em;  font-weight:800; }
+.h-l   { font-size:var(--t-l);    line-height:1.05; letter-spacing:-0.035em; font-weight:800; }
+.h-m   { font-size:var(--t-m);    line-height:1.12; letter-spacing:-0.025em; font-weight:700; }
+.h-s   { font-size:var(--t-s);    line-height:1.25; letter-spacing:-0.02em;  font-weight:600; }
+.body  { font-size:var(--t-body); line-height:1.45; color:#222; font-weight:500; }
+.cap   { font-size:var(--t-cap);  color:#555; font-weight:500; }
+.kicker{ font-size:var(--t-kicker); letter-spacing:0.14em; text-transform:uppercase; font-weight:700; color:#555; }
+
+.ig.dark .body  { color:#DDD; }
+.ig.dark .cap   { color:rgba(255,255,255,0.55); }
+.ig.dark .kicker{ color:rgba(255,255,255,0.55); }
+.ig.accent .kicker{ color:var(--accent-ink); }
+.ig.accent .cap   { color:var(--accent-ink); }
+
+h1,h2,h3,p{margin:0;}
+.mono{ font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace; }
+
+/* ── Accent primitives ──────────────────────────────────── */
+.hl{
+  background:var(--accent); color:var(--ink);
+  padding:0 .08em; line-height:1;
+  -webkit-box-decoration-break:clone; box-decoration-break:clone;
+}
+.u{ border-bottom:var(--u-thick) solid var(--accent); padding-bottom:6px; }
+.ybar{ position:absolute; width:6px; background:var(--accent); }
+
+/* ── Chips, Tags ────────────────────────────────────────── */
+.chip{
+  display:inline-flex; align-items:center; padding:14px 26px;
+  border:2px solid var(--rule); border-radius:var(--r-chip);
+  font-size:30px; color:#222; background:#fff; font-weight:500;
+}
+.chip.y{ background:var(--accent); border-color:var(--accent); font-weight:700; color:var(--ink); }
+.chip.k{ background:var(--ink); color:#fff; border-color:var(--ink); }
+.chip.outline-w{ background:transparent; color:#fff; border-color:rgba(255,255,255,0.3); }
+
+.tag{
+  display:inline-block; padding:10px 22px;
+  background:var(--ink); color:var(--accent);
+  font-size:22px; font-weight:700; letter-spacing:0.18em;
+  text-transform:uppercase; border-radius:var(--r-tag);
+}
+.ig.dark   .tag{ background:var(--accent); color:var(--ink); }
+.ig.accent .tag{ background:var(--ink);    color:var(--accent); }
+
+/* ── Stat cards ─────────────────────────────────────────── */
+.stat{
+  background:var(--surface); padding:32px 26px; border-radius:var(--r-card);
+  flex:1; min-width:0;
+}
+.stat.k{ background:var(--ink); color:#fff; }
+.stat.y{ background:var(--accent); }
+.stat-num{ font-size:76px; font-weight:900; letter-spacing:-0.03em; color:var(--ink); line-height:1; }
+.stat.k .stat-num{ color:var(--accent); }
+.stat-lab{ font-size:28px; color:#555; margin-top:10px; font-weight:500; }
+.stat.k .stat-lab{ color:rgba(255,255,255,0.7); }
+
+/* ── Rules (dividers) ───────────────────────────────────── */
+.rule   { height:1px; background:var(--rule); }
+.rule-w { height:1px; background:var(--rule-dark); }
+.rule-thick{ height:2px; background:var(--ink); }
+
+/* ── Swipe indicator & page number ──────────────────────── */
+.swipe{
+  position:absolute; right:44px; bottom:44px;
+  display:flex; align-items:center; gap:14px;
+  font-size:28px; color:#555; font-weight:600;
+}
+.swipe .arr{
+  width:52px; height:52px; border-radius:50%;
+  background:var(--ink); color:var(--accent);
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; font-weight:700;
+}
+.ig.dark   .swipe{ color:rgba(255,255,255,0.6); }
+.ig.dark   .swipe .arr{ background:var(--accent); color:var(--ink); }
+.ig.accent .swipe{ color:var(--accent-ink); }
+.ig.accent .swipe .arr{ background:var(--ink); color:var(--accent); }
+
+.pgnum{
+  position:absolute; right:44px; bottom:44px;
+  font-size:30px; color:var(--mute); font-weight:600; letter-spacing:0.05em;
+}
+.ig.dark   .pgnum{ color:rgba(255,255,255,0.5); }
+.ig.accent .pgnum{ color:var(--accent-ink); }
+
+/* ── Brand mark (top-left corner stamp) ─────────────────── */
+.brandmark{
+  position:absolute; top:44px; left:44px;
+  display:flex; align-items:center; gap:12px;
+  font-size:24px; font-weight:800; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--ink);
+}
+.brandmark::before{
+  content:""; width:14px; height:14px; background:var(--accent); border-radius:3px;
+}
+.ig.dark   .brandmark{ color:#fff; }
+.ig.accent .brandmark{ color:var(--ink); }
+.ig.accent .brandmark::before{ background:var(--ink); }
+
+/* ── Quote block ────────────────────────────────────────── */
+.quote{
+  font-size:72px; line-height:1.15; letter-spacing:-0.03em;
+  font-weight:800; color:var(--ink);
+}
+.quote::before{
+  content:"“"; display:block; font-size:180px; line-height:0.5;
+  color:var(--accent); margin-bottom:32px;
+}
+.ig.dark .quote{ color:#fff; }
+
+/* ── Numbered list ──────────────────────────────────────── */
+.nlist{ display:flex; flex-direction:column; gap:28px; }
+.nlist-item{ display:flex; gap:28px; align-items:flex-start; }
+.nlist-num{
+  flex:0 0 auto; width:72px; height:72px; border-radius:50%;
+  background:var(--ink); color:var(--accent);
+  display:flex; align-items:center; justify-content:center;
+  font-size:36px; font-weight:900;
+}
+.ig.dark .nlist-num{ background:var(--accent); color:var(--ink); }
+.nlist-body{ flex:1; padding-top:8px; }
+.nlist-t{ font-size:44px; font-weight:800; letter-spacing:-0.02em; line-height:1.15; }
+.nlist-d{ font-size:30px; color:#666; margin-top:8px; font-weight:500; line-height:1.4; }
+.ig.dark .nlist-d{ color:rgba(255,255,255,0.6); }

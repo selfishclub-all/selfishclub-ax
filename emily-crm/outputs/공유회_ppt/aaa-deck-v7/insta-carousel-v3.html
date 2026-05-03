@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>Instagram Carousel v3 — FOMO 커버 3안</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html,body{margin:0;padding:0;}
+  :root{
+    --ink:#0A0A0A;
+    --paper:#FFFFFF;
+    --yellow:#E9ED12;
+    --mute:#8A8A8A;
+    --mute-2:#C9C9C9;
+    --rule:#E6E6E6;
+  }
+  .ig{
+    width:1080px;height:1350px;position:relative;overflow:hidden;
+    font-family:"Pretendard Variable","Pretendard",-apple-system,sans-serif;
+    color:var(--ink);background:var(--paper);
+    letter-spacing:-0.02em;
+  }
+  .ig.dark{background:var(--ink);color:#fff;}
+  .ig.yellow{background:var(--yellow);color:var(--ink);}
+  .pad{position:absolute;inset:0;padding:96px 88px;box-sizing:border-box;display:flex;flex-direction:column;}
+  .mono{font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace;}
+  .hl{background:var(--yellow);padding:0 .08em;box-decoration-break:clone;-webkit-box-decoration-break:clone;line-height:1;}
+  .hl-tight{background:var(--yellow);padding:0 .08em;display:inline-block;line-height:0.95;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+  .u{border-bottom:6px solid var(--yellow);padding-bottom:6px;}
+  .rule-w{height:1px;background:rgba(255,255,255,0.18);}
+  .rule{height:1px;background:var(--rule);}
+  .kicker{font-size:34px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:#555;}
+  .eyebrow{font-size:38px;color:#444;letter-spacing:0.02em;font-weight:500;}
+  h1,h2,h3,p{margin:0;}
+  .swipe{position:absolute;right:44px;bottom:44px;display:flex;align-items:center;gap:14px;font-size:28px;color:#555;font-weight:600;}
+  .swipe .arr{width:52px;height:52px;border-radius:50%;background:var(--ink);color:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;}
+  .ig.dark .swipe{color:rgba(255,255,255,0.6);}
+  .ig.dark .swipe .arr{background:var(--yellow);color:var(--ink);}
+  .ig.yellow .swipe{color:#4a4b00;}
+  .ig.yellow .swipe .arr{background:var(--ink);color:var(--yellow);}
+  .pgnum{position:absolute;right:44px;bottom:44px;font-size:30px;color:var(--mute);font-weight:600;letter-spacing:0.05em;}
+  .ig.dark .pgnum{color:rgba(255,255,255,0.5);}
+  .ig.yellow .pgnum{color:#4a4b00;}
+
+  .h-hero{font-size:170px;line-height:0.94;letter-spacing:-0.045em;font-weight:800;}
+  .h-xl{font-size:120px;line-height:1.0;letter-spacing:-0.04em;font-weight:800;}
+  .h-l{font-size:92px;line-height:1.05;letter-spacing:-0.035em;font-weight:800;}
+  .h-m{font-size:64px;line-height:1.12;letter-spacing:-0.025em;font-weight:700;}
+  .h-s{font-size:46px;line-height:1.25;letter-spacing:-0.02em;font-weight:600;}
+  .body{font-size:38px;line-height:1.45;color:#222;font-weight:500;}
+  .cap{font-size:32px;color:#555;font-weight:500;}
+  .ig.dark .body{color:#DDD;}
+  .ig.dark .cap{color:rgba(255,255,255,0.55);}
+
+  .chip{display:inline-flex;align-items:center;padding:14px 26px;border:2px solid var(--rule);border-radius:999px;font-size:30px;color:#222;background:#fff;font-weight:500;}
+  .chip.y{background:var(--yellow);border-color:var(--yellow);font-weight:700;}
+  .chip.k{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .tag{display:inline-block;padding:10px 22px;background:var(--ink);color:var(--yellow);font-size:22px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;border-radius:6px;}
+  .ig.dark .tag{background:var(--yellow);color:var(--ink);}
+  .ig.yellow .tag{background:var(--ink);color:var(--yellow);}
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel">
+
+
+const { DesignCanvas, DCSection, DCArtboard } = window;
+
+// ─────────────────────────────────────────────
+// 01 COVER · 3개 시안 (FOMO / 경험담 / 숫자)
+// ─────────────────────────────────────────────
+
+// 01-A · FOMO 훅 — 포스터 느낌, 타이포그래피 위계 중심
+const S1A_CoverFOMO = () =>
+<div className="ig dark">
+    <div className="pad" style={{ paddingTop: 110, paddingBottom: 130, paddingLeft: 72, paddingRight: 72 }}>
+
+      {/* 서론 — 태그 + 브랜드 뱃지로 디자인 */}
+      <div style={{ marginBottom: 56 }}>
+        <div style={{ fontSize: 42, lineHeight: 1.25, color: 'rgba(255,255,255,0.55)', fontWeight: 500, letterSpacing: '-0.01em', marginBottom: 20 }}>
+          릴스에 맨날
+        </div>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
+          <span style={{ padding: '10px 22px', background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 10, fontSize: 34, fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>클로드</span>
+          <span style={{ padding: '10px 22px', background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 10, fontSize: 34, fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>에이전트</span>
+          <span style={{ padding: '10px 22px', background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.25)', borderRadius: 10, fontSize: 34, fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>하네스</span>
+          <span style={{ fontSize: 34, color: 'rgba(255,255,255,0.5)', fontWeight: 600 }}>···</span>
+        </div>
+        <div style={{ fontSize: 32, color: 'rgba(255,255,255,0.45)', fontWeight: 500, marginTop: 20, fontStyle: 'italic' }}>
+          “AI가 시대를 바꿨다…” 뭐 이런 이야기
+        </div>
+      </div>
+
+      {/* 메인 훅 — 각 줄마다 그래픽 + 리듬 */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
+        {/* 좌측 yellow bar */}
+        <div style={{ position: 'absolute', left: -72, top: 10, bottom: 10, width: 6, background: 'var(--yellow)' }}></div>
+
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 18 }}>
+          <span style={{ fontWeight: 300, color: 'rgba(255,255,255,0.75)', letterSpacing: '-0.02em', fontStyle: 'italic', fontSize: "60px" }}>그래서,</span>
+        </div>
+
+        <div style={{ fontSize: 68, lineHeight: 1.1, letterSpacing: '-0.03em', fontWeight: 500, color: 'rgba(255,255,255,0.92)', marginTop: 4 }}>
+          진짜 <span style={{ position: 'relative', display: 'inline-block', fontWeight: 900, color: '#fff' }}>
+            내 업무
+            <svg style={{ position: 'absolute', left: -4, right: -4, bottom: -10, width: 'calc(100% + 8px)', height: 14, pointerEvents: 'none' }} viewBox="0 0 200 14" preserveAspectRatio="none">
+              <path d="M2 10 Q 50 2, 100 8 T 198 7" stroke="var(--yellow)" strokeWidth="5" fill="none" strokeLinecap="round" />
+            </svg>
+          </span>에는
+        </div>
+
+        <div style={{ fontSize: 156, lineHeight: 0.96, letterSpacing: '-0.055em', fontWeight: 900, color: 'var(--yellow)', marginTop: 36, position: 'relative' }}>
+          <span style={{ position: 'relative' }}>어떻게
+            <span style={{ position: 'absolute', right: -58, top: 18, fontSize: 110, color: 'var(--yellow)', fontWeight: 900 }}>
+</span>
+          </span>
+          <br />
+          <span style={{ color: '#fff' }}>적용</span>하는데<span style={{ color: 'var(--yellow)' }}>?</span>
+        </div>
+
+        {/* 화살표 구분 */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 56 }}>
+          <div style={{ fontSize: 42, color: 'var(--yellow)', fontWeight: 900 }}>↓</div>
+          <div style={{ height: 2, flex: 1, background: 'rgba(255,255,255,0.25)' }} />
+        </div>
+      </div>
+
+      {/* 제안 — 간결 */}
+      <div style={{ marginTop: 16 }}>
+        <div style={{ fontSize: 44, fontWeight: 800, lineHeight: 1.25, letterSpacing: '-0.02em', color: '#fff' }}>
+          <span style={{ color: 'var(--yellow)' }}>8명</span>이 <span style={{ color: 'var(--yellow)' }}>6주간</span> 각자 적용해본<br />
+          <span style={{ borderBottom: '4px solid var(--yellow)', paddingBottom: 6 }}>찐 후기 공개</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div className="swipe"><span>SWIPE</span><span className="arr">→</span></div>
+  </div>;
+
+// 01-B · 경험담 훅 — "A자도 몰랐던 8명"
+const S1B_CoverReal = () =>
+<div className="ig">
+    <div className="pad" style={{ justifyContent: 'space-between', paddingTop: 110, paddingBottom: 110 }}>
+      <div>
+        <div className="kicker" style={{ color: '#000' }}>AAA · 무료 공유회</div>
+        <div style={{ marginTop: 48, fontSize: 62, lineHeight: 1.2, fontWeight: 800, letterSpacing: '-0.03em', color: '#111' }}>
+          AI의 <span style={{ color: '#bbb' }}>A자</span>도<br />
+          몰랐던 <span className="hl">8명이</span>,
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', padding: '40px 0' }}>
+        <div style={{ fontSize: 220, fontWeight: 900, letterSpacing: '-0.06em', lineHeight: 0.92, color: '#000' }}>
+          2개월
+        </div>
+        <div style={{ fontSize: 40, color: '#666', marginTop: 16, fontWeight: 600 }}>
+          뒤에 벌어진 일 ↓
+        </div>
+      </div>
+
+      <div>
+        <div style={{ background: '#000', color: '#fff', padding: '40px 44px', borderRadius: 18 }}>
+          <div style={{ fontSize: 42, lineHeight: 1.4, fontWeight: 700 }}>
+            · 하루 3시간 → <span style={{ color: 'var(--yellow)' }}>5분</span><br />
+            · PRD 30%만 쓰면 <span style={{ color: 'var(--yellow)' }}>자동으로</span><br />
+            · CRM 1명이 <span style={{ color: 'var(--yellow)' }}>혼자 전 채널</span>
+          </div>
+        </div>
+        <div style={{ fontSize: 32, color: '#666', marginTop: 22, fontWeight: 500 }}>
+          이론 말고, 진짜 해본 얘기만.
+        </div>
+      </div>
+    </div>
+    <div className="swipe"><span>SWIPE</span><span className="arr">→</span></div>
+  </div>;
+
+
+// 01-C · 숫자 훅 — 아주 직관적, 포스터형
+const S1C_CoverNumber = () =>
+<div className="ig yellow">
+    <div className="pad" style={{ justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div>
+          <div style={{ fontSize: 30, fontWeight: 800, letterSpacing: '0.14em', color: '#000' }}>AAA · SELFISH CLUB</div>
+          <div style={{ fontSize: 28, fontWeight: 500, color: '#3a3b00', marginTop: 6 }}>2026.04.28 · 무료 공유회</div>
+        </div>
+        <div style={{ fontSize: 28, fontWeight: 700, color: '#000', textAlign: 'right', lineHeight: 1.3 }}>
+          에이전트 FOMO<br />
+          느끼는 사람들에게
+        </div>
+      </div>
+
+      <div>
+        <div style={{ fontSize: 56, fontWeight: 700, color: '#000', marginBottom: 24, letterSpacing: '-0.02em' }}>
+          AI 에이전트,
+        </div>
+        <div style={{ fontSize: 180, fontWeight: 900, lineHeight: 0.9, letterSpacing: '-0.05em', color: '#000' }}>
+          찐으로<br />
+          써본 사람<br />
+          <span style={{ textDecoration: 'underline', textDecorationThickness: 14 }}>8명.</span>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+        <div style={{ padding: '18px 28px', background: '#000', color: 'var(--yellow)', borderRadius: 999, fontSize: 30, fontWeight: 700 }}>#이론말고</div>
+        <div style={{ padding: '18px 28px', background: '#000', color: 'var(--yellow)', borderRadius: 999, fontSize: 30, fontWeight: 700 }}>#일할때어떻게쓰는지</div>
+        <div style={{ padding: '18px 28px', background: '#000', color: 'var(--yellow)', borderRadius: 999, fontSize: 30, fontWeight: 700 }}>#무료</div>
+      </div>
+    </div>
+    <div className="swipe"><span>SWIPE</span><span className="arr">→</span></div>
+  </div>;
+
+
+// ─────────────────────────────────────────────
+// 02 · 내 소개 + Before (구 1+2 합본)
+// ─────────────────────────────────────────────
+const S2_WhoBefore = () =>
+<div className="ig">
+    <div className="pad" style={{ paddingTop: 100, paddingBottom: 100 }}>
+      <div className="kicker" style={{ marginBottom: 28 }}>그 중 한 명은 저,</div>
+      <div style={{ fontSize: 96, lineHeight: 1.02, letterSpacing: '-0.035em', fontWeight: 800, marginBottom: 32 }}>
+        <span className="hl">에밀리.</span><br />
+        셀피쉬클럽 CRM PM.
+      </div>
+
+      <div className="body" style={{ fontSize: 38, lineHeight: 1.45, color: '#222', marginBottom: 44 }}>
+        이기적멤버십 <b>6,800명</b> 대상,<br />
+        공유회 CRM <b>4채널 혼자</b> 담당.
+      </div>
+
+      <div style={{ height: 1, background: 'var(--rule)', marginBottom: 36 }} />
+
+      <div className="kicker" style={{ marginBottom: 22 }}>예전엔,</div>
+      <div style={{ fontSize: 76, lineHeight: 1.05, letterSpacing: '-0.03em', fontWeight: 800, marginBottom: 36 }}>
+        공유회 1건마다<br />
+        <span className="u">손으로</span> 다 했어요.
+      </div>
+
+      <div style={{ display: 'flex', gap: 18, marginBottom: 28 }}>
+        <div style={{ flex: 1, background: '#F3F3F3', padding: '32px 26px', borderRadius: 14 }}>
+          <div style={{ fontSize: 76, fontWeight: 900, letterSpacing: '-0.03em', color: '#000', lineHeight: 1 }}>10일</div>
+          <div style={{ fontSize: 28, color: '#555', marginTop: 10, fontWeight: 500 }}>D-10 → D-day</div>
+        </div>
+        <div style={{ flex: 1, background: '#F3F3F3', padding: '32px 26px', borderRadius: 14 }}>
+          <div style={{ fontSize: 76, fontWeight: 900, letterSpacing: '-0.03em', color: '#000', lineHeight: 1 }}>9번</div>
+          <div style={{ fontSize: 28, color: '#555', marginTop: 10, fontWeight: 500 }}>알림톡 발송</div>
+        </div>
+        <div style={{ flex: 1, background: '#000', color: '#fff', padding: '32px 26px', borderRadius: 14 }}>
+          <div style={{ fontSize: 76, fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--yellow)', lineHeight: 1 }}>N번</div>
+          <div style={{ fontSize: 28, color: 'rgba(255,255,255,0.7)', marginTop: 10, fontWeight: 500 }}>매번 다른 대상자</div>
+        </div>
+      </div>
+
+      <div className="body" style={{ fontSize: 34, color: '#333', fontWeight: 500 }}>
+        매 시점 <b>수동 SQL</b>로 DB 발라내기.<br />
+        조건 하나 바뀌면 <span className="hl">또 또 또.</span>
+      </div>
+    </div>
+    <div className="swipe"><span className="arr">→</span></div>
+  </div>;
+
+
+// 04 Shift — 그래서 이렇게 바꿨어요 (역할 분담)
+const S4_Shift = () =>
+<div className="ig yellow">
+    <div className="pad" style={{ justifyContent: 'center' }}>
+      <div className="kicker" style={{ color: '#3a3b00', marginBottom: 32 }}>그래서,</div>
+      <div className="h-hero" style={{ fontSize: 150 }}>
+        AI한테<br />
+        일을<br />
+        넘겼어요.
+      </div>
+      <div style={{ marginTop: 56, display: 'flex', flexDirection: 'column', gap: 20 }}>
+        <div className="h-s" style={{ fontSize: 46, color: '#000' }}>· 만드는 건 <b>Claude</b></div>
+        <div className="h-s" style={{ fontSize: 46, color: '#000' }}>· 보내는 건 <b>n8n</b></div>
+        <div className="h-s" style={{ fontSize: 46, color: '#000' }}>· 마지막 <b>확인만</b> 제가</div>
+      </div>
+      <div className="body" style={{ marginTop: 44, fontSize: 32, color: '#3a3b00', fontWeight: 500 }}>
+        오타 1번 = 6,800명 민원.<br />사람 눈은 한 번 필요해요.
+      </div>
+    </div>
+    <div className="swipe"><span className="arr">→</span></div>
+  </div>;
+
+
+// 05 Flow — 전체 구조 시각화
+const S5_Flow = () =>
+<div className="ig">
+    <div className="pad" style={{ paddingTop: 90 }}>
+      <div className="kicker" style={{ marginBottom: 24 }}>구조는 이런 느낌,</div>
+      <div className="h-l" style={{ marginBottom: 40, fontSize: 80 }}>
+        내가 잠든 사이에도<br />
+        파이프라인이 <span className="hl">돈다.</span>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 32 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '26px 28px', border: '2px solid #000', borderRadius: 14 }}>
+          <div style={{ width: 56, height: 56, borderRadius: 14, background: '#000', color: 'var(--yellow)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, fontWeight: 800 }}>1</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 34, fontWeight: 700 }}>트리거 터짐</div>
+            <div style={{ fontSize: 26, color: '#666', marginTop: 2 }}>공유회 등록 · D-데이 · 스케줄</div>
+          </div>
+        </div>
+        <div style={{ textAlign: 'center', fontSize: 34, color: '#999', lineHeight: 0.7 }}>↓</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '26px 28px', border: '2px solid #000', borderRadius: 14 }}>
+          <div style={{ width: 56, height: 56, borderRadius: 14, background: '#000', color: 'var(--yellow)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, fontWeight: 800 }}>2</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 34, fontWeight: 700 }}>Claude가 대상자 · 카피 짜기</div>
+            <div style={{ fontSize: 26, color: '#666', marginTop: 2 }}>DB 조회 + 컨텍스트 맞게 생성</div>
+          </div>
+        </div>
+        <div style={{ textAlign: 'center', fontSize: 34, color: '#999', lineHeight: 0.7 }}>↓</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '26px 28px', background: 'var(--yellow)', borderRadius: 14 }}>
+          <div style={{ width: 56, height: 56, borderRadius: 14, background: '#000', color: 'var(--yellow)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, fontWeight: 800 }}>3</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 34, fontWeight: 800 }}>슬랙으로 승인 요청 → 내가 확인</div>
+            <div style={{ fontSize: 26, color: '#3a3b00', marginTop: 2 }}>카피·링크·시간 한 번만</div>
+          </div>
+        </div>
+        <div style={{ textAlign: 'center', fontSize: 34, color: '#999', lineHeight: 0.7 }}>↓</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '26px 28px', background: '#000', color: '#fff', borderRadius: 14 }}>
+          <div style={{ width: 56, height: 56, borderRadius: 14, background: 'var(--yellow)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, fontWeight: 800 }}>4</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 34, fontWeight: 700 }}>n8n이 알림톡 발송</div>
+            <div style={{ fontSize: 26, color: '#BBB', marginTop: 2 }}>서버가 24/7 돌아요</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="swipe"><span className="arr">→</span></div>
+  </div>;
+
+
+// 06 Now — 슬랙 모달 실물
+const S6_Now = () =>
+<div className="ig">
+    <div className="pad" style={{ paddingTop: 110 }}>
+      <div className="kicker" style={{ marginBottom: 24 }}>지금은,</div>
+      <div className="h-l" style={{ marginBottom: 28 }}>
+        아침 10시,<br />
+        슬랙 버튼 <span className="hl">한 번.</span>
+      </div>
+      <div className="body" style={{ fontSize: 34, color: '#555', marginBottom: 32 }}>
+        노트북 닫고 가도 메시지가 나가요.
+      </div>
+      <div style={{
+      border: '1px solid var(--rule)', borderRadius: 18, overflow: 'hidden',
+      boxShadow: '0 12px 40px rgba(0,0,0,0.08),0 2px 6px rgba(0,0,0,0.04)',
+      background: '#fff'
+    }}>
+        <img src="assets/slack-approval.png" alt="Slack 승인 모달"
+      style={{ display: 'block', width: '100%', height: 'auto' }} />
+      </div>
+      <div className="body" style={{ fontSize: 32, color: '#555', marginTop: 24, textAlign: 'right' }}>
+        ↑ 카피·링크·시간 확인 → 초록 버튼.
+      </div>
+    </div>
+    <div className="swipe"><span className="arr">→</span></div>
+  </div>;
+
+
+// 06 CTA — 공유회 초대
+// 07 Team — 혼자가 아닌 이유
+const S7_Team = () =>
+<div className="ig">
+    <div className="pad">
+      <div className="kicker" style={{ marginBottom: 32, marginTop: 40 }}>혼자 한 건 아니에요,</div>
+      <div className="h-l" style={{ marginBottom: 36 }}>
+        셀피쉬클럽<br />
+        <span className="hl">AAA 팀</span>과 함께.
+      </div>
+      <div className="body" style={{ fontSize: 36, lineHeight: 1.45, color: '#222', marginTop: 8 }}>
+        매주 사례를 공유하며
+        <b> 서로의 인사이트를 내 업무에 적용</b>했어요.
+      </div>
+      <div style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+          <div style={{ fontSize: 40, minWidth: 64 }}>💬</div>
+          <div>
+            <div className="h-s" style={{ fontSize: 40 }}>너 이거 써봤어?</div>
+            <div className="body" style={{ fontSize: 30, color: '#555', marginTop: 4 }}>다른 PM/마케터 사례 → 바로 테스트</div>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+          <div style={{ fontSize: 40, minWidth: 64 }}>🧠</div>
+          <div>
+            <div className="h-s" style={{ fontSize: 40 }}>프롬프트·규칙 아카이브</div>
+            <div className="body" style={{ fontSize: 30, color: '#555', marginTop: 4 }}>팀이 쌓아둔 CLAUDE.md를 가져다 쓰기</div>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+          <div style={{ fontSize: 40, minWidth: 64 }}>🧭</div>
+          <div>
+            <div className="h-s" style={{ fontSize: 40 }}>삽질은 먼저 격은 사람이</div>
+            <div className="body" style={{ fontSize: 30, color: '#555', marginTop: 4 }}>몇 주 먼저 돌진 동료들의 지도</div>
+          </div>
+        </div>
+      </div>
+      <div className="body" style={{ marginTop: 40, fontSize: 34, fontWeight: 600, color: '#000' }}>
+        그래서 <span className="hl">이런 수준까지</span> 올 1명이 만들 수 있었어요.
+      </div>
+    </div>
+    <div className="swipe"><span className="arr">→</span></div>
+  </div>;
+
+
+// 08 CTA
+const S8_CTA = () =>
+<div className="ig dark">
+    <div className="pad" style={{ justifyContent: 'center' }}>
+      <div className="eyebrow" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 40, marginBottom: 32 }}>
+        근데, <b style={{ color: '#fff' }}>어떻게 만들었냐고요?</b>
+      </div>
+      <div className="h-hero" style={{ fontSize: 150, color: '#fff' }}>
+        그건<br />
+        <span style={{ color: 'var(--yellow)' }}>공유회</span>에서.
+      </div>
+      <div className="rule-w" style={{ marginTop: 64, marginBottom: 44 }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
+        <div style={{ padding: '26px 36px', background: 'var(--yellow)', color: '#000', borderRadius: 14 }}>
+          <div style={{ fontSize: 30, fontWeight: 700, letterSpacing: '0.1em' }}>AAA 무료 공유회</div>
+          <div style={{ fontSize: 96, fontWeight: 800, lineHeight: 1, letterSpacing: '-0.04em', marginTop: 8 }}>04·28</div>
+        </div>
+        <div style={{ fontSize: 32, lineHeight: 1.5, fontWeight: 500, color: "rgb(233, 237, 18)" }}>
+          2026.04.28<br />
+          오프라인 + 녹화
+        </div>
+      </div>
+      <div className="body" style={{ marginTop: 52, fontSize: 34, color: '#DDD', lineHeight: 1.5 }}>
+        · AI한테 일 잘 시키는 법<br />
+        · 자동화 구조를 직접 설계하는 감<br />
+        · 내 규칙을 AI가 읽게 만드는 법
+      </div>
+    </div>
+  </div>;
+
+
+function App() {
+  const SLIDE_W = 540,SLIDE_H = 675;
+
+  const Frame = ({ C }) =>
+  <div style={{ transform: 'scale(0.5)', transformOrigin: 'top left', width: 1080, height: 1350 }}>
+      <C />
+    </div>;
+
+
+  const covers = [
+  { C: S1A_CoverFOMO, id: 'cov-a', label: 'A · FOMO 훅 (다크)' },
+  { C: S1B_CoverReal, id: 'cov-b', label: 'B · 경험담 훅 (2개월)' },
+  { C: S1C_CoverNumber, id: 'cov-c', label: 'C · 숫자 훅 (노랑 포스터)' }];
+
+
+  const flow = [
+  { C: S2_WhoBefore, id: 's2', label: '02 · Who + Before' },
+  { C: S4_Shift, id: 's3', label: '03 · Shift (역할분담)' },
+  { C: S5_Flow, id: 's4', label: '04 · Flow (구조)' },
+  { C: S6_Now, id: 's5', label: '05 · Now (슬랙모달)' },
+  { C: S7_Team, id: 's6', label: '06 · Team (AAA)' },
+  { C: S8_CTA, id: 's7', label: '07 · CTA (공유회)' }];
+
+
+  return (
+    <DesignCanvas>
+      <DCSection id="covers" title="1번 커버 · FOMO 훅 3안" subtitle="골라주세요 — 이론 말고 찐 경험담 / AI 에이전트 몰랐던 8명 / 무료 공유회 홍보">
+        {covers.map(({ C, id, label }) =>
+        <DCArtboard key={id} id={id} label={label} width={SLIDE_W} height={SLIDE_H}>
+            <Frame C={C} />
+          </DCArtboard>
+        )}
+      </DCSection>
+
+      <DCSection id="flow" title="2번부터 이어지는 본문 플로우" subtitle="02 Who+Before 합본 → Shift → Flow → Now → Team → CTA (7장 구성)">
+        {flow.map(({ C, id, label }) =>
+        <DCArtboard key={id} id={id} label={label} width={SLIDE_W} height={SLIDE_H}>
+            <Frame C={C} />
+          </DCArtboard>
+        )}
+      </DCSection>
+    </DesignCanvas>);
+
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

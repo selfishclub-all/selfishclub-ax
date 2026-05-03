@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>셀피쉬클럽 CRM 자동화 아키텍처</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0c0e12;
+    --bg-card: #13161d;
+    --bg-card-2: #1a1e28;
+    --border: #252a36;
+    --border-bright: #343b4d;
+    --amber: #f5a623;
+    --amber-dim: rgba(245,166,35,0.12);
+    --amber-glow: rgba(245,166,35,0.25);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.12);
+    --yellow: #f59e0b;
+    --yellow-dim: rgba(245,158,11,0.12);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --text-primary: #f0f2f7;
+    --text-secondary: #8b93a8;
+    --text-muted: #555d72;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Noto Sans KR', sans-serif;
+    --display: 'Bebas Neue', cursive;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 40px 60px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .header-left { display: flex; flex-direction: column; gap: 8px; }
+
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--amber-dim);
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    width: fit-content;
+  }
+
+  .header-badge::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .header-title {
+    font-family: var(--display);
+    font-size: 52px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--text-primary);
+  }
+
+  .header-title span { color: var(--amber); }
+
+  .header-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .header-metrics {
+    display: flex;
+    gap: 32px;
+    align-items: flex-end;
+  }
+
+  .metric {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .metric-value {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .metric-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border-bright);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    padding: 40px 60px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-section {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr;
+    gap: 0;
+    align-items: center;
+  }
+
+  .flow-node {
+    background: var(--bg-card);
+    border: 1px solid var(--border-bright);
+    border-radius: 12px;
+    padding: 20px 24px;
+    position: relative;
+  }
+
+  .flow-node.trigger {
+    border-color: var(--blue);
+    background: var(--blue-dim);
+  }
+
+  .flow-node.engine {
+    border-color: var(--amber);
+    background: var(--amber-dim);
+    grid-column: 3;
+  }
+
+  .flow-node-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .flow-node-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .flow-node-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    color: var(--text-muted);
+    font-size: 18px;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .flow-arrow-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  /* ── PIPELINE FLOW ── */
+  .pipeline {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .pipeline-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    align-items: start;
+    position: relative;
+  }
+
+  .pipeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 0 8px;
+  }
+
+  .pipeline-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 20px;
+    color: var(--text-muted);
+    font-size: 16px;
+    font-weight: 700;
+    z-index: 2;
+  }
+
+  .step-bubble {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+    border: 2px solid;
+    flex-shrink: 0;
+  }
+
+  .step-bubble.blue { border-color: var(--blue); background: var(--blue-dim); }
+  .step-bubble.amber { border-color: var(--amber); background: var(--amber-dim); }
+  .step-bubble.green { border-color: var(--green); background: var(--green-dim); }
+
+  .step-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .step-detail {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .step-detail .highlight {
+    color: var(--amber);
+    font-weight: 700;
+  }
+
+  /* ── COMMAND BOX ── */
+  .command-box {
+    background: #0a0c10;
+    border: 1px solid var(--blue);
+    border-radius: 10px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .command-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--blue-dim) 0%, transparent 60%);
+  }
+
+  .command-prompt {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 700;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .command-text {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 400;
+    position: relative;
+  }
+
+  .command-text em {
+    color: var(--amber);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .command-badge {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--green);
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  /* ── CHANNELS GRID ── */
+  .channels-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  .channel-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .channel-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .channel-card.auto::before { background: var(--green); }
+  .channel-card.semi::before { background: var(--yellow); }
+  .channel-card.manual::before { background: var(--red); }
+
+  .channel-card.auto { border-color: rgba(34,197,94,0.2); }
+  .channel-card.semi { border-color: rgba(245,158,11,0.2); }
+  .channel-card.manual { border-color: rgba(239,68,68,0.2); }
+
+  .channel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .channel-icon { font-size: 22px; }
+
+  .auto-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .auto-badge.green { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
+  .auto-badge.yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid var(--yellow); }
+  .auto-badge.red { background: var(--red-dim); color: var(--red); border: 1px solid var(--red); }
+
+  .channel-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .channel-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .channel-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.3;
+  }
+
+  .flow-step-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .flow-step-dot.green { background: var(--green); }
+  .flow-step-dot.yellow { background: var(--yellow); }
+  .flow-step-dot.red { background: var(--red); }
+  .flow-step-dot.blue { background: var(--blue); }
+
+  .flow-step .auto { color: var(--green); font-weight: 600; }
+  .flow-step .manual-text { color: var(--red); font-weight: 600; }
+  .flow-step .semi-text { color: var(--yellow); font-weight: 600; }
+
+  /* ── TIMELINE ── */
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .tl-header {
+    background: var(--bg-card-2);
+    padding: 10px 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tl-day-header {
+    background: var(--bg-card-2);
+    padding: 10px 12px;
+    text-align: center;
+  }
+
+  .tl-day-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    display: block;
+  }
+
+  .tl-day-sub {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    display: block;
+  }
+
+  .tl-day-header.dday .tl-day-label { color: var(--amber); }
+  .tl-day-header.dday { background: rgba(245,166,35,0.07); }
+
+  .tl-channel-label {
+    background: var(--bg-card);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .tl-cell {
+    background: var(--bg-card);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 60px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .tl-pill {
+    border-radius: 4px;
+    padding: 3px 7px;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.3;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .tl-pill.auto { background: var(--green-dim); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .tl-pill.semi { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
+  .tl-pill.manual { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+  .tl-pill.prep { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+  .tl-cell.empty { background: rgba(19,22,29,0.4); }
+
+  /* ── TOOLS ROW ── */
+  .tools-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+
+  .tool-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .tool-icon { font-size: 24px; }
+
+  .tool-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .tool-role {
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ── BEFORE/AFTER ── */
+  .impact-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .impact-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .impact-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .impact-time {
+    font-family: var(--mono);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .impact-time.before { color: var(--red); }
+  .impact-time.after { color: var(--green); }
+
+  .impact-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .impact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .impact-item {
+    font-size: 11px;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .impact-item::before { content: '·'; color: var(--text-muted); }
+
+  .impact-arrow {
+    text-align: center;
+    font-size: 32px;
+    color: var(--amber);
+  }
+
+  .impact-arrow-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-left {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+
+  .legend-dot.green { background: var(--green); }
+  .legend-dot.yellow { background: var(--yellow); }
+  .legend-dot.red { background: var(--red); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 4px 0;
+  }
+
+  /* ── APPROVAL LOOP ── */
+  .approval-callout {
+    background: var(--blue-dim);
+    border: 1px solid rgba(96,165,250,0.3);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 0;
+  }
+
+  .approval-callout-icon { font-size: 20px; flex-shrink: 0; }
+
+  .approval-callout-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .approval-callout-text strong {
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* ── GRID HELPERS ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  /* ── AUTOMATION BAR ── */
+  .auto-bar {
+    display: flex;
+    gap: 3px;
+    margin-top: 8px;
+  }
+
+  .auto-segment {
+    height: 4px;
+    border-radius: 2px;
+    flex: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <div class="header-badge">SELFISH CLUB · CRM AUTOMATION · 2026</div>
+    <h1 class="header-title">공유회 <span>CRM</span><br>자동화 아키텍처</h1>
+    <p class="header-subtitle">명령어 한 줄로 전체 CRM 파이프라인 자동 실행 — 5채널 · 20+ 메시지 · 6,829명</p>
+  </div>
+  <div class="header-metrics">
+    <div class="metric">
+      <div class="metric-value">6,829</div>
+      <div class="metric-label">총 발송 회원</div>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric">
+      <div class="metric-value">9종</div>
+      <div class="metric-label">알림톡 템플릿</div>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric">
+      <div class="metric-value">5개</div>
+      <div class="metric-label">자동화 채널</div>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric">
+      <div class="metric-value" style="color:var(--green)">30분</div>
+      <div class="metric-label">공유회 1회 준비</div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SECTION 1: TRIGGER + PIPELINE -->
+  <div>
+    <div class="section-label">01 · 트리거 & 자동화 파이프라인</div>
+
+    <!-- Command -->
+    <div class="command-box">
+      <span class="command-prompt">Emily $</span>
+      <span class="command-text">CRM 시작해줘 <em>https://selfish.club/sharing/{slug}</em></span>
+      <span class="command-badge">→ 전체 자동 실행</span>
+    </div>
+
+    <!-- Pipeline steps -->
+    <div class="pipeline">
+      <div class="pipeline-steps">
+        <div class="pipeline-step">
+          <div class="step-bubble blue">📥</div>
+          <div class="step-title">페이지 크롤링</div>
+          <div class="step-detail">URL 파싱<br>프로그램 정보<br>자동 추출</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-bubble amber">📅</div>
+          <div class="step-title">타임라인 생성</div>
+          <div class="step-detail">D-7~D+3<br>발송 스케줄<br><span class="highlight">9종 알림톡</span></div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-bubble amber">✍️</div>
+          <div class="step-title">전채널 카피 생성</div>
+          <div class="step-detail">알림톡 · 카플친<br>오카방 · 온드미디어<br>인스타 동시 생성</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-bubble amber">🔗</div>
+          <div class="step-title">UTM 생성</div>
+          <div class="step-detail">채널별 <span class="highlight">21개</span><br>추적 링크<br>자동 생성</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-bubble green">📤</div>
+          <div class="step-title">Slack 전달</div>
+          <div class="step-detail">#crm-카피<br>에밀리 검토<br>승인 후 발송</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: CHANNELS -->
+  <div>
+    <div class="section-label">02 · 채널별 자동화 레벨</div>
+    <div class="channels-grid">
+
+      <!-- 알림톡 -->
+      <div class="channel-card auto">
+        <div class="channel-header">
+          <div class="channel-icon">💬</div>
+          <div class="auto-badge green">완전 자동</div>
+        </div>
+        <div>
+          <div class="channel-name">알림톡 9종</div>
+          <div class="channel-count">6,829명 발송</div>
+        </div>
+        <div class="channel-flow">
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>n8n 크론 <span class="auto">자동 발송</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot blue"></div>
+            <span>Slack 승인 모달</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>SOLAPI <span class="auto">자동 전송</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>에밀리 개입 <span class="auto">0분</span></span>
+          </div>
+        </div>
+        <div class="auto-bar">
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--green)"></div>
+        </div>
+      </div>
+
+      <!-- 카플친 -->
+      <div class="channel-card semi">
+        <div class="channel-header">
+          <div class="channel-icon">🖼️</div>
+          <div class="auto-badge yellow">반자동</div>
+        </div>
+        <div>
+          <div class="channel-name">카카오 플친 배너</div>
+          <div class="channel-count">오픈·리마인드·마감 3종</div>
+        </div>
+        <div class="channel-flow">
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>배너 이미지 <span class="auto">자동 생성</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot blue"></div>
+            <span>Slack 승인 후 전달</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot yellow"></div>
+            <span>에밀리: 파트너센터 <span class="semi-text">~15분</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>카피 생성은 <span class="auto">100% 자동</span></span>
+          </div>
+        </div>
+        <div class="auto-bar">
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--yellow)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+        </div>
+      </div>
+
+      <!-- 오카방 -->
+      <div class="channel-card manual">
+        <div class="channel-header">
+          <div class="channel-icon">💭</div>
+          <div class="auto-badge red">수동 게시</div>
+        </div>
+        <div>
+          <div class="channel-name">오픈채팅방</div>
+          <div class="channel-count">3개 채팅방</div>
+        </div>
+        <div class="channel-flow">
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>카피 <span class="auto">자동 생성</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot blue"></div>
+            <span>Slack #crm-카피 대기</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot red"></div>
+            <span>에밀리: 오카방 <span class="manual-text">3곳 수동 게시</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>타이밍·톤 <span class="auto">가이드 자동</span></span>
+          </div>
+        </div>
+        <div class="auto-bar">
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+        </div>
+      </div>
+
+      <!-- 온드미디어 -->
+      <div class="channel-card manual">
+        <div class="channel-header">
+          <div class="channel-icon">🌐</div>
+          <div class="auto-badge red">수동 설정</div>
+        </div>
+        <div>
+          <div class="channel-name">온드미디어 5종</div>
+          <div class="channel-count">리틀리 · 대화방 · 소식</div>
+        </div>
+        <div class="channel-flow">
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>5종 카피 <span class="auto">자동 생성</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot blue"></div>
+            <span>Slack 복붙 친화 형식</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot red"></div>
+            <span>에밀리: <span class="manual-text">각 플랫폼 입력</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot yellow"></div>
+            <span>웰컴메시지 · 소식 포함</span>
+          </div>
+        </div>
+        <div class="auto-bar">
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+        </div>
+      </div>
+
+      <!-- 인스타 -->
+      <div class="channel-card manual">
+        <div class="channel-header">
+          <div class="channel-icon">📸</div>
+          <div class="auto-badge red">수동 게시</div>
+        </div>
+        <div>
+          <div class="channel-name">인스타그램</div>
+          <div class="channel-count">캐러셀 5장 + 캡션</div>
+        </div>
+        <div class="channel-flow">
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>이미지 + 캡션 <span class="auto">자동 생성</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot blue"></div>
+            <span>Slack 파일 전달</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot red"></div>
+            <span>에밀리: 인스타 <span class="manual-text">수동 게시</span></span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-dot green"></div>
+            <span>해시태그 <span class="auto">자동 생성</span></span>
+          </div>
+        </div>
+        <div class="auto-bar">
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--green)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+          <div class="auto-segment" style="background:var(--border-bright)"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Approval callout -->
+    <div style="margin-top:12px;">
+      <div class="approval-callout">
+        <div class="approval-callout-icon">👀</div>
+        <div class="approval-callout-text">
+          <strong>에밀리의 역할</strong>: D-7에 모든 카피·에셋이 Slack #crm-카피에 일괄 도착 → 검토 후 승인 or 피드백 → 이후 발송은 일정에 맞게 자동 진행. 알림톡은 n8n이 당일 자동 발송, 나머지는 Slack 내용 복붙해서 각 채널에 게시.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: TIMELINE -->
+  <div>
+    <div class="section-label">03 · 공유회 1회 발송 타임라인</div>
+    <div class="timeline-grid">
+
+      <!-- Header row -->
+      <div class="tl-header">채널</div>
+      <div class="tl-day-header">
+        <span class="tl-day-label">D-7</span>
+        <span class="tl-day-sub">준비 완료</span>
+      </div>
+      <div class="tl-day-header">
+        <span class="tl-day-label">D-5</span>
+        <span class="tl-day-sub">오픈</span>
+      </div>
+      <div class="tl-day-header">
+        <span class="tl-day-label">D-3</span>
+        <span class="tl-day-sub">리마인드</span>
+      </div>
+      <div class="tl-day-header">
+        <span class="tl-day-label">D-1</span>
+        <span class="tl-day-sub">마감</span>
+      </div>
+      <div class="tl-day-header dday">
+        <span class="tl-day-label">D-day ★</span>
+        <span class="tl-day-sub">공유회 당일</span>
+      </div>
+
+      <!-- 알림톡 row -->
+      <div class="tl-channel-label">💬 알림톡</div>
+      <div class="tl-cell">
+        <span class="tl-pill prep">크롤링 + 타임라인 생성</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill auto">① 오픈알림</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill auto">② 오픈리마인드</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill auto">③ D-1 리마인드</span>
+        <span class="tl-pill auto">⑤ 할인쿠폰</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill auto">④ 당일</span>
+        <span class="tl-pill auto">⑥ 입장링크</span>
+        <span class="tl-pill auto">⑦ 시작알림</span>
+        <span class="tl-pill auto">⑧ 혜택안내</span>
+      </div>
+
+      <!-- 카플친 row -->
+      <div class="tl-channel-label">🖼️ 카플친</div>
+      <div class="tl-cell">
+        <span class="tl-pill prep">배너 이미지 3종 생성</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill semi">오픈 배너 발송</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill semi">리마인드 배너</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill semi">마감 배너</span>
+      </div>
+      <div class="tl-cell empty"></div>
+
+      <!-- 오카방 row -->
+      <div class="tl-channel-label">💭 오카방</div>
+      <div class="tl-cell">
+        <span class="tl-pill prep">카피 3종 생성</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill manual">오픈 공지 게시</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill manual">리마인드 게시</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill manual">마감 공지 게시</span>
+      </div>
+      <div class="tl-cell empty"></div>
+
+      <!-- 온드미디어 row -->
+      <div class="tl-channel-label">🌐 온드미디어</div>
+      <div class="tl-cell">
+        <span class="tl-pill prep">5종 카피 생성</span>
+      </div>
+      <div class="tl-cell">
+        <span class="tl-pill manual">리틀리·소식 세팅</span>
+      </div>
+      <div class="tl-cell empty"></div>
+      <div class="tl-cell empty"></div>
+      <div class="tl-cell empty"></div>
+
+      <!-- 인스타 row -->
+      <div class="tl-channel-label">📸 인스타</div>
+      <div class="tl-cell">
+        <span class="tl-pill prep">캐러셀 5장 생성</span>
+      </div>
+      <div class="tl-cell empty"></div>
+      <div class="tl-cell">
+        <span class="tl-pill manual">캐러셀 게시</span>
+      </div>
+      <div class="tl-cell empty"></div>
+      <div class="tl-cell empty"></div>
+
+    </div>
+
+    <div style="margin-top:8px; display:flex; gap:4px; align-items:center; justify-content:flex-end;">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);">※ D+3 ⑨ VOD 발송 알림톡 자동 발송 (별도)</span>
+    </div>
+  </div>
+
+  <!-- SECTION 4: TOOLS + IMPACT -->
+  <div class="two-col">
+
+    <!-- Tools -->
+    <div>
+      <div class="section-label">04 · 기술 스택</div>
+      <div class="tools-row">
+        <div class="tool-card">
+          <div class="tool-icon">🤖</div>
+          <div class="tool-name">Claude Code</div>
+          <div class="tool-role">전체 오케스트레이션 + 카피·이미지 생성</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">⚡</div>
+          <div class="tool-name">n8n</div>
+          <div class="tool-role">크론 스케줄 + Slack 승인 모달</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">💬</div>
+          <div class="tool-name">SOLAPI</div>
+          <div class="tool-role">카카오 알림톡·친구톡 발송 API</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">🗄️</div>
+          <div class="tool-name">Supabase</div>
+          <div class="tool-role">회원·구매·아이템 데이터베이스</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">💼</div>
+          <div class="tool-name">Slack</div>
+          <div class="tool-role">카피 전달 + 에밀리 승인 채널</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">🔗</div>
+          <div class="tool-name">Git</div>
+          <div class="tool-role">노트북 간 코드·설정 동기화</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Impact -->
+    <div>
+      <div class="section-label">05 · 도입 전/후 비교</div>
+      <div class="impact-row">
+        <div class="impact-card">
+          <div class="impact-label">BEFORE</div>
+          <div class="impact-time before">2h</div>
+          <div class="impact-desc">공유회 1회 CRM 준비</div>
+          <div class="impact-items">
+            <div class="impact-item">채널별 카피 수동 작성</div>
+            <div class="impact-item">발송 시간 직접 계산·예약</div>
+            <div class="impact-item">이미지 수동 제작 요청</div>
+            <div class="impact-item">UTM 링크 개별 생성</div>
+            <div class="impact-item">Supabase 수동 조회</div>
+          </div>
+        </div>
+        <div>
+          <div class="impact-arrow">→</div>
+          <div class="impact-arrow-sub" style="text-align:center;">CRM 자동화</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-label">AFTER</div>
+          <div class="impact-time after">30m</div>
+          <div class="impact-desc">공유회 1회 CRM 준비</div>
+          <div class="impact-items">
+            <div class="impact-item">명령어 1줄 → 전채널 생성</div>
+            <div class="impact-item">알림톡 n8n 완전 자동 발송</div>
+            <div class="impact-item">배너 AI 자동 생성</div>
+            <div class="impact-item">UTM 21개 자동 생성</div>
+            <div class="impact-item">에밀리: 검토 + 복붙만</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-left">셀피쉬클럽 이기적멤버십 CRM 자동화 · feat/sharing-crm-team · 2026.04</div>
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot green"></div>
+      완전 자동 (에밀리 개입 없음)
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot yellow"></div>
+      반자동 (이미지 자동, 발송 수동 15분)
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot red"></div>
+      수동 게시 (카피 자동 생성, 직접 게시)
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

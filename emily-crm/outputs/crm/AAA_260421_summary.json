@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-04-21T01:32:02.705Z",
+  "base": {
+    "membership_total": 6865,
+    "with_phone": 6848,
+    "aaa_applicants_excluded": 85,
+    "after_exclude": 6771
+  },
+  "segments": {
+    "S1": 68,
+    "S2": 946,
+    "S3": 102,
+    "S4": 134,
+    "S5": 445,
+    "S6": 2607,
+    "S7": 2268,
+    "S8": 201,
+    "total": 6771
+  }
+}
