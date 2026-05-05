@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#e0e0e0;padding:40px;display:flex;flex-direction:column;align-items:center;gap:60px;font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif}
+.label{font-size:12px;color:#999;margin-top:8px;letter-spacing:0.08em;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- ===== 1. 오픈 배너 — 딥그린 + 골드 악센트 + 좌정렬 ===== -->
+<div>
+<div class="banner" style="width:800px;height:600px;position:relative;overflow:hidden;background:linear-gradient(155deg,#0D2818 0%,#1A3A2A 40%,#0F2D1C 100%);">
+  <!-- 장식 글로우 -->
+  <div style="position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(200,170,80,0.08) 0%,transparent 60%);top:-120px;right:-100px;"></div>
+  <div style="position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(200,170,80,0.05) 0%,transparent 60%);bottom:60px;left:-80px;"></div>
+
+  <!-- 상단 뱃지 -->
+  <div style="position:absolute;top:36px;left:44px;">
+    <span style="background:rgba(200,170,80,0.15);border:1px solid rgba(200,170,80,0.3);color:#C8AA50;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:2px;">SELFISH CLUB</span>
+  </div>
+  <div style="position:absolute;top:40px;right:44px;">
+    <span style="color:rgba(255,255,255,0.35);font-size:13px;font-weight:500;letter-spacing:1px;">이기적공유회</span>
+  </div>
+
+  <!-- 서브카피 -->
+  <div style="position:absolute;top:110px;left:44px;">
+    <span style="color:#C8AA50;font-size:18px;font-weight:700;letter-spacing:1px;">단 2주만에 수익화 성공</span>
+  </div>
+
+  <!-- 메인카피 -->
+  <div style="position:absolute;top:148px;left:44px;width:520px;">
+    <p style="font-size:52px;font-weight:900;color:#FFFFFF;line-height:1.22;letter-spacing:-0.03em;">AI로 블로그</p>
+    <p style="font-size:52px;font-weight:900;line-height:1.22;letter-spacing:-0.03em;margin-top:2px;">
+      <span style="background:linear-gradient(transparent 50%,rgba(200,170,80,0.3) 50%);padding:0 6px;color:#fff;">첫 수익</span>
+      <span style="color:#FFFFFF;"> 만들기</span>
+    </p>
+  </div>
+
+  <!-- 우측 키워드 카드 -->
+  <div style="position:absolute;top:108px;right:36px;width:220px;display:flex;flex-direction:column;gap:10px;">
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px 18px;">
+      <span style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.7);">블로그 수익화 전략</span>
+    </div>
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px 18px;">
+      <span style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.7);">AI 글쓰기 실전 노하우</span>
+    </div>
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px 18px;">
+      <span style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.7);">SEO 최적화 비법</span>
+    </div>
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px 18px;">
+      <span style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.7);">자동화 수익 파이프라인</span>
+    </div>
+  </div>
+
+  <!-- 중간 설명 -->
+  <div style="position:absolute;top:330px;left:44px;">
+    <p style="font-size:16px;color:rgba(255,255,255,0.45);line-height:1.6;">5인의 실전 블로거가 공개하는<br>AI 블로그 수익화 A-Z</p>
+  </div>
+
+  <!-- 하단 바 -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:72px;background:rgba(200,170,80,0.12);border-top:1px solid rgba(200,170,80,0.2);display:flex;align-items:center;justify-content:space-between;padding:0 44px;">
+    <span style="font-size:17px;font-weight:700;color:rgba(255,255,255,0.7);">4/09(목) 저녁 8시 ZOOM 라이브</span>
+    <span style="background:#C8AA50;color:#0D2818;padding:12px 28px;border-radius:24px;font-size:16px;font-weight:800;">지금 바로 신청하기 ></span>
+  </div>
+</div>
+<p class="label">OPEN</p>
+</div>
+
+
+<!-- ===== 2. 리마인드 배너 — 블루/퍼플 그라데이션 + 하단 정렬 ===== -->
+<div>
+<div class="banner" style="width:800px;height:600px;position:relative;overflow:hidden;background:linear-gradient(160deg,#1A1040 0%,#2A1860 40%,#1E1250 100%);">
+  <!-- 글로우 장식 -->
+  <div style="position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(100,80,220,0.12) 0%,transparent 55%);top:-200px;right:-100px;"></div>
+  <div style="position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(140,100,255,0.08) 0%,transparent 55%);bottom:-100px;left:100px;"></div>
+
+  <!-- 상단 D-day 뱃지 -->
+  <div style="position:absolute;top:32px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;">
+    <span style="background:rgba(140,100,255,0.2);border:1px solid rgba(140,100,255,0.35);color:#B89EFF;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:2px;">SELFISH CLUB</span>
+    <span style="background:#7C5CFF;color:#fff;padding:8px 16px;border-radius:20px;font-size:14px;font-weight:800;">마감 D-7</span>
+  </div>
+
+  <!-- 센터 메인카피 -->
+  <div style="position:absolute;top:130px;left:0;right:0;text-align:center;padding:0 60px;">
+    <p style="font-size:20px;font-weight:600;color:#B89EFF;letter-spacing:1px;margin-bottom:16px;">아직도 블로그 수익 0원이세요?</p>
+    <p style="font-size:54px;font-weight:900;color:#FFFFFF;line-height:1.22;letter-spacing:-0.03em;">AI 하나로</p>
+    <p style="font-size:54px;font-weight:900;line-height:1.22;letter-spacing:-0.03em;margin-top:4px;">
+      <span style="color:#fff;">블로그 </span>
+      <span style="background:linear-gradient(transparent 50%,rgba(124,92,255,0.4) 50%);padding:0 6px;color:#fff;">첫 수익</span>
+      <span style="color:#fff;"> 만드는 법</span>
+    </p>
+  </div>
+
+  <!-- 서브 텍스트 -->
+  <div style="position:absolute;top:340px;left:0;right:0;text-align:center;">
+    <p style="font-size:17px;color:rgba(255,255,255,0.4);line-height:1.6;">2주 만에 수익화에 성공한 5인의<br>실전 블로그 운영 전략을 라이브로 공개합니다</p>
+  </div>
+
+  <!-- 하단 그라데이션 바 -->
+  <div style="position:absolute;bottom:0;left:0;right:0;">
+    <div style="height:40px;background:linear-gradient(to bottom,transparent,rgba(124,92,255,0.1));"></div>
+    <div style="height:72px;background:rgba(124,92,255,0.15);border-top:1px solid rgba(124,92,255,0.2);display:flex;align-items:center;justify-content:center;gap:28px;">
+      <span style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.6);">4/09(목) 20:00-22:00</span>
+      <span style="width:1px;height:20px;background:rgba(255,255,255,0.2);"></span>
+      <span style="background:linear-gradient(135deg,#7C5CFF,#9B7AFF);color:#fff;padding:12px 28px;border-radius:24px;font-size:16px;font-weight:800;box-shadow:0 4px 16px rgba(124,92,255,0.3);">놓치기 전에 신청하기 ></span>
+    </div>
+  </div>
+</div>
+<p class="label">REMIND</p>
+</div>
+
+
+<!-- ===== 3. 마감 배너 — 다크 + 레드 글로우 + 센터 긴박 타이포 ===== -->
+<div>
+<div class="banner" style="width:800px;height:600px;position:relative;overflow:hidden;background:#0A0A0A;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+  <!-- 레드 글로우 -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120%;height:120%;background:radial-gradient(ellipse at center,rgba(220,30,30,0.18) 0%,rgba(180,20,20,0.06) 40%,transparent 70%);z-index:0;"></div>
+
+  <!-- 상단 긴박 바 -->
+  <div style="position:absolute;top:0;left:0;right:0;height:52px;background:linear-gradient(90deg,#CC2222,#E83333);display:flex;align-items:center;justify-content:center;gap:12px;z-index:1;">
+    <span style="font-size:15px;font-weight:900;color:#fff;letter-spacing:2px;">SELFISH CLUB</span>
+    <span style="width:1px;height:16px;background:rgba(255,255,255,0.4);"></span>
+    <span style="font-size:16px;font-weight:800;color:#fff;">오늘 저녁 6시 마감</span>
+  </div>
+
+  <!-- 서브카피 -->
+  <div style="position:relative;z-index:1;margin-bottom:20px;">
+    <span style="color:#FF4444;font-size:20px;font-weight:700;letter-spacing:1px;">신청 마감까지 단 몇 시간</span>
+  </div>
+
+  <!-- 메인카피 -->
+  <div style="position:relative;z-index:1;margin-bottom:24px;">
+    <p style="font-size:58px;font-weight:900;color:#FFFFFF;line-height:1.2;letter-spacing:-0.02em;text-shadow:0 0 40px rgba(220,30,30,0.25);">지금 신청 안 하면</p>
+    <p style="font-size:58px;font-weight:900;color:#FFFFFF;line-height:1.2;letter-spacing:-0.02em;text-shadow:0 0 40px rgba(220,30,30,0.25);margin-top:4px;">다음 기회는 없습니다</p>
+  </div>
+
+  <!-- 프로그램명 -->
+  <div style="position:relative;z-index:1;">
+    <p style="font-size:16px;color:#888;line-height:1.5;">AI로 블로그 첫 수익 만들기 — 5인의 실전 노하우 라이브</p>
+  </div>
+
+  <!-- 하단 CTA 바 -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:68px;background:#CC2222;display:flex;align-items:center;justify-content:center;gap:24px;z-index:1;">
+    <span style="color:rgba(255,255,255,0.85);font-size:16px;font-weight:500;">2026. 04. 09 (목) 20:00-22:00</span>
+    <span style="width:1px;height:20px;background:rgba(255,255,255,0.4);"></span>
+    <span style="color:#fff;font-size:17px;font-weight:800;letter-spacing:1px;">마감 전 신청하기 ></span>
+  </div>
+</div>
+<p class="label">CLOSE</p>
+</div>
+
+</body>
+</html>

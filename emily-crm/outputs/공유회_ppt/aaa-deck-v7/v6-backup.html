@@ -1,0 +1,1229 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>AAA 공유회 — Emily</title>
+<meta name="viewport" content="width=1920" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<script src="deck-stage.js"></script>
+<style>
+  :root{
+    --ink:#0A0A0A;
+    --paper:#FFFFFF;
+    --yellow:#E9ED12;
+    --yellow-soft:#F6F780;
+    --mute:#8A8A8A;
+    --mute-2:#C9C9C9;
+    --rule:#E6E6E6;
+    --rule-2:#EFEFEF;
+    --chip:#F3F3F3;
+    --dash:#D5D5D5;
+  }
+  html,body{margin:0;padding:0;background:#000;font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","tnum";}
+  deck-stage{background:#000;}
+  section.slide{
+    width:1920px;height:1080px;background:var(--paper);color:var(--ink);
+    position:relative;overflow:hidden;
+    font-family:"Pretendard Variable","Pretendard",sans-serif;
+    letter-spacing:-0.015em;
+  }
+  /* ── Frame chrome ─────────────────────────────────────── */
+  .frame-top, .frame-bot{
+    position:absolute;left:72px;right:72px;
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:14px;color:var(--mute);letter-spacing:0.14em;text-transform:uppercase;
+    font-weight:500;
+  }
+  .frame-top{top:44px;}
+  .frame-bot{bottom:40px;}
+  .frame-top .dot{width:6px;height:6px;border-radius:50%;background:var(--ink);display:inline-block;margin:0 10px;vertical-align:middle;}
+  .frame-bot .num{font-variant-numeric:tabular-nums;letter-spacing:0.08em;}
+
+  .pg{position:absolute;left:50%;transform:translateX(-50%);bottom:40px;font-size:14px;color:var(--mute);letter-spacing:0.2em;}
+
+  /* chapter marker — dark slide */
+  .slide.dark{background:var(--ink);color:var(--paper);}
+  .slide.dark .frame-top, .slide.dark .frame-bot{color:rgba(255,255,255,0.55);}
+  .slide.dark .frame-top .dot{background:var(--paper);}
+  .slide.dark .pg{color:rgba(255,255,255,0.55);}
+
+  /* yellow slide */
+  .slide.yellow{background:var(--yellow);color:var(--ink);}
+  .slide.yellow .frame-top, .slide.yellow .frame-bot{color:#595b00;}
+  .slide.yellow .frame-top .dot{background:var(--ink);}
+  .slide.yellow .pg{color:#595b00;}
+
+  /* ── Typography helpers ───────────────────────────────── */
+  h1,h2,h3,h4,p{margin:0;}
+  .kicker{font-size:16px;letter-spacing:0.18em;color:var(--mute);text-transform:uppercase;font-weight:600;}
+  .eyebrow{font-size:18px;letter-spacing:0.06em;color:var(--mute);font-weight:500;}
+  .mono{font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+
+  /* big type */
+  .hero{font-size:148px;line-height:0.95;letter-spacing:-0.04em;font-weight:700;}
+  .h-xl{font-size:110px;line-height:1.02;letter-spacing:-0.035em;font-weight:700;}
+  .h-l{font-size:84px;line-height:1.05;letter-spacing:-0.03em;font-weight:700;}
+  .h-m{font-size:56px;line-height:1.12;letter-spacing:-0.025em;font-weight:700;}
+  .h-s{font-size:36px;line-height:1.25;letter-spacing:-0.02em;font-weight:600;}
+  .body{font-size:26px;line-height:1.5;color:#333;font-weight:400;}
+  .body-l{font-size:32px;line-height:1.45;color:#222;font-weight:400;}
+  .cap{font-size:18px;color:var(--mute);letter-spacing:0.02em;}
+
+  .hl{background:var(--yellow);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+  .u{border-bottom:3px solid var(--yellow);padding-bottom:2px;}
+  .ink-y{color:var(--yellow);}
+  .rule{height:1px;background:var(--rule);width:100%;}
+  .rule-ink{height:1px;background:var(--ink);width:100%;}
+
+  /* dashed capture box */
+  .cap-box{
+    border:1.5px dashed var(--dash);border-radius:10px;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;
+    color:var(--mute);background:#FAFAFA;
+    font-size:18px;letter-spacing:0.05em;
+  }
+  .cap-box .tag{font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#AAA;}
+  .cap-box .tip{font-size:15px;color:#9A9A9A;max-width:70%;text-align:center;line-height:1.4;}
+
+  /* chip */
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--rule);border-radius:999px;font-size:16px;color:#333;background:#fff;}
+  .chip .bullet{width:6px;height:6px;border-radius:50%;background:var(--ink);}
+  .chip.y{background:var(--yellow);border-color:var(--yellow);color:var(--ink);font-weight:600;}
+  .chip.dark{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+  /* numbered row */
+  .numrow{display:flex;gap:64px;align-items:flex-start;}
+  .numrow .n{font-size:18px;color:var(--mute);letter-spacing:0.1em;font-weight:600;}
+  .numrow .lbl{font-size:36px;font-weight:700;margin-top:8px;}
+  .numrow .sub{font-size:18px;color:var(--mute);margin-top:6px;}
+
+  /* Slack modal mock */
+  .slack{
+    width:680px;background:#fff;border-radius:12px;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,0.18),0 0 0 1px #E4E4E4;
+    overflow:hidden;font-family:"Pretendard Variable",sans-serif;
+  }
+  .slack-head{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid #EEE;font-size:15px;color:#222;font-weight:600;}
+  .slack-head .x{margin-left:auto;color:#AAA;}
+  .slack-body{padding:22px;font-size:16px;color:#1d1c1d;line-height:1.5;}
+  .slack-msg{padding:12px 14px;background:#F8F8F8;border-radius:8px;margin-top:10px;}
+  .slack-foot{display:flex;gap:10px;padding:16px 22px;border-top:1px solid #EEE;}
+  .slack-btn{padding:10px 18px;border-radius:6px;font-size:15px;font-weight:600;}
+  .slack-btn.primary{background:#007a5a;color:#fff;}
+  .slack-btn.ghost{background:#fff;color:#1d1c1d;border:1px solid #DDD;}
+
+  /* tree */
+  .tree{font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace;font-size:20px;line-height:1.8;color:#222;}
+  .tree .muted{color:#999;}
+  .tree .y{background:var(--yellow);padding:0 4px;}
+
+  /* terminal */
+  .term{
+    background:#0E0E0E;border-radius:10px;padding:22px 26px;
+    font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace;
+    font-size:18px;line-height:1.7;color:#E8E8E8;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.4);
+  }
+  .term .prompt{color:#7A7A7A;}
+  .term .g{color:#7CE07C;}
+  .term .r{color:#FF7A7A;}
+  .term .y{color:var(--yellow);}
+  .term .dim{color:#8A8A8A;}
+
+  /* connector arrow */
+  .arrow{display:inline-flex;align-items:center;gap:8px;color:var(--mute);font-size:18px;}
+  .arrow::before{content:"→";font-size:22px;color:var(--ink);}
+
+  /* card */
+  .card{border:1px solid var(--rule);border-radius:14px;padding:28px 30px;background:#fff;}
+  .card.dark{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+  /* big number */
+  .bignum{font-size:240px;line-height:0.9;letter-spacing:-0.05em;font-weight:700;font-variant-numeric:tabular-nums;}
+  .midnum{font-size:140px;line-height:0.9;letter-spacing:-0.04em;font-weight:700;font-variant-numeric:tabular-nums;}
+
+  /* message arrow flow */
+  .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .flow .step{padding:14px 18px;border:1px solid var(--rule);border-radius:10px;background:#fff;min-width:140px;text-align:center;}
+  .flow .step .t{font-size:12px;letter-spacing:0.18em;color:var(--mute);text-transform:uppercase;font-weight:600;}
+  .flow .step .v{font-size:20px;margin-top:6px;font-weight:600;}
+  .flow .sep{color:var(--mute-2);font-size:22px;}
+  .flow .step.y{background:var(--yellow);border-color:var(--yellow);}
+  .flow .step.k{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .flow .step.k .t{color:#999;}
+
+  /* utility */
+  .pad{padding:140px 140px 140px 140px;box-sizing:border-box;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;}
+  .pad-top{padding:160px 140px 140px 140px;box-sizing:border-box;width:100%;height:100%;display:flex;flex-direction:column;}
+
+</style>
+</head>
+<body>
+
+<script type="application/json" id="speaker-notes">
+["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+</script>
+
+<deck-stage width="1920" height="1080">
+
+<!-- ============================================================
+     01 · 인트로 (1–5)
+     ============================================================ -->
+
+<!-- 1 · 후킹 타이틀 -->
+<section class="slide" data-label="Hook">
+  <div class="frame-top"><span>INTRO</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad" style="justify-content:flex-end;padding-bottom:200px;">
+    <div class="kicker" style="margin-bottom:36px;">— 01 —</div>
+    <div class="hero">
+      매일 아침,<br/>
+      AI가 <span class="hl">알림톡</span>을<br/>
+      들고 옵니다.
+    </div>
+    <div class="h-s" style="color:var(--mute);margin-top:56px;font-weight:500;">
+      에밀리 · 셀피쉬클럽 CRM PM &nbsp;·&nbsp; AAA 공유회 · 2026.04.28
+    </div>
+  </div>
+</section>
+
+<!-- 2 · 자기소개 -->
+<section class="slide" data-label="Hello">
+  <div class="frame-top"><span>INTRO · ABOUT</span><span>Emily · Selfish Club · AAA</span></div>
+  <div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:0;padding:160px 140px 140px;box-sizing:border-box;">
+    <div style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="eyebrow" style="margin-bottom:24px;">안녕하세요,</div>
+      <div class="h-xl" style="margin-bottom:44px;">에밀리<span style="color:var(--yellow);">.</span></div>
+      <div class="h-s" style="font-weight:500;color:#333;line-height:1.35;">
+        셀피쉬클럽 CRM PM<br/>
+        <span style="color:var(--mute);font-weight:400;">= 인하우스 풀스택 마케터</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:40px;max-width:520px;">
+        <span class="chip">#퍼포먼스</span>
+        <span class="chip">#그로스</span>
+        <span class="chip">#ops</span>
+        <span class="chip y">#효율충</span>
+        <span class="chip">#데이터자동화</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;">
+      <div style="position:relative;width:520px;height:620px;">
+        <!-- yellow frame offset -->
+        <div style="position:absolute;inset:20px 0 0 20px;background:var(--yellow);border-radius:14px;"></div>
+        <div style="position:absolute;inset:0 20px 20px 0;border-radius:14px;overflow:hidden;background:#111;box-shadow:0 24px 60px rgba(0,0,0,0.15);">
+          <img src="assets/emily.png" alt="Emily" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div style="position:absolute;right:-18px;bottom:-18px;background:#000;color:var(--yellow);padding:14px 20px;border-radius:10px;font-size:20px;font-weight:800;letter-spacing:0.08em;">EMILY</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · AAA 크루 이중 정체성 -->
+<section class="slide" data-label="AAA crew">
+  <div class="frame-top"><span>INTRO · AAA</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:40px;">— 03 —</div>
+    <div class="h-l" style="margin-bottom:80px;">
+      지난 6주, <span class="u">AAA팀</span>에 있었어요.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:56px;">
+      <div>
+        <div class="kicker" style="color:var(--ink);margin-bottom:18px;">WHY</div>
+        <div class="h-s" style="line-height:1.35;">반복에 쓰는 시간을<br/><span class="hl">기획</span>에 쓰고 싶어서.</div>
+      </div>
+      <div>
+        <div class="kicker" style="color:var(--ink);margin-bottom:18px;">WHAT</div>
+        <div class="h-s" style="line-height:1.35;">Claude Code로<br/>CRM 자동화를 직접.</div>
+      </div>
+      <div>
+        <div class="kicker" style="color:var(--ink);margin-bottom:18px;">NOW</div>
+        <div class="h-s" style="line-height:1.35;">아침 10시,<br/>슬랙 버튼 하나로 끝.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · 목차 -->
+<section class="slide" data-label="Contents">
+  <div class="frame-top"><span>CONTENTS</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 04 —</div>
+    <div class="h-l" style="margin-bottom:72px;">목차.</div>
+    <div style="display:grid;grid-template-columns:80px 1fr 1fr;row-gap:40px;column-gap:40px;max-width:1300px;">
+      <div class="h-m" style="color:var(--mute-2);">01</div>
+      <div class="h-m">지난 여정</div>
+      <div class="body-l" style="color:var(--mute);align-self:end;">여러분이 받은 메시지는 이렇게 나가요</div>
+
+      <div class="h-m" style="color:var(--mute-2);">02</div>
+      <div class="h-m">Step 1</div>
+      <div class="body-l" style="color:var(--mute);align-self:end;">자동화 구조 설계</div>
+
+      <div class="h-m" style="color:var(--mute-2);">03</div>
+      <div class="h-m">Step 2</div>
+      <div class="body-l" style="color:var(--mute);align-self:end;">AI한테 내 맥락 심기 · 하네스</div>
+
+      <div class="h-m" style="color:var(--mute-2);">04</div>
+      <div class="h-m">마무리</div>
+      <div class="body-l" style="color:var(--mute);align-self:end;">유즈케이스 · 임팩트 · 팀</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · TL;DR -->
+<section class="slide yellow" data-label="TL;DR">
+  <div class="frame-top"><span>TL;DR</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad" style="justify-content:center;">
+    <div class="kicker" style="margin-bottom:36px;color:#595b00;">— 05 —</div>
+    <div class="eyebrow" style="color:#595b00;margin-bottom:20px;">한 줄로 요약하면,</div>
+    <div style="font-size:200px;line-height:0.95;letter-spacing:-0.045em;font-weight:800;">
+      AI한테<br/>일 잘 시키는 법.
+    </div>
+    <div class="body-l" style="margin-top:56px;color:#3a3b00;">오늘 드릴 내용, 결국 이 한 줄이에요.</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     02 · WHY — 공유회 CRM이 촘촘한 일 (6–10)
+     ============================================================ -->
+
+<!-- 6 · 섹션 구분 — 메인카피 위, 5채널 폰 목업 아래 -->
+<style>
+  .ph{background:#E5E5E5;border-radius:32px;padding:22px 9px 14px;box-shadow:0 20px 40px rgba(0,0,0,0.55),inset 0 0 0 1.5px rgba(255,255,255,0.15);position:relative;}
+  .ph::before{content:"";position:absolute;top:10px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:99px;background:#B0B0B0;}
+  .ph-s{border-radius:18px;overflow:hidden;}
+  .ch-lbl{text-align:center;margin-top:22px;font-size:17px;color:rgba(255,255,255,0.6);letter-spacing:0.22em;font-weight:700;}
+  .ch-lbl b{color:#fff;margin-right:10px;}
+  .ph-s{zoom:1.35;}
+
+</style>
+<section class="slide dark" data-label="§1 Intro">
+  <div class="frame-top"><span>§ 1 · 지난 여정</span><span>Emily · Selfish Club · AAA</span></div>
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:110px 80px 90px;box-sizing:border-box;gap:40px;justify-content:center;">
+
+    <div style="text-align:center;">
+      <div class="kicker" style="color:rgba(255,255,255,0.5);margin-bottom:18px;">— 06 —</div>
+      <div style="font-size:68px;line-height:1.15;letter-spacing:-0.025em;font-weight:800;color:#fff;">
+        여러분은 어떤 <span style="color:var(--yellow);">메시지</span>를 통해<br/>
+        이 공유회에 오게 되셨나요?
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:28px;align-items:start;">
+
+      <div>
+        <div class="ph">
+          <div class="ph-s" style="background:#1A1A1A;padding:10px 8px;">
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:8px;">
+              <div style="width:22px;height:22px;border-radius:50%;background:#FEE500;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <div style="font-size:5px;font-weight:900;color:#000;line-height:1;text-align:center;">SELFISH<br/>CLUB</div>
+              </div>
+              <div style="color:#fff;font-size:9px;font-weight:700;flex:1;">셀피쉬클럽</div>
+            </div>
+            <div style="background:#fff;border-radius:6px;overflow:hidden;color:#111;">
+              <div style="background:#FEE500;padding:5px 8px;font-size:8px;font-weight:800;">알림톡 도착</div>
+              <div style="padding:8px 8px 9px;font-size:7px;line-height:1.55;color:#222;">
+                <div style="font-size:10px;font-weight:800;line-height:1.25;letter-spacing:-0.01em;color:#111;">
+                  이기적 공유회<br/>이번 주제는?
+                </div>
+                <div style="margin-top:6px;">📣 혹시.. 무슨 일 하세요? AI를 실무에 어떻게 써야 할지 감이 오실 거예요</div>
+                <div style="margin-top:6px;font-size:7px;line-height:1.7;color:#111;">
+                  🟨 <b>AAA 무료 공유회</b><br/>
+                  🟨 <b>4월 28일 (화) 20:30</b>
+                </div>
+                <div style="color:#333;margin-top:6px;font-size:6.5px;line-height:1.5;">
+                  셀피쉬 크루 <b>8명</b>이 업무에 AI 에이전트를 붙여본 <b>6주</b>, <span style="border-bottom:1px solid #FEE500;font-weight:700;">낱낱이 공개해요</span>
+                </div>
+                <div style="color:#B45309;margin-top:6px;font-size:6.5px;font-weight:600;">⚠️ VOD 제공 X — 라이브 필수!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ch-lbl"><b>01</b>알림톡</div>
+      </div>
+
+      <div>
+        <div class="ph">
+          <div class="ph-s" style="background:#fff;">
+            <div style="background:#F2F2F2;padding:9px 8px 7px;text-align:center;border-bottom:1px solid #E5E5E5;">
+              <div style="font-size:9px;font-weight:800;color:#111;">셀피쉬클럽</div>
+              <div style="font-size:6px;color:#888;margin-top:1px;">cs.selfishclub@gmail.com</div>
+            </div>
+            <div style="padding:8px 7px 10px;">
+              <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+                <div style="width:14px;height:14px;border-radius:50%;background:#FEE500;display:flex;align-items:center;justify-content:center;">
+                  <div style="font-size:3.5px;font-weight:900;color:#000;line-height:1;text-align:center;">SELFISH<br/>CLUB</div>
+                </div>
+                <div style="font-size:6.5px;color:#111;"><span style="color:#888;">(광고)</span><b>셀피쉬클럽</b></div>
+              </div>
+              <div style="background:#000;color:#fff;border-radius:3px;padding:10px 6px 12px;text-align:center;">
+                <div style="font-size:4.5px;color:rgba(255,255,255,0.5);margin-bottom:3px;letter-spacing:0.05em;">무료 공유회 · 4.28</div>
+                <div style="font-size:9px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;">AI, '딸-깍'이<br/>가능할까요?</div>
+                <div style="font-size:6.5px;font-weight:700;margin-top:3px;line-height:1.25;">6주간 직접<br/>부딪쳐봤습니다.</div>
+                <div style="font-size:15px;margin-top:5px;line-height:1;">🧽</div>
+              </div>
+              <div style="font-size:6px;line-height:1.55;color:#222;margin-top:7px;">
+                AI, 막상 실제 업무에 적용하기 어렵진 않으셨나요? 🤔
+                <div style="margin-top:5px;">셀피쉬 크루 <b>8명</b>이 Claude Code로 각자 업무에 AI 에이전트를 직접 붙여본 <b>6주</b>, 낱낱이 공개!</div>
+                <div style="margin-top:5px;">🟨 <b>AAA 무료 공유회</b> (선착순)<br/>🟨 <b>4월 28일 (화) 20:30</b></div>
+                <div style="margin-top:5px;color:#B45309;font-weight:600;">⚠️ VOD 제공 X, 라이브 필수!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ch-lbl"><b>02</b>카플친</div>
+      </div>
+
+      <div>
+        <div class="ph">
+          <div class="ph-s" style="background:#000;">
+            <div style="display:flex;align-items:center;gap:5px;padding:7px 8px;border-bottom:1px solid rgba(255,255,255,0.08);">
+              <div style="width:14px;height:14px;border-radius:50%;background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF);padding:1px;box-sizing:border-box;">
+                <div style="width:100%;height:100%;border-radius:50%;background:#000;padding:1px;box-sizing:border-box;">
+                  <div style="width:100%;height:100%;border-radius:50%;background:#fff;"></div>
+                </div>
+              </div>
+              <div style="font-size:7px;font-weight:700;color:#fff;flex:1;">selfishclub_official</div>
+              <div style="color:#fff;font-size:9px;letter-spacing:1px;">···</div>
+            </div>
+            <div style="padding:11px 10px 10px;">
+              <div style="font-size:7px;color:rgba(255,255,255,0.55);margin-bottom:5px;">릴스에 맨날</div>
+              <div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:5px;">
+                <span style="padding:1px 5px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:3px;font-size:6.5px;font-weight:700;color:#fff;">클로드</span>
+                <span style="padding:1px 5px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:3px;font-size:6.5px;font-weight:700;color:#fff;">에이전트</span>
+                <span style="padding:1px 5px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:3px;font-size:6.5px;font-weight:700;color:#fff;">하네스</span>
+              </div>
+              <div style="font-size:6px;color:rgba(255,255,255,0.5);margin-bottom:10px;font-style:italic;">"AI가 시대를 바꿨다…"</div>
+              <div style="font-size:7px;font-weight:500;color:rgba(255,255,255,0.75);font-style:italic;margin-bottom:2px;">그래서,</div>
+              <div style="font-size:9px;color:#fff;font-weight:500;line-height:1.15;letter-spacing:-0.02em;margin-bottom:6px;">
+                진짜 <span style="border-bottom:1.5px solid var(--yellow);font-weight:800;">내 업무</span>에는
+              </div>
+              <div style="font-size:19px;line-height:0.98;color:var(--yellow);font-weight:900;letter-spacing:-0.04em;">
+                어떻게<br/><span style="color:#fff;">적용</span>하는데?
+              </div>
+              <div style="margin-top:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.12);font-size:7.5px;font-weight:800;color:#fff;line-height:1.4;">
+                <span style="color:var(--yellow);">8명</span>이 <span style="color:var(--yellow);">6주간</span> 적용해본<br/>
+                <span style="border-bottom:1.5px solid var(--yellow);">찐 후기 공개</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;border-top:1px solid rgba(255,255,255,0.08);color:#fff;font-size:9px;">
+              <span>♡</span><span>💬</span><span>↗</span>
+              <span style="margin-left:auto;">🔖</span>
+            </div>
+          </div>
+        </div>
+        <div class="ch-lbl"><b>03</b>인스타</div>
+      </div>
+
+      <div>
+        <div class="ph">
+          <div class="ph-s" style="background:#B2C7D9;padding:7px 6px 9px;">
+            <div style="display:flex;align-items:center;gap:4px;padding:1px 2px 5px;color:#111;">
+              <span style="font-size:8px;">←</span>
+              <span style="font-size:7px;font-weight:700;flex:1;">AAA 공유회 오픈톡방</span>
+              <span style="font-size:7px;">☰</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;background:rgba(255,255,255,0.75);border-radius:4px;padding:3px 6px;margin-bottom:5px;font-size:6.5px;color:#3a3a3a;font-weight:700;">
+              📌 <span>공지 · 방장</span>
+            </div>
+            <div style="display:flex;gap:4px;align-items:flex-start;">
+              <div style="width:14px;height:14px;border-radius:3px;background:#000;color:#FAE100;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;flex-shrink:0;">E</div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;">
+                <div style="font-size:6px;color:#333;font-weight:700;">에밀리 · 방장</div>
+                <div style="background:#FAE100;border-radius:2px 8px 8px 8px;padding:6px 8px;font-size:6.5px;line-height:1.5;color:#111;">
+                  <div style="font-weight:800;font-size:7.5px;">[무료] 셀피쉬 AI Agent 찐활용 공유회 🎉</div>
+                  <div style="color:#0A66C2;margin-top:1px;">@all</div>
+                  <div style="margin-top:4px;">🎬 터미널에서 영상까지 뽑는 OS<br/>📒 노션 대신 옵시디언 웹페이지<br/>📊 결제·예약·CRM·광고 한 화면에<br/>🎯 실제 서비스 만든 이야기</div>
+                  <div style="margin-top:4px;">👇 이런 분께 추천<br/>😰 AI 시작점 모르는 분<br/>😰 이론 말고 찐 얘기 원하는 분<br/>😰 혼자하기 막막한 분</div>
+                  <div style="margin-top:4px;">🎆 <b>스폰지클럽</b>(크루 양성+커뮤니티) 시작 👀</div>
+                  <div style="margin-top:4px;">📅 <b>4/28 (화) 20:30</b> · 무료<br/>⚠️ VOD 없음<br/>👉 <span style="color:#0A66C2;text-decoration:underline;">bit.ly/4eHdq0G</span></div>
+                </div>
+                <div style="font-size:5.5px;color:#666;">오전 10:24</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ch-lbl"><b>04</b>오카방</div>
+      </div>
+
+      <div>
+        <div class="ph">
+          <div class="ph-s" style="background:#0E1526;">
+            <div style="display:flex;align-items:center;gap:5px;padding:7px 8px;border-bottom:1px solid rgba(255,255,255,0.08);font-size:6.5px;color:rgba(255,255,255,0.55);">
+              <div style="width:14px;height:14px;border-radius:50%;background:#FEE500;color:#000;display:flex;align-items:center;justify-content:center;font-size:6.5px;font-weight:900;flex-shrink:0;">S</div>
+              <div style="flex:1;min-width:0;">
+                <div style="color:#fff;font-size:7.5px;font-weight:700;">셀피쉬클럽</div>
+                <div>to me · 오전 10:24</div>
+              </div>
+              <div style="font-size:8px;">✉</div>
+            </div>
+            <div style="padding:12px 9px 10px;display:flex;flex-direction:column;gap:7px;color:#fff;">
+              <div style="font-size:10px;font-weight:800;line-height:1.2;letter-spacing:-0.02em;text-align:center;">
+                AI, '딸-깍'이<br/>가능할까요?
+              </div>
+              <div style="font-size:8px;font-weight:700;line-height:1.25;text-align:center;">
+                6주간 직접<br/>부딪쳐봤습니다.
+              </div>
+              <div style="background:#fff;border-radius:4px;padding:5px 4px;">
+                <div style="font-size:6.5px;font-weight:800;color:#D43A3A;text-align:center;line-height:1.3;">
+                  📣 4/28(화) 20:30<br/>무료 공유회, 지금 신청!
+                </div>
+              </div>
+              <div style="font-size:6px;line-height:1.55;color:rgba(255,255,255,0.85);">
+                "<b style="color:#fff;">딸깍 한 번이면 자동화</b>"는 얘기 많지만, <span style="color:var(--yellow);">막상 내 업무에 가져오면 쉽게 포기</span>하기 마련이에요.
+                <div style="margin-top:4px;">'되는구나'와 '내 일에 쓴다' 사이의 간극, <span style="color:var(--yellow);font-weight:700;">6주간 좁혀온 팀</span>이 있어요.</div>
+                <div style="margin-top:4px;color:rgba(255,255,255,0.7);">셀피쉬클럽 <b style="color:#fff;">AAA팀 8명</b>, <span style="color:var(--yellow);">Claude Code</span>로 각자 업무에 에이전트를 붙여봤어요.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ch-lbl"><b>05</b>이메일</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 7 · 4채널 -->
+<section class="slide" data-label="4 channels">
+  <div class="frame-top"><span>§ 1 · 지난 여정</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 07 —</div>
+    <div class="h-l" style="margin-bottom:24px;">공유회 1건이 열리면,</div>
+    <div class="h-l" style="margin-bottom:72px;">채널 <span class="hl">네 개</span>가 동시에 나가요.</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;">
+      <div>
+        <div class="kicker" style="color:var(--mute);margin-bottom:16px;">01</div>
+        <div class="h-s">알림톡</div>
+        <div class="cap" style="margin-top:12px;">카카오 · 템플릿 9종</div>
+      </div>
+      <div>
+        <div class="kicker" style="color:var(--mute);margin-bottom:16px;">02</div>
+        <div class="h-s">카플친</div>
+        <div class="cap" style="margin-top:12px;">플러스친구 소식</div>
+      </div>
+      <div>
+        <div class="kicker" style="color:var(--mute);margin-bottom:16px;">03</div>
+        <div class="h-s">채널톡</div>
+        <div class="cap" style="margin-top:12px;">앱 내 팝업</div>
+      </div>
+      <div>
+        <div class="kicker" style="color:var(--mute);margin-bottom:16px;">04</div>
+        <div class="h-s">오카방</div>
+        <div class="cap" style="margin-top:12px;">오픈채팅 공지</div>
+      </div>
+    </div>
+    <div class="rule" style="margin-top:60px;"></div>
+    <div class="body" style="margin-top:24px;color:var(--mute);">오늘은 이 중에서 <span style="color:var(--ink);font-weight:600;">알림톡</span> 얘기만 할 거예요. 제일 빡센 녀석이거든요.</div>
+  </div>
+</section>
+
+<!-- 8 · 알림톡 복잡도 (핵심 숫자) -->
+<section class="slide" data-label="Complexity">
+  <div class="frame-top"><span>§ 1 · 지난 여정</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 08 —</div>
+    <div class="h-l" style="margin-bottom:16px;">알림톡, 얼마나 빡세냐면.</div>
+    <div class="body-l" style="color:var(--mute);margin-bottom:72px;">공유회 1건당 이렇게 나가요.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:48px;">
+      <div>
+        <div class="bignum">10</div>
+        <div class="h-s" style="margin-top:24px;">일</div>
+        <div class="cap" style="margin-top:10px;">D-10 부터 D-day 까지</div>
+      </div>
+      <div>
+        <div class="bignum"><span style="background:var(--yellow);padding:0 .08em;">9</span></div>
+        <div class="h-s" style="margin-top:40px;">번 발송</div>
+        <div class="cap" style="margin-top:10px;">승인 템플릿 9종</div>
+      </div>
+      <div>
+        <div class="bignum">N</div>
+        <div class="h-s" style="margin-top:24px;">번 바뀌는 대상자</div>
+        <div class="cap" style="margin-top:10px;">매 시점마다 다름</div>
+      </div>
+    </div>
+    <div class="rule" style="margin-top:72px;"></div>
+    <div style="display:flex;gap:40px;margin-top:28px;">
+      <div class="body" style="color:#333;">· D-5 <span style="color:var(--mute);">오픈알림 안 받은 사람만</span></div>
+      <div class="body" style="color:#333;">· D-1 <span style="color:var(--mute);">신청자만</span></div>
+      <div class="body" style="color:#333;">· D-day <span style="color:var(--mute);">결제자만</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · 매번 수동 SQL -->
+<section class="slide" data-label="Manual SQL">
+  <div class="frame-top"><span>§ 1 · 지난 여정</span><span>Emily · Selfish Club · AAA</span></div>
+  <div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;padding:160px 140px 140px;box-sizing:border-box;gap:80px;">
+    <div style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="kicker" style="margin-bottom:28px;">— 09 —</div>
+      <div class="h-l" style="margin-bottom:32px;">근데 이거,<br/>생각보다 <span class="u">손이 많이 가요.</span></div>
+      <div class="body-l" style="color:#333;max-width:520px;">
+        매번 <span style="font-weight:600;">수동으로 DB를 발랐어요.</span><br/>
+        신청자 추출 → 미신청자 분리 → 다음 타겟 세팅.
+      </div>
+      <div class="body" style="color:var(--mute);margin-top:20px;">조건 하나 바뀌면, 또 또 또.</div>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <div style="width:100%;background:#F6F6F6;border-radius:12px;padding:28px 32px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:16px;line-height:1.75;color:#222;">
+        <div style="color:#888;">-- 공유회 오픈 알림 대상자</div>
+        <div><span style="color:#B45309;">SELECT</span> u_phone, u_name</div>
+        <div><span style="color:#B45309;">FROM</span> membership</div>
+        <div><span style="color:#B45309;">WHERE</span> marketing_agree = <span style="color:#16A34A;">true</span>;</div>
+        <div style="height:18px;"></div>
+        <div style="color:#888;">-- 리마인드 (미신청자만)</div>
+        <div><span style="color:#B45309;">SELECT</span> u_phone <span style="color:#888;">FROM</span> membership m</div>
+        <div><span style="color:#B45309;">WHERE NOT EXISTS</span> (</div>
+        <div>&nbsp;&nbsp;<span style="color:#B45309;">SELECT</span> 1 <span style="color:#B45309;">FROM</span> event e</div>
+        <div>&nbsp;&nbsp;<span style="color:#B45309;">WHERE</span> e.u_phone = m.u_phone);</div>
+        <div style="height:18px;"></div>
+        <div style="color:#888;">-- D-1 확정자만 골라내기</div>
+        <div><span style="color:#B45309;">SELECT</span> u_phone <span style="color:#888;">FROM</span> event</div>
+        <div><span style="color:#B45309;">WHERE</span> status = <span style="color:#16A34A;">'confirmed'</span>;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · Before/After + 슬랙 -->
+<section class="slide" data-label="Before After">
+  <div class="frame-top"><span>§ 1 · 지난 여정</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 10 —</div>
+    <div class="h-l" style="margin-bottom:72px;">그래서 AAA 6주간, <span class="hl">자동화</span>를 시작했어요.</div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:72px;align-items:center;max-width:1500px;">
+      <div style="text-align:center;">
+        <div class="kicker" style="margin-bottom:20px;">BEFORE</div>
+        <div style="font-size:200px;line-height:1;letter-spacing:-0.04em;font-weight:700;color:var(--mute);">3<span style="font-size:110px;letter-spacing:-0.02em;">h</span></div>
+        <div class="body" style="color:var(--mute);margin-top:28px;">하루 3시간, 수동 SQL + 발송</div>
+      </div>
+      <div style="font-size:120px;color:var(--mute-2);font-weight:300;">→</div>
+      <div style="text-align:center;">
+        <div class="kicker" style="margin-bottom:20px;">AFTER</div>
+        <div style="font-size:200px;line-height:1;letter-spacing:-0.04em;font-weight:700;"><span style="background:var(--yellow);padding:0 .06em;">5<span style="font-size:110px;letter-spacing:-0.02em;">min</span></span></div>
+        <div class="body" style="margin-top:28px;">슬랙 승인 한 번 누르면 끝.</div>
+      </div>
+    </div>
+    <div class="rule" style="margin-top:80px;"></div>
+    <div class="body-l" style="margin-top:28px;color:#333;">오늘 아침 제 슬랙엔 이게 와요. <span style="color:var(--mute);">→ 다음 장</span></div>
+  </div>
+</section>
+
+<!-- 11 · 슬랙 모달 풀 -->
+<section class="slide" data-label="Slack modal">
+  <div class="frame-top"><span>§ 1 · 지난 여정</span><span>Emily · Selfish Club · AAA</span></div>
+  <div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;padding:160px 140px 140px;box-sizing:border-box;gap:80px;">
+    <div style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="kicker" style="margin-bottom:28px;">— 11 —</div>
+      <div class="h-l" style="margin-bottom:32px;">지금 제 하루는<br/>이렇게 시작해요.<br/><span class="u">슬랙 하나로.</span></div>
+      <div style="margin-top:40px;display:flex;flex-direction:column;gap:22px;">
+        <div class="numrow"><div style="min-width:60px;"><div class="n">① AM 10:00</div></div><div><div class="lbl">모달이 와요</div><div class="sub">오늘 나갈 메시지 통합 리스트</div></div></div>
+        <div class="numrow"><div style="min-width:60px;"><div class="n">② 수정·승인</div></div><div><div class="lbl">한 번에 끝</div><div class="sub">시간·링크·카피 다 모달 안에서</div></div></div>
+        <div class="numrow"><div style="min-width:60px;"><div class="n">③ 예약 발송</div></div><div><div class="lbl">알아서 나가요</div><div class="sub">Solapi로 자동</div></div></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;">
+      <div class="slack">
+        <div class="slack-head">
+          <span style="width:20px;height:20px;border-radius:4px;background:#4A154B;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;">#</span>
+          <span>오늘의 알림톡 · 승인 요청</span>
+          <span class="x">✕</span>
+        </div>
+        <div class="slack-body">
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <div style="width:36px;height:36px;border-radius:6px;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">🌟</div>
+            <div style="flex:1;">
+              <div style="font-weight:700;font-size:15px;">알림톡봇 <span style="background:#EEE;color:#555;font-size:11px;padding:1px 6px;border-radius:3px;margin-left:4px;font-weight:600;">앱</span> <span style="color:#999;font-weight:400;font-size:13px;margin-left:6px;">오전 11:05</span></div>
+              <div style="color:#1d1c1d;margin-top:4px;font-size:15px;">🔗 <b>[#6 입장링크] 비개발자를 위한 클로드코드앱 &amp; 깃헙 실전 정복기 — 수정됨</b> ✏️</div>
+              <div style="color:#1d1c1d;margin-top:10px;font-size:14px;line-height:1.55;">
+                <b>대상:</b> 1명<br/>
+                ⏰ <b>발송시간:</b> 11:11<br/>
+                🔗 <b>URL:</b> <span style="color:#1264A3;text-decoration:underline;">sepia-quartz-81f.notion.site/3305c...</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="slack-msg" style="margin-top:14px;">
+            <div style="font-size:13px;font-weight:700;color:#1d1c1d;margin-bottom:8px;">📋 수정된 미리보기:</div>
+            <div style="font-size:13px;color:#1d1c1d;line-height:1.6;background:#fff;border:1px solid #EEE;border-radius:6px;padding:12px 14px;">
+              {이름}님께서 신청하신<br/>
+              <b>이기적공유회</b>가 <b>20:00</b>에 시작됩니다 😊<br/>
+              늦지 않게 입장해주세요!<br/><br/>
+              🟨 <b>공유회명</b> : 비개발자를 위한 클로드코드앱 &amp; 깃헙 실전 정복기<br/>
+              🟨 <b>라이브혜택</b> :<br/>
+              &nbsp;&nbsp;공유회 다시보기 <b>VOD 제공</b><br/>
+              &nbsp;&nbsp;라이브 완주 시 추가 혜택 공개<br/>
+              👇 하단 '라이브 입장하기' 클릭 👇
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;color:#996500;font-size:13px;font-weight:600;">
+            <span>⚠️</span>
+            <div><b>승인 시 예약 발송이 확정됩니다.</b> <span style="color:#666;font-weight:500;">카피·링크·시간을 반드시 확인 후 승인해주세요.</span></div>
+          </div>
+        </div>
+        <div class="slack-foot">
+          <button class="slack-btn primary" style="white-space:nowrap;">✅ 이대로 발송</button>
+          <button class="slack-btn ghost" style="white-space:nowrap;">✏️ 수정</button>
+          <button class="slack-btn ghost" style="white-space:nowrap;color:#C0392B;border-color:#F5C6C1;background:#FDEDEC;">❌ 취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     03 · STEP 1 — 자동화 구조 (12–16)
+     ============================================================ -->
+
+<!-- 12 · Step 1 챕터 -->
+<section class="slide dark" data-label="§2 Step 1">
+  <div class="frame-top"><span>§ 2 · STEP 1</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad" style="justify-content:center;">
+    <div class="kicker" style="color:rgba(255,255,255,0.5);margin-bottom:36px;">— 12 —</div>
+    <div class="eyebrow" style="color:rgba(255,255,255,0.6);margin-bottom:24px;">여기서부터 본편.</div>
+    <div style="font-size:180px;line-height:0.95;letter-spacing:-0.04em;font-weight:700;">
+      Step 1.<br/>
+      <span style="color:var(--yellow);">자동화 구조</span> 설계.
+    </div>
+    <div class="body-l" style="color:rgba(255,255,255,0.6);margin-top:60px;">노트북을 덮어도, 퇴근한 뒤에도 — 메시지가 나가게.</div>
+  </div>
+</section>
+
+<!-- 13 · 도구 셋 -->
+<section class="slide" data-label="Stack">
+  <div class="frame-top"><span>§ 2 · STEP 1</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 13 —</div>
+    <div class="h-l" style="margin-bottom:16px;">그 전에, <span class="hl">도구 셋.</span></div>
+    <div class="body-l" style="color:var(--mute);margin-bottom:72px;">셀피쉬가 쓰는 스택이에요.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;">
+      <div class="card">
+        <div class="kicker" style="color:var(--mute);">01</div>
+        <div class="h-m" style="margin:16px 0 12px;">Slack</div>
+        <div class="body" style="color:#333;margin-bottom:6px;">커뮤니케이션 · 승인</div>
+        <div class="cap">메신저이자 승인 게이트</div>
+      </div>
+      <div class="card">
+        <div class="kicker" style="color:var(--mute);">02</div>
+        <div class="h-m" style="margin:16px 0 12px;">Supabase</div>
+        <div class="body" style="color:#333;margin-bottom:6px;">데이터베이스</div>
+        <div class="cap">멤버·신청·일정 한 곳에</div>
+      </div>
+      <div class="card dark">
+        <div class="kicker" style="color:#999;">03</div>
+        <div class="h-m" style="margin:16px 0 12px;color:var(--yellow);">n8n</div>
+        <div class="body" style="color:#EEE;margin-bottom:6px;">자동화 워크플로우</div>
+        <div class="cap" style="color:#999;">서버에서 24/7</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · 삽질 ① — 노트북 꺼짐 -->
+<section class="slide" data-label="Pitfall 1">
+  <div class="frame-top"><span>§ 2 · STEP 1</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 14 — &nbsp;&nbsp; T — 1주 · 첫 삽질</div>
+    <div class="h-l" style="margin-bottom:60px;">노트북 덮으면 <span class="u">멈추는</span> 자동화?</div>
+    <div style="max-width:1100px;display:flex;flex-direction:column;gap:18px;">
+      <div style="display:flex;gap:20px;">
+        <div style="min-width:80px;" class="kicker">나</div>
+        <div class="body-l" style="color:#222;">미신청자 뽑아서, 저녁 7시에 이거 보내줘.</div>
+      </div>
+      <div style="display:flex;gap:20px;">
+        <div style="min-width:80px;" class="kicker">Claude</div>
+        <div class="body-l" style="color:#222;">네, 7시에 보낼게요.</div>
+      </div>
+      <div style="display:flex;gap:20px;">
+        <div style="min-width:80px;" class="kicker">나</div>
+        <div class="body-l" style="color:#222;">…근데 저 6시에 퇴근하거든요. 노트북 끄고 가도 돼요?</div>
+      </div>
+      <div style="display:flex;gap:20px;">
+        <div style="min-width:80px;" class="kicker">Claude</div>
+        <div class="body-l" style="color:#222;">아… 노트북이 꺼지면, 저는 못 보내요.</div>
+      </div>
+    </div>
+    <div class="rule" style="margin-top:56px;"></div>
+    <div class="h-s" style="margin-top:28px;">→ 내가 없어도 돌아갈 무언가가 필요했어요.</div>
+  </div>
+</section>
+
+<!-- 15 · 만드는 건 Claude, 보내는 건 n8n -->
+<section class="slide" data-label="Claude + n8n">
+  <div class="frame-top"><span>§ 2 · STEP 1</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 15 —</div>
+    <div class="h-l" style="margin-bottom:72px;">그래서, <span class="hl">만드는 건 Claude,</span> <span class="hl">보내는 건 n8n.</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;">
+      <div class="card" style="padding:44px 44px;">
+        <div class="kicker" style="color:var(--mute);margin-bottom:20px;">만드는 역할</div>
+        <div class="h-m" style="margin-bottom:24px;">Claude Code</div>
+        <div class="body" style="color:#333;">알림톡 내용·조건·타이밍을 설계.</div>
+        <div class="body" style="color:var(--mute);margin-top:10px;">내가 노트북 켰을 때만 돌아요.</div>
+      </div>
+      <div class="card dark" style="padding:44px 44px;">
+        <div class="kicker" style="color:#999;margin-bottom:20px;">보내는 역할</div>
+        <div class="h-m" style="margin-bottom:24px;color:var(--yellow);">n8n</div>
+        <div class="body" style="color:#EEE;">설계된 알림톡을 실제로 발송.</div>
+        <div class="body" style="color:#999;margin-top:10px;">서버에서 <span style="color:#fff;font-weight:600;">24시간</span> 계속 돌아요.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 · 삽질 ② — 오타 공포 → 슬랙 승인 -->
+<section class="slide" data-label="Pitfall 2">
+  <div class="frame-top"><span>§ 2 · STEP 1</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 16 —</div>
+    <div class="h-l" style="margin-bottom:16px;">근데 또 불안했어요.</div>
+    <div class="body-l" style="color:var(--mute);margin-bottom:64px;">완전 자동은 무서운 이유가 있죠.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:36px;">
+      <div class="card" style="border-color:#000;">
+        <div class="h-s">오타 한 번</div>
+        <div class="body" style="color:var(--mute);margin-top:12px;">= 6,800명이 동시에 본다</div>
+      </div>
+      <div class="card" style="border-color:#000;">
+        <div class="h-s">링크 깨짐</div>
+        <div class="body" style="color:var(--mute);margin-top:12px;">= 유입 <span style="font-weight:700;color:var(--ink);">0</span></div>
+      </div>
+      <div class="card" style="border-color:#000;">
+        <div class="h-s">타겟 실수</div>
+        <div class="body" style="color:var(--mute);margin-top:12px;">신청 안 한 사람한테 "내일 봐요"</div>
+      </div>
+    </div>
+    <div class="rule-ink" style="margin-top:72px;"></div>
+    <div class="h-m" style="margin-top:28px;">사람이 한 번 보는 관문을 넣자. <span class="hl">→ Slack 승인.</span></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     04 · STEP 2 — 하네스 (귀납적 서사) (17–21)
+     ============================================================ -->
+
+<!-- 17 · Step 2 챕터 -->
+<section class="slide dark" data-label="§3 Step 2">
+  <div class="frame-top"><span>§ 3 · STEP 2</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad" style="justify-content:center;">
+    <div class="kicker" style="color:rgba(255,255,255,0.5);margin-bottom:36px;">— 17 —</div>
+    <div class="eyebrow" style="color:rgba(255,255,255,0.6);margin-bottom:24px;">자동화만으론 안 되더라.</div>
+    <div style="font-size:180px;line-height:0.95;letter-spacing:-0.04em;font-weight:700;">
+      Step 2.<br/>
+      AI한테 <span style="color:var(--yellow);">내 맥락</span>을 심는 법.
+    </div>
+    <div class="body-l" style="color:rgba(255,255,255,0.6);margin-top:60px;">'이게 하네스구나'를 알기까지 좀 걸렸어요.</div>
+  </div>
+</section>
+
+<!-- 18 · CLAUDE.md 353줄 스크린샷 -->
+<section class="slide" data-label="CLAUDE.md 353">
+  <div class="frame-top"><span>§ 3 · STEP 2</span><span>Emily · Selfish Club · AAA</span></div>
+  <div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;padding:160px 140px 140px;box-sizing:border-box;gap:72px;">
+    <div style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="kicker" style="margin-bottom:28px;">— 18 —</div>
+      <div class="h-l" style="margin-bottom:28px;">규칙이 너무 많아서,<br/><span class="mono" style="background:var(--yellow);padding:0 .1em;font-weight:800;">CLAUDE.md 353줄</span>에<br/>다 박았어요.</div>
+      <div class="body-l" style="color:var(--mute);max-width:540px;">
+        근데 AI가 자꾸 틀리고 까먹음.<br/>
+        맥북 2개 쓰는데, 다른 맥북 켜면<br/>
+        <span style="color:var(--ink);font-weight:600;">일주일 전 기억이 마지막.</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <div style="width:100%;background:#F6F6F6;border-radius:10px;padding:28px 28px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;line-height:1.55;color:#222;max-height:780px;overflow:hidden;position:relative;">
+        <div style="color:#888;max-width:60%;"># 셀피쉬 CRM 운영 규칙</div>
+        <div style="color:#888;max-width:60%;"># v2.1 — 2026.03.14</div>
+        <div style="height:10px;"></div>
+        <div style="color:#B45309;">## 톤앤매너</div>
+        <div>- 존댓말 · 이모지 1개 이하</div>
+        <div>- '~님' 호칭 통일</div>
+        <div>- 느낌표 남발 금지</div>
+        <div style="height:8px;"></div>
+        <div style="color:#B45309;">## 알림톡 타이밍</div>
+        <div>- D-5 오픈알림 / D-3 리마인드</div>
+        <div>- D-1 확정자 / D-0 입장링크</div>
+        <div>- D+1 후기 유도</div>
+        <div style="height:8px;"></div>
+        <div style="color:#B45309;">## 타겟팅 예외</div>
+        <div>- 수신거부 자동 제외</div>
+        <div>- 최근 30일 이탈자 제외</div>
+        <div>- VIP는 별도 템플릿</div>
+        <div style="height:8px;"></div>
+        <div style="color:#B45309;">## 링크 규칙</div>
+        <div>- 공유회 상세: event.selfishclub.co/:id</div>
+        <div>- UTM: utm_source=kakao&utm_medium=alimtalk</div>
+        <div>- 단축: s.slfc.to/ 항상 사용</div>
+        <div style="height:8px;"></div>
+        <div style="color:#B45309;">## 변수 네이밍</div>
+        <div>- {{member_name}} / {{event_title}}</div>
+        <div>- 날짜 포맷: YYYY.MM.DD (HH:mm)</div>
+        <div style="color:#888;">... 계속</div>
+        <div style="position:absolute;right:20px;top:20px;background:#E9ED12;padding:8px 14px;border-radius:4px;font-size:14px;font-weight:700;z-index:2;box-shadow:0 0 0 6px #F6F6F6;">353 lines</div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:140px;background:linear-gradient(transparent,#F6F6F6);"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 · 질문 던지기 -->
+<section class="slide" data-label="Ask Claude">
+  <div class="frame-top"><span>§ 3 · STEP 2</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 19 —</div>
+    <div class="h-l" style="margin-bottom:64px;">그래서 그냥 <span class="u">걔한테 물어봤어요.</span></div>
+    <div style="max-width:1200px;background:#F8F8F8;border-radius:16px;padding:56px 64px;">
+      <div class="kicker" style="margin-bottom:20px;">TO: CLAUDE</div>
+      <div class="h-m" style="line-height:1.3;font-weight:600;">
+        "너한테 기억 잘 주려면<br/>
+        뭘 가져야 해?<br/>
+        <span style="color:var(--mute);">…네가 생각하는 </span><span class="hl">하네스</span><span style="color:var(--mute);">는 뭐야?"</span>
+      </div>
+    </div>
+    <div class="body-l" style="color:var(--mute);margin-top:48px;">AAA팀에서 '하네스'라는 단어만 언뜻 들었던 참이었거든요.</div>
+  </div>
+</section>
+
+<!-- 20 · 3축 (공간·기억·학습) -->
+<section class="slide" data-label="3 axes">
+  <div class="frame-top"><span>§ 3 · STEP 2</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:28px;">— 20 —</div>
+    <div class="body-l" style="color:var(--mute);margin-bottom:12px;">걔가 답해준 거 정리해보니</div>
+    <div class="h-l" style="margin-bottom:72px;">세 가지로 모이더라고요.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;">
+      <div>
+        <div style="font-size:18px;letter-spacing:0.18em;color:var(--mute);margin-bottom:16px;font-weight:600;">01 / SPACE</div>
+        <div class="h-m" style="margin-bottom:20px;"><span class="hl">공간</span></div>
+        <div class="body" style="color:#333;line-height:1.5;">기록이 <span style="font-weight:600;">쌓일 자리</span>를 만들어주기.</div>
+        <div class="cap" style="margin-top:12px;">폴더 구조 · 파일 네이밍 규칙</div>
+      </div>
+      <div>
+        <div style="font-size:18px;letter-spacing:0.18em;color:var(--mute);margin-bottom:16px;font-weight:600;">02 / MEMORY</div>
+        <div class="h-m" style="margin-bottom:20px;"><span class="hl">기억</span></div>
+        <div class="body" style="color:#333;line-height:1.5;">세션 시작할 때 <span style="font-weight:600;">자동으로 읽게</span> 만들기.</div>
+        <div class="cap" style="margin-top:12px;">MEMORY.md · 자동 로드</div>
+      </div>
+      <div>
+        <div style="font-size:18px;letter-spacing:0.18em;color:var(--mute);margin-bottom:16px;font-weight:600;">03 / LEARNING</div>
+        <div class="h-m" style="margin-bottom:20px;"><span class="hl">학습</span></div>
+        <div class="body" style="color:#333;line-height:1.5;">규칙을 안 지키면 <span style="font-weight:600;">막게</span> 만들기.</div>
+        <div class="cap" style="margin-top:12px;">pre-commit 훅 · 커밋 차단</div>
+      </div>
+    </div>
+    <div class="rule" style="margin-top:72px;"></div>
+    <div class="body-l" style="margin-top:28px;color:#333;">적용해보니 잘 돌더라고요. <span style="color:var(--mute);">알고 보니 이게 '하네스'였던 거예요.</span></div>
+  </div>
+</section>
+
+<!-- 21 · 메모리 작동 장면 (타이틀/컨텍스트) -->
+<section class="slide yellow" data-label="Memory in action">
+  <div class="frame-top"><span>§ 3 · STEP 2</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad" style="justify-content:center;">
+    <div class="kicker" style="color:#595b00;margin-bottom:36px;">— 21 —</div>
+    <div class="eyebrow" style="color:#595b00;margin-bottom:24px;">근데 이게 말로만 들으면 감이 안 와요.</div>
+    <div style="font-size:180px;line-height:0.95;letter-spacing:-0.045em;font-weight:800;">
+      실제로는<br/>
+      이렇게 <span style="background:#000;color:var(--yellow);padding:0 .08em;">작동</span>해요.
+    </div>
+    <div class="body-l" style="margin-top:56px;color:#3a3b00;">MEMORY.md 인덱스 갱신 — 한 장면에 3축이 다 걸려 있어요.</div>
+  </div>
+</section>
+
+<!-- 22 · 메모리 작동 장면 (다이어그램) -->
+<section class="slide" data-label="Memory diagram">
+  <div class="frame-top"><span>§ 3 · STEP 2</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad-top" style="padding-top:130px;">
+    <div class="kicker" style="margin-bottom:24px;">— 22 —</div>
+    <div class="h-l" style="margin-bottom:16px;">세션 저장 → 커밋 차단 → 인덱스 추가.</div>
+    <div class="body-l" style="color:var(--mute);margin-bottom:48px;">이 한 사이클이 곧 하네스가 돌아가는 모습이에요.</div>
+
+    <div style="display:grid;grid-template-columns:1.1fr 1.3fr;gap:56px;flex:1;min-height:0;">
+      <!-- Left: folder tree -->
+      <div>
+        <div class="kicker" style="margin-bottom:18px;">공간 · 폴더 구조</div>
+        <div class="tree" style="background:#FAFAFA;border:1px solid var(--rule);border-radius:10px;padding:28px 30px;">
+          <div><span class="muted">📁</span> memory/</div>
+          <div>&nbsp;&nbsp;├─ <span class="y">MEMORY.md</span> <span class="muted">← 인덱스</span></div>
+          <div>&nbsp;&nbsp;├─ session_0418_aaa.md</div>
+          <div>&nbsp;&nbsp;├─ session_0421_crm.md <span class="muted">new</span></div>
+          <div>&nbsp;&nbsp;├─ feedback_0419.md</div>
+          <div>&nbsp;&nbsp;└─ <span class="muted">...</span></div>
+          <div style="height:10px;"></div>
+          <div><span class="muted">📁</span> .husky/</div>
+          <div>&nbsp;&nbsp;└─ <span class="y">pre-commit</span> <span class="muted">← 검사</span></div>
+        </div>
+        <div class="cap" style="margin-top:14px;">세션 파일이 쌓이면 MEMORY.md에도 한 줄 추가돼야 함.</div>
+      </div>
+
+      <!-- Right: terminal + axes -->
+      <div style="display:flex;flex-direction:column;gap:24px;">
+        <div class="kicker">학습 · pre-commit 훅이 막음</div>
+        <div class="term">
+          <div><span class="prompt">$</span> git commit -m "add session_0421"</div>
+          <div class="dim">running pre-commit…</div>
+          <div class="dim">✓ lint</div>
+          <div class="dim">✓ type-check</div>
+          <div class="r">✗ memory-index</div>
+          <div style="height:6px;"></div>
+          <div><span class="r">❌ 인덱스 누락 1건</span> — <span class="y">MEMORY.md</span>에 추가 필요</div>
+          <div class="dim">&nbsp;&nbsp;· memory/session_0421_crm.md</div>
+          <div style="height:6px;"></div>
+          <div class="dim">commit aborted.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+          <div style="padding:14px 16px;border:1px solid var(--rule);border-radius:10px;">
+            <div style="font-size:12px;letter-spacing:0.18em;color:var(--mute);font-weight:600;">SPACE</div>
+            <div style="font-size:18px;margin-top:6px;font-weight:600;">폴더 구조가<br/>자리를 만듦</div>
+          </div>
+          <div style="padding:14px 16px;border:1px solid var(--rule);border-radius:10px;">
+            <div style="font-size:12px;letter-spacing:0.18em;color:var(--mute);font-weight:600;">MEMORY</div>
+            <div style="font-size:18px;margin-top:6px;font-weight:600;">MEMORY.md가<br/>매 세션 자동 로드</div>
+          </div>
+          <div style="padding:14px 16px;background:var(--ink);color:#fff;border-radius:10px;">
+            <div style="font-size:12px;letter-spacing:0.18em;color:#999;font-weight:600;">LEARNING</div>
+            <div style="font-size:18px;margin-top:6px;font-weight:600;color:var(--yellow);">훅이 규칙을<br/>강제함</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     05 · 유즈케이스 (23–25)
+     ============================================================ -->
+
+<!-- 23 · 유즈케이스 ① 알림톡 PRD -->
+<section class="slide" data-label="UC1 PRD">
+  <div class="frame-top"><span>§ 4 · 유즈케이스</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad-top" style="padding-top:130px;">
+    <div class="kicker" style="margin-bottom:24px;">— 23 — &nbsp;&nbsp; USE CASE ①</div>
+    <div class="h-l" style="margin-bottom:16px;">규칙을 <span class="hl">md 파일</span>로 빼서 AI가 읽게.</div>
+    <div class="body-l" style="color:var(--mute);margin-bottom:44px;">353줄 CLAUDE.md → 역할별 PRD로 분리.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 80px 1fr;gap:24px;align-items:stretch;flex:1;min-height:0;">
+      <!-- BEFORE -->
+      <div style="background:#F6F6F6;border-radius:12px;padding:30px 32px;">
+        <div class="kicker" style="margin-bottom:18px;color:var(--mute);">BEFORE</div>
+        <div class="h-s" style="margin-bottom:18px;">CLAUDE.md 하나에 다 박음</div>
+        <div class="tree" style="font-size:17px;">
+          <div>📄 CLAUDE.md <span class="muted">353 lines</span></div>
+          <div class="muted">&nbsp;&nbsp;톤 · 타이밍 · 타겟 · 링크 ·</div>
+          <div class="muted">&nbsp;&nbsp;변수 · 예외 · 채널별 규칙…</div>
+          <div class="muted">&nbsp;&nbsp;(전부 한 파일)</div>
+        </div>
+        <div class="cap" style="margin-top:18px;color:#B45309;">→ 길어서 AI가 끝까지 안 읽음</div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;font-size:72px;color:var(--mute-2);font-weight:300;">→</div>
+
+      <!-- AFTER -->
+      <div style="background:var(--ink);color:#fff;border-radius:12px;padding:30px 32px;">
+        <div class="kicker" style="margin-bottom:18px;color:var(--yellow);">AFTER</div>
+        <div class="h-s" style="margin-bottom:18px;">역할별 PRD로 쪼갬</div>
+        <div class="tree" style="font-size:17px;color:#EEE;">
+          <div>📁 prd/</div>
+          <div>&nbsp;&nbsp;├─ <span style="color:var(--yellow);">alimtalk.md</span> <span style="color:#999;">알림톡 규칙</span></div>
+          <div>&nbsp;&nbsp;├─ <span style="color:var(--yellow);">tone.md</span> <span style="color:#999;">톤앤매너</span></div>
+          <div>&nbsp;&nbsp;├─ <span style="color:var(--yellow);">targeting.md</span> <span style="color:#999;">예외 규칙</span></div>
+          <div>&nbsp;&nbsp;└─ <span style="color:var(--yellow);">links.md</span> <span style="color:#999;">UTM · 단축</span></div>
+        </div>
+        <div class="cap" style="margin-top:18px;color:#BBB;">→ AI가 그때그때 필요한 것만 로드</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 24 · 유즈케이스 ② 에이전트 8개 -->
+<section class="slide" data-label="UC2 Agents">
+  <div class="frame-top"><span>§ 4 · 유즈케이스</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad-top" style="padding-top:130px;">
+    <div class="kicker" style="margin-bottom:24px;">— 24 — &nbsp;&nbsp; USE CASE ②</div>
+    <div class="h-l" style="margin-bottom:16px;"><span class="hl">에이전트 8개</span>, 역할을 쪼갰어요.</div>
+    <div class="body-l" style="color:var(--mute);margin-bottom:44px;">한 명이 다 하는 대신, 직원 여덟 명처럼.</div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;flex:1;min-height:0;align-content:start;">
+      <div class="card" style="padding:22px 24px;">
+        <div class="kicker" style="color:var(--mute);">01</div>
+        <div class="h-s" style="margin:8px 0 4px;font-size:28px;">director</div>
+        <div class="cap">전체 흐름 지휘</div>
+      </div>
+      <div class="card" style="padding:22px 24px;">
+        <div class="kicker" style="color:var(--mute);">02</div>
+        <div class="h-s" style="margin:8px 0 4px;font-size:28px;">copywriter</div>
+        <div class="cap">카피 초안 작성</div>
+      </div>
+      <div class="card" style="padding:22px 24px;">
+        <div class="kicker" style="color:var(--mute);">03</div>
+        <div class="h-s" style="margin:8px 0 4px;font-size:28px;">data-collector</div>
+        <div class="cap">DB에서 타겟 조회</div>
+      </div>
+      <div class="card" style="padding:22px 24px;">
+        <div class="kicker" style="color:var(--mute);">04</div>
+        <div class="h-s" style="margin:8px 0 4px;font-size:28px;">dispatcher</div>
+        <div class="cap">실제 발송 트리거</div>
+      </div>
+      <div class="card" style="padding:22px 24px;background:var(--yellow);border-color:var(--yellow);">
+        <div class="kicker" style="color:#595b00;">05</div>
+        <div class="h-s" style="margin:8px 0 4px;font-size:28px;">verifier</div>
+        <div class="cap" style="color:#595b00;">링크·변수 검수</div>
+      </div>
+      <div class="card" style="padding:22px 24px;">
+        <div class="kicker" style="color:var(--mute);">06</div>
+        <div class="h-s" style="margin:8px 0 4px;font-size:28px;">scheduler</div>
+        <div class="cap">예약 시점 관리</div>
+      </div>
+      <div class="card" style="padding:22px 24px;">
+        <div class="kicker" style="color:var(--mute);">07</div>
+        <div class="h-s" style="margin:8px 0 4px;font-size:28px;">reporter</div>
+        <div class="cap">발송 리포트</div>
+      </div>
+      <div class="card dark" style="padding:22px 24px;">
+        <div class="kicker" style="color:#999;">08</div>
+        <div class="h-s" style="margin:8px 0 4px;font-size:28px;color:var(--yellow);">code-reviewer</div>
+        <div class="cap" style="color:#BBB;">검수 게이트</div>
+      </div>
+    </div>
+
+    <div class="cap" style="margin-top:22px;">↑ code-reviewer는 AAA 과제 중에 '검수가 필요하다'는 걸 깨닫고 뒤늦게 추가한 역할이에요.</div>
+  </div>
+</section>
+
+<!-- 25 · 유즈케이스 ③ 촘촘한 CRM 자동화 -->
+<section class="slide" data-label="UC3 CRM flow">
+  <div class="frame-top"><span>§ 4 · 유즈케이스</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad-top" style="padding-top:130px;">
+    <div class="kicker" style="margin-bottom:24px;">— 25 — &nbsp;&nbsp; USE CASE ③</div>
+    <div class="h-l" style="margin-bottom:16px;">발송이 <span class="u">다음 발송을 만들어요.</span></div>
+    <div class="body-l" style="color:var(--mute);margin-bottom:56px;">알림톡 한 번 나가면, 그다음이 자동으로 세팅돼요.</div>
+
+    <div class="flow" style="justify-content:space-between;flex-wrap:nowrap;overflow:hidden;">
+      <div class="step y"><div class="t">STEP 1 · 내가 누름</div><div class="v">알림톡 ①<br/>발송</div></div>
+      <div class="sep">→</div>
+      <div class="step"><div class="t">AGENT</div><div class="v">data-collector<br/>신청자 조회</div></div>
+      <div class="sep">→</div>
+      <div class="step"><div class="t">AGENT</div><div class="v">dispatcher<br/>신청자 제외 세팅</div></div>
+      <div class="sep">→</div>
+      <div class="step k"><div class="t">STEP 2 · 자동</div><div class="v">미신청자 전용<br/>알림톡 ② 발송</div></div>
+    </div>
+    <div class="cap" style="margin-top:14px;text-align:center;">STEP 1만 내가 승인하면 돼요 — 나머지는 에이전트끼리 릴레이로 STEP 2를 만들어요.</div>
+
+    <div class="rule" style="margin-top:56px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:32px;">
+      <div>
+        <div class="kicker" style="margin-bottom:10px;color:var(--mute);">옛날엔</div>
+        <div class="body-l" style="color:#222;">알림톡 ① 보내고 → 다음 날 수동으로 신청자 빼고 → 미신청자만 추려서 ② 보냄.</div>
+      </div>
+      <div>
+        <div class="kicker" style="margin-bottom:10px;">지금은</div>
+        <div class="body-l" style="color:#222;">알림톡 ① 발송 직후에 에이전트끼리 자동으로 <span class="hl">다음 타겟을 재조회.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     06 · IMPACT · 팀 · 아웃트로 (26–28)
+     ============================================================ -->
+
+<!-- 26 · IMPACT -->
+<section class="slide" data-label="Impact">
+  <div class="frame-top"><span>§ 5 · IMPACT</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:32px;">— 26 —</div>
+    <div class="h-l" style="margin-bottom:72px;">그래서 뭐가 바뀌었냐면.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;">
+      <div>
+        <div class="kicker" style="color:var(--mute);margin-bottom:14px;">알림톡 1건</div>
+        <div style="font-size:120px;line-height:1.05;letter-spacing:-0.04em;font-weight:700;">3h<br/><span style="color:var(--mute-2);font-size:60px;font-weight:400;">→</span> <span style="background:var(--yellow);padding:0 .04em;">5min</span></div>
+        <div class="body" style="color:#333;margin-top:18px;">매일 아침 슬랙 모달 한 번.</div>
+      </div>
+      <div>
+        <div class="kicker" style="color:var(--mute);margin-bottom:14px;">공유회 준비</div>
+        <div style="font-size:120px;line-height:1.05;letter-spacing:-0.04em;font-weight:700;">2d<br/><span style="color:var(--mute-2);font-size:60px;font-weight:400;">→</span> 1h</div>
+        <div class="body" style="color:#333;margin-top:18px;">채널별 발송 세팅 전체.</div>
+      </div>
+      <div>
+        <div class="kicker" style="color:var(--mute);margin-bottom:14px;">리스크</div>
+        <div class="h-m" style="margin-top:6px;">오타·링크 실수<br/><span class="hl">검수 단계에서 차단.</span></div>
+      </div>
+    </div>
+    <div class="rule" style="margin-top:72px;"></div>
+    <div class="body-l" style="margin-top:28px;color:#222;max-width:1100px;">
+      퇴근 직전 카피 쓰다 지쳤던 제가, <span style="font-weight:600;">맥북 닫고 집에 가도</span> 메시지가 나가요.
+    </div>
+  </div>
+</section>
+
+<!-- 27 · 팀 — 스폰지클럽 -->
+<section class="slide" data-label="Team Sponge">
+  <div class="frame-top"><span>§ 6 · 팀</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="margin-bottom:28px;">— 27 —</div>
+    <div class="h-l" style="margin-bottom:16px;">혼자 한 거 아니에요.</div>
+    <div class="body-l" style="color:var(--mute);margin-bottom:44px;">AAA 6주, 옆자리에서 이렇게 영향받았어요.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px 60px;">
+      <div style="display:flex;gap:20px;">
+        <div class="chip dark" style="min-width:90px;justify-content:center;">비비안</div>
+        <div class="body" style="color:#222;">전체 대시보드 크루랑 협업하면서, <span style="font-weight:600;">내 CRM이 전체 어디에 들어가는지</span> 감 잡음.</div>
+      </div>
+      <div style="display:flex;gap:20px;">
+        <div class="chip dark" style="min-width:90px;justify-content:center;">다니</div>
+        <div class="body" style="color:#222;">마케팅 OS 보면서 영향받아, <span style="font-weight:600;">CLAUDE.md → PRD 구조</span> 차용.</div>
+      </div>
+      <div style="display:flex;gap:20px;">
+        <div class="chip y" style="min-width:130px;justify-content:center;">code-reviewer</div>
+        <div class="body" style="color:#222;">AAA 과제로 <span style="font-weight:600;">하네스 서로 공유</span>하다 "검수가 필요하다" 깨닫고 만든 에이전트.</div>
+      </div>
+      <div style="display:flex;gap:20px;">
+        <div class="chip dark" style="min-width:90px;justify-content:center;">흐민 · 오웬</div>
+        <div class="body" style="color:#222;">흐민의 <span style="font-weight:600;">'질문하는 AI'</span>, 오웬의 <span style="font-weight:600;">'찜마켓'</span> 보면서 활용 범위 확장.</div>
+      </div>
+    </div>
+
+    <div class="rule" style="margin-top:60px;"></div>
+    <div class="h-m" style="margin-top:28px;">그래서 <span class="hl">스폰지클럽.</span></div>
+    <div class="body-l" style="color:#333;margin-top:12px;">빨아들이고, 내보내고, 또 누군가가 빨아들이고.</div>
+  </div>
+</section>
+
+<!-- 28 · 아웃트로 -->
+<section class="slide dark" data-label="Outro">
+  <div class="frame-top"><span>OUTRO</span><span>Emily · Selfish Club · AAA</span></div>
+  <div class="pad">
+    <div class="kicker" style="color:rgba(255,255,255,0.5);margin-bottom:36px;">— 28 —</div>
+    <div class="eyebrow" style="color:rgba(255,255,255,0.6);margin-bottom:24px;">여러분은 이렇게 해보세요.</div>
+    <div class="h-xl" style="margin-bottom:72px;">내일부터 <span style="color:var(--yellow);">세 가지</span>만.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:44px;max-width:1500px;">
+      <div>
+        <div class="kicker" style="color:rgba(255,255,255,0.5);margin-bottom:18px;">01</div>
+        <div class="h-s" style="color:#fff;">한 파일로 시작하기.</div>
+        <div class="body" style="color:rgba(255,255,255,0.6);margin-top:10px;">CLAUDE.md에 내 규칙부터 적어보기.</div>
+      </div>
+      <div>
+        <div class="kicker" style="color:rgba(255,255,255,0.5);margin-bottom:18px;">02</div>
+        <div class="h-s" style="color:#fff;">걔한테 먼저 물어보기.</div>
+        <div class="body" style="color:rgba(255,255,255,0.6);margin-top:10px;">"내 맥락 잘 기억하려면 뭘 줘야 해?"</div>
+      </div>
+      <div>
+        <div class="kicker" style="color:rgba(255,255,255,0.5);margin-bottom:18px;">03</div>
+        <div class="h-s" style="color:#fff;">사람 관문 하나 남겨두기.</div>
+        <div class="body" style="color:rgba(255,255,255,0.6);margin-top:10px;">완전 자동 말고, 승인 한 번.</div>
+      </div>
+    </div>
+    <div class="rule" style="margin-top:80px;background:rgba(255,255,255,0.15);"></div>
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-top:32px;">
+      <div class="h-l" style="color:#fff;">감사합니다.<br/><span style="color:var(--yellow);">Q & A.</span></div>
+      <div class="body" style="color:rgba(255,255,255,0.5);text-align:right;">
+        에밀리 · 셀피쉬클럽 CRM PM<br/>
+        AAA 공유회 · 2026.04.28
+      </div>
+    </div>
+  </div>
+</section>
+
+</deck-stage>
+
+</body>
+</html>

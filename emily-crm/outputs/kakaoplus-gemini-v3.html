@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오톡 플러스친구 와이드형 배너 3종 - SELFISH CLUB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #d0ccc6;
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .banner-container {
+            width: 800px;
+            height: 480px;
+            position: relative;
+            margin-bottom: 60px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box; /* 패딩, 보더가 width/height에 포함되도록 */
+            color: #333; /* 기본 글씨색 */
+        }
+        .banner-container:last-child {
+            margin-bottom: 0;
+        }
+        .text-highlight {
+            background: linear-gradient(to top, #ffe100 30%, transparent 30%);
+            padding: 0 4px;
+            line-height: 1.2; /* 하이라이트가 텍스트를 너무 많이 침범하지 않도록 */
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+        .badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            z-index: 10;
+            white-space: nowrap;
+        }
+        .date-time-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            z-index: 10;
+            letter-spacing: -0.5px;
+        }
+
+        /* 오픈 배너 스타일 */
+        .open-banner {
+            background: linear-gradient(to bottom right, #fffdf8, #fff4e8); /* 웜톤 밝은 배경 */
+        }
+        .open-banner .main-title {
+            position: absolute;
+            top: 60px;
+            left: 380px;
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.3;
+            color: #2c2c2c;
+            width: 380px;
+            text-align: left;
+        }
+        .open-banner .sub-text {
+            position: absolute;
+            top: 250px;
+            left: 380px;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.6;
+            color: #6a6a6a;
+            width: 380px;
+            text-align: left;
+        }
+        .open-banner .image-section {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 360px;
+            height: 100%;
+            background-color: #f7e0c4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            box-sizing: border-box;
+            background-image: url('https://via.placeholder.com/360x480/d3b08e/ffffff?text=AI+영상+고민'); /* 예시 이미지 */
+            background-size: cover;
+            background-position: center;
+        }
+        .open-banner .image-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.1));
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 80px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .open-banner .pain-point-text {
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            max-width: 280px;
+        }
+        .open-banner .icon {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            font-size: 80px;
+            color: #ff9100;
+            opacity: 0.7;
+            transform: rotate(15deg);
+        }
+
+        /* 리마인드 배너 스타일 */
+        .remind-banner {
+            background: linear-gradient(to right, #e8dff7, #d4c1ee); /* 라벤더/보라 톤 */
+        }
+        .remind-banner .main-text-area {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 60px; /* 날짜바 공간 */
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .remind-banner .d-day {
+            font-size: 110px;
+            font-weight: 900;
+            color: #6a0dad; /* 진한 보라색 */
+            line-height: 1.1;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .remind-banner .sub-main-copy {
+            font-size: 44px;
+            font-weight: 800;
+            color: #3f0a7a;
+            line-height: 1.3;
+            margin-bottom: 25px;
+        }
+        .remind-banner .description {
+            font-size: 22px;
+            font-weight: 500;
+            color: #5c3c8f;
+            line-height: 1.5;
+            max-width: 600px;
+        }
+        .remind-banner .glow-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 60%),
+                        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+        }
+
+        /* 마감 배너 스타일 */
+        .close-banner {
+            background-color: #ffffff; /* 화이트 배경 */
+        }
+        .close-banner .red-strip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            background-color: #ff2d55; /* 강조 레드 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 60px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 5;
+        }
+        .close-banner .main-focus-area {
+            position: absolute;
+            top: 140px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 140px - 60px); /* 레드 스트립 + 날짜바 제외 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .close-banner .program-title {
+            font-size: 38px;
+            font-weight: 800;
+            color: #2c2c2c;
+            line-height: 1.3;
+            margin-bottom: 15px;
+            max-width: 700px;
+        }
+        .close-banner .urgent-message {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e0002f;
+            line-height: 1.5;
+            max-width: 650px;
+            margin-bottom: 30px;
+        }
+        .close-banner .cta-button {
+            display: inline-block;
+            background-color: #ff2d55;
+            color: #ffffff;
+            padding: 18px 40px;
+            border-radius: 30px;
+            font-size: 26px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(255, 45, 85, 0.4);
+            transition: background-color 0.3s ease;
+        }
+        .close-banner .cta-button:hover {
+            background-color: #e0002f;
+        }
+        .close-banner .badge {
+            background-color: rgba(0, 0, 0, 0.6);
+            top: 160px; /* 레드 스트립 아래로 배치 */
+            left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. 오픈 배너 -->
+    <div class="banner-container open-banner">
+        <div class="badge">SELFISH CLUB</div>
+        <div class="image-section">
+            <div class="image-overlay">
+                <p class="pain-point-text">
+                    "AI 영상... <br>
+                    <span class="text-highlight" style="background: linear-gradient(to top, #ffe100 40%, transparent 40%);">AI 티가 너무 나요!</span><br>
+                    <span class="text-highlight" style="background: linear-gradient(to top, #ffe100 40%, transparent 40%);">얼굴도 계속 바뀌고...</span><br>
+                    <span class="text-highlight" style="background: linear-gradient(to top, #ffe100 40%, transparent 40%);">촬영/모델 비용도 부담돼요!</span>"
+                </p>
+            </div>
+        </div>
+        <h1 class="main-title">
+            이제 <span class="text-highlight">AI 티 안 나게</span><br>
+            <span class="text-highlight">고퀄리티 영상</span><br>
+            뚝딱 만드는 법<br>
+            <span style="font-size: 42px; font-weight: 700; display: block; margin-top: 10px;">이기적공유회에서 만나요!</span>
+        </h1>
+        <p class="sub-text">
+            패션, 뷰티, 바디케어 현업 크리에이터 4인이<br>
+            실제 워크플로우를 그대로 공개합니다.<br>
+            당신의 영상 제작 고민, 여기서 끝내세요!
+        </p>
+        <div class="icon">✨</div> <!-- 시각적 요소 추가 -->
+        <div class="date-time-bar">
+            3/16(월) 저녁 8시, ZOOM 라이브 진행!
+        </div>
+    </div>
+
+    <!-- 2. 리마인드 배너 -->
+    <div class="banner-container remind-banner">
+        <div class="glow-effect"></div>
+        <div class="badge">SELFISH CLUB</div>
+        <div class="main-text-area">
+            <p class="d-day"><span class="text-highlight" style="background: linear-gradient(to top, #fffb92 35%, transparent 35%);">마감 D-3</span></p>
+            <h2 class="sub-main-copy">
+                현업 크리에이터들의 <span class="text-highlight" style="background: linear-gradient(to top, #fffb92 35%, transparent 35%);">AI 영상 비법</span><br>
+                이대로 놓치실 건가요?
+            </h2>
+            <p class="description">
+                AI 영상으로 고민만 하셨던 분들, 지금이 기회입니다!<br>
+                패션, 뷰티, 바디케어 분야 <span style="font-weight: 700;">4인의 전문가</span>가<br>
+                <span style="font-weight: 700;">AI 티 없는 고품질 영상 제작</span> 노하우를 공개합니다.<br>
+                서두르지 않으면 참여할 수 없어요!
+            </p>
+        </div>
+        <div class="date-time-bar">
+            3/16(월) 저녁 8시, ZOOM 라이브 | 3/16(월) 저녁 6시 마감
+        </div>
+    </div>
+
+    <!-- 3. 마감 배너 -->
+    <div class="banner-container close-banner">
+        <div class="red-strip">
+            🔥 오늘 마감! 놓치면 후회할 기회! 🔥
+        </div>
+        <div class="badge">SELFISH CLUB</div>
+        <div class="main-focus-area">
+            <h2 class="program-title">
+                <span class="text-highlight" style="background: linear-gradient(to top, #ffe100 30%, transparent 30%);">AI 비즈니스 영상</span>의 모든 것,<br>
+                <span class="text-highlight" style="background: linear-gradient(to top, #ffe100 30%, transparent 30%);">이기적공유회</span>에서 확인하세요!
+            </h2>
+            <p class="urgent-message">
+                <span style="color: #ff2d55; font-weight: 700;">단 하루!</span> 지금 신청하지 않으면<br>
+                AI 영상 제작의 혁신을 경험할 기회를 영원히 놓칩니다.
+            </p>
+            <a href="#" class="cta-button">
+                지금 바로 신청하기
+            </a>
+        </div>
+        <div class="date-time-bar" style="background-color: #ff2d55; color: #fff;">
+            신청 마감: 3/16(월) 저녁 6시까지!
+        </div>
+    </div>
+
+</body>
+</html>

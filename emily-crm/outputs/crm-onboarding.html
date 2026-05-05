@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>셀피쉬클럽 공유회 CRM 자동화 — 온보딩</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --card: #f8f8fa;
+    --card-hover: #f0f0f4;
+    --border: #e2e2e8;
+    --accent: #6c47ff;
+    --accent2: #e85d2a;
+    --accent3: #00a67d;
+    --text: #1a1a1a;
+    --text-dim: #555;
+    --text-muted: #999;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+  }
+  nav .container {
+    display: flex; gap: 8px; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav .container::-webkit-scrollbar { display: none; }
+  nav a {
+    color: var(--text-dim); text-decoration: none;
+    padding: 8px 16px; border-radius: 20px;
+    font-size: 15px; white-space: nowrap;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  nav a:hover, nav a.active {
+    color: var(--accent); border-color: var(--accent);
+    background: rgba(108,71,255,0.06);
+  }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #1a1a1a 30%, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 20px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 32px;
+  }
+
+  /* Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 60px;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* Section */
+  section {
+    padding: 60px 0;
+    border-top: 1px solid var(--border);
+  }
+  section h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  section .subtitle {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+
+  /* Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.2s;
+  }
+  .card:hover { border-color: var(--accent); background: var(--card-hover); }
+  .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card p { font-size: 15px; color: var(--text-dim); }
+
+  /* Mermaid */
+  .mermaid-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 24px;
+    overflow-x: auto;
+    margin-bottom: 24px;
+  }
+  .mermaid { text-align: center; }
+  .mermaid svg { max-width: 100%; }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent3));
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 32px;
+    padding: 20px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -28px; top: 24px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #fff;
+  }
+  .tl-item.done::before { background: var(--accent3); }
+  .tl-item.current::before {
+    background: var(--accent2);
+    box-shadow: 0 0 8px var(--accent2);
+  }
+  .tl-date {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .tl-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .tl-desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+  .tl-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-top: 8px;
+    margin-right: 4px;
+  }
+  .tag-done { background: rgba(0,166,125,0.1); color: var(--accent3); }
+  .tag-wip { background: rgba(232,93,42,0.1); color: var(--accent2); }
+  .tag-plan { background: rgba(108,71,255,0.1); color: var(--accent); }
+
+  /* Phase Flow */
+  .phase-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .phase-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .phase-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .phase-card:nth-child(1)::before { background: var(--accent); }
+  .phase-card:nth-child(2)::before { background: #22d3ee; }
+  .phase-card:nth-child(3)::before { background: #facc15; }
+  .phase-card:nth-child(4)::before { background: var(--accent2); }
+  .phase-card:nth-child(5)::before { background: #f43f5e; }
+  .phase-card:nth-child(6)::before { background: var(--accent3); }
+  .phase-num {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .phase-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .phase-items {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+  .phase-items span {
+    display: block;
+    padding-left: 12px;
+    position: relative;
+  }
+  .phase-items span::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  /* Tech Stack */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .tech-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: all 0.2s;
+  }
+  .tech-item:hover { border-color: var(--accent); }
+  .tech-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .tech-info h4 { font-size: 16px; font-weight: 600; }
+  .tech-info p { font-size: 14px; color: var(--text-dim); margin-top: 2px; }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { border-color: var(--text-dim); color: var(--text); }
+  .tab-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 12px 14px;
+    color: var(--text-dim);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  .data-table tr:hover td { background: rgba(124,92,252,0.04); }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-auto { background: rgba(108,71,255,0.1); color: var(--accent); }
+  .badge-modal { background: rgba(0,166,125,0.1); color: var(--accent3); }
+  .badge-manual { background: rgba(232,93,42,0.1); color: var(--accent2); }
+
+  /* Before/After */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .compare-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .compare-box h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .compare-box ul {
+    list-style: none;
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+  .compare-box ul li::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .compare-box.before ul li::before { background: #f43f5e; }
+  .compare-box.after ul li::before { background: var(--accent3); }
+  .compare-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--text-muted);
+    padding-top: 40px;
+  }
+
+  /* Agent section */
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .agent-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .agent-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .agent-emoji { font-size: 28px; margin-bottom: 8px; }
+  .agent-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .agent-role { font-size: 13px; color: var(--text-dim); }
+  .agent-model {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    margin-top: 6px;
+    background: rgba(108,71,255,0.08);
+    color: var(--accent);
+  }
+
+  /* Footer */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .compare { grid-template-columns: 1fr; }
+    .compare-arrow { transform: rotate(90deg); padding: 0; }
+    .phase-flow { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="#why" class="active">Why</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#flow">CRM Flow</a>
+    <a href="#channels">Channels</a>
+    <a href="#agents">AI Agents</a>
+    <a href="#tech">Tech Stack</a>
+    <a href="#devlog">Dev Log</a>
+    <a href="#status">Status</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-badge">SELFISH CLUB CRM AUTOMATION</div>
+    <h1>"CRM 시작해줘" 한 마디로<br>시작되는 CRM 자동화 이야기</h1>
+    <p>공유회 1건당 6개 채널, 9종 알림톡, 30+개 콘텐츠.<br>이 모든 걸 한 문장으로 시작해서 승인 한 번으로 끝냅니다.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">채널</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">9종</div>
+        <div class="stat-label">알림톡 템플릿</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">자동 생성 콘텐츠</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3주</div>
+        <div class="stat-label">구축 기간</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- WHY -->
+<section id="why">
+  <div class="container">
+    <h2>왜 만들었나</h2>
+    <p class="subtitle">1인 마케터 에밀리의 Pain Point에서 시작</p>
+
+    <!-- 배경 설명 -->
+    <div class="card" style="margin-bottom: 32px; border-color: var(--accent); border-left: 3px solid var(--accent);">
+      <h3>셀피쉬클럽 공유회란?</h3>
+      <p>셀피쉬클럽은 이기적멤버십이라는 유료 커뮤니티를 운영한다. <strong>공유회</strong>는 외부 전문가를 초청해서 멤버들에게 제공하는 라이브 세미나.<br>
+      매달 2~3건씩 열리는데, 매번 <strong>모집 오픈 → 리마인드 → 마감 → 당일 안내 → 사후 VOD 발송</strong>까지 6개 채널에서 수십 개 메시지를 보내야 한다.<br>
+      이걸 1인 마케터(에밀리)가 혼자 수작업으로 해왔다.</p>
+    </div>
+
+    <!-- Before: 수동 프로세스 상세 -->
+    <h3 style="margin-bottom: 16px; font-size: 18px;">Before — 공유회 1건에 필요한 수작업</h3>
+    <div class="manual-timeline" style="margin-bottom: 32px;">
+      <div class="manual-step" style="display: grid; grid-template-columns: 100px 1fr; gap: 16px; margin-bottom: 16px; padding: 16px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; border-left: 3px solid #f43f5e;">
+        <div style="font-size: 12px; color: #f43f5e; font-weight: 600;">D-7<br><span style="color: var(--text-muted); font-size: 11px;">사전세팅</span></div>
+        <div style="font-size: 15px; color: var(--text-dim); line-height: 1.9;">
+          &#128221; 상세페이지에서 제목/공유자/일정/가격/혜택 정보 직접 정리<br>
+          &#128279; UTM 파라미터 21개를 규칙 보면서 수동 생성 (source/medium/campaign 조합)<br>
+          &#128279; bit.ly 3개 각각 만들기 (오카방 3방 각각 다른 URL)<br>
+          &#9997;&#65039; 알림톡/카플친/오카방/온드미디어/인스타 — <strong>6채널 카피 각각 직접 작성</strong><br>
+          &#127912; 카플친 배너 3종(오픈/리마인드/마감) <strong>직접 디자인+제작</strong><br>
+          &#128197; 리틀리/대화방소식/웰컴메시지/소식 수동 세팅<br>
+          <strong style="color: #f43f5e;">소요: 반나절 (3~4시간)</strong>
+        </div>
+      </div>
+      <div class="manual-step" style="display: grid; grid-template-columns: 100px 1fr; gap: 16px; margin-bottom: 16px; padding: 16px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; border-left: 3px solid #f43f5e;">
+        <div style="font-size: 12px; color: #f43f5e; font-weight: 600;">D-day<br><span style="color: var(--text-muted); font-size: 11px;">공유회 당일</span></div>
+        <div style="font-size: 15px; color: var(--text-dim); line-height: 1.9;">
+          &#128202; Supabase에서 신청자/미신청자 데이터 직접 추출+세팅<br>
+          &#9200; 13:00 — 할인쿠폰 알림톡 수동 발송<br>
+          &#9200; 14:00 — 당일 리마인드 알림톡 수동 발송<br>
+          &#9200; 19:00 — 입장링크 알림톡 수동 발송<br>
+          &#9200; 20:00 — 라이브 시작 알림톡 수동 발송<br>
+          &#9200; 22:00 — 혜택안내 알림톡 수동 발송<br>
+          <strong style="color: #f43f5e;">하루에 5번 노트북 앞에 + 매번 발송 대상 데이터 직접 세팅</strong>
+        </div>
+      </div>
+      <div class="manual-step" style="display: grid; grid-template-columns: 100px 1fr; gap: 16px; padding: 16px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; border-left: 3px solid #f43f5e;">
+        <div style="font-size: 12px; color: #f43f5e; font-weight: 600;">문제<br><span style="color: var(--text-muted); font-size: 11px;">반복되는 고통</span></div>
+        <div style="font-size: 15px; color: var(--text-dim); line-height: 1.9;">
+          &#128561; 배너 3종 매번 직접 만들어야 (디자이너 없음, 직접 제작)<br>
+          &#128561; 발송 대상 데이터(신청자/미신청자) 매번 DB에서 직접 추출+세팅<br>
+          &#128561; 채널 하나 빠뜨리면 해당 채널은 그냥 안 보내게 됨<br>
+          &#128561; UTM 규칙 실수하면 성과 추적 불가<br>
+          &#128561; 매달 2~3건씩 반복이라 매번 같은 작업을 처음부터<br>
+          &#128561; 성과 측정? 감으로. 어떤 채널이 전환 잘 되는지 모름<br>
+          &#128561; 공유회 당일 저녁에 외출 불가 (알림톡 시간 맞춰야)
+        </div>
+      </div>
+    </div>
+
+    <!-- After 비교 -->
+    <h3 style="margin-bottom: 16px; font-size: 18px;">After — "CRM 시작해줘" 한 마디</h3>
+    <div class="mermaid-wrap" style="margin-bottom: 24px;">
+      <div class="mermaid">
+graph LR
+  A["에밀리:<br/>CRM 시작해줘<br/>selfishclub.xyz/이기적공유회/ai-github"] --> B["AI 에이전트 팀<br/>자동 처리<br/>(~3분)"]
+  B --> C["Slack에<br/>전체 산출물<br/>미리보기"]
+  C --> D["수정할 거 있으면<br/>대화로 수정"]
+  D --> E["확정 → 예약발송<br/>끝!"]
+
+  style A fill:#6c47ff,stroke:#6c47ff,color:#fff
+  style B fill:#ede9ff,stroke:#6c47ff,color:#1a1a1a
+  style C fill:#e6f7f0,stroke:#00a67d,color:#1a1a1a
+  style D fill:#fffbe6,stroke:#f59e0b,color:#1a1a1a
+  style E fill:#00a67d,stroke:#00a67d,color:#fff
+      </div>
+    </div>
+
+    <div class="compare">
+      <div class="compare-box before">
+        <h3 style="color:#f43f5e">Before</h3>
+        <ul>
+          <li>공유회 1건 세팅에 반나절</li>
+          <li>D-day에 5번 노트북 앞에</li>
+          <li>UTM 21개 수동 생성</li>
+          <li>배너 3종 매번 직접 제작</li>
+          <li>발송 대상 DB 직접 추출+세팅</li>
+          <li>빠뜨린 채널은 발송 안 됨</li>
+        </ul>
+      </div>
+      <div class="compare-arrow">&#10132;</div>
+      <div class="compare-box after">
+        <h3 style="color:var(--accent3)">After</h3>
+        <ul>
+          <li>"CRM 시작해줘" 한 마디 → 3분</li>
+          <li>D-day 알림톡 전자동 (n8n)</li>
+          <li>UTM+bit.ly 규칙 자동 적용</li>
+          <li>AI가 배너 3종 자동 생성</li>
+          <li>신청자/미신청자 DB 자동 분류+발송</li>
+          <li>타임라인으로 빠뜨림 불가</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 리소스 절감 -->
+    <h3 style="margin-top: 40px; margin-bottom: 16px; font-size: 18px;">시간/리소스 절감 — 공유회 1건 기준</h3>
+    <div style="display: grid; grid-template-columns: 1fr 60px 1fr; gap: 16px; margin-bottom: 24px; align-items: stretch;">
+      <div style="background: var(--card); border: 1px solid #f43f5e; border-radius: 12px; padding: 24px;">
+        <div style="font-size: 13px; color: #f43f5e; font-weight: 600; margin-bottom: 12px;">BEFORE (수작업)</div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: var(--text-dim); line-height: 1.6;">
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <span>사전세팅 (카피+배너+UTM+세팅)</span>
+            <span style="color: #f43f5e; font-weight: 700; white-space: nowrap;">3~4시간</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <span>D-day 알림톡 5회 수동 발송</span>
+            <span style="color: #f43f5e; font-weight: 700; white-space: nowrap;">~1시간</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <span>매 발송마다 DB 데이터 추출+세팅</span>
+            <span style="color: #f43f5e; font-weight: 700; white-space: nowrap;">~30분</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <span>배너 3종 직접 디자인+제작</span>
+            <span style="color: #f43f5e; font-weight: 700; white-space: nowrap;">~1시간</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 4px;">
+            <span style="font-weight: 700; color: var(--text);">공유회 1건 합계</span>
+            <span style="color: #f43f5e; font-weight: 800; font-size: 18px;">~6시간</span>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+            + D-day 하루종일 노트북 앞에 대기<br>
+            + 실수/누락 리스크 상시 존재
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--text-muted);">&#10132;</div>
+      <div style="background: var(--card); border: 1px solid var(--accent3); border-radius: 12px; padding: 24px;">
+        <div style="font-size: 13px; color: var(--accent3); font-weight: 600; margin-bottom: 12px;">AFTER (자동화)</div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: var(--text-dim); line-height: 1.6;">
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <span>"CRM 시작해줘" → AI 전체 생성</span>
+            <span style="color: var(--accent3); font-weight: 700; white-space: nowrap;">~3분</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <span>Slack 미리보기 확인+수정</span>
+            <span style="color: var(--accent3); font-weight: 700; white-space: nowrap;">~15분</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <span>D-day 알림톡 (n8n 자동, 승인만)</span>
+            <span style="color: var(--accent3); font-weight: 700; white-space: nowrap;">~5분</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <span>온드미디어+오카방 복붙</span>
+            <span style="color: var(--accent3); font-weight: 700; white-space: nowrap;">~15분</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 4px;">
+            <span style="font-weight: 700; color: var(--text);">공유회 1건 합계</span>
+            <span style="color: var(--accent3); font-weight: 800; font-size: 18px;">~40분</span>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+            + D-day 외출 가능 (n8n이 자동)<br>
+            + 데이터/UTM/배너 전부 자동
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 월간 절감 요약 -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px;">
+      <div style="background: linear-gradient(135deg, rgba(108,71,255,0.06), rgba(0,166,125,0.06)); border: 1px solid var(--accent); border-radius: 12px; padding: 24px; text-align: center;">
+        <div style="font-size: 32px; font-weight: 800; color: var(--accent);">89%</div>
+        <div style="font-size: 12px; color: var(--text-dim); margin-top: 4px;">시간 절감<br><span style="color: var(--text-muted);">6시간 → 40분</span></div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(108,71,255,0.06), rgba(0,166,125,0.06)); border: 1px solid var(--accent); border-radius: 12px; padding: 24px; text-align: center;">
+        <div style="font-size: 32px; font-weight: 800; color: var(--accent);">~15시간/월</div>
+        <div style="font-size: 12px; color: var(--text-dim); margin-top: 4px;">월간 절감<br><span style="color: var(--text-muted);">월 2~3건 기준</span></div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(108,71,255,0.06), rgba(0,166,125,0.06)); border: 1px solid var(--accent); border-radius: 12px; padding: 24px; text-align: center;">
+        <div style="font-size: 32px; font-weight: 800; color: var(--accent);">0건</div>
+        <div style="font-size: 12px; color: var(--text-dim); margin-top: 4px;">누락 가능성<br><span style="color: var(--text-muted);">타임라인이 관리</span></div>
+      </div>
+    </div>
+
+    <!-- 자동화 목표 -->
+    <div class="card" style="margin-top: 24px; border-color: var(--accent3); border-left: 3px solid var(--accent3);">
+      <h3>자동화 목표</h3>
+      <p>
+        <strong>1단계 (현재)</strong>: 카피/배너/UTM 생성 자동화 + 알림톡 발송 자동화 → 에밀리는 <strong>확인+승인만</strong><br>
+        <strong>2단계 (4월 후반)</strong>: 채널별 전환 측정 + 사후분석 리포트 자동화<br>
+        <strong>3단계 (5월~)</strong>: 과거 성과 기반 카피 최적화 + 유저 여정 추적 + A/B 테스트
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="container">
+    <h2>시스템 아키텍처</h2>
+    <p class="subtitle">Claude Code + n8n 하이브리드 구조 — 각각의 장점을 살린 역할 분담</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+graph TB
+  subgraph TRIGGER["1. 트리거"]
+    A["에밀리: CRM 시작해줘 URL"]
+    B["n8n 크론 (매일 09:00)"]
+  end
+
+  subgraph CLAUDE["2. Claude Code (AI 에이전트 팀)"]
+    C["data-collector<br/>URL 크롤 + DB 조회"]
+    D["timeline-planner<br/>전채널 일정표"]
+    E["copywriter<br/>6채널 카피 생성"]
+    F["media-ops<br/>UTM + bit.ly + 배너"]
+    G["dispatcher<br/>Slack 전달 + SOLAPI"]
+    H["director<br/>전체 검수"]
+  end
+
+  subgraph N8N["3. n8n (독립 자동화)"]
+    I["알림톡 크론<br/>①~⑨ 9종"]
+    J["Slack 모달<br/>승인/수정/취소"]
+    K["SOLAPI 발송"]
+  end
+
+  subgraph CHANNELS["4. 발송 채널"]
+    L["알림톡 9종"]
+    M["카플친 배너"]
+    N["오카방 3방"]
+    O["온드미디어 4종"]
+    P["인스타 캐러셀"]
+  end
+
+  subgraph INFRA["인프라"]
+    Q[("Supabase<br/>회원/프로그램 DB")]
+    R["SOLAPI<br/>알림톡/친구톡 API"]
+    S["Slack<br/>미리보기+승인"]
+    T["Gemini API<br/>배너 이미지"]
+  end
+
+  A --> C
+  B --> I
+  C --> D --> E --> F --> G
+  H -.->|검수| G
+  G --> S
+  I --> J --> K --> L
+  G -->|SOLAPI 예약| M
+  G -->|Slack 카피| N
+  G -->|Slack 카피| O
+  G -->|Slack 이미지| P
+  C --> Q
+  K --> R
+  F --> T
+
+  style TRIGGER fill:#ede9ff,stroke:#6c47ff,color:#1a1a1a
+  style CLAUDE fill:#ede9ff,stroke:#6c47ff,color:#1a1a1a
+  style N8N fill:#e6f7f0,stroke:#00a67d,color:#1a1a1a
+  style CHANNELS fill:#fff0eb,stroke:#e85d2a,color:#1a1a1a
+  style INFRA fill:#f8f8fa,stroke:#ccc,color:#1a1a1a
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Claude Code = 두뇌</h3>
+        <p>카피 생성, 배너 디자인, UTM 규칙 적용, Slack 전달까지. AI 에이전트 7종이 팀으로 협업. 맥북이 켜져 있을 때 "만드는 작업"을 처리.</p>
+      </div>
+      <div class="card">
+        <h3>n8n = 알람시계</h3>
+        <p>알림톡 9종의 시간별 자동 발송. 크론으로 돌아가서 맥북 꺼도 됨. Slack 모달로 에밀리가 카피 확인/수정 후 승인.</p>
+      </div>
+      <div class="card">
+        <h3>왜 이 구조?</h3>
+        <p>알림톡은 정해진 시간에 정확히 나가야 해서 n8n 크론. 카피/배너는 AI가 잘하는 영역이라 Claude Code. 각각의 강점을 살린 하이브리드.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CRM FLOW -->
+<section id="flow">
+  <div class="container">
+    <h2>CRM 전체 플로우</h2>
+    <p class="subtitle">공유회 1건의 라이프사이클 — 사전세팅부터 VOD 발송까지</p>
+
+    <div class="phase-flow">
+      <div class="phase-card">
+        <div class="phase-num">Phase 1</div>
+        <div class="phase-title">사전세팅 (D-7~5)</div>
+        <div class="phase-items">
+          <span>타임라인 생성</span>
+          <span>전채널 카피 한번에</span>
+          <span>배너 3종 생성</span>
+          <span>UTM 21개 + bit.ly</span>
+          <span>Slack 미리보기 전달</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">Phase 2</div>
+        <div class="phase-title">오픈 (모집 시작)</div>
+        <div class="phase-items">
+          <span>알림톡 ① 오픈알림</span>
+          <span>카플친 오픈 배너</span>
+          <span>오카방 오픈 카피</span>
+          <span>온드미디어 4종 세팅</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">Phase 3</div>
+        <div class="phase-title">리마인드 (오픈+2일)</div>
+        <div class="phase-items">
+          <span>알림톡 ② 리마인드</span>
+          <span>카플친 리마인드 배너</span>
+          <span>오카방 리마인드</span>
+          <span>인스타 캐러셀 5장</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">Phase 4</div>
+        <div class="phase-title">D-1 마감임박</div>
+        <div class="phase-items">
+          <span>알림톡 ③ D-1</span>
+          <span>카플친 마감 배너</span>
+          <span>오카방 마감 카피</span>
+          <span>줌링크 입력 (재사용)</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">Phase 5</div>
+        <div class="phase-title">D-day 당일</div>
+        <div class="phase-items">
+          <span>⑤ 할인쿠폰 (미신청자)</span>
+          <span>④ 당일리마인드 (자동)</span>
+          <span>⑥ 입장링크</span>
+          <span>⑦ 라이브 시작 (자동)</span>
+          <span>⑧ 혜택안내</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">Phase 6</div>
+        <div class="phase-title">사후 (D+1~)</div>
+        <div class="phase-items">
+          <span>⑨ VOD 발송 (D+3)</span>
+          <span>카플친 혜택 배너</span>
+          <span>이메일 VOD (추후)</span>
+          <span>사후분석 리포트</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHANNELS -->
+<section id="channels">
+  <div class="container">
+    <h2>채널별 상세</h2>
+    <p class="subtitle">각 채널이 어떻게 자동화되는지</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('alimtalk')">알림톡 9종</button>
+      <button class="tab-btn" onclick="switchTab('kaplus')">카플친</button>
+      <button class="tab-btn" onclick="switchTab('openchat')">오카방</button>
+      <button class="tab-btn" onclick="switchTab('owned')">온드미디어</button>
+      <button class="tab-btn" onclick="switchTab('insta')">인스타그램</button>
+    </div>
+
+    <div id="tab-alimtalk" class="tab-content active">
+      <div class="mermaid-wrap" style="margin-bottom: 16px">
+        <div class="mermaid">
+sequenceDiagram
+  participant C as n8n 크론
+  participant S as Slack 모달
+  participant E as 에밀리
+  participant API as SOLAPI
+
+  C->>S: 발송 시간 도달 → 미리보기 전달
+  S->>E: Block Kit 버튼 (승인/수정/취소)
+  alt 수정
+    E->>S: 카피/링크 수정
+    S->>E: 수정 미리보기
+    E->>S: 승인
+  end
+  E->>S: 승인 클릭
+  S->>API: SOLAPI 발송
+  API-->>E: 알림톡 도착
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr><th>#</th><th>알림톡</th><th>시간</th><th>대상</th><th>발송</th><th>상태</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>오픈알림</td><td>오픈일 15:00</td><td>전체 회원</td><td><span class="badge badge-modal">모달</span></td><td>&#9989;</td></tr>
+          <tr><td>2</td><td>오픈리마인드</td><td>오픈+2일 13:00</td><td>미신청자</td><td><span class="badge badge-modal">모달</span></td><td>&#9989;</td></tr>
+          <tr><td>3</td><td>D-1 리마인드</td><td>D-1 13:00</td><td>신청자</td><td><span class="badge badge-modal">모달+줌링크</span></td><td>&#9989;</td></tr>
+          <tr><td>4</td><td>당일 리마인드</td><td>D-day 14:00</td><td>신청자</td><td><span class="badge badge-auto">자동</span></td><td>&#9989;</td></tr>
+          <tr><td>5</td><td>할인쿠폰</td><td>D-day 13:00</td><td>미신청자</td><td><span class="badge badge-modal">모달</span></td><td>&#9989;</td></tr>
+          <tr><td>6</td><td>입장링크</td><td>D-day 19:00</td><td>신청자</td><td><span class="badge badge-modal">모달+혜택입력</span></td><td>&#9989;</td></tr>
+          <tr><td>7</td><td>라이브 시작</td><td>D-day 20:00</td><td>신청자</td><td><span class="badge badge-auto">자동</span></td><td>&#9989;</td></tr>
+          <tr><td>8</td><td>혜택안내</td><td>D-day 22:00</td><td>신청자</td><td><span class="badge badge-modal">모달+노션링크</span></td><td>&#9989;</td></tr>
+          <tr><td>9</td><td>VOD 발송</td><td>D+3 18:00</td><td>신청자</td><td><span class="badge badge-modal">모달+VOD링크</span></td><td>&#9989;</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-dim); margin-top: 12px;">
+        <span class="badge badge-auto">자동</span> = 이전 모달에서 입력한 데이터 재사용, 에밀리 승인 불필요<br>
+        <span class="badge badge-modal">모달</span> = Slack Block Kit 버튼으로 카피 확인/수정 후 승인
+      </p>
+    </div>
+
+    <div id="tab-kaplus" class="tab-content">
+      <div class="card-grid">
+        <div class="card">
+          <h3>배너 3종 자동 생성</h3>
+          <p>오픈/리마인드/마감 Phase별 800x600 와이드 배너. Gemini API로 주제 맞는 배경 이미지 생성 → HTML 조합 → PNG 변환. 카피+이미지+UTM 한 세트.</p>
+        </div>
+        <div class="card">
+          <h3>발송 방식</h3>
+          <p>Claude Code가 카피+배너 생성 → Slack에 미리보기 → 에밀리 확인 → SOLAPI 친구톡 예약 발송. 카카오 파트너센터 API가 없어서 SOLAPI 경유.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-openchat" class="tab-content">
+      <div class="card-grid">
+        <div class="card">
+          <h3>3방 x 3Phase = 9개 카피</h3>
+          <p>셀피쉬 대화방/AI 대화방/사이드프로젝트 대화방. 각 방마다 다른 톤의 카피 + 각각 다른 bit.ly (UTM 추적용). 오픈/리마인드/마감 3Phase.</p>
+        </div>
+        <div class="card">
+          <h3>발송 방식</h3>
+          <p>Claude Code가 카피 자동 생성 → Slack #crm-카피에 복붙용으로 전달 → 에밀리가 카카오톡 오픈채팅방에 직접 복붙. (오카방 API 없음)</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-owned" class="tab-content">
+      <div class="card-grid">
+        <div class="card">
+          <h3>온드미디어 4종</h3>
+          <p>리틀리 (랜딩페이지) / 대화방소식 / 웰컴메시지 / 소식 — 각각 카피 + UTM URL 자동 생성. CRM 시작 시 한번에 생성되어 Slack 스레드로 전달.</p>
+        </div>
+        <div class="card">
+          <h3>발송 방식</h3>
+          <p>에밀리가 Slack 카피를 각 플랫폼에 수동 세팅. 저빈도(공유회 당 1회)라서 수동이 합리적. 공유회 1건당 약 15분 소요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-insta" class="tab-content">
+      <div class="card-grid">
+        <div class="card">
+          <h3>캐러셀 5장 자동 생성</h3>
+          <p>1080x1080 인스타그램 캐러셀 5장. 프로그램 정보 기반 카피 + Gemini 배경이미지 + HTML 조합 → PNG. 캡션 + 해시태그도 자동.</p>
+        </div>
+        <div class="card">
+          <h3>발송 방식</h3>
+          <p>현재: Slack에 이미지 미리보기 전달 (게시는 수동). 추후: Meta Graph API로 자동 게시 예정.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS -->
+<section id="agents">
+  <div class="container">
+    <h2>AI 에이전트 팀 구성</h2>
+    <p class="subtitle">"CRM 시작해줘" 한 마디에 7개 에이전트가 순차 협업</p>
+
+    <div class="agent-grid">
+      <div class="agent-card">
+        <div class="agent-emoji">&#129302;</div>
+        <div class="agent-name">director</div>
+        <div class="agent-role">전체 검수, 최종 승인<br>빠진 항목/규칙 위반 탐지</div>
+        <div class="agent-model">opus</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">&#128187;</div>
+        <div class="agent-name">team-lead</div>
+        <div class="agent-role">카피/에셋 품질 검수<br>톤&amp;매너 일관성</div>
+        <div class="agent-model">sonnet</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">&#128269;</div>
+        <div class="agent-name">data-collector</div>
+        <div class="agent-role">URL 크롤 + DB 조회<br>프로그램 정보 수집</div>
+        <div class="agent-model">haiku</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">&#128197;</div>
+        <div class="agent-name">timeline-planner</div>
+        <div class="agent-role">전채널 일정표 생성<br>Phase별 날짜 계산</div>
+        <div class="agent-model">lib</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">&#9997;&#65039;</div>
+        <div class="agent-name">copywriter</div>
+        <div class="agent-role">6채널 카피 생성<br>PRD 규칙 기반</div>
+        <div class="agent-model">sonnet</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">&#127912;</div>
+        <div class="agent-name">media-ops</div>
+        <div class="agent-role">UTM + bit.ly + 배너<br>Gemini 이미지 생성</div>
+        <div class="agent-model">sonnet</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-emoji">&#128640;</div>
+        <div class="agent-name">dispatcher</div>
+        <div class="agent-role">Slack 전달 + SOLAPI<br>예약 발송 관리</div>
+        <div class="agent-model">sonnet</div>
+      </div>
+    </div>
+
+    <div class="mermaid-wrap" style="margin-top: 24px">
+      <div class="mermaid">
+graph LR
+  A["CRM 시작해줘 URL"] --> B["data-collector<br/>정보 수집"]
+  B --> C["timeline-planner<br/>일정표"]
+  C --> D["copywriter<br/>전채널 카피"]
+  D --> E["media-ops<br/>UTM+배너+bit.ly"]
+  E --> F["team-lead<br/>품질 검수"]
+  F --> G["dispatcher<br/>Slack 전달"]
+  G --> H["director<br/>최종 검수"]
+
+  style A fill:#6c47ff,stroke:#6c47ff,color:#fff
+  style H fill:#00a67d,stroke:#00a67d,color:#fff
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="tech">
+  <div class="container">
+    <h2>기술 스택</h2>
+    <p class="subtitle">실제 사용된 도구와 선택 이유</p>
+
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="tech-icon" style="background: rgba(108,71,255,0.1);">&#129302;</div>
+        <div class="tech-info">
+          <h4>Claude Code (Opus/Sonnet/Haiku)</h4>
+          <p>AI 에이전트 팀 오케스트레이션. 카피 생성, 코드 실행, API 호출까지 CLI 하나로.</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background: rgba(232,93,42,0.1);">&#9881;</div>
+        <div class="tech-info">
+          <h4>n8n (Self-hosted)</h4>
+          <p>알림톡 크론 자동화. Slack Block Kit 모달. 맥북 꺼도 돌아가는 독립 워크플로우.</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background: rgba(0,166,125,0.1);">&#128451;</div>
+        <div class="tech-info">
+          <h4>Supabase (PostgreSQL)</h4>
+          <p>회원 DB, 프로그램 DB, 신청 내역. n8n과 Claude Code 모두 접근.</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background: rgba(250,204,21,0.1);">&#128172;</div>
+        <div class="tech-info">
+          <h4>SOLAPI</h4>
+          <p>알림톡 + 친구톡 발송 API. 카카오 비즈니스 채널 연동. 템플릿 변수 치환.</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background: rgba(108,71,255,0.06);">&#128172;</div>
+        <div class="tech-info">
+          <h4>Slack MCP</h4>
+          <p>카피 미리보기 전달, 승인 인터페이스, 팀 커뮤니케이션 허브.</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background: rgba(66,133,244,0.1);">&#127912;</div>
+        <div class="tech-info">
+          <h4>Gemini API</h4>
+          <p>카플친 배너/인스타 캐러셀 배경 이미지 생성. 텍스트 없이 주제만.</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background: rgba(232,93,42,0.06);">&#128279;</div>
+        <div class="tech-info">
+          <h4>Bitly API</h4>
+          <p>오카방 3방 각각 다른 단축URL (UTM 추적용). 21개 UTM 규칙 자동 적용.</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background: rgba(0,166,125,0.06);">&#128196;</div>
+        <div class="tech-info">
+          <h4>PRD 9개 + 에이전트 6종</h4>
+          <p>삼단구조: 스킬(파이프라인) + 에이전트(역할) + PRD(규칙 원본). 2,500줄+ 문서.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEV LOG -->
+<section id="devlog">
+  <div class="container">
+    <h2>개발 타임라인</h2>
+    <p class="subtitle">3주간의 여정 — 0에서 프로덕션 직전까지</p>
+
+    <div class="timeline">
+      <div class="tl-item done">
+        <div class="tl-date">3/23 (일) — Day 1</div>
+        <div class="tl-title">프로젝트 초기화</div>
+        <div class="tl-desc">빈 디렉토리 구조 + 이기적멤버십 통합 PRD 레포 초기화. 기획서 및 CRM 타임라인 템플릿 추가.</div>
+        <span class="tl-tag tag-done">init</span>
+      </div>
+
+      <div class="tl-item done">
+        <div class="tl-date">3/27~29 — Day 4~6</div>
+        <div class="tl-title">구조 설계 + Dry Run</div>
+        <div class="tl-desc">selfish_sharing 프로젝트 이관. PRD 8개 분리. 전채널 카피 + UTM 확정 + 카플친 배너 + 캐러셀 dry-run 성공. 삼단구조(스킬/에이전트/PRD) 확립.</div>
+        <span class="tl-tag tag-done">architecture</span>
+      </div>
+
+      <div class="tl-item done">
+        <div class="tl-date">3/30~4/2 — Week 1</div>
+        <div class="tl-title">n8n 알림톡 아키텍처 완성</div>
+        <div class="tl-desc">알림톡 9종 → 하이브리드 구조(크론+모달+자동발송) 설계. Slack Block Kit 모달 승인/수정/취소. SOLAPI 연동. ①~⑤ 테스트 성공.</div>
+        <span class="tl-tag tag-done">n8n</span>
+        <span class="tl-tag tag-done">SOLAPI</span>
+      </div>
+
+      <div class="tl-item done">
+        <div class="tl-date">4/5 — 미팅</div>
+        <div class="tl-title">v2 로드맵 + 카카오모먼트 전환 결정</div>
+        <div class="tl-desc">오픈알림 타이밍 확정, 카카오모먼트 API 전환 계획, v2 로드맵(유저여정/KPI적응형/인사이트축적) 수립.</div>
+        <span class="tl-tag tag-done">planning</span>
+      </div>
+
+      <div class="tl-item done">
+        <div class="tl-date">4/7~9 — Week 2 전반</div>
+        <div class="tl-title">알림톡 ⑥~⑨ 완성 + n8n 버그 대거 수정</div>
+        <div class="tl-desc">EDT 타임존 이슈, 6자리 크론, f_scheduled 분리, 자동승인 경로, VOD 발송 완성. n8n 삽질 교훈 전체 캡처. 4월 로드맵(Tier 0~3) 수립.</div>
+        <span class="tl-tag tag-done">n8n</span>
+        <span class="tl-tag tag-done">debug</span>
+      </div>
+
+      <div class="tl-item done">
+        <div class="tl-date">4/10~12 — 크루 테스트</div>
+        <div class="tl-title">7명 크루 실전 테스트 시작</div>
+        <div class="tl-desc">크루 7명(신청자4+미신청자3) 데이터 세팅. ①②③⑤ 테스트 완료. 카플친 배너 3종 + 에디터 HTML. 카플친 n8n 승인 로직. 전채널 카피 생성.</div>
+        <span class="tl-tag tag-done">test</span>
+        <span class="tl-tag tag-done">kaplus</span>
+      </div>
+
+      <div class="tl-item current">
+        <div class="tl-date">4/13 (오늘) — D-day</div>
+        <div class="tl-title">D-day 테스트 (④⑥⑦⑧)</div>
+        <div class="tl-desc">크루 테스트 D-day 알림톡 4종 실전 테스트. 이후 testMode 해제 → 프로덕션 전환 준비.</div>
+        <span class="tl-tag tag-wip">in progress</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">4/14~19 — Week 2 후반</div>
+        <div class="tl-title">전채널 자동화 + 프로덕션 전환</div>
+        <div class="tl-desc">카플친 파이프라인 완성. 인스타 캐러셀 업로드. testMode 해제. 첫 프로덕션 공유회 CRM 실행.</div>
+        <span class="tl-tag tag-plan">planned</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">4/20~30 — Week 3~4</div>
+        <div class="tl-title">측정 + 사후분석 + 대시보드</div>
+        <div class="tl-desc">SQL view 3개(채널 귀인/이벤트 퍼널/채널Phase 매트릭스). "사후분석 해줘" 스킬. Next.js 대시보드. 주간 다이제스트.</div>
+        <span class="tl-tag tag-plan">planned</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS -->
+<section id="status">
+  <div class="container">
+    <h2>현재 상태 + 앞으로</h2>
+    <p class="subtitle">2026-04-13 기준</p>
+
+    <div class="card-grid" style="margin-bottom: 32px">
+      <div class="card" style="border-color: var(--accent3)">
+        <h3 style="color: var(--accent3)">완료</h3>
+        <p>
+          &#9989; 알림톡 9종 전체 자동화 (n8n 크론+모달)<br>
+          &#9989; PRD 9개 + 에이전트 6종 + 스킬 2개<br>
+          &#9989; 전채널 카피 자동 생성 (6채널)<br>
+          &#9989; UTM 21개 규칙 + bit.ly 자동 변환<br>
+          &#9989; 카플친 배너 3종 에디터 + HTML/PNG<br>
+          &#9989; Slack 스레드 미리보기 전달 구조<br>
+          &#9989; 크루 테스트 ①②③⑤ 성공
+        </p>
+      </div>
+      <div class="card" style="border-color: var(--accent2)">
+        <h3 style="color: var(--accent2)">진행 중</h3>
+        <p>
+          &#128312; 크루 테스트 D-day (④⑥⑦⑧)<br>
+          &#128312; 카플친 발송 파이프라인 마무리<br>
+          &#128312; 인스타 캐러셀 이미지 생성<br>
+          &#128312; testMode 해제 준비
+        </p>
+      </div>
+      <div class="card" style="border-color: var(--accent)">
+        <h3 style="color: var(--accent)">다음 단계 (v2)</h3>
+        <p>
+          &#128313; Supabase SQL view (채널 귀인/퍼널)<br>
+          &#128313; "사후분석 해줘" 스킬 활성화<br>
+          &#128313; Next.js + Vercel 대시보드<br>
+          &#128313; 유저 여정 추적 + A/B 테스트<br>
+          &#128313; 과거 인사이트 RAG
+        </p>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: var(--text-muted)">
+      <h3>핵심 숫자</h3>
+      <p style="line-height: 2.2">
+        개발 기간: <strong>3주</strong> (3/23 ~ 4/13)<br>
+        커밋: <strong>50+개</strong><br>
+        문서(PRD+에이전트+스킬): <strong>2,500줄+</strong><br>
+        n8n 워크플로우: <strong>2개</strong> (크론 + 웹훅)<br>
+        n8n 백업: <strong>6개</strong> 스냅샷<br>
+        Slack 채널: <strong>2개</strong> (#crm-알림톡-승인단계, #crm-카피)<br>
+        공유회 1건당 에밀리 수동 작업: <strong>~15분</strong> (온드미디어+오카방 복붙)<br>
+        나머지: <strong>전자동</strong> (알림톡) 또는 <strong>확인만</strong> (카플친/인스타)
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>셀피쉬클럽 공유회 CRM 자동화 — built with Claude Code + n8n + Supabase</p>
+    <p style="margin-top: 4px;">Last updated: 2026-04-13</p>
+  </div>
+</footer>
+
+<script>
+  // Mermaid init
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#ede9ff',
+      primaryTextColor: '#1a1a1a',
+      primaryBorderColor: '#6c47ff',
+      lineColor: '#999',
+      secondaryColor: '#f0f8f5',
+      tertiaryColor: '#f8f8fa',
+      noteTextColor: '#1a1a1a',
+      noteBkgColor: '#ede9ff',
+      textColor: '#1a1a1a',
+      mainBkg: '#ede9ff',
+      actorBkg: '#ede9ff',
+      actorBorder: '#6c47ff',
+      actorTextColor: '#1a1a1a',
+      signalColor: '#555',
+      signalTextColor: '#1a1a1a',
+    },
+    flowchart: { curve: 'basis', padding: 16 },
+    sequence: { mirrorActors: false },
+  });
+
+  // Tab switching
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Nav scroll highlight
+  const navLinks = document.querySelectorAll('nav a');
+  const sections = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const top = section.offsetTop - 100;
+      if (scrollY >= top) current = section.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

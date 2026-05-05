@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>카플친 배너 에디터 — 3종 생성기</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Noto Sans KR',sans-serif; background:#f0f0f0; color:#222; }
+.wrap { max-width:960px; margin:0 auto; padding:20px; }
+h1 { font-size:22px; margin-bottom:4px; }
+.desc { color:#888; font-size:13px; margin-bottom:20px; }
+
+/* Program Input */
+.prog-input { background:#fff; padding:20px; border-radius:12px; margin-bottom:20px; box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+.prog-input h3 { font-size:15px; margin-bottom:12px; color:#555; }
+.prog-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.prog-grid label { display:flex; flex-direction:column; gap:3px; font-size:12px; font-weight:600; color:#777; }
+.prog-grid input { padding:8px 10px; border:1px solid #ddd; border-radius:6px; font-size:14px; font-family:inherit; }
+.prog-grid .full { grid-column:1/-1; }
+.gen-btn { margin-top:14px; padding:10px 24px; background:#111; color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit; }
+.gen-btn:hover { background:#333; }
+
+/* Tabs */
+.tabs { display:flex; gap:4px; margin-bottom:16px; }
+.tab { padding:10px 20px; border:none; border-radius:8px 8px 0 0; cursor:pointer; font-family:inherit; font-size:14px; font-weight:600; background:#ddd; color:#666; }
+.tab.active { background:#111; color:#fff; }
+
+/* Canvas area */
+.phase-panel { display:none; }
+.phase-panel.active { display:block; }
+canvas { width:100%; border-radius:8px; border:1px solid #ccc; margin-bottom:12px; }
+.actions { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+.actions button { padding:8px 14px; border-radius:6px; font-family:inherit; font-size:13px; cursor:pointer; }
+.btn-edit { border:1px solid #ddd; background:#fff; }
+.btn-dl { border:none; color:#fff; font-weight:700; }
+.btn-reset { border:1px solid #ddd; background:#fff; color:#999; }
+.editor-fields { display:none; grid-template-columns:1fr 1fr; gap:10px; padding:16px; background:#f9f9f9; border-radius:8px; margin-bottom:16px; }
+.editor-fields.show { display:grid; }
+.editor-fields label { display:flex; flex-direction:column; gap:3px; font-size:12px; font-weight:600; color:#666; }
+.editor-fields input { padding:7px 10px; border:1px solid #ddd; border-radius:6px; font-size:13px; font-family:inherit; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>📢 카플친 배너 에디터</h1>
+<p class="desc">프로그램 정보 입력 → 오픈/리마인드/마감 3종 자동 생성 · 편집 · PNG 다운로드 · 1346×734 (2배 해상도 다운로드)</p>
+
+<!-- Program Input -->
+<div class="prog-input">
+  <h3>📋 프로그램 정보</h3>
+  <div class="prog-grid">
+    <label class="full">프로그램명 <input id="p_name" value="비개발자를 위한 클로드코드앱 & 깃헙 실전 정복기"></label>
+    <label>일정 <input id="p_date" value="4/13(월) 저녁 8시 ZOOM"></label>
+    <label>마감일 <input id="p_deadline" value="4/12(일)"></label>
+    <label>핵심 키워드 (강조) <input id="p_keyword" value="내 서비스"></label>
+    <label>현재 신청자 수 <input id="p_count" value="100" type="number"></label>
+  </div>
+  <button class="gen-btn" onclick="generate()">🔥 3종 배너 생성</button>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab(0)">🔔 오픈</button>
+  <button class="tab" onclick="switchTab(1)">📣 리마인드</button>
+  <button class="tab" onclick="switchTab(2)">🚨 마감</button>
+</div>
+
+<!-- Phase 0: 오픈 -->
+<div class="phase-panel active" id="panel0">
+  <canvas id="c0"></canvas>
+  <div class="actions">
+    <button class="btn-edit" onclick="toggleEdit(0)">✏️ 편집</button>
+    <button class="btn-dl" style="background:#00E5A0;color:#111" onclick="dl(0,'png')">📥 PNG</button>
+    <button class="btn-dl" style="background:#555" onclick="dl(0,'jpg')">📥 JPG</button>
+    <button class="btn-reset" onclick="resetPhase(0)">🔄 초기화</button>
+  </div>
+  <div class="editor-fields" id="ed0">
+    <label>뱃지 <input data-p="0" data-k="badge" oninput="render(0)"></label>
+    <label>라벨 <input data-p="0" data-k="label" oninput="render(0)"></label>
+    <label>메인 1줄 <input data-p="0" data-k="main1" oninput="render(0)"></label>
+    <label>메인 2줄 <input data-p="0" data-k="main2" oninput="render(0)"></label>
+    <label>강조 단어 <input data-p="0" data-k="hl" oninput="render(0)"></label>
+    <label>서브 <input data-p="0" data-k="sub" oninput="render(0)"></label>
+    <label>일시 <input data-p="0" data-k="date" oninput="render(0)"></label>
+    <label>CTA <input data-p="0" data-k="cta" oninput="render(0)"></label>
+  </div>
+</div>
+
+<!-- Phase 1: 리마인드 -->
+<div class="phase-panel" id="panel1">
+  <canvas id="c1"></canvas>
+  <div class="actions">
+    <button class="btn-edit" onclick="toggleEdit(1)">✏️ 편집</button>
+    <button class="btn-dl" style="background:#4FC3F7;color:#111" onclick="dl(1,'png')">📥 PNG</button>
+    <button class="btn-dl" style="background:#555" onclick="dl(1,'jpg')">📥 JPG</button>
+    <button class="btn-reset" onclick="resetPhase(1)">🔄 초기화</button>
+  </div>
+  <div class="editor-fields" id="ed1">
+    <label>뱃지 <input data-p="1" data-k="badge" oninput="render(1)"></label>
+    <label>라벨 <input data-p="1" data-k="label" oninput="render(1)"></label>
+    <label>메인 1줄 <input data-p="1" data-k="main1" oninput="render(1)"></label>
+    <label>메인 2줄 <input data-p="1" data-k="main2" oninput="render(1)"></label>
+    <label>강조 단어 <input data-p="1" data-k="hl" oninput="render(1)"></label>
+    <label>서브 <input data-p="1" data-k="sub" oninput="render(1)"></label>
+    <label>일시 <input data-p="1" data-k="date" oninput="render(1)"></label>
+    <label>CTA <input data-p="1" data-k="cta" oninput="render(1)"></label>
+  </div>
+</div>
+
+<!-- Phase 2: 마감 -->
+<div class="phase-panel" id="panel2">
+  <canvas id="c2"></canvas>
+  <div class="actions">
+    <button class="btn-edit" onclick="toggleEdit(2)">✏️ 편집</button>
+    <button class="btn-dl" style="background:#FF3B30" onclick="dl(2,'png')">📥 PNG</button>
+    <button class="btn-dl" style="background:#555" onclick="dl(2,'jpg')">📥 JPG</button>
+    <button class="btn-reset" onclick="resetPhase(2)">🔄 초기화</button>
+  </div>
+  <div class="editor-fields" id="ed2">
+    <label>뱃지 <input data-p="2" data-k="badge" oninput="render(2)"></label>
+    <label>라벨 <input data-p="2" data-k="label" oninput="render(2)"></label>
+    <label>메인 1줄 <input data-p="2" data-k="main1" oninput="render(2)"></label>
+    <label>메인 2줄 <input data-p="2" data-k="main2" oninput="render(2)"></label>
+    <label>강조 단어 <input data-p="2" data-k="hl" oninput="render(2)"></label>
+    <label>서브 <input data-p="2" data-k="sub" oninput="render(2)"></label>
+    <label>일시 <input data-p="2" data-k="date" oninput="render(2)"></label>
+    <label>CTA <input data-p="2" data-k="cta" oninput="render(2)"></label>
+  </div>
+</div>
+
+</div>
+
+<script>
+const W=1346, H=734, SC=2;
+
+// 3 palettes (각 Phase 다르게)
+const PAL = [
+  // 오픈: 다크 & 네온그린
+  { bg1:'#111111', bg2:'#1A1A2E', acc:'#00E5A0', dim:'rgba(255,255,255,0.55)', badge:'rgba(0,229,160,0.12)', badgeB:'rgba(0,229,160,0.4)', cta:'#00E5A0', ctaTxt:'#111' },
+  // 리마인드: 다크 블루
+  { bg1:'#0F1923', bg2:'#0A1128', acc:'#4FC3F7', dim:'rgba(255,255,255,0.55)', badge:'rgba(79,195,247,0.12)', badgeB:'rgba(79,195,247,0.4)', cta:'#FFD84D', ctaTxt:'#111' },
+  // 마감: 다크 레드
+  { bg1:'#1A0A0A', bg2:'#0F0808', acc:'#FF3B30', dim:'rgba(255,255,255,0.55)', badge:'rgba(255,59,48,0.15)', badgeB:'rgba(255,59,48,0.5)', cta:'#FF3B30', ctaTxt:'#fff' },
+];
+
+let data = [{},{},{}]; // per-phase text data
+
+function getProg() {
+  return {
+    name: document.getElementById('p_name').value,
+    date: document.getElementById('p_date').value,
+    deadline: document.getElementById('p_deadline').value,
+    keyword: document.getElementById('p_keyword').value,
+    count: document.getElementById('p_count').value,
+  };
+}
+
+function generate() {
+  const p = getProg();
+  const shortName = p.name.length > 20 ? p.name.substring(0,20)+'...' : p.name;
+
+  data[0] = {
+    badge: '신청 오픈 🔔',
+    label: '이기적공유회',
+    main1: '요즘 다들 쓴다는데',
+    main2: p.keyword + ', 나도 해볼까?',
+    hl: p.keyword,
+    sub: p.name,
+    date: p.date,
+    cta: '자세히 보기 ›'
+  };
+  data[1] = {
+    badge: '마감 임박 ⏰',
+    label: '이기적공유회',
+    main1: '벌써 ' + p.count + '명 돌파!',
+    main2: '마감 전 확인해보세요',
+    hl: p.count + '명',
+    sub: p.name,
+    date: p.date,
+    cta: '마감 전 신청하기 ›'
+  };
+  data[2] = {
+    badge: '🚨 오늘 마감',
+    label: '이기적공유회',
+    main1: '오늘 밤 마감',
+    main2: '할인가 신청 마지막 기회',
+    hl: '오늘 밤',
+    sub: p.name,
+    date: p.date,
+    cta: '지금 바로 신청 ›'
+  };
+
+  for (let i=0; i<3; i++) { syncFields(i); render(i); }
+}
+
+function syncFields(p) {
+  const d = data[p];
+  document.querySelectorAll(`[data-p="${p}"]`).forEach(el => {
+    el.value = d[el.dataset.k] || '';
+  });
+}
+
+function getFields(p) {
+  const d = {};
+  document.querySelectorAll(`[data-p="${p}"]`).forEach(el => {
+    d[el.dataset.k] = el.value;
+  });
+  data[p] = d;
+  return d;
+}
+
+function draw(canvas, p, scale) {
+  const ctx = canvas.getContext('2d');
+  canvas.width = W*scale; canvas.height = H*scale;
+  ctx.scale(scale, scale);
+  const t = getFields(p);
+  const c = PAL[p];
+
+  // BG
+  const bg = ctx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,c.bg1); bg.addColorStop(1,c.bg2);
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle = c.acc.replace(')',',0.03)').replace('rgb','rgba');
+  if (!ctx.strokeStyle.includes('rgba')) ctx.strokeStyle = 'rgba(255,255,255,0.02)';
+  ctx.lineWidth=1;
+  for(let i=0;i<W;i+=40){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke();}
+  for(let j=0;j<H;j+=40){ctx.beginPath();ctx.moveTo(0,j);ctx.lineTo(W,j);ctx.stroke();}
+
+  // Glow
+  const glow = ctx.createRadialGradient(W/2,H/2-30,0,W/2,H/2-30,350);
+  const glowColor = c.acc.replace(')',',0.08)').replace('#','');
+  glow.addColorStop(0, hexToRGBA(c.acc, 0.08));
+  glow.addColorStop(1, hexToRGBA(c.acc, 0));
+  ctx.fillStyle=glow; ctx.fillRect(0,0,W,H);
+
+  ctx.textAlign='center';
+
+  // Badge
+  ctx.font='bold 18px "Noto Sans KR"';
+  const bw=ctx.measureText(t.badge||'').width+48, bh=38, bx=W/2, by=135;
+  ctx.beginPath(); ctx.roundRect(bx-bw/2,by-bh/2,bw,bh,19);
+  ctx.fillStyle=c.badge; ctx.fill();
+  ctx.strokeStyle=c.badgeB; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.fillStyle=c.acc; ctx.fillText(t.badge||'', bx, by+6);
+
+  // Label
+  ctx.font='500 22px "Noto Sans KR"'; ctx.fillStyle=c.dim;
+  ctx.fillText(t.label||'', W/2, 210);
+
+  // Main 1
+  const mainSize = p===2 ? 72 : 64;
+  ctx.font=`900 ${mainSize}px "Noto Sans KR"`; ctx.fillStyle='#fff';
+  ctx.fillText(t.main1||'', W/2, 310);
+
+  // Main 2 with highlight
+  const line2 = t.main2||'', hl = t.hl||'';
+  if (hl && line2.includes(hl)) {
+    const parts = line2.split(hl);
+    const fw = ctx.measureText(line2).width;
+    let sx = W/2 - fw/2;
+    ctx.textAlign='left';
+    if(parts[0]){ctx.fillStyle='#fff';ctx.fillText(parts[0],sx,395);sx+=ctx.measureText(parts[0]).width;}
+    ctx.fillStyle=c.acc; ctx.fillText(hl,sx,395); sx+=ctx.measureText(hl).width;
+    if(parts[1]){ctx.fillStyle='#fff';ctx.fillText(parts[1],sx,395);}
+    ctx.textAlign='center';
+  } else {
+    ctx.fillStyle='#fff'; ctx.fillText(line2, W/2, 395);
+  }
+
+  // Sub
+  ctx.font='400 22px "Noto Sans KR"'; ctx.fillStyle=c.dim;
+  ctx.fillText(t.sub||'', W/2, 455);
+
+  // Date
+  ctx.font='500 20px "Noto Sans KR"'; ctx.fillStyle='rgba(255,255,255,0.35)';
+  ctx.fillText(t.date||'', W/2, 505);
+
+  // CTA
+  const ctaW=280, ctaH=56, ctaX=W/2-ctaW/2, ctaY=575;
+  ctx.shadowColor=hexToRGBA(c.cta,0.3); ctx.shadowBlur=20; ctx.shadowOffsetY=4;
+  ctx.beginPath(); ctx.roundRect(ctaX,ctaY,ctaW,ctaH,28);
+  ctx.fillStyle=c.cta; ctx.fill();
+  ctx.shadowColor='transparent'; ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+  ctx.font='700 22px "Noto Sans KR"'; ctx.fillStyle=c.ctaTxt;
+  ctx.fillText(t.cta||'', W/2, ctaY+36);
+
+  // Bottom
+  ctx.fillStyle=hexToRGBA(c.acc,0.05); ctx.fillRect(0,H-48,W,48);
+  ctx.font='400 13px "Noto Sans KR"'; ctx.fillStyle='rgba(255,255,255,0.25)';
+  ctx.fillText('SELFISH CLUB — 이기적멤버십', W/2, H-20);
+}
+
+function hexToRGBA(hex, a) {
+  if (hex.startsWith('rgba')) return hex;
+  hex = hex.replace('#','');
+  if (hex.length===3) hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  const r=parseInt(hex.substring(0,2),16), g=parseInt(hex.substring(2,4),16), b=parseInt(hex.substring(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+function render(p) { draw(document.getElementById('c'+p), p, 1); }
+
+function dl(p, fmt) {
+  const c=document.createElement('canvas');
+  draw(c,p,SC);
+  const a=document.createElement('a');
+  const names=['open','remind','close'];
+  a.download=`kakaoplus-${names[p]}-banner.${fmt}`;
+  a.href=c.toDataURL(fmt==='jpg'?'image/jpeg':'image/png',0.95);
+  a.click();
+}
+
+function toggleEdit(p) {
+  const ed=document.getElementById('ed'+p);
+  ed.classList.toggle('show');
+}
+
+function resetPhase(p) { generate(); }
+
+function switchTab(p) {
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===p));
+  document.querySelectorAll('.phase-panel').forEach((t,i)=>t.classList.toggle('active',i===p));
+}
+
+// Init
+document.fonts.ready.then(()=>generate());
+</script>
+</body>
+</html>

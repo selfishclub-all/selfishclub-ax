@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AAA × Emily — 셀피쉬클럽 CRM AX, 알림톡 케이스 스터디</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+  :root {
+    --bg: #FAFAF5;
+    --ink: #0A0A0A;
+    --ink-soft: #2A2A2A;
+    --muted: #8A8A8A;
+    --line: #E8E6E0;
+    --yellow: #FFE600;
+    --yellow-soft: #FFF4A8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    background: #1a1a1a;
+    overflow: hidden;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .stage {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .slide {
+    width: 1920px;
+    height: 1080px;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 96px 120px;
+    display: none;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    transform-origin: center center;
+  }
+  .slide.active { display: flex; }
+  .slide.dark { background: var(--ink); color: #fff; }
+  .slide.yellow { background: var(--yellow); color: var(--ink); }
+
+  /* Top bar */
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 60px;
+  }
+  .slide.dark .top { color: #777; }
+  .slide.yellow .top { color: rgba(0,0,0,0.5); }
+
+  .top .left { color: var(--ink); }
+  .slide.dark .top .left { color: #fff; }
+
+  /* Bottom bar */
+  .bottom {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .slide.dark .bottom { color: #666; }
+
+  .pgnum { font-variant-numeric: tabular-nums; }
+
+  /* Body */
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Type styles */
+  .kicker {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+  .slide.dark .kicker { color: #999; }
+
+  .h-hero {
+    font-size: 180px;
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+  }
+  .h-1 {
+    font-size: 130px;
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+  }
+  .h-2 {
+    font-size: 88px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  .h-3 {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .h-4 {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .body-lg {
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .slide.dark .body-lg { color: #ccc; }
+  .body-md {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .slide.dark .body-md { color: #bbb; }
+  .body-sm {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; }
+
+  /* Highlight */
+  .hl {
+    background: var(--yellow);
+    padding: 0 0.1em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .strike {
+    text-decoration: line-through;
+    text-decoration-thickness: 4px;
+    color: var(--muted);
+  }
+
+  /* Cards */
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 40px 44px;
+  }
+  .slide.dark .card {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+  }
+  .card.ink {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .card.yellow {
+    background: var(--yellow);
+    color: var(--ink);
+    border-color: var(--yellow);
+  }
+
+  /* Quote */
+  .quote {
+    border-left: 6px solid var(--ink);
+    padding: 8px 0 8px 36px;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    font-style: italic;
+  }
+  .slide.dark .quote { border-left-color: var(--yellow); }
+  .slide.yellow .quote { border-left-color: var(--ink); }
+
+  /* TOC */
+  .toc-row {
+    display: grid;
+    grid-template-columns: 100px 320px 1fr;
+    align-items: baseline;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 36px;
+    font-weight: 700;
+  }
+  .toc-row .num {
+    font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .toc-row .label {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .toc-row .title {
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  /* Stats */
+  .stat-num {
+    font-size: 280px;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    font-feature-settings: "tnum";
+  }
+  .stat-lab {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 18px;
+  }
+
+  /* HUD */
+  .hud {
+    position: fixed;
+    bottom: 24px;
+    right: 28px;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    font-family: 'JetBrains Mono', monospace;
+    z-index: 100;
+    user-select: none;
+  }
+  .hud-help {
+    position: fixed;
+    bottom: 24px;
+    left: 28px;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    font-family: 'JetBrains Mono', monospace;
+    z-index: 100;
+    user-select: none;
+  }
+
+  /* Util */
+  .row { display: flex; }
+  .col { display: flex; flex-direction: column; }
+  .gap-12 { gap: 12px; }
+  .gap-16 { gap: 16px; }
+  .gap-20 { gap: 20px; }
+  .gap-24 { gap: 24px; }
+  .gap-32 { gap: 32px; }
+  .gap-40 { gap: 40px; }
+  .gap-56 { gap: 56px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .grid-9 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .center { display: flex; align-items: center; justify-content: center; flex-direction: column; }
+
+  /* Icon box */
+  .ico {
+    width: 80px; height: 80px;
+    background: var(--yellow);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px; font-weight: 900;
+    margin-bottom: 24px;
+  }
+
+  /* Big arrow */
+  .ar {
+    font-size: 96px;
+    font-weight: 200;
+    color: var(--muted);
+    margin: 0 24px;
+  }
+
+  /* Channel chip */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 32px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 30px;
+    font-weight: 700;
+  }
+  .chip .dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+  .chip.y { background: var(--yellow); border-color: var(--yellow); }
+  .chip.k { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .chip.k .dot { background: var(--yellow); }
+
+  /* Phone bezel */
+  .phone {
+    width: 380px;
+    aspect-ratio: 9/19;
+    background: #111;
+    border-radius: 38px;
+    padding: 14px;
+    border: 3px solid #222;
+  }
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: #fff;
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .ktok-header {
+    background: #FFE100;
+    padding: 20px 24px;
+    font-size: 18px;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .ktok-body {
+    padding: 28px 24px;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .ktok-btn {
+    margin: 16px;
+    padding: 16px;
+    background: #FFE100;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* Slack mock */
+  .slack {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  }
+  .slack-h {
+    padding: 20px 28px;
+    background: #4A154B;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .slack-h .avatar {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: var(--yellow);
+    color: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 900;
+  }
+  .slack-b { padding: 28px; }
+  .slack-modal {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 16px;
+  }
+  .slack-modal-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .slack-modal-meta {
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .slack-modal-btns {
+    display: flex; gap: 12px; margin-top: 20px;
+  }
+  .slack-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 18px; font-weight: 700;
+    border: 1px solid var(--line);
+  }
+  .slack-btn.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .slack-btn.danger { background: #fff; color: #c11; border-color: #fcc; }
+
+  /* Workflow boxes */
+  .wf {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .wf-box {
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    padding: 20px 24px;
+    font-size: 24px;
+    font-weight: 700;
+    min-width: 160px;
+    text-align: center;
+  }
+  .wf-arr {
+    font-size: 36px;
+    color: var(--muted);
+  }
+
+  /* Before/After table */
+  .ba {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .ba-h {
+    padding: 28px 36px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    background: #FAFAF5;
+  }
+  .ba-h:first-child { border-right: 1px solid var(--line); }
+  .ba-c {
+    padding: 28px 36px;
+    font-size: 28px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--line);
+    line-height: 1.45;
+  }
+  .ba-c:nth-child(odd) { border-right: 1px solid var(--line); }
+  .ba-c.before { color: var(--muted); }
+  .ba-c.after { color: var(--ink); font-weight: 700; }
+  .ba-c.big { font-size: 44px; font-weight: 900; }
+  .ba > :nth-last-child(-n+2) { border-bottom: none; }
+
+  /* Agent card */
+  .agent {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .agent-icon {
+    width: 56px; height: 56px;
+    background: var(--ink);
+    color: var(--yellow);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 900;
+    margin-bottom: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .agent-name {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .agent-role {
+    font-size: 19px;
+    color: var(--muted);
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  /* Logo chip */
+  .logo {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px 28px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .logo .sub {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* Step block */
+  .step {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  .step-n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 80px;
+    font-weight: 900;
+    line-height: 0.9;
+    color: var(--muted);
+    min-width: 140px;
+  }
+
+  /* Faded list */
+  .pain-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .pain-list li {
+    list-style: none;
+    padding: 22px 28px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-size: 26px;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .pain-list li::before {
+    content: '·';
+    color: var(--muted);
+    font-size: 36px;
+    line-height: 0;
+  }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+<!-- 01. 타이틀 -->
+<section class="slide dark" data-i="1">
+  <div class="top">
+    <div class="left">EMILY · SELFISH CLUB</div>
+    <div>AAA · WEEK 6 · 2026.04.28</div>
+  </div>
+  <div class="body" style="justify-content:flex-end;">
+    <div class="kicker" style="color:var(--yellow); margin-bottom:48px;">CRM AX · CASE STUDY</div>
+    <div class="h-hero" style="color:#fff;">URL 한 줄,<br><span style="color:var(--yellow);">알림톡</span>이<br>자동으로</div>
+    <div class="body-lg" style="margin-top:64px; max-width:1200px;">
+      셀피쉬클럽 CRM의 첫 칸 — 알림톡 자동화 6주 케이스.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>EMILY</div>
+    <div class="pgnum">01 / 27</div>
+  </div>
+</section>
+
+<!-- 02. 목차 -->
+<section class="slide" data-i="2">
+  <div class="top">
+    <div class="left">목차</div>
+    <div>CONTENTS</div>
+  </div>
+  <div class="body">
+    <div class="kicker">오늘 이야기할 다섯 가지</div>
+    <div style="display:flex; flex-direction:column;">
+      <div class="toc-row"><div class="num">01</div><div class="label">WHO</div><div class="title">에밀리는 누구</div></div>
+      <div class="toc-row"><div class="num">02</div><div class="label">WHY</div><div class="title">왜 자동화부터 시작했나</div></div>
+      <div class="toc-row"><div class="num">03</div><div class="label">WHAT</div><div class="title">결과 — 매일 11시 슬랙으로</div></div>
+      <div class="toc-row"><div class="num">04</div><div class="label">HOW</div><div class="title">알림톡 케이스 스터디 7단계</div></div>
+      <div class="toc-row"><div class="num">05</div><div class="label">NEXT</div><div class="title">알림톡은 첫 칸</div></div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>EMILY · AAA</div>
+    <div class="pgnum">02 / 27</div>
+  </div>
+</section>
+
+<!-- 03. WHO -->
+<section class="slide" data-i="3">
+  <div class="top">
+    <div class="left">WHO</div>
+    <div>01 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div class="kicker">에밀리</div>
+    <div class="h-1">안녕하세요,<br>에밀리입니다.</div>
+    <div style="display:flex; gap:80px; margin-top:80px;">
+      <div>
+        <div class="body-sm" style="margin-bottom:8px;">ROLE</div>
+        <div class="h-3">셀피쉬클럽 마케터 · CRM AX 담당</div>
+      </div>
+      <div>
+        <div class="body-sm" style="margin-bottom:8px;">CONFESSION</div>
+        <div class="h-3" style="color:var(--muted);">알림톡, 한 번도<br>안 만들어봤습니다.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>WHO · 에밀리</div>
+    <div class="pgnum">03 / 27</div>
+  </div>
+</section>
+
+<!-- 04. 오늘 가져가셨으면 하는 것 3 -->
+<section class="slide" data-i="4">
+  <div class="top">
+    <div class="left">TAKEAWAYS</div>
+    <div>오늘 가져가셨으면 하는 것 3가지</div>
+  </div>
+  <div class="body">
+    <div class="kicker">이 세 가지는 꼭</div>
+    <div class="grid-3" style="margin-top:48px;">
+      <div class="card" style="padding:48px 44px; min-height:480px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div class="ico">01</div>
+        <div>
+          <div class="h-3" style="margin-bottom:20px;">AX는 멀리 있지 않다</div>
+          <div class="body-md">한 채널부터 시작하면 됩니다. 저는 알림톡부터 시작했습니다.</div>
+        </div>
+      </div>
+      <div class="card ink" style="padding:48px 44px; min-height:480px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div class="ico" style="background:var(--yellow); color:var(--ink);">02</div>
+        <div>
+          <div class="h-3" style="margin-bottom:20px;">자동화는<br><span style="color:var(--yellow);">시간 절약이 아닙니다</span></div>
+          <div class="body-md" style="color:#bbb;">개선할 시간을 만드는 일입니다. 그 시간으로 다음을 합니다.</div>
+        </div>
+      </div>
+      <div class="card" style="padding:48px 44px; min-height:480px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div class="ico">03</div>
+        <div>
+          <div class="h-3" style="margin-bottom:20px;">혼자 다 하지 마세요</div>
+          <div class="body-md">8명을 만들면 됩니다. 클로드와 함께.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>TAKEAWAYS</div>
+    <div class="pgnum">04 / 27</div>
+  </div>
+</section>
+
+<!-- 05. WHY 1 — 셀피쉬가 AX로 -->
+<section class="slide yellow" data-i="5">
+  <div class="top">
+    <div class="left">WHY · 큰 그림</div>
+    <div>02 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div class="kicker" style="color:rgba(0,0,0,0.6);">먼저 이 얘기부터</div>
+    <div class="h-hero" style="font-size:170px;">셀피쉬클럽이<br>AX로 갑니다.</div>
+    <div class="body-lg" style="margin-top:56px; max-width:1300px; color:var(--ink);">
+      <span class="mono" style="font-weight:700;">AX</span> = AI Transformation. <br>
+      운영 전체를 에이전트로 옮기는 중입니다.
+    </div>
+  </div>
+  <div class="bottom" style="color:rgba(0,0,0,0.5);">
+    <div>WHY · AX</div>
+    <div class="pgnum">05 / 27</div>
+  </div>
+</section>
+
+<!-- 06. 그 안에서 나는 -->
+<section class="slide" data-i="6">
+  <div class="top">
+    <div class="left">WHY · 내 자리</div>
+    <div>02 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div class="kicker">그 안에서 저는</div>
+    <div class="h-1">CRM AX 담당.</div>
+    <div style="margin-top:80px; display:flex; gap:24px; align-items:center;">
+      <div class="chip">셀피쉬 AX</div>
+      <div class="ar">→</div>
+      <div class="chip k"><span class="dot"></span>CRM</div>
+      <div class="ar">→</div>
+      <div class="chip y">알림톡 (오늘 이야기)</div>
+    </div>
+    <div class="body-md" style="margin-top:56px; max-width:1100px;">
+      CRM 안에는 채널이 많습니다. 카플친·이메일·인스타·온드미디어·오픈채팅… 그중 첫 칸이 알림톡이었습니다.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>WHY · 내 자리</div>
+    <div class="pgnum">06 / 27</div>
+  </div>
+</section>
+
+<!-- 07. 공유회 1건 = 이만큼 -->
+<section class="slide" data-i="7">
+  <div class="top">
+    <div class="left">WHY · 페인 포인트</div>
+    <div>02 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">공유회 1건에 들어가는 것</div>
+    <div class="h-2" style="margin-bottom:48px;">이게 다 — <span class="hl">손으로</span>.</div>
+    <div class="grid-3" style="gap:18px;">
+      <div class="card"><div class="h-4">알림톡</div><div class="body-sm" style="margin-top:8px;">9종 (오픈/리마인드/D-1/당일/할인/입장/시작/혜택/VOD)</div></div>
+      <div class="card"><div class="h-4">카플친 배너</div><div class="body-sm" style="margin-top:8px;">3종 (오픈/리마인드/마감) + 카피</div></div>
+      <div class="card"><div class="h-4">이메일</div><div class="body-sm" style="margin-top:8px;">오픈 / 마감</div></div>
+      <div class="card"><div class="h-4">오픈채팅</div><div class="body-sm" style="margin-top:8px;">3방 × 3 Phase = 9개 카피</div></div>
+      <div class="card"><div class="h-4">인스타</div><div class="body-sm" style="margin-top:8px;">캐러셀 5장 + 캡션</div></div>
+      <div class="card"><div class="h-4">온드미디어</div><div class="body-sm" style="margin-top:8px;">리틀리 / 소식 / 웰컴 / 대화방 메뉴</div></div>
+    </div>
+    <div class="body-lg" style="margin-top:48px; font-weight:700;">
+      공유회 1번 준비 = <span class="hl">하루 3시간</span> × 채널 × 회차.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>WHY · 페인</div>
+    <div class="pgnum">07 / 27</div>
+  </div>
+</section>
+
+<!-- 08. 일단 알림톡부터 -->
+<section class="slide dark" data-i="8">
+  <div class="top">
+    <div class="left">WHY · 시작점</div>
+    <div>02 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div class="kicker" style="color:#999;">그래서</div>
+    <div class="h-hero" style="color:#fff;">일단,<br><span style="color:var(--yellow);">알림톡부터</span>.</div>
+    <div class="body-lg" style="margin-top:56px; max-width:1100px; color:#bbb;">
+      "한 번에 다"는 욕심. 한 칸씩 옮기기로 했습니다.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>시작점</div>
+    <div class="pgnum">08 / 27</div>
+  </div>
+</section>
+
+<!-- 09. 근데 나도 알림톡 몰랐음 -->
+<section class="slide" data-i="9">
+  <div class="top">
+    <div class="left">WHY · 솔직한 출발</div>
+    <div>02 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div class="kicker">고백 하나</div>
+    <div class="h-1">근데 저도 알림톡,<br><span class="strike">잘 알았던 거</span> 아닙니다.</div>
+    <div class="body-lg" style="margin-top:64px; max-width:1300px;">
+      원래 다른 채널 담당이었거든요. AX 시작하면서 알림톡을 맡게 됐습니다.<br>
+      그래서 첫 일은 — <strong>알림톡이 뭔지부터 정리</strong>.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>솔직한 출발</div>
+    <div class="pgnum">09 / 27</div>
+  </div>
+</section>
+
+<!-- 10. 알림톡이 뭐냐면 -->
+<section class="slide" data-i="10">
+  <div class="top">
+    <div class="left">WHY · 용어 풀이</div>
+    <div>02 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">잠깐, 알림톡이 뭐냐면</div>
+    <div class="h-2" style="margin-bottom:56px;">신청한 분께 가는 <span class="hl">카카오 안내 메시지</span>.</div>
+    <div class="grid-2" style="gap:32px;">
+      <div class="card" style="padding:48px;">
+        <div class="kicker" style="margin-bottom:16px;">정보성</div>
+        <div class="h-3" style="margin-bottom:20px;">신청 · 일정 · 입장</div>
+        <div class="body-md">신청한 분 대상. 동의 없이도 발송 가능.<br>"오픈했어요 / D-1 입니다 / 입장 링크"</div>
+      </div>
+      <div class="card ink" style="padding:48px;">
+        <div class="kicker" style="margin-bottom:16px; color:var(--yellow);">광고성</div>
+        <div class="h-3" style="margin-bottom:20px; color:#fff;">할인 · 이벤트</div>
+        <div class="body-md" style="color:#bbb;">동의 + (광고) 표기 필수.<br>"쿠폰 도착 / 혜택 안내"</div>
+      </div>
+    </div>
+    <div class="body-md" style="margin-top:32px; color:var(--muted);">
+      셀피쉬 메시지 받아보신 분들 — 그게 알림톡이에요.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>알림톡 정의</div>
+    <div class="pgnum">10 / 27</div>
+  </div>
+</section>
+
+<!-- 11. 알림톡만 해도 반복되던 일 -->
+<section class="slide" data-i="11">
+  <div class="top">
+    <div class="left">WHY · 반복되는 일</div>
+    <div>02 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">알림톡만 해도, 매번</div>
+    <div class="h-2" style="margin-bottom:48px;">이 7가지를 손으로 했습니다.</div>
+    <ul class="pain-list">
+      <li>신청자 DB 조회 (Supabase 쿼리)</li>
+      <li>9종 알림톡 카피 매번 작성</li>
+      <li>변수 매칭 (#{이름}, #{프로그램명}…)</li>
+      <li>발송 시간 직접 챙기기</li>
+      <li>중복 발송 방지 체크</li>
+      <li>미신청자 자동 제외</li>
+      <li>발송 결과 추적·기록</li>
+    </ul>
+    <div class="body-lg" style="margin-top:40px; font-weight:700;">
+      공유회 1번 = <span class="hl">하루 3시간</span>.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>반복</div>
+    <div class="pgnum">11 / 27</div>
+  </div>
+</section>
+
+<!-- 12. 진짜 문제 — 모두에게 같은 카피 -->
+<section class="slide yellow" data-i="12">
+  <div class="top">
+    <div class="left">WHY · 진짜 문제</div>
+    <div>02 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div class="kicker" style="color:rgba(0,0,0,0.6);">근데 더 큰 문제는</div>
+    <div class="h-hero" style="font-size:160px;">모두에게<br>같은 카피.</div>
+    <div style="display:flex; gap:48px; margin-top:64px; align-items:center;">
+      <div class="h-1" style="font-size:140px; font-family:'JetBrains Mono', monospace;">0%</div>
+      <div class="h-3">개인화율 0%.<br>사람마다 소구되는 게 다른데, 같은 메시지를 보내고 있었습니다.</div>
+    </div>
+  </div>
+  <div class="bottom" style="color:rgba(0,0,0,0.5);">
+    <div>진짜 문제</div>
+    <div class="pgnum">12 / 27</div>
+  </div>
+</section>
+
+<!-- 13. WHAT — 매일 11시 슬랙 -->
+<section class="slide" data-i="13">
+  <div class="top">
+    <div class="left">WHAT · 결과 먼저</div>
+    <div>03 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">결론부터 보여드릴게요</div>
+    <div class="h-1" style="margin-bottom:56px;">매일 아침 <span class="hl">11시</span>,<br>슬랙으로 옵니다.</div>
+    <div style="display:flex; gap:48px; align-items:flex-start;">
+      <div class="slack" style="flex:1;">
+        <div class="slack-h"><div class="avatar">CR</div>#crm-알림톡-승인단계</div>
+        <div class="slack-b">
+          <div class="body-md" style="font-weight:700;">📬 오늘 발송 예정 — ① 오픈알림</div>
+          <div class="slack-modal">
+            <div class="slack-modal-title">[셀피쉬] AAA 공유회 오픈했어요!</div>
+            <div class="slack-modal-meta">
+              · 발송 대상 — 신청자 142명<br>
+              · 발송 시간 — 14:00<br>
+              · 변수 — #{프로그램명}, #{URL}
+            </div>
+            <div class="slack-modal-btns">
+              <button class="slack-btn primary">이대로 발송</button>
+              <button class="slack-btn">시간 변경</button>
+              <button class="slack-btn danger">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1; padding-top:32px;">
+        <div class="kicker" style="margin-bottom:16px;">에밀리가 하는 일</div>
+        <div class="h-3" style="margin-bottom:24px;">검수만.</div>
+        <div class="body-md">
+          카피·시간·대상자 확인 → "이대로 발송" 버튼 클릭. <br>
+          그게 끝입니다.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>WHAT · 결과</div>
+    <div class="pgnum">13 / 27</div>
+  </div>
+</section>
+
+<!-- 14. 하루 3시간 → 5분 -->
+<section class="slide dark" data-i="14">
+  <div class="top">
+    <div class="left">WHAT · 임팩트</div>
+    <div>03 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div style="display:flex; align-items:center; gap:80px;">
+      <div>
+        <div class="kicker" style="color:#777;">BEFORE</div>
+        <div class="stat-num strike" style="color:#666;">3<span style="font-size:120px;">시간</span></div>
+        <div class="stat-lab">하루 / 알림톡 운영</div>
+      </div>
+      <div style="font-size:120px; color:var(--yellow); font-weight:200;">→</div>
+      <div>
+        <div class="kicker" style="color:var(--yellow);">AFTER</div>
+        <div class="stat-num" style="color:var(--yellow);">5<span style="font-size:120px;">분</span></div>
+        <div class="stat-lab" style="color:#fff;">하루 / 검수만</div>
+      </div>
+    </div>
+    <div class="body-lg" style="margin-top:80px; color:#ccc;">
+      30배가 아닙니다. <span style="color:var(--yellow); font-weight:800;">36배.</span>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>임팩트</div>
+    <div class="pgnum">14 / 27</div>
+  </div>
+</section>
+
+<!-- 15. HOW 1단계 — 클로드와 브레인스토밍 -->
+<section class="slide" data-i="15">
+  <div class="top">
+    <div class="left">HOW · 1 / 7</div>
+    <div>04 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">1단계 — 시작</div>
+    <div class="h-1">클로드랑 같이<br>브레인스토밍.</div>
+    <div style="display:flex; gap:48px; margin-top:64px;">
+      <div class="card" style="flex:1; padding:40px;">
+        <div class="kicker" style="margin-bottom:12px;">EMILY</div>
+        <div class="h-4">"알림톡 9종을 어떻게 자동으로 보낼 수 있을까?"</div>
+      </div>
+      <div class="card ink" style="flex:1; padding:40px;">
+        <div class="kicker" style="margin-bottom:12px; color:var(--yellow);">CLAUDE</div>
+        <div class="h-4" style="color:#fff;">"먼저 템플릿이랑 발송 시점부터 정리해볼까요? 그다음 어디까지 자동화할지 결정하면 좋겠어요."</div>
+      </div>
+    </div>
+    <div class="body-md" style="margin-top:40px;">
+      대화는 곧 PRD가 됩니다.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>HOW · 1단계</div>
+    <div class="pgnum">15 / 27</div>
+  </div>
+</section>
+
+<!-- 16. HOW 2단계 — CLAUDE.md -->
+<section class="slide" data-i="16">
+  <div class="top">
+    <div class="left">HOW · 2 / 7</div>
+    <div>04 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">2단계 — 규칙 한 장</div>
+    <div class="h-1"><span class="mono">CLAUDE.md</span></div>
+    <div style="display:flex; gap:64px; align-items:flex-start; margin-top:48px;">
+      <div style="flex:1.1;">
+        <div class="h-3" style="margin-bottom:24px;">클로드가 매번 까먹어도<br>이 한 장이 대신 기억합니다.</div>
+        <div class="body-md">
+          전체가 어떻게 움직이는지에 대한 <strong>규칙 파일</strong>.<br>
+          세션이 새로 열릴 때마다 자동으로 읽어요.
+        </div>
+      </div>
+      <div class="card mono" style="flex:1; padding:32px; font-size:18px; line-height:1.7; background:#1a1a1a; color:#eee; border-color:#1a1a1a;">
+<span style="color:#888;"># 셀피쉬 CRM — 알림톡 자동화</span><br>
+<br>
+<span style="color:var(--yellow);">## 원칙</span><br>
+- 발송 전 슬랙 모달 검수 필수<br>
+- 같은 알림톡 중복 발송 자동 차단<br>
+- 미신청자 자동 제외<br>
+<br>
+<span style="color:var(--yellow);">## 에이전트</span><br>
+- director / data-collector / copywriter<br>
+- timeline-planner / dispatcher / verifier<br>
+<br>
+<span style="color:var(--yellow);">## 발송 시점 (KST)</span><br>
+- ① 오픈알림 — 신청 시작 시<br>
+- ② 리마인드 — D-3 11:00<br>
+- ③ D-1 — D-1 18:00<br>
+...
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>HOW · 2단계</div>
+    <div class="pgnum">16 / 27</div>
+  </div>
+</section>
+
+<!-- 17. HOW 3단계 — 노트북 덮으면 멈춤 -->
+<section class="slide" data-i="17">
+  <div class="top">
+    <div class="left">HOW · 3 / 7</div>
+    <div>04 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">3단계 — 문제 발견</div>
+    <div class="h-1">근데, 노트북 덮으면<br><span style="color:#c11;">전부 멈춥니다.</span></div>
+    <div style="display:flex; gap:32px; margin-top:64px; align-items:center;">
+      <div class="card" style="flex:1; padding:48px;">
+        <div class="kicker" style="margin-bottom:16px;">FACT</div>
+        <div class="h-3">알림톡은 14시에 나가야 하는데<br>제 노트북은 점심에 잠깐 닫아도 됩니다.</div>
+      </div>
+      <div class="ar">→</div>
+      <div class="card yellow" style="flex:1; padding:48px;">
+        <div class="kicker" style="margin-bottom:16px;">필요한 것</div>
+        <div class="h-3"><span class="mono">제 맥북이 꺼져 있어도<br>혼자 도는 도구</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>HOW · 3단계</div>
+    <div class="pgnum">17 / 27</div>
+  </div>
+</section>
+
+<!-- 18. HOW 4단계 — n8n -->
+<section class="slide" data-i="18">
+  <div class="top">
+    <div class="left">HOW · 4 / 7</div>
+    <div>04 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">4단계 — 그래서 n8n</div>
+    <div class="h-1"><span class="mono">n8n</span> = 박스를 잇는 자동화.</div>
+    <div class="body-md" style="margin-top:24px;">
+      서버에서 24시간 도는 워크플로우 도구. 코드 없이 <strong>박스를 선으로 잇는 방식</strong>으로 만듭니다.
+    </div>
+    <div class="wf" style="margin-top:64px; justify-content:center;">
+      <div class="wf-box">크론 11:00</div>
+      <div class="wf-arr">→</div>
+      <div class="wf-box">DB 조회</div>
+      <div class="wf-arr">→</div>
+      <div class="wf-box">슬랙 모달</div>
+      <div class="wf-arr">→</div>
+      <div class="wf-box" style="background:#FFF8C5;">검수 대기 (Wait)</div>
+      <div class="wf-arr">→</div>
+      <div class="wf-box" style="background:var(--yellow);">SOLAPI 발송</div>
+    </div>
+    <div class="body-md" style="margin-top:64px; color:var(--muted);">
+      현재 <strong>38개 노드</strong>가 매일 도는 중.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>HOW · 4단계</div>
+    <div class="pgnum">18 / 27</div>
+  </div>
+</section>
+
+<!-- 19. HOW 5단계 — 슬랙 카드로 승인 -->
+<section class="slide" data-i="19">
+  <div class="top">
+    <div class="left">HOW · 5 / 7</div>
+    <div>04 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">5단계 — 잘못 나가면?</div>
+    <div class="h-1">발송 전에<br>슬랙으로 한 번 더.</div>
+    <div class="body-md" style="margin-top:24px; color:var(--muted);">
+      <span class="mono">Slack</span> = 업무용 메신저. 우리가 매일 쓰는 그거.
+    </div>
+    <div style="display:flex; gap:48px; margin-top:48px; align-items:center;">
+      <div class="slack" style="flex:1;">
+        <div class="slack-h"><div class="avatar">!</div>승인 모달</div>
+        <div class="slack-b">
+          <div class="slack-modal">
+            <div class="slack-modal-title">⚠️ ③ D-1 리마인드 — 발송 30분 전</div>
+            <div class="slack-modal-meta">
+              · 신청자 142명 → <strong>발송 직전 재조회</strong><br>
+              · 카피: "내일 14:00 시작이에요!"<br>
+              · 줌 링크: 입력됨
+            </div>
+            <div class="slack-modal-btns">
+              <button class="slack-btn primary">이대로 발송</button>
+              <button class="slack-btn danger">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;">
+        <ul class="col gap-16" style="list-style:none;">
+          <li class="card" style="padding:24px 28px; font-size:24px; font-weight:700;">✓ 카피 한 번 더 확인</li>
+          <li class="card" style="padding:24px 28px; font-size:24px; font-weight:700;">✓ 잘못 나갈 것 같으면 <span style="color:#c11;">취소</span></li>
+          <li class="card" style="padding:24px 28px; font-size:24px; font-weight:700;">✓ 시간 변경도 가능</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>HOW · 5단계</div>
+    <div class="pgnum">19 / 27</div>
+  </div>
+</section>
+
+<!-- 20. HOW 6단계 — BEFORE/AFTER -->
+<section class="slide" data-i="20">
+  <div class="top">
+    <div class="left">HOW · 6 / 7</div>
+    <div>04 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">6단계 — 바뀐 것</div>
+    <div class="h-2" style="margin-bottom:48px;">하루의 모양이 달라졌습니다.</div>
+    <div class="ba">
+      <div class="ba-h">BEFORE — 손으로</div>
+      <div class="ba-h">AFTER — 자동</div>
+      <div class="ba-c before">DB 직접 쿼리해서 신청자 추출</div>
+      <div class="ba-c after">크론이 매일 11시에 자동 조회</div>
+      <div class="ba-c before">9종 카피 매번 새로 작성</div>
+      <div class="ba-c after">템플릿 + 변수만 채우면 끝</div>
+      <div class="ba-c before">발송 시간 알람 맞춰놓기</div>
+      <div class="ba-c after">예약 발송 — 알아서 나감</div>
+      <div class="ba-c before">발송 결과 모름</div>
+      <div class="ba-c after">Slack으로 자동 리포트</div>
+      <div class="ba-c before big strike">하루 3시간</div>
+      <div class="ba-c after big">하루 5분</div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>HOW · 6단계</div>
+    <div class="pgnum">20 / 27</div>
+  </div>
+</section>
+
+<!-- 21. HOW 7단계 — 7일 흐름도 + 크론 -->
+<section class="slide" data-i="21">
+  <div class="top">
+    <div class="left">HOW · 7 / 7</div>
+    <div>04 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">7단계 — 한눈에 보기</div>
+    <div class="h-2" style="margin-bottom:32px;">공유회 7일, 알림톡 9종.</div>
+    <div class="body-md" style="margin-bottom:32px; color:var(--muted);">
+      <span class="mono">크론</span> = 매일 정해진 시간에 도는 거. 11시면 11시.
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(8, 1fr); gap:14px;">
+      <div></div>
+      <div class="card" style="padding:18px; text-align:center;"><div class="kicker" style="margin:0 0 8px; font-size:14px;">D-7</div><div class="h-4" style="font-size:24px;">①</div><div class="body-sm" style="font-size:14px;">오픈</div></div>
+      <div class="card" style="padding:18px; text-align:center;"><div class="kicker" style="margin:0 0 8px; font-size:14px;">D-3</div><div class="h-4" style="font-size:24px;">②</div><div class="body-sm" style="font-size:14px;">리마인드</div></div>
+      <div class="card" style="padding:18px; text-align:center;"><div class="kicker" style="margin:0 0 8px; font-size:14px;">D-2</div><div class="h-4" style="font-size:24px;">⑤</div><div class="body-sm" style="font-size:14px;">할인</div></div>
+      <div class="card" style="padding:18px; text-align:center;"><div class="kicker" style="margin:0 0 8px; font-size:14px;">D-1</div><div class="h-4" style="font-size:24px;">③</div><div class="body-sm" style="font-size:14px;">D-1</div></div>
+      <div class="card yellow" style="padding:18px; text-align:center;"><div class="kicker" style="margin:0 0 8px; font-size:14px; color:rgba(0,0,0,0.6);">D-DAY</div><div class="h-4" style="font-size:24px;">④⑥⑦</div><div class="body-sm" style="font-size:14px; color:var(--ink);">당일·입장·시작</div></div>
+      <div class="card" style="padding:18px; text-align:center;"><div class="kicker" style="margin:0 0 8px; font-size:14px;">D+1</div><div class="h-4" style="font-size:24px;">⑧</div><div class="body-sm" style="font-size:14px;">혜택</div></div>
+      <div class="card" style="padding:18px; text-align:center;"><div class="kicker" style="margin:0 0 8px; font-size:14px;">D+3</div><div class="h-4" style="font-size:24px;">⑨</div><div class="body-sm" style="font-size:14px;">VOD</div></div>
+    </div>
+    <div style="margin-top:48px; display:flex; gap:18px; align-items:center;">
+      <div class="chip k"><span class="dot"></span>매일 11:00 크론</div>
+      <div class="ar" style="font-size:48px;">→</div>
+      <div class="chip">DB 조회 + 슬랙 모달</div>
+      <div class="ar" style="font-size:48px;">→</div>
+      <div class="chip y">예약 시간 자동 발송</div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>HOW · 전체 흐름</div>
+    <div class="pgnum">21 / 27</div>
+  </div>
+</section>
+
+<!-- 22. 사용한 스킬 — 딥인터뷰 -->
+<section class="slide" data-i="22">
+  <div class="top">
+    <div class="left">SKILLS</div>
+    <div>04 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div class="kicker">사용한 스킬 ①</div>
+    <div class="h-1">딥인터뷰로<br>기획.</div>
+    <div style="display:flex; gap:48px; margin-top:64px; align-items:flex-start;">
+      <div style="flex:1;">
+        <div class="body-lg">
+          클로드한테 묻고, 또 묻고, 다시 묻습니다.<br>
+          "이건 왜?" "이게 안 되면?" "다른 방법은?"<br><br>
+          <strong>막연한 자동화 아이디어 → 실행 가능한 PRD</strong>로 정리되는 과정.
+        </div>
+      </div>
+      <div class="card ink" style="flex:1; padding:40px;">
+        <div class="kicker" style="margin-bottom:16px; color:var(--yellow);">예시</div>
+        <div class="body-md" style="color:#bbb;">
+          Q. "취소 버튼 만들고 싶어"<br>
+          A. "어떤 시점에 취소? 발송 직전? 예약 후?"<br>
+          Q. "예약 후 취소"<br>
+          A. "그럼 staticData에 플래그를…"<br><br>
+          <span style="color:var(--yellow);">→ 5번 시도 끝에 1줄로 해결</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>SKILL · 딥인터뷰</div>
+    <div class="pgnum">22 / 27</div>
+  </div>
+</section>
+
+<!-- 23. 일은 8명에게 분업 -->
+<section class="slide" data-i="23">
+  <div class="top">
+    <div class="left">SKILLS</div>
+    <div>04 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">사용한 스킬 ②</div>
+    <div class="h-2" style="margin-bottom:48px;">일은 — <span class="hl">8명에게</span> 분업.</div>
+    <div class="grid-4" style="gap:18px;">
+      <div class="agent"><div class="agent-icon">D</div><div class="agent-name">director</div><div class="agent-role">전체 검수 · 최종 승인</div></div>
+      <div class="agent"><div class="agent-icon">L</div><div class="agent-name">team-lead</div><div class="agent-role">카피·에셋 품질 검수</div></div>
+      <div class="agent"><div class="agent-icon">C</div><div class="agent-name">data-collector</div><div class="agent-role">URL 크롤링 · DB 조회</div></div>
+      <div class="agent"><div class="agent-icon">P</div><div class="agent-name">timeline-planner</div><div class="agent-role">Phase별 날짜 계산</div></div>
+      <div class="agent"><div class="agent-icon">W</div><div class="agent-name">copywriter</div><div class="agent-role">전채널 카피 생성</div></div>
+      <div class="agent"><div class="agent-icon">M</div><div class="agent-name">media-ops</div><div class="agent-role">이미지 · HTML · PNG</div></div>
+      <div class="agent"><div class="agent-icon">S</div><div class="agent-name">dispatcher</div><div class="agent-role">API 발송 · Slack 전달</div></div>
+      <div class="agent"><div class="agent-icon">V</div><div class="agent-name">verifier</div><div class="agent-role">규칙 위반 자동 반려</div></div>
+    </div>
+    <div class="body-md" style="margin-top:32px;">
+      한 명한테 다 시키면 흔들립니다. <strong>8명이 분담하면 안정됩니다.</strong>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>SKILL · 서브 에이전트</div>
+    <div class="pgnum">23 / 27</div>
+  </div>
+</section>
+
+<!-- 24. 6주 전 vs 지금 -->
+<section class="slide" data-i="24">
+  <div class="top">
+    <div class="left">NEXT · 회고</div>
+    <div>05 / 05</div>
+  </div>
+  <div class="body">
+    <div class="kicker">6주 전 vs 지금</div>
+    <div class="h-2" style="margin-bottom:48px;">짧게 짚고 갑니다.</div>
+    <div class="ba">
+      <div class="ba-h">6주 전</div>
+      <div class="ba-h">지금</div>
+      <div class="ba-c before">CRM 초보, 알림톡 잘 모름</div>
+      <div class="ba-c after">URL 1줄로 8채널 자동</div>
+      <div class="ba-c before">손으로 다 함</div>
+      <div class="ba-c after">8 에이전트가 분담 + 검수</div>
+      <div class="ba-c before big strike">하루 3시간</div>
+      <div class="ba-c after big">하루 5분</div>
+      <div class="ba-c before">모두에게 같은 카피</div>
+      <div class="ba-c after">다음은 — 개인화</div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>회고</div>
+    <div class="pgnum">24 / 27</div>
+  </div>
+</section>
+
+<!-- 25. 알림톡은 첫 칸 -->
+<section class="slide yellow" data-i="25">
+  <div class="top">
+    <div class="left">NEXT · 다음은</div>
+    <div>05 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div class="kicker" style="color:rgba(0,0,0,0.6);">AX, 다음은 어디로</div>
+    <div class="h-hero" style="font-size:160px;">알림톡은<br>첫 칸이었어요.</div>
+    <div style="margin-top:64px; display:flex; gap:14px; flex-wrap:wrap;">
+      <div class="chip k"><span class="dot"></span>알림톡 ✓</div>
+      <div class="chip">카플친</div>
+      <div class="chip">이메일</div>
+      <div class="chip">인스타</div>
+      <div class="chip">온드미디어</div>
+      <div class="chip">오픈채팅</div>
+      <div class="chip">개인화 카피 ★</div>
+    </div>
+  </div>
+  <div class="bottom" style="color:rgba(0,0,0,0.5);">
+    <div>NEXT</div>
+    <div class="pgnum">25 / 27</div>
+  </div>
+</section>
+
+<!-- 26. 혼자 했으면 못 했을 -->
+<section class="slide" data-i="26">
+  <div class="top">
+    <div class="left">CLOSE · 팀</div>
+    <div>05 / 05</div>
+  </div>
+  <div class="body" style="justify-content:center;">
+    <div class="kicker">마지막으로</div>
+    <div class="h-1">혼자였으면<br>여기까지 못 왔습니다.</div>
+    <div style="display:flex; gap:32px; margin-top:64px;">
+      <div class="card" style="flex:1; padding:32px; text-align:center;"><div class="h-3">클로드 코드</div><div class="body-sm" style="margin-top:8px;">매일의 페어</div></div>
+      <div class="card" style="flex:1; padding:32px; text-align:center;"><div class="h-3">8 에이전트</div><div class="body-sm" style="margin-top:8px;">분업 · 검수</div></div>
+      <div class="card" style="flex:1; padding:32px; text-align:center;"><div class="h-3">셀피쉬 팀</div><div class="body-sm" style="margin-top:8px;">결정 · 피드백</div></div>
+      <div class="card" style="flex:1; padding:32px; text-align:center;"><div class="h-3">AAA 7명</div><div class="body-sm" style="margin-top:8px;">6주 동행</div></div>
+    </div>
+    <div class="quote" style="margin-top:64px;">
+      이기적으로 공유하면 — 조 전체의 시야가 내 시야가 됩니다.
+    </div>
+  </div>
+  <div class="bottom">
+    <div>팀 크레딧</div>
+    <div class="pgnum">26 / 27</div>
+  </div>
+</section>
+
+<!-- 27. 감사합니다 -->
+<section class="slide dark" data-i="27">
+  <div class="top">
+    <div class="left">EMILY</div>
+    <div>SELFISH CLUB · AAA · 2026.04.28</div>
+  </div>
+  <div class="body" style="justify-content:center; align-items:center;">
+    <div class="kicker" style="color:var(--yellow);">END.</div>
+    <div class="h-hero" style="color:#fff; text-align:center; font-size:220px;">감사합니다.</div>
+    <div class="body-lg" style="margin-top:64px; color:#999; text-align:center;">
+      Q&amp;A
+    </div>
+  </div>
+  <div class="bottom">
+    <div>EMILY · SELFISH CLUB</div>
+    <div class="pgnum">27 / 27</div>
+  </div>
+</section>
+
+</div>
+
+<div class="hud" id="hud">01 / 27</div>
+<div class="hud-help">← →   ·   F: FULLSCREEN   ·   ESC</div>
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const stage = document.getElementById('stage');
+  const hud = document.getElementById('hud');
+  const total = slides.length;
+  let i = 0;
+
+  function show(n) {
+    n = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === n));
+    hud.textContent = String(n + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    i = n;
+    location.hash = '#' + (n + 1);
+  }
+
+  function fit() {
+    const sx = window.innerWidth / 1920;
+    const sy = window.innerHeight / 1080;
+    const s = Math.min(sx, sy) * 0.96;
+    slides.forEach(sl => { sl.style.transform = 'scale(' + s + ')'; });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { show(i + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { show(i - 1); e.preventDefault(); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(total - 1); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  stage.addEventListener('click', (e) => {
+    const x = e.clientX / window.innerWidth;
+    if (x > 0.5) show(i + 1); else show(i - 1);
+  });
+
+  window.addEventListener('resize', fit);
+
+  // initial slide from hash
+  const h = parseInt((location.hash || '#1').slice(1), 10);
+  show(isNaN(h) ? 0 : h - 1);
+  fit();
+})();
+</script>
+</body>
+</html>

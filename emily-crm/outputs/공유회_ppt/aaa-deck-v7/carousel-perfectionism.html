@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>AAA · 완벽주의가 일을 느리게 한다</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
+<link rel="stylesheet" href="aaa-system.css"/>
+<style>
+  html,body{margin:0;padding:0;background:#f0eee9;}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="aaa-system.jsx"></script>
+<script type="text/babel">
+  const { DesignCanvas, DCSection, DCArtboard } = window;
+  const { HeroSlide, SplitSlide, QuoteSlide, StatsSlide, ListSlide, CTASlide, Frame } = window;
+
+  const TOTAL = 10;
+
+  // 01 · Cover — Hero (dark, hl on 느리게)
+  const S01 = () =>
+    <HeroSlide
+      theme="dark"
+      brand={true}
+      kicker="AAA · SELFMARKETING #04"
+      title={<>완벽주의가<br/>일을 <span className="hl">느리게</span><br/>한다.</>}
+      sub={<>8주 실험으로 찾은<br/>3가지 해제법 ↓</>}
+      footer="swipe"
+    />;
+
+  // 02 · Problem — 자기 고백 (light)
+  const S02 = () =>
+    <Frame theme="light" brand={true} footer="page" page={2} total={TOTAL}>
+      <div style={{ flex:1, display:'flex', flexDirection:'column', justifyContent:'center', paddingTop:40 }}>
+        <div className="kicker" style={{ marginBottom: 28 }}>솔직히 말하면,</div>
+        <div style={{ fontSize: 88, lineHeight: 1.05, letterSpacing:'-0.035em', fontWeight: 800, marginBottom: 40 }}>
+          저는 <span className="hl">완벽주의자</span>라<br/>
+          일이 <span className="u">느려요.</span>
+        </div>
+        <div className="body" style={{ fontSize: 36 }}>
+          초안이 마음에 안 들면 공유 못 하고,<br/>
+          중간에 바꿀 여지가 있으면 시작 못 해요.<br/>
+          <span style={{ color:'#888' }}>그러다 마감이 또 밀렸죠.</span>
+        </div>
+      </div>
+    </Frame>;
+
+  // 03 · Hypothesis — 전제를 뒤집기 (accent)
+  const S03 = () =>
+    <HeroSlide
+      theme="accent"
+      brand={true}
+      kicker="그래서 8주 실험"
+      title={<>완벽하게 말고,<br/><span className="u">먼저</span> 하기로.</>}
+      sub="규칙 3개로 바꿨어요."
+      footer="page"
+      page={3} total={TOTAL}
+    />;
+
+  // 04 · List — 3가지 해제법
+  const S04 = () =>
+    <ListSlide
+      theme="light"
+      brand={true}
+      kicker="해제법 3가지"
+      title={<>완벽주의를<br/>끄는 법.</>}
+      items={[
+        { t: '초안부터 공유', d: '부끄러운 버전을 3일 안에 팀에 던진다.' },
+        { t: '마감을 역설계', d: '시간이 먼저. 품질은 그 안에서 맞춘다.' },
+        { t: '확인만 마지막에', d: '쓰는 건 전부 AI가. 나는 통과만 누른다.' },
+      ]}
+      page={4} total={TOTAL}
+    />;
+
+  // 05 · Split — Before/After on 규칙 #01
+  const S05 = () =>
+    <SplitSlide
+      theme="light"
+      brand={true}
+      kicker="#01 · 초안부터 공유"
+      title={<>3일 규칙.</>}
+      left={{
+        label: '예전엔',
+        title: '2주',
+        body: '혼자 다듬다 타이밍 놓침. 공유 전에 이미 지침.',
+      }}
+      right={{
+        label: '바꾸고',
+        title: '3일',
+        body: '부끄러워도 공유. 반응 보고 고친다. 혼자 추측 끝.',
+        tone: 'ink',
+      }}
+      page={5} total={TOTAL}
+    />;
+
+  // 06 · Quote — 깨달음
+  const S06 = () =>
+    <QuoteSlide
+      theme="light"
+      brand={true}
+      quote={<>내 초안이 부끄러운 건<br/>내 기준이 <span className="hl">올라갔다</span>는 뜻이에요.</>}
+      attribution="에밀리"
+      role="CRM PM · 셀피쉬클럽"
+      page={6} total={TOTAL}
+    />;
+
+  // 07 · Split — 규칙 #02 마감 역설계 (dark)
+  const S07 = () =>
+    <Frame theme="dark" brand={true} footer="page" page={7} total={TOTAL}>
+      <div style={{ paddingTop: 40 }}>
+        <div className="kicker" style={{ marginBottom: 20 }}>#02 · 마감을 역설계</div>
+        <div className="h-l" style={{ fontSize: 78, marginBottom: 40 }}>
+          <span style={{ color:'#888' }}>"완성되면"</span><br/>
+          말고 <span className="hl">"금요일"</span>.
+        </div>
+      </div>
+      <div style={{ flex:1, display:'flex', alignItems:'center' }}>
+        <div style={{ display:'flex', flexDirection:'column', gap:22, width:'100%' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:20, padding:'28px 32px', background:'rgba(255,255,255,0.06)', borderRadius:14 }}>
+            <div style={{ fontSize: 28, fontWeight: 900, color:'var(--accent)', width: 140, letterSpacing:'0.1em' }}>MON</div>
+            <div style={{ fontSize: 32, fontWeight: 600, color:'#fff' }}>부끄러운 초안</div>
+          </div>
+          <div style={{ display:'flex', alignItems:'center', gap:20, padding:'28px 32px', background:'rgba(255,255,255,0.06)', borderRadius:14 }}>
+            <div style={{ fontSize: 28, fontWeight: 900, color:'var(--accent)', width: 140, letterSpacing:'0.1em' }}>WED</div>
+            <div style={{ fontSize: 32, fontWeight: 600, color:'#fff' }}>피드백 + 2차 수정</div>
+          </div>
+          <div style={{ display:'flex', alignItems:'center', gap:20, padding:'28px 32px', background:'var(--accent)', borderRadius:14 }}>
+            <div style={{ fontSize: 28, fontWeight: 900, color:'var(--ink)', width: 140, letterSpacing:'0.1em' }}>FRI</div>
+            <div style={{ fontSize: 32, fontWeight: 800, color:'var(--ink)' }}>발행. 끝.</div>
+          </div>
+        </div>
+      </div>
+    </Frame>;
+
+  // 08 · Rule #03 — AI가 쓴다 (light)
+  const S08 = () =>
+    <Frame theme="light" brand={true} footer="page" page={8} total={TOTAL}>
+      <div style={{ paddingTop: 40 }}>
+        <div className="kicker" style={{ marginBottom: 20 }}>#03 · 확인만 마지막에</div>
+        <div className="h-l" style={{ fontSize: 78, marginBottom: 48 }}>
+          <span className="hl">쓰는 건</span> 다 맡겨요.
+        </div>
+      </div>
+      <div style={{ flex:1, display:'flex', flexDirection:'column', gap: 18, justifyContent:'center' }}>
+        <div style={{ display:'flex', gap: 18 }}>
+          <div className="stat" style={{ padding:'36px 32px' }}>
+            <div style={{ fontSize: 26, color:'#888', fontWeight: 700, letterSpacing:'0.12em', textTransform:'uppercase', marginBottom: 16 }}>초안 · AI</div>
+            <div className="stat-num" style={{ fontSize: 92 }}>80%</div>
+            <div className="stat-lab">Claude가 생성</div>
+          </div>
+          <div className="stat" style={{ padding:'36px 32px' }}>
+            <div style={{ fontSize: 26, color:'#888', fontWeight: 700, letterSpacing:'0.12em', textTransform:'uppercase', marginBottom: 16 }}>다듬기 · AI</div>
+            <div className="stat-num" style={{ fontSize: 92 }}>15%</div>
+            <div className="stat-lab">Claude가 교정</div>
+          </div>
+          <div className="stat k" style={{ padding:'36px 32px' }}>
+            <div style={{ fontSize: 26, color:'var(--accent)', fontWeight: 700, letterSpacing:'0.12em', textTransform:'uppercase', marginBottom: 16 }}>확인 · 나</div>
+            <div className="stat-num" style={{ fontSize: 92 }}>5%</div>
+            <div className="stat-lab">통과만 누름</div>
+          </div>
+        </div>
+        <div className="body" style={{ fontSize: 32, marginTop: 28 }}>
+          "잘 쓰는 사람"이 되려다<br/>
+          <b>"빨리 발행하는 사람"</b>이 됐어요.
+        </div>
+      </div>
+    </Frame>;
+
+  // 09 · Stats — 8주 후 결과
+  const S09 = () =>
+    <StatsSlide
+      theme="light"
+      brand={true}
+      kicker="8주 뒤"
+      title="결과는 이랬어요."
+      stats={[
+        { num: '3.2x', lab: '아웃풋 속도' },
+        { num: '-67%', lab: '재작업 시간', tone: 'ink' },
+        { num: '12개', lab: '8주간 발행', tone: 'accent' },
+      ]}
+      closer={<>완벽주의가 아니라 <b>속도</b>가 퀄리티였어요.</>}
+      page={9} total={TOTAL}
+    />;
+
+  // 10 · CTA
+  const S10 = () =>
+    <CTASlide
+      theme="accent"
+      brand={true}
+      eyebrow="다음 공유회 · 4월 28일 (화) 21:00"
+      title={<>완벽주의<br/>끄는 <span className="u">법,</span><br/>같이.</>}
+      action="프로필 링크에서 신청 →"
+      handle="@aaa.selfmarketing"
+      hashtags={['이론말고', '실전공유', '무료']}
+      page={10} total={TOTAL}
+    />;
+
+  const SLIDES = [
+    { id:'01', label:'01 Cover',        el: <S01/> },
+    { id:'02', label:'02 Problem',      el: <S02/> },
+    { id:'03', label:'03 Hypothesis',   el: <S03/> },
+    { id:'04', label:'04 List',         el: <S04/> },
+    { id:'05', label:'05 Rule #1',      el: <S05/> },
+    { id:'06', label:'06 Quote',        el: <S06/> },
+    { id:'07', label:'07 Rule #2',      el: <S07/> },
+    { id:'08', label:'08 Rule #3',      el: <S08/> },
+    { id:'09', label:'09 Result',       el: <S09/> },
+    { id:'10', label:'10 CTA',          el: <S10/> },
+  ];
+
+  const App = () =>
+    <DesignCanvas>
+      <DCSection id="carousel" title="완벽주의가 일을 느리게 한다" subtitle="10장 · 1080×1350 · AAA Selfmarketing v1">
+        {SLIDES.map(s =>
+          <DCArtboard key={s.id} id={s.id} label={s.label} width={1080} height={1350}>
+            {s.el}
+          </DCArtboard>
+        )}
+      </DCSection>
+    </DesignCanvas>;
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<!-- Tweaks wiring (swap accent, density) -->
+<script>
+  /*EDITMODE-BEGIN*/ const TWEAKS = {
+    "accent":"#E9ED12",
+    "accentInk":"#3a3b00",
+    "density":1
+  } /*EDITMODE-END*/;
+
+  let panelEl = null;
+  function ensurePanel(){
+    if (panelEl) return panelEl;
+    panelEl = document.createElement('div');
+    panelEl.id = 'tweaks-panel';
+    panelEl.style.cssText = 'position:fixed;bottom:20px;right:20px;width:260px;background:#0A0A0A;color:#fff;border-radius:12px;padding:18px;font-family:Pretendard,system-ui,sans-serif;font-size:13px;box-shadow:0 20px 40px rgba(0,0,0,0.25);z-index:99999;';
+    panelEl.innerHTML = `
+      <div style="font-size:11px;letter-spacing:0.2em;font-weight:800;color:#E9ED12;margin-bottom:12px;">TWEAKS</div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:11px;color:#999;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;margin-bottom:6px;">Accent</div>
+        <div id="tw-swatches" style="display:flex;gap:6px;">
+          <button data-c="#E9ED12" data-ai="#3a3b00" style="width:28px;height:28px;border-radius:6px;border:2px solid #fff;background:#E9ED12;cursor:pointer;padding:0;"></button>
+          <button data-c="#FF4D2E" data-ai="#3b0f05" style="width:28px;height:28px;border-radius:6px;border:2px solid transparent;background:#FF4D2E;cursor:pointer;padding:0;"></button>
+          <button data-c="#00D67F" data-ai="#04331f" style="width:28px;height:28px;border-radius:6px;border:2px solid transparent;background:#00D67F;cursor:pointer;padding:0;"></button>
+          <button data-c="#5B8CFF" data-ai="#0d1f4a" style="width:28px;height:28px;border-radius:6px;border:2px solid transparent;background:#5B8CFF;cursor:pointer;padding:0;"></button>
+          <button data-c="#FF5BD8" data-ai="#3a0f33" style="width:28px;height:28px;border-radius:6px;border:2px solid transparent;background:#FF5BD8;cursor:pointer;padding:0;"></button>
+          <button data-c="#FFFFFF" data-ai="#000000" style="width:28px;height:28px;border-radius:6px;border:2px solid transparent;background:#fff;cursor:pointer;padding:0;"></button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#999;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;margin-bottom:6px;">Density <span id="tw-dv" style="float:right;color:#E9ED12;font-family:monospace;">1.00</span></div>
+        <input id="tw-dens" type="range" min="0.75" max="1.25" step="0.05" value="1" style="width:100%;accent-color:#E9ED12;">
+      </div>
+    `;
+    document.body.appendChild(panelEl);
+
+    panelEl.querySelectorAll('#tw-swatches button').forEach(b => {
+      b.addEventListener('click', () => save({ accent: b.dataset.c, accentInk: b.dataset.ai }));
+    });
+    panelEl.querySelector('#tw-dens').addEventListener('input', e => save({ density: parseFloat(e.target.value) }));
+    return panelEl;
+  }
+
+  function apply(t){
+    document.documentElement.style.setProperty('--accent', t.accent);
+    document.documentElement.style.setProperty('--accent-ink', t.accentInk);
+    document.documentElement.style.setProperty('--density', t.density);
+    if (panelEl){
+      panelEl.querySelector('#tw-dv').textContent = Number(t.density).toFixed(2);
+      panelEl.querySelector('#tw-dens').value = t.density;
+      panelEl.querySelectorAll('#tw-swatches button').forEach(b => {
+        b.style.borderColor = (b.dataset.c === t.accent) ? '#fff' : 'transparent';
+      });
+    }
+  }
+  function save(p){
+    Object.assign(TWEAKS, p);
+    apply(TWEAKS);
+    window.parent.postMessage({ type:'__edit_mode_set_keys', edits: p }, '*');
+  }
+  apply(TWEAKS);
+
+  window.addEventListener('message', e => {
+    if (e.data?.type === '__activate_edit_mode')   { ensurePanel().style.display='block'; apply(TWEAKS); }
+    if (e.data?.type === '__deactivate_edit_mode' && panelEl) panelEl.style.display='none';
+  });
+  window.parent.postMessage({ type:'__edit_mode_available' }, '*');
+</script>
+</body>
+</html>

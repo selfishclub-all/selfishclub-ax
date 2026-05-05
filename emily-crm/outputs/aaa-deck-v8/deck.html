@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AI가 매일 아침 알림톡을 들고 옵니다 — 에밀리</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --text: #f5f5f5;
+    --muted: #8a8a8a;
+    --soft: #c8c8c8;
+    --accent: #E9ED12;
+    --accent-soft: rgba(233, 237, 18, 0.12);
+    --divider: #1f1f1f;
+    --card: rgba(255,255,255,0.025);
+    --card-border: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+  }
+  .deck { position: relative; width: 100vw; height: 100vh; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 7vh 9vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  /* Slide markers */
+  .num {
+    position: absolute; top: 4vh; left: 9vw;
+    font-size: 13px; letter-spacing: 0.25em;
+    color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+  .pager {
+    position: absolute; top: 4vh; right: 9vw;
+    font-size: 13px; letter-spacing: 0.05em;
+    color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+  .tag {
+    font-size: 13px; letter-spacing: 0.32em;
+    color: var(--accent); margin-bottom: 18px; font-weight: 600;
+  }
+  .divider {
+    width: 56px; height: 2px; background: var(--accent);
+    margin: 0 0 36px; border-radius: 2px;
+  }
+  .divider.thin { background: var(--card-border); height: 1px; }
+
+  /* Typography */
+  .title-xl {
+    font-size: clamp(48px, 7.4vw, 108px);
+    font-weight: 700; line-height: 1.08; letter-spacing: -0.025em;
+  }
+  .title-l {
+    font-size: clamp(40px, 5.2vw, 76px);
+    font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
+  }
+  .title-m {
+    font-size: clamp(28px, 3.4vw, 50px);
+    font-weight: 600; line-height: 1.25; letter-spacing: -0.015em;
+  }
+  .body {
+    font-size: clamp(16px, 1.4vw, 22px);
+    line-height: 1.7; color: var(--soft);
+    max-width: 60ch;
+  }
+  .body.muted { color: var(--muted); }
+  .accent { color: var(--accent); }
+  .strike { text-decoration: line-through; color: var(--muted); text-decoration-thickness: 2px; }
+  .underline { background: linear-gradient(transparent 60%, var(--accent-soft) 60%); padding: 0 4px; }
+
+  /* Big number */
+  .bignum {
+    font-size: clamp(140px, 18vw, 280px);
+    font-weight: 800; line-height: 0.9;
+    letter-spacing: -0.05em; color: var(--accent);
+  }
+  .bignum-sub {
+    font-size: clamp(20px, 2vw, 32px);
+    color: var(--soft); margin-top: 16px;
+  }
+  .arrow {
+    font-size: clamp(60px, 7vw, 100px);
+    color: var(--muted); padding: 0 36px; line-height: 1;
+  }
+
+  /* Cards */
+  .grid-3 {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 48px;
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 36px; }
+  .card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 18px; padding: 36px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .card .label { font-size: 12px; letter-spacing: 0.25em; color: var(--accent); font-weight: 700; }
+  .card .name { font-size: clamp(22px, 2.2vw, 32px); font-weight: 700; }
+  .card .desc { font-size: clamp(14px, 1.05vw, 16px); color: var(--muted); line-height: 1.6; }
+
+  /* Speech bubble */
+  .speech {
+    background: var(--accent); color: #0a0a0a;
+    padding: 24px 32px; border-radius: 24px 24px 24px 6px;
+    font-size: clamp(16px, 1.4vw, 22px); font-weight: 600;
+    max-width: 540px; line-height: 1.5;
+    box-shadow: 0 12px 40px rgba(233,237,18,0.15);
+  }
+  .speech .who { font-size: 12px; opacity: 0.6; margin-top: 8px; letter-spacing: 0.1em; }
+
+  /* Pain bullets */
+  .pain {
+    display: flex; flex-direction: column; gap: 18px; margin-top: 36px;
+  }
+  .pain-row {
+    display: flex; gap: 20px; align-items: baseline;
+    font-size: clamp(20px, 2.2vw, 32px); font-weight: 600;
+  }
+  .pain-row .icon { color: var(--accent); font-size: 0.7em; }
+
+  /* Channel chips */
+  .channels {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px;
+  }
+  .chip {
+    padding: 12px 22px; border-radius: 999px;
+    border: 1px solid var(--card-border); background: var(--card);
+    font-size: clamp(13px, 1.1vw, 16px); color: var(--soft);
+  }
+  .chip.hi { background: var(--accent); color: #0a0a0a; border-color: var(--accent); font-weight: 700; }
+
+  /* Step row */
+  .steps {
+    display: flex; align-items: stretch; gap: 18px; margin-top: 40px;
+  }
+  .step {
+    flex: 1; background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 24px 22px;
+  }
+  .step .n { color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 0.2em; }
+  .step .t { font-size: clamp(16px, 1.3vw, 20px); font-weight: 600; margin-top: 10px; }
+  .step .d { font-size: clamp(13px, 1vw, 15px); color: var(--muted); margin-top: 6px; line-height: 1.55; }
+  .step-arrow { display: flex; align-items: center; color: var(--muted); font-size: 24px; }
+
+  /* Slack mock */
+  .slack-mock {
+    margin-top: 36px;
+    background: #1a1a1a; border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 28px 32px;
+    max-width: 720px; line-height: 1.7;
+  }
+  .slack-bot { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .slack-bot .av { width: 32px; height: 32px; border-radius: 8px; background: var(--accent); }
+  .slack-bot .name { font-weight: 700; font-size: 15px; }
+  .slack-bot .tag { font-size: 11px; letter-spacing: 0; padding: 2px 8px; background: var(--accent-soft); color: var(--accent); border-radius: 4px; margin: 0; font-weight: 700; }
+  .slack-body { font-size: 15px; color: var(--soft); }
+  .slack-buttons { display: flex; gap: 10px; margin-top: 16px; }
+  .btn-approve { padding: 10px 20px; background: var(--accent); color: #0a0a0a; border-radius: 8px; font-weight: 700; font-size: 14px; }
+  .btn-edit { padding: 10px 20px; background: transparent; border: 1px solid var(--card-border); color: var(--soft); border-radius: 8px; font-size: 14px; }
+  .btn-cancel { padding: 10px 20px; background: transparent; border: 1px solid var(--card-border); color: var(--muted); border-radius: 8px; font-size: 14px; }
+
+  /* Center variants */
+  .center { align-items: center; text-align: center; }
+  .center .body { margin: 24px auto 0; }
+
+  /* Cover */
+  .cover {
+    background:
+      radial-gradient(80% 60% at 70% 30%, rgba(233,237,18,0.08), transparent 60%),
+      radial-gradient(60% 50% at 20% 80%, rgba(233,237,18,0.04), transparent 60%),
+      var(--bg);
+  }
+  .cover .meta {
+    position: absolute; left: 9vw; bottom: 7vh;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .cover .meta .who { color: var(--accent); font-weight: 700; letter-spacing: 0.1em; }
+  .cover .meta .role { color: var(--muted); font-size: 14px; }
+
+  /* Two col layout */
+  .two-col {
+    display: grid; grid-template-columns: 1.1fr 0.9fr;
+    gap: 64px; align-items: center; margin-top: 24px;
+  }
+
+  /* Nav */
+  .nav-bar {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 50;
+    background: rgba(20,20,20,0.6); padding: 8px 14px; border-radius: 999px;
+    backdrop-filter: blur(8px);
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.18); cursor: pointer;
+    transition: all 0.2s;
+  }
+  .dot:hover { background: rgba(255,255,255,0.4); }
+  .dot.active { background: var(--accent); width: 22px; border-radius: 4px; }
+
+  .help {
+    position: fixed; bottom: 22px; right: 22px; z-index: 50;
+    font-size: 11px; color: var(--muted); letter-spacing: 0.1em;
+  }
+
+  /* === Flow pill pattern (vivian-style) === */
+  .flow-row {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 12px 14px; margin: 28px 0 14px;
+  }
+  .pill {
+    padding: 14px 22px; border-radius: 14px;
+    border: 1px solid var(--card-border); background: var(--card);
+    font-size: clamp(14px, 1.15vw, 17px); font-weight: 600; color: var(--text);
+    white-space: nowrap;
+  }
+  .pill.hi { background: var(--accent); color: #0a0a0a; border-color: var(--accent); }
+  .pill.dark { background: #0a0a0a; color: #fff; border-color: #2c2c2c; }
+  .pill.muted { color: var(--soft); background: transparent; }
+  .pill-arrow { color: var(--muted); font-size: 22px; padding: 0 4px; line-height: 1; }
+  .flow-cap {
+    font-size: clamp(13px, 1vw, 15px); color: var(--muted);
+    margin-top: 8px; letter-spacing: -0.005em;
+  }
+  .flow-cap .accent { color: var(--accent); font-weight: 700; }
+
+  /* Terminal mock */
+  .terminal {
+    background: #141414; border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 22px 26px; margin-top: 20px;
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: clamp(12px, 0.95vw, 14px); line-height: 1.75;
+    color: #b8b8b8; max-width: 920px; overflow: hidden;
+  }
+  .terminal .prompt { color: var(--accent); margin-right: 8px; }
+  .terminal .cmd { color: #fff; }
+  .terminal .out { color: #7a7a7a; }
+  .terminal .ok { color: var(--accent); }
+  .terminal .dim { color: #555; }
+
+  /* Mock side-by-side */
+  .mock-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    margin-top: 24px;
+  }
+
+  /* Highlight box */
+  .highlight {
+    border-left: 3px solid var(--accent);
+    padding: 18px 24px;
+    background: var(--accent-soft);
+    border-radius: 0 10px 10px 0;
+    font-size: clamp(16px, 1.4vw, 22px);
+    color: var(--text); margin-top: 24px;
+  }
+
+  /* Risk emphasis */
+  .risk-num {
+    font-size: clamp(80px, 10vw, 160px);
+    font-weight: 800; color: var(--accent); line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  @media (max-width: 900px) {
+    .grid-3 { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 32px; }
+    .steps { flex-direction: column; }
+    .slide { padding: 6vh 7vw; }
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 01 Cover -->
+  <section class="slide cover" data-i="1">
+    <span class="num">01</span>
+    <span class="pager">AAA · 셀피쉬클럽 공유회</span>
+    <div class="tag">매일 아침의 풍경</div>
+    <div class="title-xl">AI가 매일 아침<br/>알림톡을 들고 옵니다.</div>
+    <div class="meta">
+      <div class="who">에밀리</div>
+      <div class="role">셀피쉬클럽 CRM PM · AAA 크루</div>
+    </div>
+  </section>
+
+  <!-- 02 Opening question -->
+  <section class="slide center" data-i="2">
+    <span class="num">02</span>
+    <div class="tag">잠깐, 한번 떠올려보세요</div>
+    <div class="title-l">여러분은 어떤 메시지를 받고<br/>오늘 이 자리에 오셨나요?</div>
+    <div class="body">알림톡, 카카오플친, 오픈채팅, 인스타, 메일, 리틀리…<br/>그 중 하나를 따라 들어오셨을 거예요.</div>
+  </section>
+
+  <!-- 03 Self intro -->
+  <section class="slide" data-i="3">
+    <span class="num">03</span>
+    <div class="tag">SPEAKER</div>
+    <div class="divider"></div>
+    <div class="title-l">저는 그 메시지를<br/>보내는 사람이에요.</div>
+    <div class="grid-2" style="margin-top:48px; max-width: 820px;">
+      <div class="card">
+        <span class="label">본업</span>
+        <span class="name">셀피쉬클럽 CRM PM</span>
+        <span class="desc">이기적멤버십 6,800명에게 가는 모든 메시지를 설계하고 발송해요.</span>
+      </div>
+      <div class="card">
+        <span class="label">인하우스</span>
+        <span class="name">퍼포먼스 · 그로스</span>
+        <span class="desc">마케팅 퍼널을 직접 설계·구축하고, AI로 운영 효율을 높입니다.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 The volume of work -->
+  <section class="slide" data-i="4">
+    <span class="num">04</span>
+    <div class="tag">공유회 한 건이 열리면</div>
+    <div class="divider"></div>
+    <div class="title-m">한 번의 공유회에<br/>이만큼의 메시지가 나갑니다.</div>
+
+    <div class="channels" style="margin-top:24px;">
+      <span class="chip hi">알림톡 9종</span>
+      <span class="chip">카카오플친</span>
+      <span class="chip">오픈채팅 3방</span>
+      <span class="chip">인스타 캐러셀</span>
+      <span class="chip">이메일</span>
+      <span class="chip">리틀리·웰컴</span>
+    </div>
+    <div class="flow-cap" style="margin-top:14px;">
+      <span class="accent">알림톡</span> = 카톡으로 받는 정보성 메시지 (신청자/멤버십 회원 대상). 노란 배경 그거 맞아요.
+    </div>
+
+    <div style="margin-top:36px;">
+      <div style="font-size:13px; color:var(--muted); letter-spacing:0.2em; margin-bottom:14px;">알림톡 9종 — 10일짜리 타임라인</div>
+      <div class="flow-row" style="margin-top:0;">
+        <span class="pill">D-5 오픈알림</span>
+        <span class="pill-arrow">→</span>
+        <span class="pill">D-3 오픈리마인드</span>
+        <span class="pill-arrow">→</span>
+        <span class="pill hi">D-1 리마인드</span>
+        <span class="pill-arrow">→</span>
+        <span class="pill">D-day 할인쿠폰</span>
+        <span class="pill-arrow">→</span>
+        <span class="pill">당일 리마인드</span>
+        <span class="pill-arrow">→</span>
+        <span class="pill">입장링크</span>
+        <span class="pill-arrow">→</span>
+        <span class="pill">시작알림</span>
+        <span class="pill-arrow">→</span>
+        <span class="pill">혜택안내</span>
+        <span class="pill-arrow">→</span>
+        <span class="pill dark">D+3 VOD</span>
+      </div>
+      <div class="flow-cap">매번 <span class="accent">대상자도, 카피도, 시점도 다릅니다.</span> 예: D-5는 "오픈알림 받고 안 신청한 사람", D-1은 "신청자만"</div>
+    </div>
+  </section>
+
+  <!-- 05 Pain -->
+  <section class="slide" data-i="5">
+    <span class="num">05</span>
+    <div class="tag">매일 아침의 풍경 (이전)</div>
+    <div class="divider"></div>
+    <div class="title-l">이걸 매번<br/>손으로 보내고 있었어요.</div>
+    <div class="pain">
+      <div class="pain-row"><span class="icon">●</span><span>매번 SQL을 직접 짜서 대상자를 뽑고</span></div>
+      <div class="pain-row"><span class="icon">●</span><span>9개 템플릿마다 카피·링크·시간을 다르게 입력하고</span></div>
+      <div class="pain-row"><span class="icon">●</span><span>오타 1번이 곧 6,800명에게 가는 사고가 됩니다.</span></div>
+    </div>
+    <div class="body" style="margin-top:36px;">하루 <span class="accent">3시간</span>이 그냥 사라졌어요.</div>
+  </section>
+
+  <!-- 06 Decision -->
+  <section class="slide center" data-i="6">
+    <span class="num">06</span>
+    <div class="tag">결심</div>
+    <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+    <div class="title-xl">자동화하기로<br/>했어요.</div>
+    <div class="body">반복이 싫어서가 아니라,<br/>이 시간을 다른 데 쓰고 싶어서.</div>
+  </section>
+
+  <!-- 07 Impact number -->
+  <section class="slide center" data-i="7">
+    <span class="num">07</span>
+    <div class="tag">결과부터</div>
+    <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+    <div style="display:flex; align-items:center; gap:24px; margin-top:24px;">
+      <div>
+        <div class="bignum" style="font-size:clamp(80px,12vw,180px); color:var(--muted);">3<span style="font-size:0.4em; margin-left:6px;">시간</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div>
+        <div class="bignum">5<span style="font-size:0.4em; margin-left:6px;">분</span></div>
+      </div>
+    </div>
+    <div class="body" style="margin-top:36px;">슬랙 모달에서 <span class="accent">승인 한 번</span>이면 끝나는 일로 바뀌었어요.</div>
+  </section>
+
+  <!-- 08 The 3 tools -->
+  <section class="slide" data-i="8">
+    <span class="num">08</span>
+    <div class="tag">자동화에 쓴 건 3개 뿐</div>
+    <div class="divider"></div>
+    <div class="title-m">한 화면에 그리면 이래요.</div>
+
+    <div class="flow-row" style="margin-top:36px;">
+      <span class="pill">Supabase <span style="color:var(--muted); font-weight:500; margin-left:6px;">DB</span></span>
+      <span class="pill-arrow">→</span>
+      <span class="pill hi">n8n <span style="color:#0a0a0a99; font-weight:500; margin-left:6px;">WORKFLOW</span></span>
+      <span class="pill-arrow">→</span>
+      <span class="pill dark">Slack <span style="color:#aaa; font-weight:500; margin-left:6px;">APPROVAL</span></span>
+      <span class="pill-arrow">→</span>
+      <span class="pill muted">SOLAPI 발송</span>
+    </div>
+    <div class="flow-cap">데이터는 <span class="accent">Supabase</span>에, 흐름은 <span class="accent">n8n</span>이 돌리고, 결정은 <span class="accent">Slack</span>에서 사람이 한 번 더.</div>
+
+    <div class="grid-3" style="margin-top:32px;">
+      <div class="card">
+        <span class="label">DB</span>
+        <span class="name">Supabase</span>
+        <span class="desc">회원·신청자·공유회 정보가 다 들어있는 데이터베이스. SQL 손으로 짜던 자리를 대신해요.</span>
+      </div>
+      <div class="card">
+        <span class="label">WORKFLOW</span>
+        <span class="name">n8n</span>
+        <span class="desc">서버에서 24시간 도는 자동화 도구. 매일 정해진 시간에 알아서 다음 발송을 챙겨줘요.</span>
+      </div>
+      <div class="card">
+        <span class="label">APPROVAL</span>
+        <span class="name">Slack</span>
+        <span class="desc">발송 직전, 사람이 한 번 더 검수하는 관문. 익숙한 메신저 안에서 끝나요.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 Why not just Claude Code -->
+  <section class="slide" data-i="9">
+    <span class="num">09</span>
+    <div class="tag">처음엔 클로드 코드만으로</div>
+    <div class="divider"></div>
+    <div class="two-col">
+      <div>
+        <div class="title-m">근데 제가<br/>퇴근하면요…</div>
+        <div class="body" style="margin-top:24px;">
+          맥북이 꺼지면 클로드 코드도 멈춰요.<br/>
+          오후 7시 발송 알림톡은 어떻게 나가지?
+        </div>
+      </div>
+      <div>
+        <div class="speech">
+          노트북이 꺼지면 저는 발송 못 해요.
+          <div class="who">— 클로드 코드</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 n8n joins -->
+  <section class="slide" data-i="10">
+    <span class="num">10</span>
+    <div class="tag">매일 아침 10시, 자동으로</div>
+    <div class="divider"></div>
+    <div class="title-m">크론 한 줄이면<br/>이 모든 게 자동으로</div>
+
+    <div class="flow-row">
+      <span class="pill hi">⏰ 크론 발화</span>
+      <span class="pill-arrow">→</span>
+      <span class="pill">오늘 알림톡 판별</span>
+      <span class="pill-arrow">→</span>
+      <span class="pill">DB 대상자 조회</span>
+      <span class="pill-arrow">→</span>
+      <span class="pill">변수 매핑</span>
+      <span class="pill-arrow">→</span>
+      <span class="pill dark">Slack 모달 전송</span>
+    </div>
+
+    <div class="flow-cap">
+      매일 10:00 KST → <span class="accent">그날 보낼 알림톡 9종 중 오늘 해당분만</span> 자동 추려서, 슬랙으로 도착
+    </div>
+
+    <div class="terminal">
+<span class="dim">$</span> <span class="cmd">n8n cron</span>  <span class="dim">·</span>  <span class="dim">workflow:</span> 셀피쉬DB_main_flow  <span class="dim">·</span>  <span class="ok">10:00 KST</span>
+<span class="out">[10:00:01] Schedule Trigger fired</span>
+<span class="out">[10:00:02] Code: 알림톡 판별 → 오늘 대상 템플릿: ③' D-1 리마인드 (iid_1002)</span>
+<span class="out">[10:00:03] Postgres: 대상자 조회 → <span class="ok">1,328명</span></span>
+<span class="out">[10:00:04] Code: 변수 매핑 → #{이름}, #{시간}, #{공유회명}, #{일정}, #{라이브혜택}</span>
+<span class="out">[10:00:05] HTTP: Slack 모달 전송 → <span class="ok">#crm-알림톡-승인단계</span></span>
+<span class="ok">✓ 모달 도착. 승인 대기.</span>
+    </div>
+  </section>
+
+  <!-- 11 Auto send is scary -->
+  <section class="slide center" data-i="11">
+    <span class="num">11</span>
+    <div class="tag">그런데</div>
+    <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+    <div class="title-l">완전 자동은,<br/>사실 무서웠어요.</div>
+    <div class="body" style="margin-top:24px;">
+      카피 오타 한 번이면 <span class="accent">6,800명에게 그대로 나갑니다.</span><br/>
+      되돌릴 수가 없어요.
+    </div>
+  </section>
+
+  <!-- 12 Slack approval gate -->
+  <section class="slide" data-i="12">
+    <span class="num">12</span>
+    <div class="tag">사람이 한 번 더 보는 관문</div>
+    <div class="divider"></div>
+    <div class="title-m">발송 직전, 슬랙에서<br/>한 번 더 승인을 받아요.</div>
+
+    <div class="flow-row" style="margin-top:36px;">
+      <span class="pill">n8n이 모달 전송</span>
+      <span class="pill-arrow">→</span>
+      <span class="pill hi">에밀리 검수</span>
+      <span class="pill-arrow">→</span>
+      <span class="pill dark">✅ 승인</span>
+      <span class="pill" style="opacity:0.6;">✏️ 수정</span>
+      <span class="pill" style="opacity:0.4;">취소</span>
+      <span class="pill-arrow">→</span>
+      <span class="pill">Wait → 발송시각까지 대기</span>
+      <span class="pill-arrow">→</span>
+      <span class="pill">DB 재조회 (발송 직전 시점)</span>
+      <span class="pill-arrow">→</span>
+      <span class="pill dark">SOLAPI 발송</span>
+    </div>
+    <div class="flow-cap">자동화는 켜두되, <span class="accent">최종 결정은 사람이.</span> 발송 시각이 와도 DB는 그 시점에 다시 조회해서 정확한 대상자에게 나가요.</div>
+  </section>
+
+  <!-- 13 Slack modal mock -->
+  <section class="slide" data-i="13">
+    <span class="num">13</span>
+    <div class="tag">매일 아침 슬랙에 도착하는 모달</div>
+    <div class="divider"></div>
+    <div class="title-m">이렇게 와요.</div>
+    <div class="slack-mock">
+      <div class="slack-bot">
+        <div class="av"></div>
+        <div class="name">공유회-crm-bot</div>
+        <div class="tag">APP</div>
+      </div>
+      <div class="slack-body">
+        📨 <b>[AAA 공유회] D-1 리마인드</b><br/>
+        대상: 신청자 1,328명<br/>
+        발송 시간: <b>오늘 14:00 KST</b><br/>
+        템플릿: ③' D-1 리마인드 (이미지헤더 + 라이브혜택)<br/>
+        <span style="color:var(--muted); font-size:13px;">⚠️ 승인 시 예약 발송이 확정됩니다.</span>
+      </div>
+      <div class="slack-buttons">
+        <span class="btn-approve">✅ 승인</span>
+        <span class="btn-edit">✏️ 수정</span>
+        <span class="btn-cancel">취소</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 One click -->
+  <section class="slide center" data-i="14">
+    <span class="num">14</span>
+    <div class="tag">그리고</div>
+    <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+    <div class="title-xl">승인만 누르면<br/>끝.</div>
+    <div class="body" style="margin-top:32px;">
+      대상자 재조회·변수 매핑·SOLAPI 발송까지<br/>
+      <span class="accent">전부 자동.</span>
+    </div>
+  </section>
+
+  <!-- 15 Team -->
+  <section class="slide" data-i="15">
+    <span class="num">15</span>
+    <div class="tag">혼자였으면 못 했을 거예요</div>
+    <div class="divider"></div>
+    <div class="title-m">크루들이 옆에서<br/>같이 만들었어요.</div>
+    <div class="body" style="margin-top:24px; max-width: 60ch;">
+      한 크루가 만든 대시보드 위에 제 CRM이 얹히고,<br/>
+      다른 크루의 OS 구조를 보고 제 폴더 규칙을 다시 짰어요.<br/>
+      서로의 시행착오가 곧 지름길이 됐습니다.
+    </div>
+    <div class="highlight" style="margin-top:36px;">
+      더 자세한 자동화 구조 · 에이전트 · 하네스 이야기는<br/>
+      <span class="accent">5월 셀피쉬 AX 별도 공유회 / 스펀지클럽</span>에서 풀게요.
+    </div>
+  </section>
+
+  <!-- 16 Thank you -->
+  <section class="slide center" data-i="16">
+    <span class="num">16</span>
+    <div class="tag">감사합니다</div>
+    <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+    <div class="title-xl">매일 아침,<br/>이젠 AI가 들고 옵니다.</div>
+    <div class="body" style="margin-top:32px;">질문은 채팅으로 받을게요. — 에밀리</div>
+  </section>
+
+</div>
+
+<div class="nav-bar" id="nav"></div>
+<div class="help">← →  ·  스페이스 다음  ·  숫자 직접 이동</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const nav = document.getElementById('nav');
+  let cur = 0;
+
+  slides.forEach((s, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.addEventListener('click', () => go(i));
+    nav.appendChild(dot);
+  });
+
+  function go(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides[cur].classList.remove('active');
+    cur = i;
+    slides[cur].classList.add('active');
+    [...nav.children].forEach((d, j) => d.classList.toggle('active', j === cur));
+    history.replaceState(null, '', '#' + (cur + 1));
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(cur + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(cur - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(slides.length - 1);
+    else if (/^[0-9]$/.test(e.key)) {
+      const n = parseInt(e.key, 10);
+      if (n >= 1) go(n - 1);
+    }
+  });
+
+  // Init: read hash
+  const initial = parseInt(location.hash.replace('#','')) || 1;
+  go(initial - 1);
+</script>
+</body>
+</html>

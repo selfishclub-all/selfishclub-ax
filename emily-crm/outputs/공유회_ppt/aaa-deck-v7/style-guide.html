@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>AAA Selfmarketing — Design System v1.0</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
+<link rel="stylesheet" href="aaa-system.css"/>
+<style>
+  /* Guide-only styles (not part of the system) */
+  html,body{margin:0;background:#FAFAF7;color:#0A0A0A;font-family:"Pretendard Variable","Pretendard",-apple-system,sans-serif;letter-spacing:-0.01em;}
+  .wrap{max-width:1280px;margin:0 auto;padding:80px 56px 160px;}
+  .top{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;padding-bottom:32px;border-bottom:2px solid #0A0A0A;margin-bottom:56px;}
+  .top h1{font-size:88px;font-weight:900;letter-spacing:-0.04em;line-height:0.95;margin:0;}
+  .top h1 .mark{background:#E9ED12;padding:0 .12em;}
+  .top .meta{text-align:right;font-size:14px;color:#666;line-height:1.6;font-weight:500;letter-spacing:0.04em;}
+  .top .meta b{display:block;color:#0A0A0A;font-size:16px;letter-spacing:0.12em;text-transform:uppercase;}
+
+  .section{margin-top:96px;}
+  .section > h2{font-size:14px;font-weight:800;letter-spacing:0.24em;text-transform:uppercase;color:#888;margin:0 0 8px;}
+  .section > .lead{font-size:40px;font-weight:800;letter-spacing:-0.025em;line-height:1.15;margin:0 0 40px;max-width:820px;}
+  .section > .desc{font-size:17px;color:#444;line-height:1.6;max-width:720px;margin:-24px 0 40px;font-weight:500;}
+
+  .subhead{font-size:13px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:#0A0A0A;margin:48px 0 16px;padding-bottom:8px;border-bottom:1px solid #DDD;}
+
+  /* Token swatches */
+  .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .sw{border-radius:12px;overflow:hidden;border:1px solid #E6E6E6;background:#fff;}
+  .sw .chip{display:block;height:140px;border:none;border-radius:0;}
+  .sw .meta{padding:14px 16px;}
+  .sw .name{font-size:14px;font-weight:700;}
+  .sw .val{font-size:12px;color:#666;font-family:"JetBrains Mono",ui-monospace,monospace;margin-top:2px;}
+  .sw .use{font-size:12px;color:#888;margin-top:6px;}
+
+  /* Type specimens */
+  .typespec{display:grid;grid-template-columns:120px 1fr 120px;gap:24px;padding:20px 0;border-bottom:1px dashed #DDD;align-items:baseline;}
+  .typespec .lbl{font-size:12px;font-family:"JetBrains Mono",ui-monospace,monospace;color:#888;letter-spacing:0.05em;}
+  .typespec .demo{line-height:1;}
+  .typespec .size{font-size:12px;font-family:"JetBrains Mono",ui-monospace,monospace;color:#888;text-align:right;}
+  .demo-hero{font-size:68px;font-weight:800;letter-spacing:-0.045em;line-height:0.94;}
+  .demo-xl  {font-size:56px;font-weight:800;letter-spacing:-0.04em;}
+  .demo-l   {font-size:44px;font-weight:800;letter-spacing:-0.035em;}
+  .demo-m   {font-size:32px;font-weight:700;letter-spacing:-0.025em;}
+  .demo-s   {font-size:24px;font-weight:600;letter-spacing:-0.02em;}
+  .demo-body{font-size:18px;font-weight:500;color:#222;}
+  .demo-cap {font-size:15px;color:#555;font-weight:500;}
+  .demo-kicker{font-size:14px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:#555;}
+
+  /* Component grid */
+  .compgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .comp{background:#fff;border:1px solid #E6E6E6;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:20px;}
+  .comp .cname{font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#888;}
+  .comp .stage{min-height:80px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .comp .stage.dark{background:#0A0A0A;padding:20px;border-radius:8px;}
+  .comp .stage.yel {background:#E9ED12;padding:20px;border-radius:8px;}
+  .comp code{font-size:12px;font-family:"JetBrains Mono",ui-monospace,monospace;color:#777;background:#F5F5F0;padding:8px 12px;border-radius:6px;display:block;white-space:pre-wrap;}
+
+  /* Rules do/don't */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .rule-card{background:#fff;border-radius:12px;padding:28px 32px;border-left:6px solid #E9ED12;}
+  .rule-card.dont{border-left-color:#D9534F;}
+  .rule-card .flag{font-size:11px;font-weight:800;letter-spacing:0.2em;color:#9A9E00;text-transform:uppercase;margin-bottom:8px;}
+  .rule-card.dont .flag{color:#C14A46;}
+  .rule-card .t{font-size:20px;font-weight:700;letter-spacing:-0.015em;line-height:1.3;margin-bottom:8px;}
+  .rule-card .d{font-size:15px;color:#555;line-height:1.55;font-weight:500;}
+
+  /* Layout catalog */
+  .layouts{display:grid;grid-template-columns:repeat(3, 1fr);gap:32px;}
+  .layout-card{background:#fff;border:1px solid #E6E6E6;border-radius:14px;overflow:hidden;}
+  .layout-thumb{position:relative;aspect-ratio:4/5;background:#F5F5F0;overflow:hidden;}
+  .layout-thumb .scaled{position:absolute;top:0;left:0;width:1080px;height:1350px;transform-origin:0 0;}
+  .layout-meta{padding:20px 24px 24px;}
+  .layout-meta .n{font-size:11px;font-family:"JetBrains Mono",ui-monospace,monospace;color:#999;letter-spacing:0.1em;}
+  .layout-meta h4{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 8px;}
+  .layout-meta p{font-size:13px;color:#666;line-height:1.5;font-weight:500;margin:0;}
+
+  /* Code blocks */
+  pre.codeblock{background:#0A0A0A;color:#E9ED12;padding:24px 28px;border-radius:12px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px;line-height:1.6;overflow-x:auto;white-space:pre;}
+  pre.codeblock .k{color:#8A8A8A;}
+  pre.codeblock .s{color:#fff;}
+
+  /* Tweaks panel */
+  #tweaks-panel{
+    position:fixed;bottom:20px;right:20px;width:280px;
+    background:#0A0A0A;color:#fff;border-radius:12px;padding:20px;
+    font-size:13px;box-shadow:0 20px 40px rgba(0,0,0,0.25);z-index:1000;
+    display:none;
+  }
+  #tweaks-panel h4{margin:0 0 12px;font-size:11px;letter-spacing:0.2em;font-weight:800;color:#E9ED12;}
+  #tweaks-panel .row{margin-bottom:14px;}
+  #tweaks-panel label{display:block;font-size:11px;color:#999;margin-bottom:6px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;}
+  #tweaks-panel .swatch-row{display:flex;gap:6px;}
+  #tweaks-panel .swatch-row button{width:30px;height:30px;border-radius:6px;border:2px solid transparent;cursor:pointer;padding:0;}
+  #tweaks-panel .swatch-row button.on{border-color:#fff;}
+  #tweaks-panel input[type=range]{width:100%;accent-color:#E9ED12;}
+  #tweaks-panel .val{font-size:11px;color:#E9ED12;font-family:"JetBrains Mono",ui-monospace,monospace;float:right;}
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- MAST -->
+  <div class="top">
+    <div>
+      <div style="font-size:13px;font-weight:800;letter-spacing:0.24em;color:#888;text-transform:uppercase;margin-bottom:16px;">AAA · DESIGN SYSTEM v1.0</div>
+      <h1>AAA <span class="mark">Selfmarketing</span><br/>디자인 시스템</h1>
+      <p style="font-size:20px;color:#444;line-height:1.5;font-weight:500;margin:24px 0 0;max-width:680px;">
+        매주 찍어낼 수 있는 AAA팀 캐러셀 키트.<br/>
+        토큰 · 타이포 · 컴포넌트 · 레이아웃 · 규칙.
+      </p>
+    </div>
+    <div class="meta">
+      <b>v1.0</b>
+      2026.04 · APR<br/>
+      CONTRIB · AAA TEAM<br/>
+      STATUS · LIVE
+    </div>
+  </div>
+
+  <!-- ═══════ 01 · PRINCIPLES ═══════ -->
+  <div class="section">
+    <h2>01 · Principles</h2>
+    <p class="lead">비주얼 전에, 태도 먼저.</p>
+    <div class="rules">
+      <div class="rule-card">
+        <div class="flag">#01 · 훅이 먼저다</div>
+        <div class="t">첫 슬라이드가 안 멈추면 나머진 없다.</div>
+        <div class="d">숫자, 대비, 질문, 예상 배신 — 둘 중 하나는 반드시 커버에.</div>
+      </div>
+      <div class="rule-card">
+        <div class="flag">#02 · 한 슬라이드 한 메시지</div>
+        <div class="t">두 개 이상 말하고 싶으면 두 장으로 쪼갠다.</div>
+        <div class="d">슬라이드를 아끼지 말 것. 인스타는 스와이프 비용이 0이다.</div>
+      </div>
+      <div class="rule-card">
+        <div class="flag">#03 · 옐로우는 강조용</div>
+        <div class="t">배경색으로 쓸 땐 1~2장만. 전체 덱의 리듬용.</div>
+        <div class="d">하이라이트로 쓸 땐 핵심어 1개에만. 3개 이상 쓰면 강조가 사라진다.</div>
+      </div>
+      <div class="rule-card">
+        <div class="flag">#04 · 숫자는 크게, 단위는 작게</div>
+        <div class="t">"10일", "6,800명", "5분" 같은 숫자는 슬라이드의 주인공.</div>
+        <div class="d">h-hero 스케일까지 키우고, 맥락은 caption으로 붙인다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ 02 · COLOR TOKENS ═══════ -->
+  <div class="section">
+    <h2>02 · Color Tokens</h2>
+    <p class="lead">3색이 전부. 섞지 말 것.</p>
+    <div class="swatches">
+      <div class="sw"><span class="chip" style="background:#0A0A0A"></span><div class="meta"><div class="name">ink</div><div class="val">#0A0A0A</div><div class="use">본문 · 기본 텍스트 · 강한 배경</div></div></div>
+      <div class="sw"><span class="chip" style="background:#FFFFFF;border-bottom:1px solid #EEE"></span><div class="meta"><div class="name">paper</div><div class="val">#FFFFFF</div><div class="use">기본 배경</div></div></div>
+      <div class="sw"><span class="chip" style="background:#E9ED12"></span><div class="meta"><div class="name">accent</div><div class="val">#E9ED12</div><div class="use">강조 · 하이라이트 · 단색 배경</div></div></div>
+      <div class="sw"><span class="chip" style="background:#3a3b00"></span><div class="meta"><div class="name">accent-ink</div><div class="val">#3a3b00</div><div class="use">옐로우 배경 위 서브 텍스트</div></div></div>
+      <div class="sw"><span class="chip" style="background:#F3F3F3"></span><div class="meta"><div class="name">surface</div><div class="val">#F3F3F3</div><div class="use">stat 카드 · 약한 섹션 배경</div></div></div>
+      <div class="sw"><span class="chip" style="background:#8A8A8A"></span><div class="meta"><div class="name">mute</div><div class="val">#8A8A8A</div><div class="use">페이지 번호 · 메타</div></div></div>
+      <div class="sw"><span class="chip" style="background:#C9C9C9"></span><div class="meta"><div class="name">mute-2</div><div class="val">#C9C9C9</div><div class="use">de-emphasize된 단어</div></div></div>
+      <div class="sw"><span class="chip" style="background:#E6E6E6"></span><div class="meta"><div class="name">rule</div><div class="val">#E6E6E6</div><div class="use">구분선 · 보더</div></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════ 03 · TYPOGRAPHY ═══════ -->
+  <div class="section">
+    <h2>03 · Typography</h2>
+    <p class="lead">Pretendard Variable. 위계는 7단.</p>
+    <p class="desc">슬라이드 실제 크기는 가이드의 <b>약 2.5배</b>. 여기선 축약 표시. 모든 크기는 <code style="background:#F5F5F0;padding:2px 8px;border-radius:4px;font-family:monospace;">1080 × 1350</code> 캔버스 기준.</p>
+
+    <div class="typespec"><div class="lbl">h-hero</div><div class="demo demo-hero">진짜 내 업무엔?</div><div class="size">170 / 0.94</div></div>
+    <div class="typespec"><div class="lbl">h-xl</div><div class="demo demo-xl">찐으로 써본 사람</div><div class="size">120 / 1.0</div></div>
+    <div class="typespec"><div class="lbl">h-l</div><div class="demo demo-l">공유회 1건마다 손으로 다 했어요</div><div class="size">92 / 1.05</div></div>
+    <div class="typespec"><div class="lbl">h-m</div><div class="demo demo-m">내가 잠든 사이에도</div><div class="size">64 / 1.12</div></div>
+    <div class="typespec"><div class="lbl">h-s</div><div class="demo demo-s">만드는 건 Claude, 보내는 건 n8n</div><div class="size">46 / 1.25</div></div>
+    <div class="typespec"><div class="lbl">body</div><div class="demo demo-body">이기적멤버십 6,800명 대상, CRM 4채널 혼자 담당.</div><div class="size">38 / 1.45</div></div>
+    <div class="typespec"><div class="lbl">cap</div><div class="demo demo-cap">2026.04.28 · 무료 공유회</div><div class="size">32 / 1.4</div></div>
+    <div class="typespec"><div class="lbl">kicker</div><div class="demo demo-kicker">AAA · SELFISH CLUB</div><div class="size">34 / 0.14em</div></div>
+  </div>
+
+  <!-- ═══════ 04 · COMPONENTS ═══════ -->
+  <div class="section">
+    <h2>04 · Components</h2>
+    <p class="lead">작은 조각들. 자유롭게 조합.</p>
+
+    <div class="compgrid">
+      <div class="comp">
+        <div class="cname">Highlight · .hl</div>
+        <div class="stage"><span style="font-size:28px;font-weight:800;">진짜 <span class="hl">내 업무</span>엔?</span></div>
+        <code>&lt;span className="hl"&gt;내 업무&lt;/span&gt;</code>
+      </div>
+      <div class="comp">
+        <div class="cname">Underline · .u</div>
+        <div class="stage"><span style="font-size:28px;font-weight:800;"><span class="u">손으로</span> 다 했어요.</span></div>
+        <code>&lt;span className="u"&gt;손으로&lt;/span&gt;</code>
+      </div>
+      <div class="comp">
+        <div class="cname">Chip · .chip</div>
+        <div class="stage" style="gap:8px;"><span class="chip" style="font-size:14px;padding:6px 14px">#이론말고</span><span class="chip y" style="font-size:14px;padding:6px 14px">#무료</span><span class="chip k" style="font-size:14px;padding:6px 14px">#8명의후기</span></div>
+        <code>&lt;span className="chip [y|k]"&gt;...&lt;/span&gt;</code>
+      </div>
+      <div class="comp">
+        <div class="cname">Tag · .tag</div>
+        <div class="stage"><span class="tag" style="font-size:11px;padding:5px 12px">AAA · SHARE</span></div>
+        <code>&lt;span className="tag"&gt;AAA · SHARE&lt;/span&gt;</code>
+      </div>
+      <div class="comp">
+        <div class="cname">Stat card · .stat</div>
+        <div class="stage" style="gap:10px;">
+          <div class="stat" style="padding:16px 14px;"><div class="stat-num" style="font-size:36px">10일</div><div class="stat-lab" style="font-size:13px">D-10 → D-day</div></div>
+          <div class="stat k" style="padding:16px 14px;"><div class="stat-num" style="font-size:36px">N번</div><div class="stat-lab" style="font-size:13px">매번 다른 대상자</div></div>
+        </div>
+        <code>&lt;div className="stat [k|y]"&gt;...&lt;/div&gt;</code>
+      </div>
+      <div class="comp">
+        <div class="cname">Swipe indicator</div>
+        <div class="stage dark"><div class="swipe" style="position:static;font-size:14px"><span>SWIPE</span><span class="arr" style="width:28px;height:28px;font-size:14px">→</span></div></div>
+        <code>&lt;div className="swipe"&gt;&lt;span&gt;SWIPE&lt;/span&gt;&lt;span className="arr"&gt;→&lt;/span&gt;&lt;/div&gt;</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ 05 · LAYOUT TEMPLATES ═══════ -->
+  <div class="section">
+    <h2>05 · Layout Templates</h2>
+    <p class="lead">6개 레이아웃. 이걸로 충분.</p>
+    <p class="desc">각 템플릿은 <code style="background:#F5F5F0;padding:2px 8px;border-radius:4px;font-family:monospace;">aaa-system.jsx</code>에 React 컴포넌트로 정의돼 있음. props만 바꾸면 새 슬라이드.</p>
+
+    <div id="layouts-mount" class="layouts"></div>
+  </div>
+
+  <!-- ═══════ 06 · RULES ═══════ -->
+  <div class="section">
+    <h2>06 · Do & Don't</h2>
+    <p class="lead">실수 방지 체크리스트.</p>
+
+    <div class="subhead">Background</div>
+    <div class="rules">
+      <div class="rule-card"><div class="flag">DO</div><div class="t">10장 덱이면 dark 1~2장, accent 1~2장, 나머지는 light.</div><div class="d">리듬용. 다크끼리 연속되면 무겁고, 옐로우 연속되면 번쩍인다.</div></div>
+      <div class="rule-card dont"><div class="flag">DON'T</div><div class="t">옐로우를 3장 이상 연속해서 쓰지 말 것.</div><div class="d">강조 기능이 사라지고, 저장 안 누르고 넘기는 원인이 된다.</div></div>
+    </div>
+
+    <div class="subhead">Text density</div>
+    <div class="rules">
+      <div class="rule-card"><div class="flag">DO</div><div class="t">슬라이드 하나에 h-l 이상 한 줄 + 설명 2~3줄.</div><div class="d">폰 화면에서 엄지로 집히는 정보량. 읽는 속도를 이긴다.</div></div>
+      <div class="rule-card dont"><div class="flag">DON'T</div><div class="t">본문을 7줄 이상 넣지 말 것.</div><div class="d">그건 블로그 글이다. 슬라이드를 쪼개라.</div></div>
+    </div>
+
+    <div class="subhead">Accent usage</div>
+    <div class="rules">
+      <div class="rule-card"><div class="flag">DO</div><div class="t">.hl은 핵심어 1개. .u는 동사에.</div><div class="d">눈이 "이 슬라이드는 뭘 말하려는지"를 0.2초만에 안다.</div></div>
+      <div class="rule-card dont"><div class="flag">DON'T</div><div class="t">한 슬라이드에 .hl을 3개 이상 넣지 말 것.</div><div class="d">강조가 경쟁하면 독자는 다 무시한다.</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════ 07 · USAGE ═══════ -->
+  <div class="section">
+    <h2>07 · How to Use</h2>
+    <p class="lead">새 캐러셀 만들기 · 3분.</p>
+
+    <div class="subhead">Step 1 · 파일 복사</div>
+<pre class="codeblock"><span class="k"># AAA 프로젝트에 두 파일만 있으면 됨</span>
+aaa-system.css
+aaa-system.jsx</pre>
+
+    <div class="subhead">Step 2 · HTML 뼈대</div>
+<pre class="codeblock"><span class="k">&lt;!-- head --&gt;</span>
+&lt;link rel="stylesheet" href="aaa-system.css"/&gt;
+&lt;script src="https://unpkg.com/react@18.3.1/..."&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/react-dom@18.3.1/..."&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/@babel/standalone..."&gt;&lt;/script&gt;
+
+<span class="k">&lt;!-- body --&gt;</span>
+&lt;script type="text/babel" src="aaa-system.jsx"&gt;&lt;/script&gt;
+&lt;script type="text/babel"&gt;
+  const { HeroSlide, StatsSlide, ListSlide, CTASlide } = window;
+  <span class="k">/* 슬라이드 조합 */</span>
+&lt;/script&gt;</pre>
+
+    <div class="subhead">Step 3 · 슬라이드 호출</div>
+<pre class="codeblock">&lt;HeroSlide
+  theme=<span class="s">"dark"</span>
+  kicker=<span class="s">"AAA · SELFMARKETING"</span>
+  title=<span class="s">"완벽주의가 일을 느리게 한다"</span>
+  accent=<span class="s">"hl"</span> accentWord=<span class="s">"느리게"</span>
+  sub=<span class="s">"8주 실험으로 찾은 3가지 해제법."</span>
+  footer=<span class="s">"swipe"</span>
+/&gt;
+
+&lt;StatsSlide
+  kicker=<span class="s">"결과"</span>
+  title=<span class="s">"8주 후 이렇게 됐어요"</span>
+  stats={[
+    { num: <span class="s">"3.2x"</span>, lab: <span class="s">"아웃풋 속도"</span> },
+    { num: <span class="s">"-67%"</span>, lab: <span class="s">"재작업 시간"</span>, tone: <span class="s">"ink"</span> },
+  ]}
+/&gt;</pre>
+  </div>
+
+</div>
+
+<!-- Tweaks panel -->
+<div id="tweaks-panel">
+  <h4>TWEAKS</h4>
+  <div class="row">
+    <label>Accent color</label>
+    <div class="swatch-row" id="swatches">
+      <button data-c="#E9ED12" data-ai="#3a3b00" class="on" style="background:#E9ED12"></button>
+      <button data-c="#FF4D2E" data-ai="#3b0f05" style="background:#FF4D2E"></button>
+      <button data-c="#00D67F" data-ai="#04331f" style="background:#00D67F"></button>
+      <button data-c="#5B8CFF" data-ai="#0d1f4a" style="background:#5B8CFF"></button>
+      <button data-c="#FF5BD8" data-ai="#3a0f33" style="background:#FF5BD8"></button>
+      <button data-c="#FFFFFF" data-ai="#000000" style="background:#FFFFFF;border:2px solid #555;"></button>
+    </div>
+  </div>
+  <div class="row">
+    <label>Density <span class="val" id="densVal">1.00</span></label>
+    <input type="range" id="dens" min="0.75" max="1.25" step="0.05" value="1">
+  </div>
+  <div class="row">
+    <label>Dark ratio <span class="val" id="darkVal">30%</span></label>
+    <input type="range" id="darkRatio" min="0" max="100" step="10" value="30">
+    <div style="font-size:10px;color:#666;margin-top:4px;line-height:1.4;">다크 슬라이드 비중 가이드</div>
+  </div>
+</div>
+
+<!-- Render layout thumbnails -->
+<script type="text/babel" src="aaa-system.jsx"></script>
+<script type="text/babel">
+  const { HeroSlide, SplitSlide, QuoteSlide, StatsSlide, ListSlide, CTASlide } = window;
+
+  const LAYOUTS = [
+    { id: '01', name: 'Hero', desc: '포스터 훅. 커버 · 섹션 헤더 · 펀치라인.',
+      el: <HeroSlide theme="dark" kicker="AAA · SELFMARKETING" title={<>완벽주의가<br/>일을 <span className="hl">느리게</span> 한다</>} sub="8주 실험으로 찾은 3가지 해제법." footer="swipe" brand={true} /> },
+    { id: '02', name: 'Split', desc: 'Before/After · Do/Don\'t · 2열 대비.',
+      el: <SplitSlide kicker="예전엔 / 지금은" title="뭐가 달라졌냐면" left={{ label:'BEFORE', title:'3시간', body:'손으로 SQL, 수동 발송, 체크리스트 확인.' }} right={{ label:'AFTER', title:'5분', body:'자동화가 발송, 사람은 마지막 확인만.', tone:'ink' }} page={3} total={10} /> },
+    { id: '03', name: 'Quote', desc: '체험담 · 후기 · 한 마디.',
+      el: <QuoteSlide quote={<>해본 사람 얘기가<br/>제일 빨리 배워져요.</>} attribution="에밀리" role="CRM PM · 셀피쉬클럽" page={4} total={10} /> },
+    { id: '04', name: 'Stats', desc: '숫자 · 결과 · 임팩트.',
+      el: <StatsSlide kicker="결과" title="8주 뒤 이렇게 됐어요" stats={[{num:'3.2x', lab:'아웃풋 속도'},{num:'-67%', lab:'재작업', tone:'ink'},{num:'1명', lab:'전 채널 커버', tone:'accent'}]} closer="혼자 4채널. 가능함." page={5} total={10} /> },
+    { id: '05', name: 'List', desc: '넘버드 리스트 · 3~5개 포인트.',
+      el: <ListSlide kicker="3가지 해제법" title="완벽주의를 끄는 법" items={[{t:'초안부터 공유', d:'내가 쓴 게 아니어도 된다'},{t:'마감을 역설계', d:'시간을 먼저, 품질은 그 안에서'},{t:'확인만 마지막에', d:'생성은 다 맡긴다'}]} page={6} total={10} /> },
+    { id: '06', name: 'CTA', desc: '마지막 장 · 저장 유도 · 다음 행동.',
+      el: <CTASlide eyebrow="4/28 · 화요일 21시" title={<>같이<br/>해봐요.</>} action="프로필 링크에서 신청" handle="@aaa.selfmarketing" hashtags={['이론말고','실전공유','무료']} page={10} total={10} /> },
+  ];
+
+  const LayoutCard = ({ L }) => {
+    const wrapRef = React.useRef(null);
+    const [scale, setScale] = React.useState(0.25);
+    React.useEffect(() => {
+      if (!wrapRef.current) return;
+      const resize = () => {
+        const w = wrapRef.current.getBoundingClientRect().width;
+        setScale(w / 1080);
+      };
+      resize();
+      window.addEventListener('resize', resize);
+      return () => window.removeEventListener('resize', resize);
+    }, []);
+    return (
+      <div className="layout-card">
+        <div className="layout-thumb" ref={wrapRef}>
+          <div className="scaled" style={{ transform: `scale(${scale})` }}>{L.el}</div>
+        </div>
+        <div className="layout-meta">
+          <div className="n">{L.id} / TEMPLATE</div>
+          <h4>{L.name}</h4>
+          <p>{L.desc}</p>
+        </div>
+      </div>
+    );
+  };
+
+  const App = () => <>{LAYOUTS.map(L => <LayoutCard key={L.id} L={L} />)}</>;
+  ReactDOM.createRoot(document.getElementById('layouts-mount')).render(<App />);
+</script>
+
+<!-- Tweaks wiring -->
+<script>
+  /*EDITMODE-BEGIN*/ const TWEAKS = {
+    "accent":"#E9ED12",
+    "accentInk":"#3a3b00",
+    "density":1,
+    "darkRatio":30
+  } /*EDITMODE-END*/;
+
+  function applyTweaks(t){
+    document.documentElement.style.setProperty('--accent', t.accent);
+    document.documentElement.style.setProperty('--accent-ink', t.accentInk);
+    document.documentElement.style.setProperty('--density', t.density);
+    // Update highlight in header
+    document.querySelectorAll('.top h1 .mark').forEach(el => el.style.background = t.accent);
+    document.getElementById('densVal').textContent = Number(t.density).toFixed(2);
+    document.getElementById('darkVal').textContent = t.darkRatio + '%';
+    document.getElementById('dens').value = t.density;
+    document.getElementById('darkRatio').value = t.darkRatio;
+    document.querySelectorAll('#swatches button').forEach(b => b.classList.toggle('on', b.dataset.c === t.accent));
+  }
+  applyTweaks(TWEAKS);
+
+  // Tweaks toolbar integration
+  window.addEventListener('message', e => {
+    if (e.data?.type === '__activate_edit_mode')   document.getElementById('tweaks-panel').style.display = 'block';
+    if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').style.display = 'none';
+  });
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+
+  function save(partial){
+    Object.assign(TWEAKS, partial);
+    applyTweaks(TWEAKS);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: partial }, '*');
+  }
+  document.querySelectorAll('#swatches button').forEach(b => {
+    b.addEventListener('click', () => save({ accent: b.dataset.c, accentInk: b.dataset.ai }));
+  });
+  document.getElementById('dens').addEventListener('input', e => save({ density: parseFloat(e.target.value) }));
+  document.getElementById('darkRatio').addEventListener('input', e => save({ darkRatio: parseInt(e.target.value,10) }));
+</script>
+</body>
+</html>

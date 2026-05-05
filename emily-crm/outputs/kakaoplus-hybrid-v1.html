@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:#d0ccc6;padding:40px;display:flex;flex-direction:column;align-items:center;gap:60px}
+.phase{font-size:13px;color:#888;letter-spacing:0.15em;font-weight:700;margin-bottom:8px}
+.banner{width:800px;height:400px;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.12)}
+.banner img.bg{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+.overlay{position:absolute;top:0;left:0;width:100%;height:100%}
+</style>
+</head>
+<body>
+
+<!-- ===== 오픈 배너 ===== -->
+<div>
+<div class="phase">OPEN</div>
+<div class="banner">
+  <img class="bg" src="banner-open-bg.png" alt="">
+  <div class="overlay" style="background:linear-gradient(135deg,rgba(253,246,236,0.85) 0%,rgba(253,246,236,0.6) 50%,rgba(253,246,236,0.3) 100%);">
+    <div style="position:absolute;top:20px;left:32px;">
+      <span style="background:#1A1A2E;color:#FFD84D;padding:7px 16px;border-radius:18px;font-size:12px;font-weight:900;letter-spacing:0.04em;">SELFISH CLUB</span>
+    </div>
+    <div style="position:absolute;top:60px;left:32px;width:58%;">
+      <p style="font-size:16px;font-weight:700;color:#C67B1A;margin-bottom:8px;">크리에이터 4명이 싹-다 보여드려요</p>
+      <h1 style="font-size:42px;font-weight:900;color:#1A1A2E;line-height:1.18;letter-spacing:-0.04em;">진짜 비즈니스에서 <span style="background:linear-gradient(180deg,transparent 55%,#FFD84D 55%);padding:0 4px;">쓰이는</span></h1>
+      <h1 style="font-size:42px;font-weight:900;color:#1A1A2E;line-height:1.18;letter-spacing:-0.04em;margin-top:2px;">AI 영상 제작</h1>
+      <h1 style="font-size:42px;font-weight:900;color:#1A1A2E;line-height:1.18;letter-spacing:-0.04em;margin-top:2px;"><span style="background:linear-gradient(180deg,transparent 55%,#FFD84D 55%);padding:0 4px;">워크플로우</span> 공개</h1>
+      <p style="font-size:15px;font-weight:600;color:#8B6914;margin-top:10px;">패션 · 뷰티 · 바디케어 4가지 실전 케이스</p>
+    </div>
+    <div style="position:absolute;right:24px;top:60px;display:flex;flex-direction:column;gap:8px;">
+      <div style="background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:20px;padding:10px 18px;box-shadow:0 2px 10px rgba(0,0,0,0.08);font-size:14px;font-weight:700;color:#1A1A2E;">AI 티가 너무 나요</div>
+      <div style="background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:20px;padding:10px 18px;box-shadow:0 2px 10px rgba(0,0,0,0.08);font-size:14px;font-weight:700;color:#1A1A2E;">컷마다 얼굴이 달라져요</div>
+      <div style="background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:20px;padding:10px 18px;box-shadow:0 2px 10px rgba(0,0,0,0.08);font-size:14px;font-weight:700;color:#1A1A2E;">촬영 비용이 부담돼요</div>
+      <div style="background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:20px;padding:10px 18px;box-shadow:0 2px 10px rgba(0,0,0,0.08);font-size:14px;font-weight:700;color:#1A1A2E;">모델 섭외가 어려워요</div>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(26,26,46,0.06);backdrop-filter:blur(6px);border-top:1px solid rgba(0,0,0,0.06);">
+      <span style="font-size:16px;font-weight:700;color:#1A1A2E;">3/16(월) 저녁 8시 · ZOOM</span>
+      <span style="background:#E8380D;color:#fff;padding:9px 22px;border-radius:20px;font-size:14px;font-weight:900;">마감 3/16 저녁 6시</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== 리마인드 배너 ===== -->
+<div>
+<div class="phase">REMIND</div>
+<div class="banner">
+  <img class="bg" src="banner-remind-bg.png" alt="">
+  <div class="overlay" style="background:linear-gradient(180deg,rgba(243,238,255,0.82) 0%,rgba(235,227,255,0.7) 50%,rgba(243,238,255,0.5) 100%);">
+    <div style="position:absolute;top:20px;left:32px;right:32px;display:flex;justify-content:space-between;align-items:center;">
+      <span style="background:#6A5AFF;color:#fff;padding:7px 16px;border-radius:18px;font-size:12px;font-weight:900;">SELFISH CLUB</span>
+      <span style="font-size:14px;font-weight:900;color:#E8380D;">🚨 마감 D-3 | 3.16(월) 18:00</span>
+    </div>
+    <div style="position:absolute;top:68px;left:0;right:0;text-align:center;padding:0 40px;">
+      <p style="font-size:20px;font-weight:700;color:#6A5AFF;margin-bottom:10px;">"도대체 저 AI 영상, 어떻게 만든 거야?" 🤔</p>
+      <h1 style="font-size:44px;font-weight:900;color:#1A1A2E;line-height:1.2;letter-spacing:-0.03em;">진짜 비즈니스에서 쓰이는</h1>
+      <h1 style="font-size:44px;font-weight:900;line-height:1.2;letter-spacing:-0.03em;"><span style="background:linear-gradient(180deg,transparent 55%,rgba(106,90,255,0.25) 55%);padding:0 6px;color:#1A1A2E;">AI 영상</span><span style="color:#1A1A2E;"> 제작기</span></h1>
+      <p style="font-size:17px;font-weight:700;color:#4A3E8A;margin-top:10px;">현업 크리에이터 4인의 100% 실전 워크플로우 공유</p>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 32px;background:rgba(106,90,255,0.06);backdrop-filter:blur(6px);border-top:1px solid rgba(106,90,255,0.08);display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:16px;font-weight:700;color:#1A1A2E;">3/16(월) 저녁 8시 · ZOOM</span>
+      <div style="background:linear-gradient(135deg,#6A5AFF,#8B7FFF);color:#fff;padding:10px 24px;border-radius:22px;font-size:15px;font-weight:900;">🎁 지금 신청하고 VOD 받기 ›</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== 마감 배너 ===== -->
+<div>
+<div class="phase">DEADLINE</div>
+<div class="banner">
+  <img class="bg" src="banner-close-bg.png" alt="">
+  <div class="overlay" style="background:linear-gradient(180deg,rgba(255,255,255,0.88) 0%,rgba(255,255,255,0.75) 100%);">
+    <div style="position:absolute;top:0;left:0;right:0;height:46px;background:linear-gradient(135deg,#E8380D,#FF4D2A);display:flex;align-items:center;justify-content:center;gap:8px;">
+      <span style="font-size:18px;">🚨</span>
+      <span style="font-size:22px;font-weight:900;color:#fff;letter-spacing:0.03em;">오늘 저녁 6시 마감</span>
+      <span style="font-size:18px;">🚨</span>
+    </div>
+    <div style="position:absolute;top:60px;left:32px;">
+      <span style="background:#1A1A2E;color:#FFD84D;padding:6px 14px;border-radius:16px;font-size:11px;font-weight:900;">SELFISH CLUB</span>
+    </div>
+    <div style="position:absolute;top:92px;left:32px;right:32px;">
+      <p style="font-size:16px;font-weight:700;color:#E8380D;margin-bottom:8px;">이기적공유회 〈AI 비즈니스 영상 편〉</p>
+      <h1 style="font-size:44px;font-weight:900;color:#1A1A2E;line-height:1.15;letter-spacing:-0.04em;">진짜 비즈니스에서 쓰이는</h1>
+      <h1 style="font-size:44px;font-weight:900;line-height:1.15;letter-spacing:-0.04em;">
+        <span style="background:linear-gradient(180deg,transparent 55%,#FFD84D 55%);padding:0 4px;color:#1A1A2E;">AI 영상 워크플로우</span><span style="color:#1A1A2E;"> 공개</span>
+      </h1>
+      <p style="font-size:15px;font-weight:600;color:#666;margin-top:10px;">촬영 0원 · 모델 0원 · 9,900원으로 전부 공개</p>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;">
+      <div style="padding:0 32px 8px;"><span style="font-size:15px;font-weight:700;color:#1A1A2E;">오늘 저녁 8시 ZOOM 라이브 · ₩9,900</span></div>
+      <div style="padding:12px 32px;background:#1A1A2E;text-align:center;">
+        <span style="background:#E8380D;color:#fff;padding:11px 40px;border-radius:24px;font-size:17px;font-weight:900;display:inline-block;">마감 전 신청하기 ›</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>

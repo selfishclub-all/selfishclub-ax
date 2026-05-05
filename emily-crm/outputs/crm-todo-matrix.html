@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: linear-gradient(180deg, #e8f0fe 0%, #f0f4fa 100%);
+  font-family:'Noto Sans KR',sans-serif;
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:40px 20px;
+}
+.page { width:1500px; }
+
+/* 헤더 */
+.header { margin-bottom:28px; }
+.header-title { font-size:34px; font-weight:900; color:#1a1a2e; }
+.header-title span { color:#888; font-weight:500; font-size:20px; }
+.header-desc { font-size:15px; color:#555; margin-top:6px; }
+
+/* Phase 배너 행 */
+.phase-row {
+  display:flex; margin-bottom:20px; padding-left:180px;
+}
+.phase-banner {
+  flex:1; height:56px; display:flex; align-items:center; justify-content:center; gap:8px;
+  font-size:20px; font-weight:900; color:#fff;
+  position:relative; margin-right:-12px;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%, 20px 50%);
+}
+.phase-banner:first-child {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+  border-radius:8px 0 0 8px;
+}
+.phase-banner .phase-icon { font-size:24px; }
+.phase-banner .phase-sub { font-size:11px; font-weight:500; opacity:0.85; }
+.pb-open { background:#4a90d9; z-index:5; }
+.pb-remind { background:#f5a623; z-index:4; }
+.pb-close { background:#e85d3a; z-index:3; }
+.pb-dday { background:#2ecc71; z-index:2; }
+.pb-post { background:#7eb8da; z-index:1; }
+
+/* 메인 그리드 */
+.flow-grid { display:flex; flex-direction:column; gap:12px; }
+
+/* 각 채널 행 */
+.channel-row { display:flex; align-items:stretch; gap:0; }
+
+/* 채널 라벨 */
+.ch-label {
+  width:180px; flex-shrink:0;
+  background:#fff; border:1px solid #ddd; border-radius:12px;
+  padding:16px; display:flex; flex-direction:column; justify-content:center;
+  margin-right:12px;
+}
+.ch-label-icon { font-size:32px; margin-bottom:4px; }
+.ch-label-name { font-size:16px; font-weight:900; color:#1a1a2e; }
+.ch-label-sub { font-size:11px; color:#888; margin-top:2px; line-height:1.4; }
+
+/* 태스크 셀 영역 */
+.tasks-area { display:flex; flex:1; gap:8px; }
+
+/* 개별 Phase 셀 */
+.task-cell {
+  flex:1; border-radius:12px; padding:14px;
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative; min-height:90px;
+}
+.task-cell-active { background:#fff; border:1px solid #e0e0e0; box-shadow:0 2px 6px rgba(0,0,0,0.04); }
+.task-cell-empty { background:rgba(255,255,255,0.3); border:1px dashed #ccc; }
+
+/* 화살표 */
+.arrow-connector {
+  display:flex; align-items:center; justify-content:center;
+  width:28px; flex-shrink:0; color:#bbb; font-size:18px; font-weight:700;
+}
+
+/* 태스크 텍스트 */
+.task-text {
+  font-size:13px; font-weight:600; color:#333; text-align:center; line-height:1.6;
+}
+.task-text .task-icon { font-size:28px; display:block; margin-bottom:4px; }
+.task-text .task-num {
+  display:inline-block; background:#e6f7ed; color:#16a34a;
+  font-size:11px; font-weight:800; padding:1px 8px; border-radius:8px;
+  margin-bottom:2px;
+}
+
+/* 채널별 셀 컬러 */
+.ch-alimtalk .task-cell-active { background:#f0f7ff; border-color:#c5ddf5; }
+.ch-kaplus .task-cell-active { background:#fff9ee; border-color:#f5deb3; }
+.ch-openchat .task-cell-active { background:#f3f0ff; border-color:#d5ccf5; }
+.ch-insta .task-cell-active { background:#fff0f5; border-color:#f5c5d5; }
+.ch-owned .task-cell-active { background:#eef8f3; border-color:#c5e8d5; }
+
+/* 하단 */
+.footer {
+  margin-top:28px; text-align:center;
+  font-size:16px; color:#666; line-height:1.8;
+}
+.footer strong { color:#e85d3a; font-weight:800; }
+.footer .strike { text-decoration:line-through; color:#bbb; }
+.footer .big-arrow { font-size:22px; color:#e85d3a; margin:0 8px; }
+</style></head><body>
+<div class="page">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-title">공유회 1회 CRM 할 일 전체 맵 <span>(Share Session CRM Workflow Full Map)</span></div>
+    <div class="header-desc">현재 공유회 하나가 올라갈 때 내가 실행해야 하는 CRM 워크플로우 구조입니다.</div>
+  </div>
+
+  <!-- Phase 배너 -->
+  <div class="phase-row">
+    <div class="phase-banner pb-open"><span class="phase-icon">💬</span> 오픈<span class="phase-sub">(OPEN)</span></div>
+    <div class="phase-banner pb-remind"><span class="phase-icon">🔔</span> 리마인드<span class="phase-sub">(REMIND)</span></div>
+    <div class="phase-banner pb-close"><span class="phase-icon">🔥</span> 마감<span class="phase-sub">(CLOSE)</span></div>
+    <div class="phase-banner pb-dday"><span class="phase-icon">✅</span> 당일<span class="phase-sub">(D-DAY)</span></div>
+    <div class="phase-banner pb-post"><span class="phase-icon">🎬</span> 사후<span class="phase-sub">(POST D+3)</span></div>
+  </div>
+
+  <div class="flow-grid">
+
+    <!-- 알림톡 -->
+    <div class="channel-row ch-alimtalk">
+      <div class="ch-label">
+        <div class="ch-label-icon">💬</div>
+        <div class="ch-label-name">알림톡</div>
+        <div class="ch-label-sub">전체 회원 6,829명<br>카카오 알림톡 발송</div>
+      </div>
+      <div class="tasks-area">
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            <span class="task-icon">📱</span>
+            <span class="task-num">①</span><br>
+            오픈알림<br>작성+발송
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            <span class="task-icon">🔔</span>
+            <span class="task-num">②</span><br>
+            리마인드<br>작성+발송
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            <span class="task-icon">📅</span>
+            <span class="task-num">③</span><br>
+            D-1 작성+발송
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            <span class="task-icon">🎁</span>
+            <span class="task-num">④</span> <span class="task-num">⑤</span> <span class="task-num">⑥</span> <span class="task-num">⑦</span> <span class="task-num">⑧</span><br>
+            당일 / 할인쿠폰 /<br>입장링크 / 시작 / 혜택
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            <span class="task-icon">▶️</span>
+            <span class="task-num">⑨</span><br>
+            VOD 발송
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 카플친 -->
+    <div class="channel-row ch-kaplus">
+      <div class="ch-label">
+        <div class="ch-label-icon">🟡</div>
+        <div class="ch-label-name">카플친</div>
+        <div class="ch-label-sub">카카오 구독자 2,865명<br>친구톡 배너 발송</div>
+      </div>
+      <div class="tasks-area">
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            배너 제작<br>카피 작성<br>발송
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            배너 제작<br>카피 작성<br>발송
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            배너 제작<br>카피 작성<br>발송
+          </div>
+        </div>
+        <div class="arrow-connector"></div>
+        <div class="task-cell task-cell-empty"></div>
+        <div class="arrow-connector"></div>
+        <div class="task-cell task-cell-empty"></div>
+      </div>
+    </div>
+
+    <!-- 오카방 -->
+    <div class="channel-row ch-openchat">
+      <div class="ch-label">
+        <div class="ch-label-icon">💭</div>
+        <div class="ch-label-name">오카방</div>
+        <div class="ch-label-sub">오픈채팅 3방<br>동시 게시</div>
+      </div>
+      <div class="tasks-area">
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            카피 작성<br>3방 게시
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            카피 작성<br>3방 게시
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            카피 작성<br>3방 게시
+          </div>
+        </div>
+        <div class="arrow-connector"></div>
+        <div class="task-cell task-cell-empty"></div>
+        <div class="arrow-connector"></div>
+        <div class="task-cell task-cell-empty"></div>
+      </div>
+    </div>
+
+    <!-- 인스타 -->
+    <div class="channel-row ch-insta">
+      <div class="ch-label">
+        <div class="ch-label-icon">📸</div>
+        <div class="ch-label-name">인스타</div>
+        <div class="ch-label-sub">캐러셀 포스트</div>
+      </div>
+      <div class="tasks-area">
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            캐러셀 5장 제작<br>캡션 작성, 업로드
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            캐러셀 5장 제작<br>캡션 작성, 업로드
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            캐러셀 5장 제작<br>캡션 작성, 업로드
+          </div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="task-cell task-cell-active">
+          <div class="task-text">
+            캐러셀 5장 제작<br>캡션 작성, 업로드
+          </div>
+        </div>
+        <div class="arrow-connector"></div>
+        <div class="task-cell task-cell-empty"></div>
+      </div>
+    </div>
+
+    <!-- 온드미디어 -->
+    <div class="channel-row ch-owned">
+      <div class="ch-label">
+        <div class="ch-label-icon">📋</div>
+        <div class="ch-label-name">온드미디어 준비</div>
+        <div class="ch-label-sub">소식 / 웰컴메시지 /<br>채팅방메뉴 / 리틀리 /<br>인스타소개 세팅</div>
+      </div>
+      <div class="tasks-area">
+        <div class="task-cell task-cell-active" style="flex:2;">
+          <div class="task-text">
+            소식 작성 + 세팅 / 웰컴메시지 작성 + 세팅 / 채팅방메뉴 작성 + 세팅<br>
+            리틀리 작성 + 세팅 / 인스타 소개 작성 + 세팅
+          </div>
+        </div>
+        <div class="arrow-connector"></div>
+        <div class="task-cell task-cell-empty" style="flex:3;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 하단 -->
+  <div class="footer">
+    이게 공유회 <strong>한 번</strong>에 해야 하는 일. 매주 공유회가 돌아감.<br>
+    <span class="strike">전부 수동으로 작성 + 발송</span>
+    <span class="big-arrow">→</span>
+    <strong>"CRM 시작해줘" 한 마디로 자동 생성</strong>
+  </div>
+
+</div>
+</body></html>

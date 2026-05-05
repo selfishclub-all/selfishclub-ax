@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>셀피쉬클럽 카카오 플러스친구 와이드형 배너</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .banner-container {
+            width: 800px;
+            margin: 0 auto;
+        }
+        .banner {
+            width: 800px;
+            height: 480px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 40px;
+            text-align: center;
+            overflow: hidden;
+            margin-bottom: 20px; /* 배너 간의 간격 */
+        }
+        .selfish-club-badge {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            background-color: #000;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            z-index: 10;
+        }
+        .program-info {
+            font-size: 18px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .sub-copy {
+            font-size: 28px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .main-copy {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.3;
+            color: #222;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #FFEE00;
+            padding: 0 5px;
+            border-radius: 3px;
+        }
+        .detail-text {
+            font-size: 22px;
+            font-weight: 400;
+            color: #444;
+            margin-bottom: 25px;
+        }
+        .price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #E6007E;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+        .date-time-info {
+            font-size: 22px;
+            font-weight: 500;
+            color: #666;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* 오픈 배너 (Open Banner) 전용 스타일 */
+        .banner-open {
+            background-color: #FDF6EC;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px;
+        }
+        .open-left-content {
+            flex: 1;
+            padding-right: 30px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+        .open-right-painpoints {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding-left: 30px;
+        }
+        .painpoint-card {
+            width: calc(50% - 10px);
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            padding: 25px 20px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #444;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-break: keep-all;
+            line-height: 1.4;
+        }
+        .banner-open .date-time-info {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            width: auto;
+            text-align: left;
+        }
+
+        /* 리마인드 배너 (Remind Banner) 전용 스타일 */
+        .banner-remind {
+            background-color: #F3EEFF;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        .remind-countdown {
+            font-size: 90px;
+            font-weight: 900;
+            color: #9C27B0;
+            margin-bottom: 25px;
+            letter-spacing: -2px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .remind-text-block {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        .banner-remind .date-time-info {
+            margin-top: 40px;
+        }
+
+        /* 마감 임박 배너 (Closing Soon Banner) 전용 스타일 */
+        .banner-closing {
+            background-color: #FFFFFF;
+            padding: 0;
+            justify-content: flex-start;
+        }
+        .closing-top-bar {
+            width: 100%;
+            background-color: #E53935;
+            color: #fff;
+            padding: 18px 0;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+            z-index: 5;
+        }
+        .closing-content {
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .closing-cta-button {
+            background-color: #212121;
+            color: #fff;
+            padding: 20px 50px;
+            border-radius: 10px;
+            font-size: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        .closing-cta-button:hover {
+            background-color: #424242;
+        }
+        .banner-closing .date-time-info {
+            margin-top: 40px;
+            margin-bottom: 0;
+        }
+        .banner-closing .selfish-club-badge {
+             z-index: 11; /* 붉은색 상단 바 위에 뱃지가 보이도록 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="banner-container">
+
+    <!-- 오픈 배너 (Open Banner) -->
+    <div class="banner banner-open">
+        <div class="selfish-club-badge">SELFISH CLUB</div>
+        <div class="open-left-content">
+            <div class="program-info">AI 비즈니스 영상 공유회</div>
+            <div class="sub-copy">크리에이터 4명이 싹-다 보여드려요</div>
+            <div class="main-copy">
+                <span class="highlight">진짜 비즈니스에서 쓰이는 AI 영상 워크플로우 공개</span>
+            </div>
+            <div class="detail-text">패션 · 뷰티 · 바디케어 4가지 실전 케이스</div>
+            <div class="price">9,900원</div>
+        </div>
+        <div class="open-right-painpoints">
+            <div class="painpoint-card">AI 티가 너무 나요</div>
+            <div class="painpoint-card">컷마다 얼굴이 달라져요</div>
+            <div class="painpoint-card">촬영 비용이 부담돼요</div>
+            <div class="painpoint-card">모델 섭외가 어려워요</div>
+        </div>
+        <div class="date-time-info">
+            3/16(월) 저녁 8시 · ZOOM
+        </div>
+    </div>
+
+    <!-- 리마인드 배너 (Remind Banner) -->
+    <div class="banner banner-remind">
+        <div class="selfish-club-badge">SELFISH CLUB</div>
+        <div class="remind-text-block">
+            <div class="remind-countdown">마감 D-3</div>
+            <div class="program-info">AI 비즈니스 영상 공유회</div>
+            <div class="sub-copy">크리에이터 4명이 싹-다 보여드려요</div>
+            <div class="main-copy">
+                <span class="highlight">진짜 비즈니스에서 쓰이는 AI 영상 워크플로우 공개</span>
+            </div>
+            <div class="detail-text">패션 · 뷰티 · 바디케어 4가지 실전 케이스</div>
+            <div class="price">9,900원</div>
+        </div>
+        <div class="date-time-info">
+            3/16(월) 저녁 8시 · ZOOM
+        </div>
+    </div>
+
+    <!-- 마감 임박 배너 (Closing Soon Banner) -->
+    <div class="banner banner-closing">
+        <div class="selfish-club-badge">SELFISH CLUB</div>
+        <div class="closing-top-bar">오늘 저녁 6시 마감! 서둘러 신청하세요!</div>
+        <div class="closing-content">
+            <div class="program-info">AI 비즈니스 영상 공유회</div>
+            <div class="sub-copy">크리에이터 4명이 싹-다 보여드려요</div>
+            <div class="main-copy">
+                <span class="highlight">진짜 비즈니스에서 쓰이는 AI 영상 워크플로우 공개</span>
+            </div>
+            <div class="detail-text">패션 · 뷰티 · 바디케어 4가지 실전 케이스</div>
+            <div class="price">9,900원</div>
+            <a href="#" class="closing-cta-button">지금 바로 신청하기</a>
+        </div>
+        <div class="date-time-info">
+            3/16(월) 저녁 8시 · ZOOM
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

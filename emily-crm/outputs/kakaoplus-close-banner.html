@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  .banner {
+    width: 800px;
+    height: 600px;
+    background: #0a0a0a;
+    position: relative;
+    overflow: hidden;
+    font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  /* 레드 글로우 */
+  .banner::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(ellipse at center, rgba(220,30,30,0.2) 0%, rgba(180,20,20,0.08) 40%, transparent 70%);
+    z-index: 0;
+  }
+  /* 상단 뱃지 */
+  .badge {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #cc2222;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 8px 20px;
+    border-radius: 4px;
+    z-index: 1;
+  }
+  /* 서브카피 */
+  .sub-copy {
+    color: #ff4444;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    z-index: 1;
+  }
+  /* 메인카피 */
+  .main-copy {
+    color: #ffffff;
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 24px;
+    z-index: 1;
+    text-shadow: 0 0 40px rgba(220,30,30,0.3);
+  }
+  /* 텍스트 1줄 */
+  .desc {
+    color: #999;
+    font-size: 16px;
+    font-weight: 400;
+    z-index: 1;
+    max-width: 600px;
+  }
+  /* 하단바 */
+  .bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: #cc2222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    z-index: 1;
+  }
+  .bottom-date {
+    color: rgba(255,255,255,0.85);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .bottom-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255,255,255,0.4);
+  }
+  .bottom-cta {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="banner">
+  <div class="badge">SELFISH CLUB</div>
+  <div class="sub-copy">오늘 18:00, 신청이 마감됩니다</div>
+  <div class="main-copy">지금 신청 안 하면<br>내일 후회합니다</div>
+  <div class="desc">비개발자도 가능한 클로드코드 × 깃헙 실전 노하우 — 오늘 저녁 8시</div>
+  <div class="bottom-bar">
+    <span class="bottom-date">2026. 04. 01 (수) 20:00</span>
+    <span class="bottom-divider"></span>
+    <span class="bottom-cta">마감 전 신청하기 →</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+- [진행 상태](progress.md) — 완료/진행중/남은작업 전체 추적 (매 세션 업데이트)
+- [4/5 CRM v2 미팅](meeting_0405_crm_v2.md) — 카카오모먼트 전환, 유저여정/KPI적응형/인사이트축적 v2 로드맵
+- [4/5 n8n 테스트 세션](session_0405_n8n_test.md) — ①~⑤ 완료, ⑥~⑨ 남음, Wait노드/SOLAPI수정/Slack채널분리
+- [4/9 n8n 크론 삽질 교훈](session_0409_n8n_gotchas.md) — EDT 타임존/6자리 크론/runOnceForEachItem/f_scheduled/자동승인/strip — **크루 테스트 전 필독**
+- [4/16 Test 2 성공](session_0416_test2_success.md) — 승인→취소→재승인 성공, 취소확인 이중이스케이프 버그, 수정미리보기 4케이스 수정
+- [카피 피드백 규칙](feedback_copy_rules.md) — CRM 카피 작성 시 지켜야 할 규칙 (할인율 표현, 안내 워딩)
+- [n8n API 이스케이프 주의](feedback_n8n_api_escaping.md) — jsCode PUT 시 python 사용 필수, bash/jq로 하면 백틱 이중이스케이프
+- [미리보기=SOLAPI 동일](feedback_preview_must_match_solapi.md) — 슬랙 미리보기는 실제 발송 템플릿과 정확히 일치해야 함
+- [4/16 옵시디언용 테스트 리포트](obsidian_0416_test_report.md) — Test 1~2 성공 + 삽질 + 크론규칙 + 버전카운터 + DB조회 (옵시디언 원본)
+- [AAA 주차별 과제](aaa_weekly_mission.md) — 매주 일요일 옵시디언 과제 MD 작성 규칙 (경로/포맷/말투)
+- [PUT에 staticData 포함 금지](feedback_n8n_no_staticdata_in_put.md) — 코드/크론 변경 시 staticData 제외, 버전 카운터 덮어쓰기 방지
+- [Wait 중 deactivate 금지](feedback_no_deactivate_during_wait.md) — Wait 대기 중 deactivate하면 실행 전부 종료됨
+- [n8n 항상 GET fresh](feedback_n8n_always_get_fresh.md) — /tmp 파일 재사용 금지, 매번 GET 후 수정
+- [Slack 발송 규칙](feedback_slack_rules.md) — 젬마 계정으로 보내지 말 것 + Claude Code 크론 자동발송 금지
+- [하네스 운영 규칙](feedback_harness_operation.md) — 저장≠활성화, verifier 경유, 세션 회고 필수, 박제 시 MEMORY 인덱스 동기화
+- [4/18 AAA 공유회 PPT 초안](session_0418_aaa_deck.md) — 하네스 보강 완료 + 발표 PPT 14장 초안 생성, 내일 수정 이어감
+- [4/21 AAA PPT v5 + CRM 세그먼트 설계](session_0421_aaa_deck_and_crm.md) — 25장 리디자인 완료 + 8개 세그먼트 확정, 내일 회사 맥북에서 모수 뽑고 XLSX 생성
+- ["풀해줘" 기본 동작](feedback_git_pull_behavior.md) — 현재 브랜치 풀 + 세션 상태 파일 충돌 시 원격(다른 맥북 최신) 우선, 로컬 드리프트는 폐기
+- [4/21 AAA 수동 CRM](session_0421_aaa_manual_crm.md) — n8n 자동화 중단 + T1/T2/T3 템플릿 전환 + 세그먼트 6,733명 수동 기획, 자동화 재개 시 레퍼런스
+- [수동 CRM 플레이북 (자동화 재설계 SSOT)](feedback_crm_manual_playbook_ref.md) — Phase 0~6 수기 흐름, 세그먼트 정의/모수/템플릿 매핑 구체 스펙. 자동화 재개 세션 시작 시 필독
+- [4/27 AAA D-1 본 발송 + PPT v8 작업](session_0427_aaa_d1_send.md) — 신청자 1,328+미신청자 6,068 발송, 모수·실패율·이슈·발표 피드백, PPT v7→v8 방향 전환
+- [AAA 4/27 발송 기록 (SSOT)](../outputs/crm/AAA_260427_send_log.md) — 카피 풀+template ID+모수+URL 처리+페이지네이션 함정. CRM 자동화 재개 시 카피 레퍼런스
+- [T1 알림톡 버튼 URL prefix](feedback_alimtalk_t1_url_prefix.md) — T1 버튼이 `www.selfishclub.xyz/sharing/` 하드코딩 prefix. `#{url}`은 slug+UTM만
+- [Supabase 페이지네이션 필수](feedback_supabase_pagination_required.md) — REST limit cap ~1000건. 발송용 조회는 무조건 fetchAll()
