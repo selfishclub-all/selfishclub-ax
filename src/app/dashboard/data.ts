@@ -7,6 +7,7 @@ import {
   dashboardRoot,
   securityRoot,
   crmRoot,
+  aiCounselorRoot,
   phaseStyle,
   type SitemapNode,
   type Feature,
@@ -67,7 +68,7 @@ function collectFeatures(node: SitemapNode, path?: string): { feature: Feature; 
   return results;
 }
 
-const allRoots = [sitemapRoot, adminRoot, dashboardRoot, securityRoot, crmRoot];
+const allRoots = [sitemapRoot, adminRoot, dashboardRoot, securityRoot, crmRoot, aiCounselorRoot];
 const allFeatureEntries = allRoots.flatMap((root) => collectFeatures(root));
 
 // ─── Phase별 작업 목록 ───
@@ -100,8 +101,20 @@ export const phases: PhaseInfo[] = [
   {
     phase: 3,
     title: phaseStyle[3].label,
-    description: "AI 자동화, CRM, SEO 최종, 포트폴리오",
+    description: "AI 자동화, SEO 최종, 포트폴리오",
     tasks: buildTasks(3),
+  },
+  {
+    phase: 4,
+    title: phaseStyle[4].label,
+    description: "CRM 자동화 — 크루 별도 작업, 추후 머지",
+    tasks: buildTasks(4),
+  },
+  {
+    phase: 5,
+    title: phaseStyle[5].label,
+    description: "웹사이트 AI 상담사 — 크루 별도 작업, 추후 머지",
+    tasks: buildTasks(5),
   },
 ];
 
@@ -145,6 +158,7 @@ export const sitemap: SitemapPage[] = [
   nodeToPage(dashboardRoot, "none"),
   nodeToPage(securityRoot, "none"),
   nodeToPage(crmRoot, "none"),
+  nodeToPage(aiCounselorRoot, "none"),
 ];
 
 // ─── CRM 에이전트 ───

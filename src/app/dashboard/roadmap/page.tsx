@@ -9,6 +9,7 @@ import {
   dashboardRoot,
   securityRoot,
   crmRoot,
+  aiCounselorRoot,
   phaseStyle,
   type SitemapNode,
   type PhaseNumber,
@@ -46,7 +47,7 @@ export default function RoadmapPage() {
       <main className="mx-auto max-w-[1400px] px-6 py-8 space-y-6">
         {/* 범례 */}
         <div className="flex flex-wrap items-center gap-4 text-xs">
-          {([1, 2, 3] as PhaseNumber[]).map((p) => {
+          {([1, 2, 3, 4, 5] as PhaseNumber[]).map((p) => {
             const s = phaseStyle[p];
             return (
               <span
@@ -100,6 +101,7 @@ export default function RoadmapPage() {
               <TreeNode node={dashboardRoot} onSelect={setSelected} selectedId={selected?.id ?? null} depth={0} />
               <TreeNode node={securityRoot} onSelect={setSelected} selectedId={selected?.id ?? null} depth={0} />
               <TreeNode node={crmRoot} onSelect={setSelected} selectedId={selected?.id ?? null} depth={0} />
+              <TreeNode node={aiCounselorRoot} onSelect={setSelected} selectedId={selected?.id ?? null} depth={0} />
             </div>
           </div>
         </div>

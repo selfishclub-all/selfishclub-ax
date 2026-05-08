@@ -1,6 +1,6 @@
 // AX 로드맵 — 비주얼 사이트맵 기반
 
-export type PhaseNumber = 1 | 2 | 3;
+export type PhaseNumber = 1 | 2 | 3 | 4 | 5;
 export type NodeStatus = "done" | "in-progress" | "planned";
 
 export interface Feature {
@@ -25,6 +25,8 @@ export const phaseStyle: Record<PhaseNumber, { bg: string; border: string; text:
   1: { bg: "#a5f3fc", border: "#67e8f9", text: "#083344", label: "Phase 1 — 뼈대 + 핵심" },
   2: { bg: "#3b82f6", border: "#60a5fa", text: "#fff", label: "Phase 2 — 콘텐츠 + 확장" },
   3: { bg: "#1e1b4b", border: "#4338ca", text: "#c7d2fe", label: "Phase 3 — 론칭 + 완성" },
+  4: { bg: "#a855f7", border: "#c084fc", text: "#fff", label: "Phase 4 — CRM (크루 작업)" },
+  5: { bg: "#ec4899", border: "#f472b6", text: "#fff", label: "Phase 5 — AI 상담사 (크루 작업)" },
 };
 
 // ─── 홈페이지 사이트맵 (퍼블릭) ───
@@ -285,17 +287,33 @@ export const crmRoot: SitemapNode = {
   id: "crm",
   path: "CRM",
   name: "CRM / Emily",
-  phase: 3,
+  phase: 4,
   status: "in-progress",
-  agenticNote: "⚡ n8n + 🧠 Claude API + 솔라피로 회원 생애주기 자동 관리.",
+  agenticNote: "⚡ n8n + 🧠 Claude API + 솔라피로 회원 생애주기 자동 관리. 다른 크루가 별도 작업 중 — 추후 머지 예정.",
   features: [
-    { name: "알림톡 오픈 알림", done: false, phase: 2 },
-    { name: "알림톡 라이브 알림", done: false, phase: 2 },
-    { name: "알림톡 VOD 알림", done: false, phase: 2 },
-    { name: "뉴스레터 구독 폼 (스티비)", done: false, phase: 2 },
-    { name: "뉴스레터 자동 발송", done: false, phase: 3 },
-    { name: "🤖 개인화 메시지 자동 생성 (세그먼트별)", done: false, phase: 3 },
-    { name: "🤖 이탈 예측 + 재참여 메시지 초안", done: false, phase: 3 },
-    { name: "🤖 뉴스레터 콘텐츠 자동 큐레이션", done: false, phase: 3 },
+    { name: "알림톡 오픈 알림", done: false, phase: 4 },
+    { name: "알림톡 라이브 알림", done: false, phase: 4 },
+    { name: "알림톡 VOD 알림", done: false, phase: 4 },
+    { name: "뉴스레터 구독 폼 (스티비)", done: false, phase: 4 },
+    { name: "뉴스레터 자동 발송", done: false, phase: 4 },
+    { name: "🤖 개인화 메시지 자동 생성 (세그먼트별)", done: false, phase: 4 },
+    { name: "🤖 이탈 예측 + 재참여 메시지 초안", done: false, phase: 4 },
+    { name: "🤖 뉴스레터 콘텐츠 자동 큐레이션", done: false, phase: 4 },
+  ],
+};
+
+export const aiCounselorRoot: SitemapNode = {
+  id: "ai-counselor",
+  path: "AI 상담사",
+  name: "AI 상담사",
+  phase: 5,
+  status: "planned",
+  agenticNote: "🧠 Claude API 기반 웹사이트 내 AI 상담사. 다른 크루가 별도 작업 중 — 추후 머지 예정.",
+  features: [
+    { name: "상담 챗봇 UI (웹 위젯)", done: false, phase: 5 },
+    { name: "프로그램 안내 / 추천 응답", done: false, phase: 5 },
+    { name: "FAQ 자동 응답", done: false, phase: 5 },
+    { name: "회원 맥락 연동 (로그인 사용자)", done: false, phase: 5 },
+    { name: "상담 이력 저장 + 어드민 조회", done: false, phase: 5 },
   ],
 };
