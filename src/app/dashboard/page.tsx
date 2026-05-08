@@ -6,7 +6,6 @@ import {
   CheckCircle,
   Circle,
   Clock,
-  AlertTriangle,
   Bot,
   Zap,
   BarChart3,
@@ -46,7 +45,6 @@ const statusConfig: Record<
   done: { label: "완료", icon: CheckCircle, className: "text-emerald-600" },
   "in-progress": { label: "진행 중", icon: Clock, className: "text-amber-500" },
   todo: { label: "예정", icon: Circle, className: "text-gray-400" },
-  blocked: { label: "블로킹", icon: AlertTriangle, className: "text-red-500" },
 };
 
 const pageStatusConfig: Record<

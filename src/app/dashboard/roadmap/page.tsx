@@ -12,6 +12,7 @@ import {
   phaseStyle,
   type SitemapNode,
   type PhaseNumber,
+  type Feature,
 } from "./data";
 
 export default function RoadmapPage() {
@@ -106,22 +107,9 @@ export default function RoadmapPage() {
         {/* 선택된 노드 상세 패널 */}
         {selected && (
           <div
-            className="rounded-xl border px-6 py-5 transition-all"
-            style={{
-              backgroundColor: phaseStyle[selected.phase].bg + "15",
-              borderColor: phaseStyle[selected.phase].border + "40",
-            }}
+            className="rounded-xl border border-white/10 bg-[#1a1a1a] px-6 py-5 transition-all"
           >
             <div className="flex items-center gap-3 mb-3">
-              <span
-                className="rounded-full px-2.5 py-1 text-xs font-bold"
-                style={{
-                  backgroundColor: phaseStyle[selected.phase].bg,
-                  color: phaseStyle[selected.phase].text,
-                }}
-              >
-                Phase {selected.phase}
-              </span>
               {selected.status === "in-progress" && (
                 <span className="relative h-2.5 w-2.5 rounded-full bg-amber-400">
                   <span className="absolute inset-0 rounded-full bg-amber-400 animate-ping opacity-50" />
@@ -273,26 +261,26 @@ function NodeBox({
   onSelect: (node: SitemapNode) => void;
   isSelected: boolean;
 }) {
-  const ps = phaseStyle[node.phase];
-  const isDone = node.status === "done";
-  const isDynamic = node.isDynamic;
   const hasFeatures = node.features && node.features.length > 0;
+  const hasPendingFeatures = hasFeatures && node.features!.some((f) => !f.done);
+  const isDone = node.status === "done" && !hasPendingFeatures;
+  const isDynamic = node.isDynamic;
 
   return (
     <button
       onClick={() => onSelect(node)}
       className="transition-all hover:scale-105 hover:brightness-125 text-left"
-      style={{ opacity: isDone ? 0.4 : 1 }}
+      style={{ opacity: isDone ? 0.2 : 1 }}
     >
       <div
         className={`rounded-lg px-4 py-2.5 min-w-[110px] relative ${hasFeatures ? "max-w-[220px]" : "max-w-[140px]"}`}
         style={{
-          backgroundColor: ps.bg,
-          border: `2px ${isDynamic ? "dashed" : "solid"} ${ps.border}`,
-          boxShadow: isSelected ? `0 0 0 2px ${ps.border}, 0 0 12px ${ps.bg}80` : "none",
+          backgroundColor: "#1a1a1a",
+          border: `2px ${isDynamic ? "dashed" : "solid"} ${isSelected ? "#E2E545" : "#333"}`,
+          boxShadow: isSelected ? "0 0 0 2px #E2E545, 0 0 12px rgba(226,229,69,0.3)" : "none",
         }}
       >
-        {/* 상태 도트: 진행 중만 빛나는 도트, 완료/계획은 없음 */}
+        {/* 상태 도트: 진행 중만 빛나는 도트 */}
         {node.status === "in-progress" && (
           <span className="absolute top-1.5 right-1.5 h-2.5 w-2.5 rounded-full bg-amber-400">
             <span className="absolute inset-0 rounded-full bg-amber-400 animate-ping opacity-50" />
@@ -300,30 +288,41 @@ function NodeBox({
         )}
 
         {/* 이름 */}
-        <p className="text-xs font-bold leading-tight" style={{ color: ps.text }}>
+        <p className="text-xs font-bold leading-tight text-white">
           {node.name}
         </p>
 
         {/* 경로 */}
         {node.path && (
-          <p className="text-[9px] mt-0.5 font-mono" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <p className="text-[9px] mt-0.5 font-mono text-white/40">
             {node.path}
           </p>
         )}
 
         {/* 기능 체크리스트 */}
         {hasFeatures && (
-          <div className="mt-2 border-t border-white/15 pt-1.5 space-y-0.5">
+          <div className="mt-2 border-t border-white/10 pt-1.5 space-y-0.5">
             {node.features!.map((f, i) => {
               const isTest = f.name.startsWith("[테스트]");
+              const fps = phaseStyle[f.phase];
               return (
                 <div key={i} className={`flex items-start gap-1.5 ${isTest ? "ml-2 border-l border-white/15 pl-1.5" : ""}`}>
-                  <span className="text-[10px] leading-none mt-0.5" style={{ color: ps.text, opacity: isTest ? 0.6 : 1 }}>
+                  <span
+                    className="inline-flex items-center justify-center h-3.5 w-3.5 rounded-full mt-[1px] shrink-0 text-[8px] font-bold leading-none"
+                    style={{
+                      backgroundColor: fps.bg,
+                      color: fps.text,
+                      opacity: f.done ? 0.4 : (isTest ? 0.6 : 1),
+                    }}
+                  >
+                    {f.phase}
+                  </span>
+                  <span className="text-[10px] leading-none mt-0.5 text-white/70" style={{ opacity: isTest ? 0.6 : 1 }}>
                     {f.done ? "☑" : "☐"}
                   </span>
                   <span
-                    className={`text-[10px] leading-tight ${f.done ? "line-through opacity-50" : ""}`}
-                    style={{ color: ps.text, opacity: isTest && !f.done ? 0.6 : 1 }}
+                    className={`text-[10px] leading-tight text-white/80 ${f.done ? "line-through opacity-40" : ""}`}
+                    style={{ opacity: isTest && !f.done ? 0.6 : 1 }}
                   >
                     {isTest ? `🧪 ${f.name.replace("[테스트] ", "")}` : f.name}
                   </span>
