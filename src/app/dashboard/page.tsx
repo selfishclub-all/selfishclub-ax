@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   CheckCircle,
   Circle,
@@ -88,9 +89,17 @@ export default function AXDashboardPage() {
               AI로 플랫폼을 만드는 과정을 실시간으로 기록합니다
             </p>
           </div>
-          <Badge variant="outline" className="border-[#E2E545] text-[#E2E545]">
-            Phase 1 진행 중
-          </Badge>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/dashboard/roadmap"
+              className="text-sm text-white/50 hover:text-[#E2E545] transition-colors"
+            >
+              로드맵 →
+            </Link>
+            <Badge variant="outline" className="border-[#E2E545] text-[#E2E545]">
+              Phase 1 진행 중
+            </Badge>
+          </div>
         </div>
       </header>
 

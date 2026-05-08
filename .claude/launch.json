@@ -1,0 +1,10 @@
+{
+  "name": "셀피쉬클럽 v4.0",
+  "runtimeExecutable": "npx",
+  "runtimeArgs": ["next", "dev"],
+  "port": 3000,
+  "cwd": "${workspaceFolder}",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

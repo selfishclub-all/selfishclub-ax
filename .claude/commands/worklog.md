@@ -1,6 +1,6 @@
 ---
 name: worklog
-description: 작업 로그를 selfishclub-ax(docs/worklog.md)와 Obsidian(Week_XX_비비안.md)에 동시 기록
+description: 작업 로그를 selfishclub-ax(docs/worklog.md)와 Obsidian(selfishclub ax vault)에 동시 기록
 ---
 
 # /worklog — 작업 로그 기록
@@ -8,7 +8,7 @@ description: 작업 로그를 selfishclub-ax(docs/worklog.md)와 Obsidian(Week_X
 현재 대화에서 수행한 작업을 **두 곳**에 기록하세요:
 
 1. **selfishclub-ax 레포**: `docs/worklog.md` (push하면 GitHub Actions가 aaa에 자동 동기화)
-2. **Obsidian**: 아래 주차 계산 규칙에 따라 해당 주차 파일에 append
+2. **Obsidian (selfishclub ax vault)**: 주차별 폴더 안에 기록
 
 ## 주차 자동 계산
 
@@ -20,10 +20,15 @@ description: 작업 로그를 selfishclub-ax(docs/worklog.md)와 Obsidian(Week_X
 ## Obsidian 파일 경로
 
 ```
-/Users/jeongeun/Desktop/aaa/00_주차별미션/Week_{XX}/Week_{XX}_비비안.md
+/Users/jeongeun/vivin-claude/selfishclub/selfishclub ax/Week_{XX}/Week_{XX}_worklog.md
 ```
 
 `{XX}`는 위 계산으로 나온 주차 (zero-padded, 예: 04, 05, 12)
+
+### 주차별 폴더 자동 생성
+
+- 해당 주차 폴더(`Week_{XX}/`)가 없으면 **자동으로 생성**
+- 파일(`Week_{XX}_worklog.md`)이 없으면 `# Week {XX} — 셀피쉬클럽 v4.0 작업 로그` 헤딩부터 시작
 
 ## 기록 포맷
 
@@ -39,7 +44,8 @@ description: 작업 로그를 selfishclub-ax(docs/worklog.md)와 Obsidian(Week_X
 ## 규칙
 
 1. **docs/worklog.md**: 날짜 헤딩(`## YYYY-MM-DD`)이 오늘 날짜로 이미 있으면 그 아래에 추가. 없으면 새 날짜 헤딩을 먼저 추가.
-2. **Obsidian 파일**: 맨 끝에 append. 파일이 없거나 비어있으면 `# Week {XX} — 셀피쉬클럽 v4.0 작업 로그` 헤딩부터 시작.
-3. 시간은 기록하지 않음
-4. "왜"는 기술적 이유가 아니라 **프로젝트 관점의 동기**를 적을 것
-5. "한 일"은 변경한 파일 나열이 아니라 **무엇이 달라졌는지** 중심으로
+2. **Obsidian 파일**: 맨 끝에 append. 파일이 없거나 비어있으면 헤딩부터 시작. 주차 폴더가 없으면 자동 생성.
+3. **work log.md**: Obsidian vault 루트의 `work log.md`에도 동일 내용을 append (전체 로그 통합본)
+4. 시간은 기록하지 않음
+5. "왜"는 기술적 이유가 아니라 **프로젝트 관점의 동기**를 적을 것
+6. "한 일"은 변경한 파일 나열이 아니라 **무엇이 달라졌는지** 중심으로
