@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
     i_vodurl: body.i_vodurl || null,
     i_event_count: 0,
     i_total_revenue: 0,
+    ...(body.i_content ? { i_content: body.i_content } : {}),
   }).select().single();
 
   if (error) {
