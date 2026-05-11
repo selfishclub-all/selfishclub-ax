@@ -55,24 +55,14 @@ body {
   margin: 0;
 }
 
-/* 이미지/영상/GIF — 본문과 동일 너비, 가운데 정렬 */
+/* 이미지/영상/GIF — 기본 풀폭, 인라인 스타일로 크기 지정된 건 존중 */
 .detail-html-content img,
 .detail-html-content video,
 .detail-html-content iframe {
-  display: block !important;
-  width: 100% !important;
-  max-width: 768px !important;
-  height: auto !important;
-  margin: 24px auto !important;
+  display: block;
+  width: 100%;
+  max-width: 768px;
+  height: auto;
+  margin: 24px auto;
   border-radius: 12px;
-}
-
-/* 원형 프로필 이미지 등 인라인 스타일 크기가 지정된 이미지는 예외 */
-.detail-html-content img[style*="border-radius: 50%"],
-.detail-html-content img[style*="border-radius:50%"] {
-  display: inline-block !important;
-  width: auto !important;
-  max-width: none !important;
-  margin: 0 !important;
-  border-radius: 50% !important;
 }
