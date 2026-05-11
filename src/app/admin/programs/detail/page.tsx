@@ -857,16 +857,22 @@ export default function DetailPage() {
                               </button>
                             )}
                             <button onClick={() => setEditingBlockId(editingBlockId === block.id ? null : block.id)} className="text-[10px] px-1.5 py-0.5 text-[#888] hover:text-[#0A0A0A]">
-                              {editingBlockId === block.id ? "닫기" : "편집"}
+                              {editingBlockId === block.id ? "코드 닫기" : "코드"}
                             </button>
                             <button onClick={() => { if (confirm("이 블록을 삭제할까요?")) removeBlock(i); }} className="text-[10px] px-1.5 py-0.5 text-red-400/60 hover:text-red-400">삭제</button>
                           </div>
                         </div>
 
-                        {/* 블록 미리보기 */}
+                        {/* 블록 미리보기 (직접 편집 가능) */}
                         <div
-                          className="p-3"
+                          className="p-3 focus:outline-none focus:ring-2 focus:ring-[#E2E545]/50 rounded"
+                          contentEditable={!isSlotBlock(block.html)}
+                          suppressContentEditableWarning
                           dangerouslySetInnerHTML={{ __html: block.html }}
+                          onBlur={(e) => {
+                            const newHtml = e.currentTarget.innerHTML;
+                            if (newHtml !== block.html) updateBlockHtml(block.id, newHtml);
+                          }}
                         />
 
                         {/* 블록 HTML 편집 */}
