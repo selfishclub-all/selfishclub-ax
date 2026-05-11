@@ -556,7 +556,7 @@ export default function DetailPage() {
       const img = document.createElement("img");
       img.src = url;
       img.alt = "";
-      img.style.cssText = "max-width:100%;border-radius:12px;margin:16px 0;display:block;";
+      img.style.cssText = "max-width:100%;border-radius:12px;margin:8px 0;display:block;";
 
       const sel = window.getSelection();
       sel?.removeAllRanges();
