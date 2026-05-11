@@ -154,8 +154,9 @@ export default function DetailPage() {
         setSelectedFaqIds(poolIds.size > 0 ? poolIds : new Set(faqPool.filter((f) => f.is_default).map((f) => f.id)));
         setCustomFaq(customs);
         const savedBlocks = item.i_detail_top_blocks as TopBlock[] | null;
-        const savedTop = savedBlocks?.filter((b) => b.id !== "apply-form");
-        const savedBottom = savedBlocks?.filter((b) => b.id === "apply-form");
+        const savedTop = savedBlocks?.filter((b) => b.id !== "apply-form" && b.id !== "terms");
+        const savedBottom = savedBlocks?.filter((b) => b.id === "apply-form" || b.id === "terms")
+          .map((b) => b.id === "terms" ? { ...b, enabled: true } : b);
         setTopBlocks(savedTop && savedTop.length > 0 ? savedTop : [...DEFAULT_TOP_BLOCKS]);
         setBottomBlocks(savedBottom && savedBottom.length > 0 ? savedBottom : [...DEFAULT_BOTTOM_BLOCKS]);
       }
@@ -1092,11 +1093,11 @@ export default function DetailPage() {
               </div>
             </div>
 
-            {/* 하단 블록 (신청폼 등) */}
+            {/* 신청폼 */}
             <div className="bg-white border border-[#E5E5E5] rounded-xl p-5 space-y-3">
-              <h2 className="text-sm font-bold text-[#0A0A0A]">하단 블록</h2>
-              <p className="text-xs text-[#999]">FAQ 아래에 표시될 블록입니다</p>
-              {bottomBlocks.map((block) => (
+              <h2 className="text-sm font-bold text-[#0A0A0A]">신청폼</h2>
+              <p className="text-xs text-[#999]">FAQ 위에 표시됩니다</p>
+              {bottomBlocks.filter((b) => b.id === "apply-form").map((block) => (
                 <div key={block.id} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="flex items-center gap-2 cursor-pointer">
@@ -1190,6 +1191,17 @@ export default function DetailPage() {
                       )}
                     </div>
                   )}
+                </div>
+              ))}
+            </div>
+
+            {/* 이용약관 / 개인정보처리방침 */}
+            <div className="bg-white border border-[#E5E5E5] rounded-xl p-5 space-y-3">
+              <h2 className="text-sm font-bold text-[#0A0A0A]">이용약관 / 개인정보처리방침</h2>
+              <p className="text-xs text-[#999]">FAQ 아래, 페이지 맨 하단에 표시됩니다</p>
+              {bottomBlocks.filter((b) => b.id === "terms").map((block) => (
+                <div key={block.id}>
+                  <div className="bg-[#F5F5F0] rounded-lg p-3" dangerouslySetInnerHTML={{ __html: block.html }} />
                 </div>
               ))}
             </div>
