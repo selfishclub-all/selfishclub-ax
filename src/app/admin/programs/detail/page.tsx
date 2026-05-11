@@ -618,6 +618,7 @@ export default function DetailPage() {
         i_detail_html: blocksToHtml(),
         i_detail_faq: allFaq,
         i_detail_top_blocks: allBlocks,
+        i_thumbnail: thumbnail || null,
       }),
     });
 

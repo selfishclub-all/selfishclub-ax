@@ -79,6 +79,7 @@ export async function PUT(request: NextRequest) {
   if (body.i_title_userside !== undefined) updateData.i_title_userside = body.i_title_userside;
   if (body.i_formid_webflow !== undefined) updateData.i_formid_webflow = body.i_formid_webflow;
   if (body.is_visible !== undefined) updateData.is_visible = body.is_visible;
+  if (body.i_thumbnail !== undefined) updateData.i_thumbnail = body.i_thumbnail;
 
   const { data, error } = await supabase
     .from("item")
