@@ -247,7 +247,15 @@ export default async function SharingDetailPage({ params }: Props) {
             dangerouslySetInnerHTML={{ __html: item.i_detail_html }}
           />
 
-          {/* 하단 FAQ */}
+          {/* 신청/결제 */}
+          {!past && (() => {
+            const applyBlock = (item.i_detail_top_blocks as { id: string; theme?: string }[] | null)
+              ?.find((b) => b.id === "apply-form");
+            const formTheme = (applyBlock?.theme as "light" | "dark" | "brand") || "light";
+            return <ApplyForm slug={slug} title={displayTitle} isPaid={isPaid} price={price} itemId={item.iid} theme={formTheme} />;
+          })()}
+
+          {/* FAQ */}
           {allFaq.length > 0 && (
             <section style={{ background: "#FFFFFF", padding: "56px 20px" }}>
               <div style={{ maxWidth: 768, margin: "0 auto" }}>
@@ -259,22 +267,17 @@ export default async function SharingDetailPage({ params }: Props) {
                     <p style={{ fontSize: 14, color: "#666", lineHeight: 1.6 }}>{f.a}</p>
                   </div>
                 ))}
+
+                {/* 이용약관 / 개인정보처리방침 */}
+                {(item.i_detail_top_blocks as { id: string; html: string; enabled: boolean }[] | null)
+                  ?.filter((b: { id: string; enabled: boolean }) => b.enabled && b.id === "terms")
+                  .map((block: { id: string; html: string }) => (
+                    <div key={block.id} dangerouslySetInnerHTML={{ __html: block.html }} />
+                  ))
+                }
               </div>
             </section>
           )}
-
-          {/* 신청/결제 */}
-          {!past && (
-            <ApplyForm slug={slug} title={displayTitle} isPaid={isPaid} price={price} itemId={item.iid} />
-          )}
-
-          {/* 하단 블록 (이용약관 — 어드민에서 관리, 신청폼은 React 컴포넌트로 처리) */}
-          {(item.i_detail_top_blocks as { id: string; html: string; enabled: boolean }[] | null)
-            ?.filter((b: { id: string; enabled: boolean }) => b.enabled && b.id === "terms")
-            .map((block: { id: string; html: string }) => (
-              <div key={block.id} dangerouslySetInnerHTML={{ __html: block.html }} />
-            ))
-          }
         </main>
         <Footer />
       </>

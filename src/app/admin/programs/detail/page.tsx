@@ -13,6 +13,7 @@ interface TopBlock {
   label: string;
   html: string;
   enabled: boolean;
+  theme?: "light" | "dark" | "brand";
 }
 
 interface ProgramItem {
@@ -430,6 +431,10 @@ export default function DetailPage() {
 
   function updateBottomBlockHtml(id: string, html: string) {
     setBottomBlocks((prev) => prev.map((b) => b.id === id ? { ...b, html } : b));
+  }
+
+  function updateBottomBlockTheme(id: string, theme: "light" | "dark" | "brand") {
+    setBottomBlocks((prev) => prev.map((b) => b.id === id ? { ...b, theme } : b));
   }
 
   // HTML 붙여넣기 → 블록으로 분리해서 추가
@@ -965,9 +970,40 @@ export default function DetailPage() {
                   </div>
                   {block.enabled && (
                     <div className="space-y-2">
-                      <div className="bg-[#F5F5F0] rounded-lg p-3 max-h-[200px] overflow-hidden" dangerouslySetInnerHTML={{ __html: block.html }} />
+                      {block.id === "apply-form" ? (
+                        <div
+                          className="rounded-lg p-3 max-h-[200px] overflow-hidden"
+                          style={{ backgroundColor: { light: "#FAFAF8", dark: "#0A0A0A", brand: "#E2E545" }[block.theme || "light"] }}
+                          dangerouslySetInnerHTML={{ __html: block.html.replace(
+                            /background:#[A-Fa-f0-9]{6}/,
+                            `background:${{ light: "#FAFAF8", dark: "#0A0A0A", brand: "#E2E545" }[block.theme || "light"]}`
+                          ).replace(
+                            /color:#0A0A0A/g,
+                            `color:${{ light: "#0A0A0A", dark: "#FFFFFF", brand: "#0A0A0A" }[block.theme || "light"]}`
+                          ) }}
+                        />
+                      ) : (
+                        <div className="bg-[#F5F5F0] rounded-lg p-3 max-h-[200px] overflow-hidden" dangerouslySetInnerHTML={{ __html: block.html }} />
+                      )}
                       {block.id === "apply-form" && (
                         <div className="space-y-2 pl-1">
+                          <p className="text-[10px] text-[#888]">배경 테마</p>
+                          <div className="flex gap-2">
+                            {([
+                              { value: "light" as const, label: "밝은 회색", bg: "#FAFAF8", text: "#333" },
+                              { value: "dark" as const, label: "블랙", bg: "#0A0A0A", text: "#fff" },
+                              { value: "brand" as const, label: "브랜드", bg: "#E2E545", text: "#0A0A0A" },
+                            ]).map((opt) => (
+                              <button
+                                key={opt.value}
+                                onClick={() => updateBottomBlockTheme(block.id, opt.value)}
+                                className={`flex-1 py-2 rounded-lg text-xs font-medium border-2 transition-all ${(block.theme || "light") === opt.value ? "border-[#0A0A0A] ring-1 ring-[#0A0A0A]" : "border-transparent"}`}
+                                style={{ backgroundColor: opt.bg, color: opt.text }}
+                              >
+                                {opt.label}
+                              </button>
+                            ))}
+                          </div>
                           <p className="text-[10px] text-[#888]">텍스트 수정</p>
                           <input
                             defaultValue="라이브에서 만나요"
