@@ -260,7 +260,7 @@ export default async function SharingDetailPage({ params }: Props) {
                     <p className="text-[#E2E545] text-xs tracking-[0.3em] uppercase text-center">{typeLabel}</p>
                     {dateStr && (
                       <div>
-                        <p className="text-white/40 text-xs font-medium mb-1">신청기간</p>
+                        <p className="text-[#E2E545] text-xs font-medium mb-1">신청기간</p>
                         <p className="text-white text-sm lg:text-base">
                           {formattedDate} ({dayOfWeek}) 저녁 6시 마감
                         </p>
@@ -268,7 +268,7 @@ export default async function SharingDetailPage({ params }: Props) {
                     )}
                     {(dateStr || displayTime) && (
                       <div>
-                        <p className="text-white/40 text-xs font-medium mb-1">ZOOM 라이브</p>
+                        <p className="text-[#E2E545] text-xs font-medium mb-1">ZOOM 라이브</p>
                         <p className="text-white text-sm lg:text-base">
                           {formattedDate}{dayOfWeek ? ` (${dayOfWeek})` : ""}{displayTime ? ` ${displayTime}` : ""}
                         </p>
