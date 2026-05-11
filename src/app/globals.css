@@ -30,6 +30,12 @@ body {
   display: block;
 }
 
+@media (max-width: 768px) {
+  .detail-html-content {
+    zoom: 0.85;
+  }
+}
+
 .detail-html-content h1,
 .detail-html-content h2,
 .detail-html-content h3,
