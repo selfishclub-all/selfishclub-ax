@@ -61,3 +61,34 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ data, error: null });
 }
+
+// 프로그램 수정 (상세 페이지 HTML, FAQ 등)
+export async function PUT(request: NextRequest) {
+  const authError = checkAdminAuth(request);
+  if (authError) return authError;
+  const body = await request.json();
+
+  if (!body.iid) {
+    return NextResponse.json({ data: null, error: "iid가 필요합니다." }, { status: 400 });
+  }
+
+  const updateData: Record<string, unknown> = {};
+  if (body.i_detail_html !== undefined) updateData.i_detail_html = body.i_detail_html;
+  if (body.i_detail_faq !== undefined) updateData.i_detail_faq = body.i_detail_faq;
+  if (body.i_detail_top_blocks !== undefined) updateData.i_detail_top_blocks = body.i_detail_top_blocks;
+  if (body.i_title_userside !== undefined) updateData.i_title_userside = body.i_title_userside;
+  if (body.i_formid_webflow !== undefined) updateData.i_formid_webflow = body.i_formid_webflow;
+
+  const { data, error } = await supabase
+    .from("item")
+    .update(updateData)
+    .eq("iid", body.iid)
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ data: null, error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ data, error: null });
+}

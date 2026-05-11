@@ -20,7 +20,7 @@ description: 작업 마무리 시 selfishclub-ax(docs/worklog.md)와 Obsidian(We
 ## Obsidian 파일 경로
 
 ```
-/Users/jeongeun/Desktop/aaa/00_주차별미션/Week_{XX}/Week_{XX}_비비안.md
+/Users/jeongeun/vivin-claude/selfishclub/selfishclub ax/Week_{XX}/Week_{XX}_worklog.md
 ```
 
 `{XX}`는 위 계산으로 나온 주차 (zero-padded, 예: 04, 05, 12)
@@ -57,7 +57,7 @@ description: 작업 마무리 시 selfishclub-ax(docs/worklog.md)와 Obsidian(We
 대화 중에 "나중에 결정하자", "논의가 필요하다"고 한 것들은 **옵시디언 전용 파일에 기록**합니다:
 
 ```
-/Users/jeongeun/Desktop/aaa/AX프로젝트 추후 결정 및 논의 필요사항.md
+/Users/jeongeun/vivin-claude/selfishclub/selfishclub ax/AX프로젝트 추후 결정 및 논의 필요사항.md
 ```
 
 워크로그(docs/worklog.md, Week_XX_비비안.md)에는 간단히 아래만 남깁니다:

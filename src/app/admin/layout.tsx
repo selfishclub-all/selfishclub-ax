@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 const sidebarItems = [
   { label: "대시보드", href: "/admin", icon: "📊" },
   { label: "프로그램 관리", href: "/admin/programs", icon: "📋" },
+  { label: "상세 페이지", href: "/admin/programs/detail", icon: "🎨" },
+  { label: "FAQ 관리", href: "/admin/faq", icon: "❓" },
   { label: "블로그", href: "/admin/blog", icon: "✏️" },
   { label: "AI 툴", href: "/admin/aitools", icon: "🤖" },
   { label: "회원 관리", href: "/admin/members", icon: "👥" },

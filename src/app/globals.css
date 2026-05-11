@@ -24,3 +24,45 @@ body {
   color: var(--foreground);
   font-family: var(--font-pretendard), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
+
+/* 어드민에서 만든 상세 페이지 HTML — Tailwind preflight 무효화 */
+.detail-html-content {
+  display: block;
+}
+
+.detail-html-content h1,
+.detail-html-content h2,
+.detail-html-content h3,
+.detail-html-content h4,
+.detail-html-content h5,
+.detail-html-content h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.detail-html-content a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.detail-html-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detail-html-content p {
+  margin: 0;
+}
+
+/* 이미지/영상/GIF — 본문과 동일 너비, 가운데 정렬 */
+.detail-html-content img,
+.detail-html-content video,
+.detail-html-content iframe {
+  display: block !important;
+  width: 100% !important;
+  max-width: 768px !important;
+  height: auto !important;
+  margin: 24px auto !important;
+  border-radius: 12px;
+}

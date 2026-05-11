@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PurchaseButton } from "./PurchaseButton";
+import { ApplyForm } from "./ApplyForm";
 
 export const dynamic = "force-dynamic";
 
@@ -205,11 +206,81 @@ export default async function SharingDetailPage({ params }: Props) {
   const heroImage = detail?.images?.[0];
   const past = isPast(item.i_eventdate);
 
+  // DB에 i_detail_html이 있으면 어드민에서 만든 상세 페이지 렌더링
+  const hasDetailHtml = !!item.i_detail_html;
+  const detailFaq = (item.i_detail_faq as { q: string; a: string; enabled: boolean }[] | null)?.filter(
+    (f: { enabled: boolean; q: string }) => f.enabled && !f.q.startsWith("[custom]")
+  ) ?? [];
+  const customFaq = (item.i_detail_faq as { q: string; a: string; enabled: boolean }[] | null)?.filter(
+    (f: { enabled: boolean; q: string }) => f.enabled && f.q.startsWith("[custom]")
+  ).map((f: { q: string; a: string; enabled: boolean }) => ({ ...f, q: f.q.replace("[custom]", "") })) ?? [];
+  const allFaq = [...detailFaq, ...customFaq];
+  const bottomBlockIds = ["terms", "apply-form"];
+  const topBlocks = (item.i_detail_top_blocks as { id: string; html: string; enabled: boolean }[] | null)?.filter(
+    (b: { id: string; enabled: boolean }) => b.enabled && !bottomBlockIds.includes(b.id)
+  ) ?? [];
+
   const reviews = detail?.reviewKey ? await getReviews(detail.reviewKey) : [];
   const avgRating = reviews.length > 0
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
     : null;
 
+  // 어드민에서 만든 상세 페이지가 있으면 그걸 렌더링
+  if (hasDetailHtml) {
+    return (
+      <>
+        <Header />
+        <main className="pt-14">
+          {/* 상단 공통 블록 */}
+          {topBlocks.length > 0 && (
+            <div className="max-w-3xl mx-auto px-5 lg:px-10 pt-8">
+              {topBlocks.map((block: { id: string; html: string }) => (
+                <div key={block.id} dangerouslySetInnerHTML={{ __html: block.html }} />
+              ))}
+            </div>
+          )}
+
+          {/* 본문 HTML — Tailwind 리셋을 무효화하고 인라인 스타일 그대로 적용 */}
+          <div
+            className="detail-html-content"
+            dangerouslySetInnerHTML={{ __html: item.i_detail_html }}
+          />
+
+          {/* 하단 FAQ */}
+          {allFaq.length > 0 && (
+            <section style={{ background: "#FFFFFF", padding: "56px 20px" }}>
+              <div style={{ maxWidth: 768, margin: "0 auto" }}>
+                <p style={{ fontSize: 11, color: "#888", letterSpacing: "0.3em", textTransform: "uppercase" as const, marginBottom: 12 }}>FAQ</p>
+                <h2 style={{ fontSize: 22, fontWeight: 700, color: "#0A0A0A", marginBottom: 24 }}>자주 묻는 질문</h2>
+                {allFaq.map((f: { q: string; a: string }, i: number) => (
+                  <div key={i} style={{ borderBottom: "1px solid #E5E5E5", paddingBottom: 16, marginBottom: 16 }}>
+                    <p style={{ fontSize: 15, fontWeight: 600, color: "#0A0A0A", marginBottom: 8 }}>Q. {f.q}</p>
+                    <p style={{ fontSize: 14, color: "#666", lineHeight: 1.6 }}>{f.a}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* 신청/결제 */}
+          {!past && (
+            <ApplyForm slug={slug} title={displayTitle} isPaid={isPaid} price={price} itemId={item.iid} />
+          )}
+
+          {/* 하단 블록 (이용약관 — 어드민에서 관리, 신청폼은 React 컴포넌트로 처리) */}
+          {(item.i_detail_top_blocks as { id: string; html: string; enabled: boolean }[] | null)
+            ?.filter((b: { id: string; enabled: boolean }) => b.enabled && b.id === "terms")
+            .map((block: { id: string; html: string }) => (
+              <div key={block.id} dangerouslySetInnerHTML={{ __html: block.html }} />
+            ))
+          }
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  // 기존 DETAIL_DATA 기반 렌더링 (폴백)
   return (
     <>
       <Header />
