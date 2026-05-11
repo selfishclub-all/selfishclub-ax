@@ -274,9 +274,6 @@ export default async function SharingDetailPage({ params }: Props) {
                         </p>
                       </div>
                     )}
-                    <p className="text-[#E2E545] text-lg font-bold text-center">
-                      {isPaid ? `${price.toLocaleString()}원` : "무료"}
-                    </p>
                   </div>
                 );
               })()}
