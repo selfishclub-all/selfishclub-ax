@@ -116,7 +116,9 @@ export default function DetailPage() {
   const [uploading, setUploading] = useState(false);
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const inlineFileInputRef = useRef<HTMLInputElement>(null);
   const insertTargetIndex = useRef<number>(-1);
+  const savedSelection = useRef<{ blockId: string; range: Range } | null>(null);
 
   useEffect(() => {
     Promise.all([fetchItems(), fetchFaqPool()]).then(() => {
@@ -524,6 +526,57 @@ export default function DetailPage() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
+  // 커서 위치에 인라인 이미지 삽입
+  function triggerInlineImageUpload(blockId: string) {
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0) {
+      savedSelection.current = { blockId, range: sel.getRangeAt(0).cloneRange() };
+    }
+    setTimeout(() => inlineFileInputRef.current?.click(), 50);
+  }
+
+  async function handleInlineImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file || !savedSelection.current) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("slug", selectedItem?.i_formid_webflow || "general");
+
+    try {
+      const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+      const json = await res.json();
+      if (json.error) { alert(`업로드 실패: ${json.error}`); setUploading(false); return; }
+
+      const url = json.data.url;
+      const { blockId, range } = savedSelection.current;
+
+      // 커서 위치에 이미지 삽입
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "";
+      img.style.cssText = "max-width:100%;border-radius:12px;margin:16px 0;display:block;";
+
+      const sel = window.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+      range.insertNode(img);
+      range.collapse(false);
+
+      // 변경된 HTML을 블록에 반영
+      const blockEl = document.querySelector(`[data-block-id="${blockId}"]`);
+      if (blockEl) {
+        updateBlockHtml(blockId, blockEl.innerHTML);
+      }
+    } catch {
+      alert("업로드 중 오류가 발생했습니다.");
+    }
+    setUploading(false);
+    savedSelection.current = null;
+    if (inlineFileInputRef.current) inlineFileInputRef.current.value = "";
+  }
+
   // 이미지 슬롯인지 판별 (블록 UI에서 사용)
   function isSlotBlock(html: string): boolean {
     return html.includes("dashed");
@@ -573,7 +626,6 @@ export default function DetailPage() {
         i_detail_html: blocksToHtml(),
         i_detail_faq: allFaq,
         i_detail_top_blocks: allBlocks,
-        i_thumbnail: thumbnail || null,
       }),
     });
 
@@ -821,6 +873,13 @@ export default function DetailPage() {
                 onChange={handleImageUpload}
                 className="hidden"
               />
+              <input
+                ref={inlineFileInputRef}
+                type="file"
+                accept="image/*,.gif"
+                onChange={handleInlineImageUpload}
+                className="hidden"
+              />
 
               {/* 블록 추가 버튼 */}
               <div className="flex items-center gap-2">
@@ -854,7 +913,7 @@ export default function DetailPage() {
                       {/* 블록 카드 */}
                       <div className={`group border rounded-lg overflow-hidden transition-colors ${isSlotBlock(block.html) ? "border-[#E2E545]/40 bg-[#FAFAF8]" : "border-[#E5E5E5] hover:border-[#E2E545]"}`}>
                         {/* 블록 컨트롤 바 */}
-                        <div className="flex items-center justify-between px-3 py-1.5 bg-[#FAFAF8] border-b border-[#E5E5E5]">
+                        <div className="flex items-center justify-between px-3 py-1.5 bg-[#FAFAF8] border-b border-[#E5E5E5] sticky top-0 z-10">
                           <span className="text-[10px] text-[#888]">
                             {isSlotBlock(block.html) ? `📷 이미지 슬롯 ${i + 1}` : `블록 ${i + 1}`}
                           </span>
@@ -879,6 +938,15 @@ export default function DetailPage() {
                                 {uploading ? "..." : "파일 변경"}
                               </button>
                             )}
+                            {!isSlotBlock(block.html) && (
+                              <button
+                                onClick={() => triggerInlineImageUpload(block.id)}
+                                disabled={uploading}
+                                className="text-[10px] px-2 py-0.5 bg-[#E2E545]/20 border border-[#E2E545]/40 rounded text-[#0A0A0A] hover:bg-[#E2E545]/40 transition-colors font-medium"
+                              >
+                                {uploading ? "..." : "📷 커서에 이미지"}
+                              </button>
+                            )}
                             <button onClick={() => splitBlock(i)} className="text-[10px] px-1.5 py-0.5 text-[#888] hover:text-[#0A0A0A]">분할</button>
                             <button onClick={() => setEditingBlockId(editingBlockId === block.id ? null : block.id)} className="text-[10px] px-1.5 py-0.5 text-[#888] hover:text-[#0A0A0A]">
                               {editingBlockId === block.id ? "코드 닫기" : "코드"}
@@ -889,6 +957,7 @@ export default function DetailPage() {
 
                         {/* 블록 미리보기 (직접 편집 가능) */}
                         <div
+                          data-block-id={block.id}
                           className="p-3 focus:outline-none focus:ring-2 focus:ring-[#E2E545]/50 rounded"
                           contentEditable={!isSlotBlock(block.html)}
                           suppressContentEditableWarning
