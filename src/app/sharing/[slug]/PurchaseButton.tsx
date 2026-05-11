@@ -62,6 +62,7 @@ export function PurchaseButton({ itemId, slug, title, price, isPaid }: Props) {
 
   return (
     <button
+      type="button"
       onClick={handlePurchase}
       className="bg-[#0A0A0A] text-white font-semibold px-8 py-3 rounded-lg hover:bg-[#222] transition-colors"
     >
