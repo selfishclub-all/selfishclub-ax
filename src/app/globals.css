@@ -55,14 +55,10 @@ body {
   margin: 0;
 }
 
-/* 이미지/영상/GIF — 본문과 동일 너비, 가운데 정렬 */
+/* 이미지/영상/GIF — 인라인 스타일 우선, 넘침만 방지 */
 .detail-html-content img,
 .detail-html-content video,
 .detail-html-content iframe {
-  display: block !important;
-  width: 100% !important;
-  max-width: 768px !important;
+  max-width: 100% !important;
   height: auto !important;
-  margin: 24px auto !important;
-  border-radius: 12px;
 }
