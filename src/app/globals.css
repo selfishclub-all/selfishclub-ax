@@ -55,14 +55,10 @@ body {
   margin: 0;
 }
 
-/* 이미지/영상/GIF — 기본 풀폭, 인라인 스타일로 크기 지정된 건 존중 */
+/* 이미지/영상/GIF — 넘침 방지만, 나머지는 인라인 스타일 존중 */
 .detail-html-content img,
 .detail-html-content video,
 .detail-html-content iframe {
-  display: block;
-  width: 100%;
-  max-width: 768px;
+  max-width: 100%;
   height: auto;
-  margin: 24px auto;
-  border-radius: 12px;
 }
