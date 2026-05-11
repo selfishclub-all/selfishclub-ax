@@ -93,3 +93,25 @@ export async function PUT(request: NextRequest) {
 
   return NextResponse.json({ data, error: null });
 }
+
+// 프로그램 삭제
+export async function DELETE(request: NextRequest) {
+  const authError = checkAdminAuth(request);
+  if (authError) return authError;
+  const body = await request.json();
+
+  if (!body.iids || !Array.isArray(body.iids) || body.iids.length === 0) {
+    return NextResponse.json({ data: null, error: "삭제할 iid 목록이 필요합니다." }, { status: 400 });
+  }
+
+  const { error } = await supabase
+    .from("item")
+    .delete()
+    .in("iid", body.iids);
+
+  if (error) {
+    return NextResponse.json({ data: null, error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ data: { deleted: body.iids.length }, error: null });
+}

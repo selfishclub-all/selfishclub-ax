@@ -91,6 +91,20 @@ export default function ProgramsPage() {
     setSelectedIids(new Set());
   }
 
+  async function deleteSelected() {
+    if (selectedIids.size === 0) { alert("프로그램을 선택해주세요."); return; }
+    if (!confirm(`선택한 ${selectedIids.size}개 프로그램을 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) return;
+    const res = await fetch("/api/admin/programs", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ iids: Array.from(selectedIids) }),
+    });
+    const json = await res.json();
+    if (json.error) { alert(`삭제 실패: ${json.error}`); return; }
+    setItems((prev) => prev.filter((i) => !selectedIids.has(i.iid)));
+    setSelectedIids(new Set());
+  }
+
   const [form, setForm] = useState({
     i_title: "",
     i_title_userside: "",
@@ -260,6 +274,9 @@ export default function ProgramsPage() {
                 </button>
                 <button onClick={() => setVisibility(false)} className="px-3 py-1.5 text-xs font-bold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/30 rounded-lg hover:bg-[#EF4444]/20 transition-colors">
                   비노출
+                </button>
+                <button onClick={deleteSelected} className="px-3 py-1.5 text-xs font-bold bg-[#EF4444] text-white rounded-lg hover:bg-[#DC2626] transition-colors">
+                  삭제
                 </button>
               </>
             )}

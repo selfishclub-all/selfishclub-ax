@@ -268,16 +268,17 @@ export default async function SharingDetailPage({ params }: Props) {
                   </div>
                 ))}
 
-                {/* 이용약관 / 개인정보처리방침 */}
-                {(item.i_detail_top_blocks as { id: string; html: string; enabled: boolean }[] | null)
-                  ?.filter((b: { id: string; enabled: boolean }) => b.enabled && b.id === "terms")
-                  .map((block: { id: string; html: string }) => (
-                    <div key={block.id} dangerouslySetInnerHTML={{ __html: block.html }} />
-                  ))
-                }
               </div>
             </section>
           )}
+
+          {/* 이용약관 / 개인정보처리방침 — 항상 맨 아래 */}
+          {(item.i_detail_top_blocks as { id: string; html: string; enabled: boolean }[] | null)
+            ?.filter((b: { id: string; enabled: boolean }) => b.enabled && b.id === "terms")
+            .map((block: { id: string; html: string }) => (
+              <div key={block.id} dangerouslySetInnerHTML={{ __html: block.html }} />
+            ))
+          }
         </main>
         <Footer />
       </>
