@@ -19,6 +19,7 @@ interface Program {
   i_vodurl: string | null;
   i_full_schedule: string | null;
   hero_image?: string | null;
+  i_thumbnail?: string | null;
 }
 
 interface Props {
@@ -279,7 +280,7 @@ function ProgramCard({
   const href = isEvent
     ? `https://www.selfishclub.xyz/events/${p.i_formid_webflow.replace("evt-", "")}`
     : `${basePath}/${p.i_formid_webflow}`;
-  const heroImage = p.hero_image || PROTOTYPE_IMAGES[p.i_formid_webflow];
+  const heroImage = p.hero_image || p.i_thumbnail || PROTOTYPE_IMAGES[p.i_formid_webflow];
 
   return (
     <motion.div

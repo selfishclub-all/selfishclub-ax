@@ -21,6 +21,7 @@ interface ProgramItem {
   i_title_userside: string | null;
   i_type: string;
   i_formid_webflow: string | null;
+  i_thumbnail: string | null;
   i_detail_html: string | null;
   i_detail_faq: FaqItem[] | null;
   i_detail_top_blocks: TopBlock[] | null;
@@ -96,6 +97,11 @@ export default function DetailPage() {
     i_eventdate: "",
   });
 
+  // 썸네일
+  const [thumbnail, setThumbnail] = useState<string>("");
+  const [thumbnailUploading, setThumbnailUploading] = useState(false);
+  const thumbnailInputRef = useRef<HTMLInputElement>(null);
+
   // 상세 페이지 데이터 — 블록 단위로 관리
   const [contentBlocks, setContentBlocks] = useState<{ id: string; html: string }[]>([]);
   const [faqPool, setFaqPool] = useState<FaqPoolItem[]>([]);
@@ -111,7 +117,47 @@ export default function DetailPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const insertTargetIndex = useRef<number>(-1);
 
-  useEffect(() => { fetchItems(); fetchFaqPool(); }, []);
+  useEffect(() => {
+    Promise.all([fetchItems(), fetchFaqPool()]).then(() => {
+      const params = new URLSearchParams(window.location.search);
+      const iid = params.get("iid");
+      const isNew = params.get("new");
+      if (isNew) {
+        handleSelect("__new__");
+      } else if (iid) {
+        setSelectedIid(iid);
+      }
+    });
+  }, []);
+
+  // iid가 세팅되고 items가 로드된 후 데이터 로드
+  useEffect(() => {
+    if (selectedIid && items.length > 0 && !isNewProgram) {
+      const item = items.find((i) => i.iid === selectedIid);
+      if (item) {
+        setThumbnail(item.i_thumbnail || "");
+        setContentBlocks(htmlToBlocks(item.i_detail_html || ""));
+        const savedFaq = item.i_detail_faq || [];
+        const poolIds = new Set<number>();
+        const customs: FaqItem[] = [];
+        savedFaq.forEach((f: FaqItem) => {
+          if (f.q.startsWith("[custom]")) {
+            customs.push({ ...f, q: f.q.replace("[custom]", "") });
+          } else {
+            const match = faqPool.find((p) => p.question === f.q);
+            if (match && f.enabled) poolIds.add(match.id);
+          }
+        });
+        setSelectedFaqIds(poolIds.size > 0 ? poolIds : new Set(faqPool.filter((f) => f.is_default).map((f) => f.id)));
+        setCustomFaq(customs);
+        const savedBlocks = item.i_detail_top_blocks as TopBlock[] | null;
+        const savedTop = savedBlocks?.filter((b) => b.id !== "apply-form");
+        const savedBottom = savedBlocks?.filter((b) => b.id === "apply-form");
+        setTopBlocks(savedTop && savedTop.length > 0 ? savedTop : [...DEFAULT_TOP_BLOCKS]);
+        setBottomBlocks(savedBottom && savedBottom.length > 0 ? savedBottom : [...DEFAULT_BOTTOM_BLOCKS]);
+      }
+    }
+  }, [selectedIid, items, faqPool, isNewProgram]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function fetchFaqPool() {
     try {
@@ -499,6 +545,7 @@ export default function DetailPage() {
         i_detail_html: blocksToHtml(),
         i_detail_faq: allFaq,
         i_detail_top_blocks: allBlocks,
+        i_thumbnail: thumbnail || null,
       }),
     });
 
@@ -620,6 +667,67 @@ export default function DetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* ─── 왼쪽: 편집 영역 ─── */}
           <div className="space-y-4">
+            {/* 썸네일 */}
+            <div className="bg-white border border-[#E5E5E5] rounded-xl p-5 space-y-3">
+              <h2 className="text-sm font-bold text-[#0A0A0A]">썸네일</h2>
+              <p className="text-xs text-[#999]">프로그램 목록과 상세 페이지 히어로에 사용됩니다</p>
+              <input
+                ref={thumbnailInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  setThumbnailUploading(true);
+                  const formData = new FormData();
+                  formData.append("file", file);
+                  formData.append("slug", selectedItem?.i_formid_webflow || "general");
+                  const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+                  const json = await res.json();
+                  setThumbnailUploading(false);
+                  if (json.error) { alert(`업로드 실패: ${json.error}`); return; }
+                  setThumbnail(json.data.url);
+                  if (thumbnailInputRef.current) thumbnailInputRef.current.value = "";
+                }}
+              />
+              {thumbnail ? (
+                <div className="space-y-2">
+                  <img src={thumbnail} alt="썸네일" className="w-full max-h-[200px] object-cover rounded-lg border border-[#E5E5E5]" />
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => thumbnailInputRef.current?.click()}
+                      disabled={thumbnailUploading}
+                      className="text-xs px-3 py-1.5 bg-[#F5F5F0] border border-[#E5E5E5] rounded-lg text-[#444] hover:bg-[#E5E5E5] transition-colors"
+                    >
+                      {thumbnailUploading ? "업로드 중..." : "이미지 변경"}
+                    </button>
+                    <button
+                      onClick={() => setThumbnail("")}
+                      className="text-xs px-3 py-1.5 text-red-400/60 hover:text-red-400"
+                    >
+                      삭제
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => thumbnailInputRef.current?.click()}
+                  disabled={thumbnailUploading}
+                  className="w-full py-8 border-2 border-dashed border-[#E5E5E5] rounded-lg text-sm text-[#888] hover:border-[#0A0A0A] hover:text-[#444] transition-colors cursor-pointer"
+                >
+                  {thumbnailUploading ? "업로드 중..." : "🖼 썸네일 이미지 업로드"}
+                </button>
+              )}
+              <input
+                type="text"
+                value={thumbnail}
+                onChange={(e) => setThumbnail(e.target.value)}
+                placeholder="또는 이미지 URL을 직접 입력"
+                className={inputClass}
+              />
+            </div>
+
             {/* 상단 공통 블록 */}
             <div className="bg-white border border-[#E5E5E5] rounded-xl p-5 space-y-3">
               <h2 className="text-sm font-bold text-[#0A0A0A]">상단 공통 블록</h2>

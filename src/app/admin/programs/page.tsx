@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface Item {
   iid: string;
@@ -17,6 +18,7 @@ interface Item {
   i_full_schedule: string | null;
   i_category: string[] | null;
   i_vodurl: string | null;
+  is_visible: boolean;
   created_at: string;
 }
 
@@ -54,6 +56,40 @@ export default function ProgramsPage() {
     hook: true, summary: true, curriculum: true, speakers: true,
     target: true, timetable: true, benefits: true, faq: true,
   });
+
+  const [selectedIids, setSelectedIids] = useState<Set<string>>(new Set());
+
+  function toggleSelect(iid: string) {
+    setSelectedIids((prev) => {
+      const next = new Set(prev);
+      if (next.has(iid)) next.delete(iid);
+      else next.add(iid);
+      return next;
+    });
+  }
+
+  function toggleSelectAll() {
+    if (selectedIids.size === items.length) {
+      setSelectedIids(new Set());
+    } else {
+      setSelectedIids(new Set(items.map((i) => i.iid)));
+    }
+  }
+
+  async function setVisibility(visible: boolean) {
+    if (selectedIids.size === 0) { alert("프로그램을 선택해주세요."); return; }
+    await Promise.all(
+      Array.from(selectedIids).map((iid) =>
+        fetch("/api/admin/programs", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ iid, is_visible: visible }),
+        })
+      )
+    );
+    setItems((prev) => prev.map((i) => selectedIids.has(i.iid) ? { ...i, is_visible: visible } : i));
+    setSelectedIids(new Set());
+  }
 
   const [form, setForm] = useState({
     i_title: "",
@@ -213,9 +249,22 @@ export default function ProgramsPage() {
             <h1 className="text-2xl font-bold mb-1">프로그램 관리</h1>
             <p className="text-sm text-[#888]">공유회, 챌린지 등 프로그램 등록 및 관리</p>
           </div>
-          <button onClick={() => setView("create")} className="bg-[#E2E545] text-[#0A0A0A] px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#CDD03B] transition-colors">
-            + 새 프로그램
-          </button>
+          <div className="flex items-center gap-2">
+            {selectedIids.size > 0 && (
+              <>
+                <span className="text-xs text-[#888]">{selectedIids.size}개 선택</span>
+                <button onClick={() => setVisibility(true)} className="px-3 py-1.5 text-xs font-bold bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/30 rounded-lg hover:bg-[#22C55E]/20 transition-colors">
+                  노출
+                </button>
+                <button onClick={() => setVisibility(false)} className="px-3 py-1.5 text-xs font-bold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/30 rounded-lg hover:bg-[#EF4444]/20 transition-colors">
+                  비노출
+                </button>
+              </>
+            )}
+            <Link href="/admin/programs/detail?new=true" className="bg-[#E2E545] text-[#0A0A0A] px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#CDD03B] transition-colors">
+              + 새 프로그램
+            </Link>
+          </div>
         </div>
 
         {loading ? (
@@ -229,7 +278,11 @@ export default function ProgramsPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[#E5E5E5]">
+                  <th className="text-center px-3 py-3 w-10">
+                    <input type="checkbox" checked={selectedIids.size === items.length && items.length > 0} onChange={toggleSelectAll} className="rounded cursor-pointer" />
+                  </th>
                   <th className="text-left px-4 py-3 font-medium text-[#888]">제목</th>
+                  <th className="text-center px-3 py-3 font-medium text-[#888] w-14">노출</th>
                   <th className="text-left px-4 py-3 font-medium text-[#888]">유형</th>
                   <th className="text-left px-4 py-3 font-medium text-[#888]">가격</th>
                   <th className="text-left px-4 py-3 font-medium text-[#888]">신청</th>
@@ -239,10 +292,23 @@ export default function ProgramsPage() {
               </thead>
               <tbody>
                 {items.map((item) => (
-                  <tr key={item.iid} className="border-b border-[#E5E5E5] last:border-none hover:bg-white transition-colors">
+                  <tr key={item.iid} className={`border-b border-[#E5E5E5] last:border-none transition-colors ${item.is_visible === false ? "opacity-50" : "hover:bg-[#FAFAF8]"}`}>
+                    <td className="text-center px-3 py-3">
+                      <input
+                        type="checkbox"
+                        checked={selectedIids.has(item.iid)}
+                        onChange={() => toggleSelect(item.iid)}
+                        className="rounded cursor-pointer"
+                      />
+                    </td>
                     <td className="px-4 py-3">
-                      <p className="font-medium text-[#0A0A0A]">{item.i_title_userside || item.i_title}</p>
-                      <p className="text-xs text-[#999]">{item.i_formid_webflow}</p>
+                      <Link href={`/admin/programs/detail?iid=${item.iid}`} className="block hover:underline">
+                        <p className="font-medium text-[#0A0A0A]">{item.i_title_userside || item.i_title}</p>
+                        <p className="text-xs text-[#999]">/{item.i_formid_webflow}</p>
+                      </Link>
+                    </td>
+                    <td className="text-center px-3 py-3">
+                      <span className={`inline-block w-2 h-2 rounded-full ${item.is_visible === false ? "bg-[#EF4444]" : "bg-[#22C55E]"}`} />
                     </td>
                     <td className="px-4 py-3">
                       <span className="inline-block bg-[#F5F5F0] text-[#444] rounded-full px-2.5 py-0.5 text-xs">{item.i_type}</span>
