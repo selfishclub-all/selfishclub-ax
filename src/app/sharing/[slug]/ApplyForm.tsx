@@ -139,6 +139,9 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light" 
             title={title}
             price={price}
             isPaid={isPaid}
+            customerName={name}
+            customerPhone={phone}
+            customerEmail={email}
           />
         ) : (
           <button

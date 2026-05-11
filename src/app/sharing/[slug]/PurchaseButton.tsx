@@ -8,12 +8,15 @@ interface Props {
   title: string;
   price: number;
   isPaid: boolean;
+  customerName?: string;
+  customerPhone?: string;
+  customerEmail?: string;
 }
 
 const storeId = process.env.NEXT_PUBLIC_PORTONE_STORE_ID!;
 const channelKey = process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY!;
 
-export function PurchaseButton({ itemId, slug, title, price, isPaid }: Props) {
+export function PurchaseButton({ itemId, slug, title, price, isPaid, customerName, customerPhone, customerEmail }: Props) {
   async function handlePurchase() {
     if (!isPaid) {
       alert("무료 신청 기능은 준비 중입니다");
@@ -21,6 +24,11 @@ export function PurchaseButton({ itemId, slug, title, price, isPaid }: Props) {
     }
 
     const orderId = `${itemId}_${Date.now()}`;
+
+    if (!customerName || !customerPhone || !customerEmail) {
+      alert("이름, 전화번호, 이메일을 모두 입력해주세요.");
+      return;
+    }
 
     const response = await PortOne.requestPayment({
       storeId,
@@ -31,6 +39,11 @@ export function PurchaseButton({ itemId, slug, title, price, isPaid }: Props) {
       currency: "CURRENCY_KRW",
       payMethod: "CARD",
       redirectUrl: `${window.location.origin}/payments/success?itemId=${itemId}&slug=${slug}`,
+      customer: {
+        fullName: customerName,
+        phoneNumber: customerPhone,
+        email: customerEmail,
+      },
     });
 
     if (!response || response.code) {
