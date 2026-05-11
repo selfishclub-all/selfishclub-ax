@@ -242,28 +242,33 @@ export default async function SharingDetailPage({ params }: Props) {
               />
             ) : null}
             <div className="absolute inset-0" style={{ background: thumbnailUrl ? "rgba(0,0,0,0.55)" : "#0A0A0A" }} />
-            <div className="relative z-10 w-full max-w-3xl mx-auto px-5 lg:px-10 py-16 text-center">
-              <p className="text-[11px] text-[#E2E545] tracking-[0.3em] uppercase mb-6">
+            <div className="relative z-10 w-full max-w-4xl mx-auto px-5 lg:px-10 py-20 lg:py-28 text-center">
+              <p className="text-xs lg:text-sm text-[#E2E545] tracking-[0.3em] uppercase mb-6">
                 {item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : item.i_type === "workshop" ? "워크숍" : item.i_type}
               </p>
-              <h1 className="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight whitespace-pre-line">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white mb-10 leading-tight whitespace-pre-line">
                 {displayTitle}
               </h1>
-              <div className="inline-block bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl px-8 py-6 mt-4 space-y-2">
-                {item.i_eventdate && (
-                  <p className="text-white text-sm lg:text-base font-medium">{item.i_eventdate}</p>
-                )}
-                {item.i_full_schedule && item.i_full_schedule !== item.i_eventdate && (() => {
-                  const timeMatch = (item.i_full_schedule as string).match(/(\d{1,2}:\d{2})\s*[~\-—]\s*(\d{1,2}:\d{2})/);
-                  return timeMatch ? (
-                    <p className="text-white/70 text-sm">{timeMatch[1]} — {timeMatch[2]}</p>
-                  ) : null;
-                })()}
-                <p className="text-white/60 text-sm">온라인 라이브</p>
-                <p className="text-[#E2E545] text-base font-bold">
-                  {isPaid ? `${price.toLocaleString()}원` : "무료"}
-                </p>
-              </div>
+              {(() => {
+                const schedule = item.i_full_schedule as string | null;
+                const dateStr = item.i_eventdate as string | null;
+                const timeMatch = schedule?.match(/(\d{1,2}:\d{2})\s*[~\-—]\s*(\d{1,2}:\d{2})/);
+                const displayDate = dateStr ? dateStr.replace(/^20/, "").replace(/-/g, ".") : null;
+                const displayTime = timeMatch ? `${timeMatch[1]}-${timeMatch[2]}` : null;
+                return (
+                  <div className="max-w-md mx-auto bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl px-10 py-6 space-y-3">
+                    {(displayDate || displayTime) && (
+                      <p className="text-white text-base lg:text-lg font-medium tracking-wide">
+                        {displayDate}{displayTime ? ` ${displayTime}` : ""}
+                      </p>
+                    )}
+                    <p className="text-white/50 text-sm">온라인 라이브</p>
+                    <p className="text-[#E2E545] text-lg font-bold">
+                      {isPaid ? `${price.toLocaleString()}원` : "무료"}
+                    </p>
+                  </div>
+                );
+              })()}
             </div>
           </section>
 
