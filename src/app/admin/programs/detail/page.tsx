@@ -564,10 +564,14 @@ export default function DetailPage() {
       range.insertNode(img);
       range.collapse(false);
 
-      // 변경된 HTML을 블록에 반영
+      // 변경된 HTML을 반영
       const blockEl = document.querySelector(`[data-block-id="${blockId}"]`);
       if (blockEl) {
-        updateBlockHtml(blockId, blockEl.innerHTML);
+        if (blockId === "__editor__") {
+          setContentBlocks([{ id: contentBlocks[0]?.id || `b_${Date.now()}`, html: blockEl.innerHTML }]);
+        } else {
+          updateBlockHtml(blockId, blockEl.innerHTML);
+        }
       }
     } catch {
       alert("업로드 중 오류가 발생했습니다.");
@@ -853,18 +857,32 @@ export default function DetailPage() {
               })}
             </div>
 
-            {/* HTML 본문 — 블록 에디터 */}
+            {/* HTML 본문 — 편집기 */}
             <div className="bg-white border border-[#E5E5E5] rounded-xl p-5 space-y-3">
-              <h2 className="text-sm font-bold text-[#0A0A0A]">본문 블록</h2>
-              <p className="text-xs text-[#999]">Claude에서 만든 HTML을 아래에 붙여넣으면 섹션별로 자동 분리됩니다. 각 블록을 위/아래로 이동하거나, 사이에 이미지를 넣을 수 있어요.</p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-sm font-bold text-[#0A0A0A]">본문 편집</h2>
+                  <p className="text-xs text-[#999]">텍스트를 직접 편집하고, 서식 도구로 꾸밀 수 있습니다</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setEditingBlockId(editingBlockId === "__code__" ? null : "__code__")}
+                    className="text-[10px] px-2 py-1 bg-[#F5F5F0] border border-[#E5E5E5] rounded text-[#888] hover:text-[#0A0A0A]"
+                  >
+                    {editingBlockId === "__code__" ? "편집기" : "HTML 코드"}
+                  </button>
+                </div>
+              </div>
 
-              {/* HTML 붙여넣기 영역 */}
-              <textarea
-                onPaste={handlePasteHtml}
-                placeholder="Claude에서 만든 HTML을 여기에 붙여넣기 (Cmd+V)"
-                rows={3}
-                className="w-full px-3 py-3 bg-[#FAFAF8] border-2 border-dashed border-[#E5E5E5] rounded-lg text-sm text-[#444] placeholder:text-[#999] focus:border-[#0A0A0A] outline-none transition resize-none text-center"
-              />
+              {/* HTML 붙여넣기 (본문 없을 때만) */}
+              {contentBlocks.length === 0 && editingBlockId !== "__code__" && (
+                <textarea
+                  onPaste={handlePasteHtml}
+                  placeholder="Claude에서 만든 HTML을 여기에 붙여넣기 (Cmd+V)"
+                  rows={3}
+                  className="w-full px-3 py-3 bg-[#FAFAF8] border-2 border-dashed border-[#E5E5E5] rounded-lg text-sm text-[#444] placeholder:text-[#999] focus:border-[#0A0A0A] outline-none transition resize-none text-center"
+                />
+              )}
 
               <input
                 ref={fileInputRef}
@@ -881,109 +899,117 @@ export default function DetailPage() {
                 className="hidden"
               />
 
-              {/* 블록 추가 버튼 */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => triggerFileUpload()}
-                  disabled={uploading}
-                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-[#F5F5F0] border border-[#E5E5E5] rounded-lg text-[#444] hover:bg-[#E5E5E5] transition-colors disabled:opacity-40"
-                >
-                  {uploading ? "업로드 중..." : "🖼 이미지/GIF 블록 추가"}
-                </button>
-                <button
-                  onClick={() => {
-                    const url = prompt("영상 URL을 입력하세요 (YouTube 등)");
-                    if (!url) return;
-                    const videoHtml = url.includes("youtube.com") || url.includes("youtu.be")
-                      ? `<div style="text-align:center;margin:24px 0;"><iframe width="100%" height="400" src="${url.replace("watch?v=", "embed/").replace("youtu.be/", "youtube.com/embed/")}" frameborder="0" allowfullscreen style="border-radius:12px;max-width:100%;"></iframe></div>`
-                      : `<div style="text-align:center;margin:24px 0;"><video src="${url}" controls style="max-width:100%;border-radius:12px;"></video></div>`;
-                    setContentBlocks((prev) => [...prev, { id: `b_${Date.now()}_vid`, html: videoHtml }]);
+              {editingBlockId === "__code__" ? (
+                /* HTML 코드 직접 편집 */
+                <textarea
+                  value={contentBlocks.map((b) => b.html).join("\n")}
+                  onChange={(e) => {
+                    const html = e.target.value;
+                    setContentBlocks([{ id: contentBlocks[0]?.id || `b_${Date.now()}`, html }]);
                   }}
-                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-[#F5F5F0] border border-[#E5E5E5] rounded-lg text-[#444] hover:bg-[#E5E5E5] transition-colors"
-                >
-                  🎬 영상 블록 추가
-                </button>
-              </div>
+                  rows={20}
+                  className="w-full px-3 py-2 bg-[#F5F5F0] border border-[#E5E5E5] rounded-lg text-xs text-[#444] font-mono focus:border-[#0A0A0A] outline-none transition resize-y"
+                />
+              ) : contentBlocks.length > 0 ? (
+                /* 서식 툴바 + 편집 영역 */
+                <>
+                  {/* 서식 툴바 */}
+                  <div className="flex flex-wrap items-center gap-1 px-2 py-2 bg-[#FAFAF8] border border-[#E5E5E5] rounded-lg sticky top-0 z-10">
+                    <button onClick={() => document.execCommand("bold")} className="px-2 py-1 text-xs font-bold hover:bg-[#E5E5E5] rounded" title="굵게">B</button>
+                    <button onClick={() => document.execCommand("italic")} className="px-2 py-1 text-xs italic hover:bg-[#E5E5E5] rounded" title="기울임">I</button>
+                    <button onClick={() => document.execCommand("underline")} className="px-2 py-1 text-xs underline hover:bg-[#E5E5E5] rounded" title="밑줄">U</button>
+                    <span className="w-px h-4 bg-[#E5E5E5]" />
+                    <select
+                      onChange={(e) => {
+                        if (e.target.value) document.execCommand("fontSize", false, e.target.value);
+                        e.target.value = "";
+                      }}
+                      className="text-[10px] px-1 py-1 bg-transparent border border-[#E5E5E5] rounded hover:bg-[#E5E5E5] cursor-pointer"
+                      defaultValue=""
+                    >
+                      <option value="" disabled>텍스트 크기</option>
+                      <option value="1">아주 작게</option>
+                      <option value="2">작게</option>
+                      <option value="3">보통</option>
+                      <option value="4">크게</option>
+                      <option value="5">아주 크게</option>
+                      <option value="6">제목</option>
+                      <option value="7">큰 제목</option>
+                    </select>
+                    <span className="w-px h-4 bg-[#E5E5E5]" />
+                    <button
+                      onClick={() => {
+                        const url = prompt("링크 URL을 입력하세요");
+                        if (url) document.execCommand("createLink", false, url);
+                      }}
+                      className="px-2 py-1 text-xs hover:bg-[#E5E5E5] rounded" title="링크"
+                    >🔗</button>
+                    <button onClick={() => document.execCommand("unlink")} className="px-2 py-1 text-xs hover:bg-[#E5E5E5] rounded" title="링크 해제">🔗✕</button>
+                    <span className="w-px h-4 bg-[#E5E5E5]" />
+                    <button onClick={() => document.execCommand("insertUnorderedList")} className="px-2 py-1 text-xs hover:bg-[#E5E5E5] rounded" title="목록">• 목록</button>
+                    <button onClick={() => document.execCommand("justifyLeft")} className="px-2 py-1 text-xs hover:bg-[#E5E5E5] rounded" title="왼쪽 정렬">⇤</button>
+                    <button onClick={() => document.execCommand("justifyCenter")} className="px-2 py-1 text-xs hover:bg-[#E5E5E5] rounded" title="가운데 정렬">⇔</button>
+                    <span className="w-px h-4 bg-[#E5E5E5]" />
+                    <button
+                      onClick={() => {
+                        const sel = window.getSelection();
+                        if (sel && sel.rangeCount > 0) {
+                          savedSelection.current = { blockId: "__editor__", range: sel.getRangeAt(0).cloneRange() };
+                        }
+                        inlineFileInputRef.current?.click();
+                      }}
+                      disabled={uploading}
+                      className="px-2 py-1 text-xs hover:bg-[#E5E5E5] rounded font-medium" title="이미지 삽입"
+                    >
+                      {uploading ? "..." : "📷 이미지"}
+                    </button>
+                    <button
+                      onClick={() => {
+                        const url = prompt("영상 URL을 입력하세요 (YouTube 등)");
+                        if (!url) return;
+                        const iframe = url.includes("youtube.com") || url.includes("youtu.be")
+                          ? `<iframe width="100%" height="400" src="${url.replace("watch?v=", "embed/").replace("youtu.be/", "youtube.com/embed/")}" frameborder="0" allowfullscreen style="border-radius:12px;max-width:100%;"></iframe>`
+                          : `<video src="${url}" controls style="max-width:100%;border-radius:12px;"></video>`;
+                        document.execCommand("insertHTML", false, `<div style="text-align:center;margin:24px 0;">${iframe}</div>`);
+                      }}
+                      className="px-2 py-1 text-xs hover:bg-[#E5E5E5] rounded" title="영상 삽입"
+                    >🎬 영상</button>
+                    <span className="w-px h-4 bg-[#E5E5E5]" />
+                    <input
+                      type="color"
+                      onChange={(e) => document.execCommand("foreColor", false, e.target.value)}
+                      className="w-6 h-6 cursor-pointer border-0 bg-transparent"
+                      title="글자 색"
+                    />
+                    <button
+                      onClick={() => document.execCommand("removeFormat")}
+                      className="px-2 py-1 text-[10px] hover:bg-[#E5E5E5] rounded text-[#888]" title="서식 제거"
+                    >서식 제거</button>
+                  </div>
 
-              {/* 블록 리스트 */}
-              {contentBlocks.length > 0 && (
-                <div className="space-y-0">
-                  {contentBlocks.map((block, i) => (
-                    <div key={block.id}>
-                      {/* 블록 카드 */}
-                      <div className={`group border rounded-lg overflow-hidden transition-colors ${isSlotBlock(block.html) ? "border-[#E2E545]/40 bg-[#FAFAF8]" : "border-[#E5E5E5] hover:border-[#E2E545]"}`}>
-                        {/* 블록 컨트롤 바 */}
-                        <div className="flex items-center justify-between px-3 py-1.5 bg-[#FAFAF8] border-b border-[#E5E5E5] sticky top-0 z-10">
-                          <span className="text-[10px] text-[#888]">
-                            {isSlotBlock(block.html) ? `📷 이미지 슬롯 ${i + 1}` : `블록 ${i + 1}`}
-                          </span>
-                          <div className="flex items-center gap-1">
-                            <button onClick={() => moveBlock(i, "up")} disabled={i === 0} className="text-[11px] px-1.5 py-0.5 text-[#888] hover:text-[#0A0A0A] disabled:opacity-20 disabled:cursor-not-allowed">↑</button>
-                            <button onClick={() => moveBlock(i, "down")} disabled={i === contentBlocks.length - 1} className="text-[11px] px-1.5 py-0.5 text-[#888] hover:text-[#0A0A0A] disabled:opacity-20 disabled:cursor-not-allowed">↓</button>
-                            {isSlotBlock(block.html) && (
-                              <button
-                                onClick={() => triggerFileUpload(block.id)}
-                                disabled={uploading}
-                                className="text-[10px] px-2 py-0.5 bg-[#E2E545]/20 border border-[#E2E545]/40 rounded text-[#0A0A0A] hover:bg-[#E2E545]/40 transition-colors font-medium"
-                              >
-                                {uploading ? "..." : "파일로 교체"}
-                              </button>
-                            )}
-                            {block.html.includes("<img") && !isSlotBlock(block.html) && (
-                              <button
-                                onClick={() => triggerFileUpload(block.id)}
-                                disabled={uploading}
-                                className="text-[10px] px-2 py-0.5 bg-[#F5F5F0] border border-[#E5E5E5] rounded text-[#888] hover:text-[#0A0A0A] transition-colors"
-                              >
-                                {uploading ? "..." : "파일 변경"}
-                              </button>
-                            )}
-                            {!isSlotBlock(block.html) && (
-                              <button
-                                onClick={() => triggerInlineImageUpload(block.id)}
-                                disabled={uploading}
-                                className="text-[10px] px-2 py-0.5 bg-[#E2E545]/20 border border-[#E2E545]/40 rounded text-[#0A0A0A] hover:bg-[#E2E545]/40 transition-colors font-medium"
-                              >
-                                {uploading ? "..." : "📷 커서에 이미지"}
-                              </button>
-                            )}
-                            <button onClick={() => splitBlock(i)} className="text-[10px] px-1.5 py-0.5 text-[#888] hover:text-[#0A0A0A]">분할</button>
-                            <button onClick={() => setEditingBlockId(editingBlockId === block.id ? null : block.id)} className="text-[10px] px-1.5 py-0.5 text-[#888] hover:text-[#0A0A0A]">
-                              {editingBlockId === block.id ? "코드 닫기" : "코드"}
-                            </button>
-                            <button onClick={() => { if (confirm("이 블록을 삭제할까요?")) removeBlock(i); }} className="text-[10px] px-1.5 py-0.5 text-red-400/60 hover:text-red-400">삭제</button>
-                          </div>
-                        </div>
-
-                        {/* 블록 미리보기 (직접 편집 가능) */}
-                        <div
-                          data-block-id={block.id}
-                          className="p-3 focus:outline-none focus:ring-2 focus:ring-[#E2E545]/50 rounded"
-                          contentEditable={!isSlotBlock(block.html)}
-                          suppressContentEditableWarning
-                          dangerouslySetInnerHTML={{ __html: block.html }}
-                          onBlur={(e) => {
-                            const newHtml = e.currentTarget.innerHTML;
-                            if (newHtml !== block.html) updateBlockHtml(block.id, newHtml);
-                          }}
-                        />
-
-                        {/* 블록 HTML 편집 */}
-                        {editingBlockId === block.id && (
-                          <div className="border-t border-[#E5E5E5] p-3">
-                            <textarea
-                              value={block.html}
-                              onChange={(e) => updateBlockHtml(block.id, e.target.value)}
-                              rows={8}
-                              className="w-full px-3 py-2 bg-[#F5F5F0] border border-[#E5E5E5] rounded-lg text-xs text-[#444] font-mono focus:border-[#0A0A0A] outline-none transition resize-y"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                  {/* 편집 영역 */}
+                  <div
+                    ref={(el) => { if (el) el.dataset.editorId = "__editor__"; }}
+                    data-block-id="__editor__"
+                    className="min-h-[400px] p-5 border border-[#E5E5E5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2E545]/50 bg-white overflow-auto"
+                    contentEditable
+                    suppressContentEditableWarning
+                    dangerouslySetInnerHTML={{ __html: contentBlocks.map((b) => b.html).join("\n") }}
+                    onBlur={(e) => {
+                      const newHtml = e.currentTarget.innerHTML;
+                      setContentBlocks([{ id: contentBlocks[0]?.id || `b_${Date.now()}`, html: newHtml }]);
+                    }}
+                    onPaste={(e) => {
+                      // HTML 붙여넣기 허용
+                      const html = e.clipboardData.getData("text/html");
+                      if (html) {
+                        e.preventDefault();
+                        document.execCommand("insertHTML", false, html);
+                      }
+                    }}
+                  />
+                </>
+              ) : null}
             </div>
 
             {/* FAQ 관리 */}
