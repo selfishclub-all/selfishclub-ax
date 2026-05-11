@@ -741,6 +741,49 @@ export default function DetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* ─── 왼쪽: 편집 영역 ─── */}
           <div className="space-y-4">
+            {/* 프로그램 정보 */}
+            <div className="bg-white border border-[#E5E5E5] rounded-xl p-5 space-y-3">
+              <h2 className="text-sm font-bold text-[#0A0A0A]">프로그램 정보</h2>
+              <div>
+                <label className={labelClass}>제목 (유저 노출용)</label>
+                <input
+                  defaultValue={selectedItem?.i_title_userside || ""}
+                  placeholder="AX 한다는 말, 도대체 뭘 한다는 거야?"
+                  onBlur={(e) => {
+                    if (e.target.value !== (selectedItem?.i_title_userside || "")) {
+                      fetch("/api/admin/programs", {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ iid: selectedIid, i_title_userside: e.target.value || null }),
+                      }).then(() => {
+                        setItems((prev) => prev.map((i) => i.iid === selectedIid ? { ...i, i_title_userside: e.target.value || null } : i));
+                      });
+                    }
+                  }}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>제목 (내부용)</label>
+                <input
+                  defaultValue={selectedItem?.i_title || ""}
+                  placeholder="이기적공유회_AX프로젝트"
+                  onBlur={(e) => {
+                    if (e.target.value !== (selectedItem?.i_title || "")) {
+                      fetch("/api/admin/programs", {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ iid: selectedIid, i_title: e.target.value }),
+                      }).then(() => {
+                        setItems((prev) => prev.map((i) => i.iid === selectedIid ? { ...i, i_title: e.target.value } : i));
+                      });
+                    }
+                  }}
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
             {/* 썸네일 */}
             <div className="bg-white border border-[#E5E5E5] rounded-xl p-5 space-y-3">
               <h2 className="text-sm font-bold text-[#0A0A0A]">썸네일</h2>

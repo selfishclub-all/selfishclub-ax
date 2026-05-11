@@ -76,6 +76,7 @@ export async function PUT(request: NextRequest) {
   if (body.i_detail_html !== undefined) updateData.i_detail_html = body.i_detail_html;
   if (body.i_detail_faq !== undefined) updateData.i_detail_faq = body.i_detail_faq;
   if (body.i_detail_top_blocks !== undefined) updateData.i_detail_top_blocks = body.i_detail_top_blocks;
+  if (body.i_title !== undefined) updateData.i_title = body.i_title;
   if (body.i_title_userside !== undefined) updateData.i_title_userside = body.i_title_userside;
   if (body.i_formid_webflow !== undefined) updateData.i_formid_webflow = body.i_formid_webflow;
   if (body.is_visible !== undefined) updateData.is_visible = body.is_visible;
