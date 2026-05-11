@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
     .from("item")
     .select("iid, i_title, i_type, i_formid_webflow, i_title_userside, i_full_schedule")
     .eq("i_formid_webflow", slug)
+    .eq("is_visible", true)
     .order("ID", { ascending: false })
     .limit(1)
     .single();

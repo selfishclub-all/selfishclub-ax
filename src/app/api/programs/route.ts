@@ -8,6 +8,7 @@ export async function GET(request: NextRequest) {
   let query = supabase
     .from("item")
     .select("ID, iid, i_title, i_title_userside, i_type, i_formid_webflow, i_paid_tf, i_price, i_eventdate, i_event_count, i_category, i_vodurl, i_full_schedule")
+    .eq("is_visible", true)
     .not("i_formid_webflow", "is", null);
 
   if (types.length > 0) {

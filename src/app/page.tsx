@@ -9,6 +9,7 @@ async function getPrograms() {
   const { data } = await supabase
     .from("item")
     .select("ID, i_title, i_title_userside, i_type, i_formid_webflow, i_paid_tf, i_price, i_eventdate, i_event_count")
+    .eq("is_visible", true)
     .not("i_formid_webflow", "is", null)
     .order("ID", { ascending: false })
     .limit(6);

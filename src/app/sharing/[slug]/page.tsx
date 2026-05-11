@@ -159,6 +159,7 @@ async function getProgram(slug: string) {
     .from("item")
     .select("*")
     .eq("i_formid_webflow", slug)
+    .eq("is_visible", true)
     .order("ID", { ascending: false })
     .limit(1);
   return data?.[0] ?? null;
