@@ -537,7 +537,7 @@ export default function DetailPage() {
 
   async function handleInlineImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (!file || !savedSelection.current) return;
+    if (!file) return;
 
     setUploading(true);
     const formData = new FormData();
@@ -550,34 +550,22 @@ export default function DetailPage() {
       if (json.error) { alert(`업로드 실패: ${json.error}`); setUploading(false); return; }
 
       const url = json.data.url;
-      const { blockId, range } = savedSelection.current;
+      const imgHtml = `<div style="text-align:center;margin:16px 0;"><img src="${url}" alt="" style="max-width:100%;border-radius:12px;" /></div>`;
 
-      // 커서 위치에 이미지 삽입
-      const img = document.createElement("img");
-      img.src = url;
-      img.alt = "";
-      img.style.cssText = "max-width:100%;border-radius:12px;margin:8px 0;display:block;";
-
-      const sel = window.getSelection();
-      sel?.removeAllRanges();
-      sel?.addRange(range);
-      range.insertNode(img);
-      range.collapse(false);
-
-      // 변경된 HTML을 반영
-      const blockEl = document.querySelector(`[data-block-id="${blockId}"]`);
-      if (blockEl) {
-        if (blockId === "__editor__") {
-          setContentBlocks([{ id: contentBlocks[0]?.id || `b_${Date.now()}`, html: blockEl.innerHTML }]);
-        } else {
-          updateBlockHtml(blockId, blockEl.innerHTML);
+      // 마커를 이미지로 교체
+      setContentBlocks((prev) => {
+        const combined = prev.map((b) => b.html).join("\n");
+        const replaced = combined.replace('⬜IMG_HERE⬜', imgHtml);
+        if (replaced !== combined) {
+          return [{ id: prev[0]?.id || `b_${Date.now()}`, html: replaced }];
         }
-      }
+        // 마커 없으면 맨 끝에 추가
+        return [{ id: prev[0]?.id || `b_${Date.now()}`, html: combined + imgHtml }];
+      });
     } catch {
       alert("업로드 중 오류가 발생했습니다.");
     }
     setUploading(false);
-    savedSelection.current = null;
     if (inlineFileInputRef.current) inlineFileInputRef.current.value = "";
   }
 
@@ -895,7 +883,18 @@ export default function DetailPage() {
                 ref={inlineFileInputRef}
                 type="file"
                 accept="image/*,.gif"
-                onChange={handleInlineImageUpload}
+                onChange={(e) => {
+                  if (e.target.files?.length) {
+                    handleInlineImageUpload(e);
+                  } else {
+                    // 파일 선택 취소 시 마커 제거
+                    setContentBlocks((prev) => {
+                      const combined = prev.map((b) => b.html).join("\n");
+                      const cleaned = combined.replace('⬜IMG_HERE⬜', '');
+                      return [{ id: prev[0]?.id || `b_${Date.now()}`, html: cleaned }];
+                    });
+                  }
+                }}
                 className="hidden"
               />
 
@@ -914,7 +913,7 @@ export default function DetailPage() {
                 /* 서식 툴바 + 편집 영역 */
                 <>
                   {/* 서식 툴바 */}
-                  <div className="flex flex-wrap items-center gap-1 px-2 py-2 bg-[#FAFAF8] border border-[#E5E5E5] rounded-lg sticky top-0 z-10">
+                  <div className="flex flex-wrap items-center gap-1 px-2 py-2 bg-[#FAFAF8] border border-[#E5E5E5] rounded-lg sticky top-0 z-10" onMouseDown={(e) => e.preventDefault()}>
                     <button onClick={() => document.execCommand("bold")} className="px-2 py-1 text-xs font-bold hover:bg-[#E5E5E5] rounded" title="굵게">B</button>
                     <button onClick={() => document.execCommand("italic")} className="px-2 py-1 text-xs italic hover:bg-[#E5E5E5] rounded" title="기울임">I</button>
                     <button onClick={() => document.execCommand("underline")} className="px-2 py-1 text-xs underline hover:bg-[#E5E5E5] rounded" title="밑줄">U</button>
@@ -952,11 +951,14 @@ export default function DetailPage() {
                     <span className="w-px h-4 bg-[#E5E5E5]" />
                     <button
                       onClick={() => {
-                        const sel = window.getSelection();
-                        if (sel && sel.rangeCount > 0) {
-                          savedSelection.current = { blockId: "__editor__", range: sel.getRangeAt(0).cloneRange() };
+                        // 커서 위치에 마커 삽입 후 파일 다이얼로그 열기
+                        document.execCommand("insertHTML", false, '⬜IMG_HERE⬜');
+                        // 마커 삽입 후 HTML 즉시 저장
+                        const editorEl = document.querySelector('[data-block-id="__editor__"]');
+                        if (editorEl) {
+                          setContentBlocks([{ id: contentBlocks[0]?.id || `b_${Date.now()}`, html: editorEl.innerHTML }]);
                         }
-                        inlineFileInputRef.current?.click();
+                        setTimeout(() => inlineFileInputRef.current?.click(), 100);
                       }}
                       disabled={uploading}
                       className="px-2 py-1 text-xs hover:bg-[#E5E5E5] rounded font-medium" title="이미지 삽입"
@@ -995,7 +997,20 @@ export default function DetailPage() {
                     contentEditable
                     suppressContentEditableWarning
                     dangerouslySetInnerHTML={{ __html: contentBlocks.map((b) => b.html).join("\n") }}
+                    onMouseUp={() => {
+                      const sel = window.getSelection();
+                      if (sel && sel.rangeCount > 0) {
+                        savedSelection.current = { blockId: "__editor__", range: sel.getRangeAt(0).cloneRange() };
+                      }
+                    }}
+                    onKeyUp={() => {
+                      const sel = window.getSelection();
+                      if (sel && sel.rangeCount > 0) {
+                        savedSelection.current = { blockId: "__editor__", range: sel.getRangeAt(0).cloneRange() };
+                      }
+                    }}
                     onBlur={(e) => {
+                      // 툴바 클릭 시에는 커서 위치 유지를 위해 저장만 하고 블록 업데이트
                       const newHtml = e.currentTarget.innerHTML;
                       setContentBlocks([{ id: contentBlocks[0]?.id || `b_${Date.now()}`, html: newHtml }]);
                     }}
