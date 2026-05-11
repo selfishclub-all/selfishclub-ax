@@ -22,6 +22,8 @@ interface ProgramItem {
   i_title_userside: string | null;
   i_type: string;
   i_formid_webflow: string | null;
+  i_eventdate: string | null;
+  i_full_schedule: string | null;
   i_thumbnail: string | null;
   i_detail_html: string | null;
   i_detail_faq: FaqItem[] | null;
@@ -782,6 +784,65 @@ export default function DetailPage() {
                   }}
                   className={inputClass}
                 />
+              </div>
+              <div>
+                <label className={labelClass}>URL slug</label>
+                <input
+                  defaultValue={selectedItem?.i_formid_webflow || ""}
+                  placeholder="ax-project"
+                  onBlur={(e) => {
+                    if (e.target.value !== (selectedItem?.i_formid_webflow || "")) {
+                      fetch("/api/admin/programs", {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ iid: selectedIid, i_formid_webflow: e.target.value || null }),
+                      }).then(() => {
+                        setItems((prev) => prev.map((i) => i.iid === selectedIid ? { ...i, i_formid_webflow: e.target.value || null } : i));
+                      });
+                    }
+                  }}
+                  className={inputClass}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className={labelClass}>날짜</label>
+                  <input
+                    type="date"
+                    defaultValue={selectedItem?.i_eventdate || ""}
+                    onBlur={(e) => {
+                      if (e.target.value !== (selectedItem?.i_eventdate || "")) {
+                        fetch("/api/admin/programs", {
+                          method: "PUT",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ iid: selectedIid, i_eventdate: e.target.value || null }),
+                        }).then(() => {
+                          setItems((prev) => prev.map((i) => i.iid === selectedIid ? { ...i, i_eventdate: e.target.value || null } : i));
+                        });
+                      }
+                    }}
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>일정 (날짜 + 시간)</label>
+                  <input
+                    defaultValue={selectedItem?.i_full_schedule || ""}
+                    placeholder="2026-05-18 20:00~21:30"
+                    onBlur={(e) => {
+                      if (e.target.value !== (selectedItem?.i_full_schedule || "")) {
+                        fetch("/api/admin/programs", {
+                          method: "PUT",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ iid: selectedIid, i_full_schedule: e.target.value || null }),
+                        }).then(() => {
+                          setItems((prev) => prev.map((i) => i.iid === selectedIid ? { ...i, i_full_schedule: e.target.value || null } : i));
+                        });
+                      }
+                    }}
+                    className={inputClass}
+                  />
+                </div>
               </div>
             </div>
 
