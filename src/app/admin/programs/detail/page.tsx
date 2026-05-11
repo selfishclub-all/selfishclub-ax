@@ -745,10 +745,11 @@ export default function DetailPage() {
             <div className="bg-white border border-[#E5E5E5] rounded-xl p-5 space-y-3">
               <h2 className="text-sm font-bold text-[#0A0A0A]">프로그램 정보</h2>
               <div>
-                <label className={labelClass}>제목 (유저 노출용)</label>
-                <input
+                <label className={labelClass}>제목 (유저 노출용) — Enter로 줄바꿈</label>
+                <textarea
                   defaultValue={selectedItem?.i_title_userside || ""}
-                  placeholder="AX 한다는 말, 도대체 뭘 한다는 거야?"
+                  placeholder="셀피쉬클럽의 2개월,&#10;격동의 에이전틱 프로젝트"
+                  rows={2}
                   onBlur={(e) => {
                     if (e.target.value !== (selectedItem?.i_title_userside || "")) {
                       fetch("/api/admin/programs", {
@@ -760,7 +761,7 @@ export default function DetailPage() {
                       });
                     }
                   }}
-                  className={inputClass}
+                  className={inputClass + " resize-none"}
                 />
               </div>
               <div>

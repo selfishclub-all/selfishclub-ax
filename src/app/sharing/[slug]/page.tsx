@@ -246,7 +246,7 @@ export default async function SharingDetailPage({ params }: Props) {
               <p className="text-[11px] text-[#E2E545] tracking-[0.3em] uppercase mb-6">
                 {item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : item.i_type === "workshop" ? "워크숍" : item.i_type}
               </p>
-              <h1 className="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+              <h1 className="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight whitespace-pre-line">
                 {displayTitle}
               </h1>
               <div className="inline-block bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl px-8 py-6 mt-4 space-y-2">
