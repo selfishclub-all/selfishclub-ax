@@ -250,19 +250,31 @@ export default async function SharingDetailPage({ params }: Props) {
                 const schedule = item.i_full_schedule as string | null;
                 const dateStr = item.i_eventdate as string | null;
                 const timeMatch = schedule?.match(/(\d{1,2}:\d{2})\s*[~\-—]\s*(\d{1,2}:\d{2})/);
-                const displayDate = dateStr ? dateStr.replace(/^20/, "").replace(/-/g, ".") : null;
+                const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
+                const dayOfWeek = dateStr ? dayNames[new Date(dateStr).getDay()] : null;
+                const formattedDate = dateStr ? dateStr.replace(/-/g, ". ") : null;
                 const displayTime = timeMatch ? `${timeMatch[1]}-${timeMatch[2]}` : null;
                 const typeLabel = item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : item.i_type === "workshop" ? "워크숍" : item.i_type;
                 return (
-                  <div className="max-w-md mx-auto bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl px-10 py-6 space-y-3">
-                    <p className="text-[#E2E545] text-xs tracking-[0.3em] uppercase">{typeLabel}</p>
-                    {(displayDate || displayTime) && (
-                      <p className="text-white text-base lg:text-lg font-medium tracking-wide">
-                        {displayDate}{displayTime ? ` ${displayTime}` : ""}
-                      </p>
+                  <div className="max-w-md mx-auto bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl px-10 py-7 text-left space-y-4">
+                    <p className="text-[#E2E545] text-xs tracking-[0.3em] uppercase text-center">{typeLabel}</p>
+                    {dateStr && (
+                      <div>
+                        <p className="text-white/40 text-xs font-medium mb-1">신청기간</p>
+                        <p className="text-white text-sm lg:text-base">
+                          {formattedDate} ({dayOfWeek}) 저녁 6시 마감
+                        </p>
+                      </div>
                     )}
-                    <p className="text-white/50 text-sm">온라인 라이브</p>
-                    <p className="text-[#E2E545] text-lg font-bold">
+                    {(dateStr || displayTime) && (
+                      <div>
+                        <p className="text-white/40 text-xs font-medium mb-1">ZOOM 라이브</p>
+                        <p className="text-white text-sm lg:text-base">
+                          {formattedDate}{dayOfWeek ? ` (${dayOfWeek})` : ""}{displayTime ? ` ${displayTime}` : ""}
+                        </p>
+                      </div>
+                    )}
+                    <p className="text-[#E2E545] text-lg font-bold text-center">
                       {isPaid ? `${price.toLocaleString()}원` : "무료"}
                     </p>
                   </div>
