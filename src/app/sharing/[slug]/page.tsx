@@ -243,9 +243,6 @@ export default async function SharingDetailPage({ params }: Props) {
             ) : null}
             <div className="absolute inset-0" style={{ background: thumbnailUrl ? "rgba(0,0,0,0.55)" : "#0A0A0A" }} />
             <div className="relative z-10 w-full max-w-4xl mx-auto px-5 lg:px-10 py-20 lg:py-28 text-center">
-              <p className="text-xs lg:text-sm text-[#E2E545] tracking-[0.3em] uppercase mb-6">
-                {item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : item.i_type === "workshop" ? "워크숍" : item.i_type}
-              </p>
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white mb-10 leading-tight whitespace-pre-line">
                 {displayTitle}
               </h1>
@@ -255,8 +252,10 @@ export default async function SharingDetailPage({ params }: Props) {
                 const timeMatch = schedule?.match(/(\d{1,2}:\d{2})\s*[~\-—]\s*(\d{1,2}:\d{2})/);
                 const displayDate = dateStr ? dateStr.replace(/^20/, "").replace(/-/g, ".") : null;
                 const displayTime = timeMatch ? `${timeMatch[1]}-${timeMatch[2]}` : null;
+                const typeLabel = item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : item.i_type === "workshop" ? "워크숍" : item.i_type;
                 return (
                   <div className="max-w-md mx-auto bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl px-10 py-6 space-y-3">
+                    <p className="text-[#E2E545] text-xs tracking-[0.3em] uppercase">{typeLabel}</p>
                     {(displayDate || displayTime) && (
                       <p className="text-white text-base lg:text-lg font-medium tracking-wide">
                         {displayDate}{displayTime ? ` ${displayTime}` : ""}
