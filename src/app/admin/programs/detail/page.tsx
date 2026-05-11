@@ -611,7 +611,12 @@ export default function DetailPage() {
       ...customFaq.map((f) => ({ ...f, q: `[custom]${f.q}` })),
     ];
 
-    const allBlocks = [...topBlocks, ...bottomBlocks];
+    const TERMS_HTML = `<div style="text-align:center;padding:24px 20px;border-top:1px solid #E5E5E5;">
+  <a href="https://sepia-quartz-81f.notion.site/22b5c0a046468081b11cc019c2f558a4?pvs=74" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:#888;text-decoration:none;">이용약관</a>
+  <span style="font-size:13px;color:#ddd;margin:0 12px;">|</span>
+  <a href="https://sepia-quartz-81f.notion.site/22b5c0a0464680528d1ffb54dfd7eaeb" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:#888;text-decoration:none;">개인정보처리방침</a>
+</div>`;
+    const allBlocks = [...topBlocks, ...bottomBlocks.map((b) => b.id === "terms" ? { ...b, html: TERMS_HTML, enabled: true } : b)];
 
     const res = await fetch("/api/admin/programs", {
       method: "PUT",
