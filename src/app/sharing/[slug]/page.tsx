@@ -238,10 +238,10 @@ export default async function SharingDetailPage({ params }: Props) {
             {thumbnailUrl ? (
               <div
                 className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${thumbnailUrl})`, opacity: 0.3 }}
+                style={{ backgroundImage: `url(${thumbnailUrl})` }}
               />
             ) : null}
-            <div className="absolute inset-0 bg-[#0A0A0A]" style={{ opacity: thumbnailUrl ? 0.7 : 1 }} />
+            <div className="absolute inset-0" style={{ background: thumbnailUrl ? "rgba(0,0,0,0.55)" : "#0A0A0A" }} />
             <div className="relative z-10 w-full max-w-3xl mx-auto px-5 lg:px-10 py-16 text-center">
               <p className="text-[11px] text-[#E2E545] tracking-[0.3em] uppercase mb-6">
                 {item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : item.i_type === "workshop" ? "워크숍" : item.i_type}
@@ -249,18 +249,21 @@ export default async function SharingDetailPage({ params }: Props) {
               <h1 className="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight">
                 {displayTitle}
               </h1>
-              {(item.i_eventdate || item.i_full_schedule || isPaid) && (
-                <div className="inline-block bg-[#1a1a1a] rounded-2xl px-8 py-5 mt-4">
-                  {item.i_full_schedule ? (
-                    <p className="text-white/80 text-sm lg:text-base">{item.i_full_schedule}</p>
-                  ) : item.i_eventdate ? (
-                    <p className="text-white/80 text-sm lg:text-base">{item.i_eventdate}</p>
-                  ) : null}
-                  <p className="text-white/50 text-sm mt-1">
-                    {isPaid ? `${price.toLocaleString()}원` : "무료"}
-                  </p>
-                </div>
-              )}
+              <div className="inline-block bg-[#1a1a1a]/80 backdrop-blur-sm rounded-2xl px-8 py-6 mt-4 space-y-2">
+                {item.i_eventdate && (
+                  <p className="text-white text-sm lg:text-base font-medium">{item.i_eventdate}</p>
+                )}
+                {item.i_full_schedule && item.i_full_schedule !== item.i_eventdate && (() => {
+                  const timeMatch = (item.i_full_schedule as string).match(/(\d{1,2}:\d{2})\s*[~\-—]\s*(\d{1,2}:\d{2})/);
+                  return timeMatch ? (
+                    <p className="text-white/70 text-sm">{timeMatch[1]} — {timeMatch[2]}</p>
+                  ) : null;
+                })()}
+                <p className="text-white/60 text-sm">온라인 라이브</p>
+                <p className="text-[#E2E545] text-base font-bold">
+                  {isPaid ? `${price.toLocaleString()}원` : "무료"}
+                </p>
+              </div>
             </div>
           </section>
 
