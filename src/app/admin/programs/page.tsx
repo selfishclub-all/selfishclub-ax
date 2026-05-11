@@ -100,7 +100,8 @@ export default function ProgramsPage() {
     i_price: 9900,
     i_live_count_max: "",
     i_eventdate: "",
-    i_time: "19:00",
+    i_time_start: "",
+    i_time_end: "",
     i_format: "온라인",
     i_duration: "120분",
     sessions: [{ speaker: "", keyword: "", detail: "" }],
@@ -147,7 +148,7 @@ export default function ProgramsPage() {
         body: JSON.stringify({
           title: form.i_title_userside || form.i_title,
           date: form.i_eventdate,
-          time: form.i_time,
+          time: `${form.i_time_start}~${form.i_time_end}`,
           format: form.i_format,
           duration: form.i_duration,
           price: form.i_paid_tf ? form.i_price : 0,
@@ -209,6 +210,7 @@ export default function ProgramsPage() {
         i_price: form.i_paid_tf ? form.i_price : null,
         i_live_count_max: form.i_live_count_max ? Number(form.i_live_count_max) : null,
         i_eventdate: form.i_eventdate || null,
+        i_full_schedule: form.i_eventdate && form.i_time_start && form.i_time_end ? `${form.i_eventdate} ${form.i_time_start}~${form.i_time_end}` : form.i_eventdate || null,
         i_content: content,
       }),
     });
@@ -369,14 +371,18 @@ export default function ProgramsPage() {
               <input value={form.i_title_userside} onChange={(e) => setForm({ ...form, i_title_userside: e.target.value })} placeholder="AI, '딸-깍'이 가능할까요?" className={inputClass} />
             </div>
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-4 gap-3">
               <div>
                 <label className={labelClass}>날짜</label>
                 <input type="date" value={form.i_eventdate} onChange={(e) => setForm({ ...form, i_eventdate: e.target.value })} className={inputClass} />
               </div>
               <div>
-                <label className={labelClass}>시간</label>
-                <input value={form.i_time} onChange={(e) => setForm({ ...form, i_time: e.target.value })} placeholder="19:00" className={inputClass} />
+                <label className={labelClass}>시작 시간</label>
+                <input type="time" value={form.i_time_start} onChange={(e) => setForm({ ...form, i_time_start: e.target.value })} className={inputClass} />
+              </div>
+              <div>
+                <label className={labelClass}>종료 시간</label>
+                <input type="time" value={form.i_time_end} onChange={(e) => setForm({ ...form, i_time_end: e.target.value })} className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>소요시간</label>
@@ -573,7 +579,7 @@ export default function ProgramsPage() {
                       rows={2}
                     />
                     <p className="text-white/40 text-sm mt-2">
-                      {form.i_eventdate} {form.i_time} · {form.i_format} · {form.i_paid_tf ? `${form.i_price?.toLocaleString()}원` : "무료"} · {form.i_duration}
+                      {form.i_eventdate} {form.i_time_start}~{form.i_time_end} · {form.i_format} · {form.i_paid_tf ? `${form.i_price?.toLocaleString()}원` : "무료"} · {form.i_duration}
                     </p>
                   </div>
                 )}

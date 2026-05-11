@@ -1219,30 +1219,10 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
         id="register"
         ref={registerRef}
         className="py-20 lg:py-32 px-4 sm:px-6"
-        style={{ backgroundColor: C.lime, color: C.text }}
+        style={{ backgroundColor: soldOut ? "#E5E5E5" : C.lime, color: soldOut ? "#666" : C.text }}
       >
         <div className="max-w-3xl mx-auto">
-          {soldOut && paymentStatus !== "success" ? (
-            <div className="py-16">
-              <FadeUp>
-                <div className="text-center">
-                  <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black mb-4">선착순 신청이 마감되었습니다</h2>
-                  <p className="text-lg sm:text-xl opacity-70 mb-8">
-                    많은 관심 감사합니다. 다음 기수 모집 시 알림을 받으시려면 카카오 채널을 추가해주세요.
-                  </p>
-                  <a
-                    href="http://pf.kakao.com/_dxmxixhG"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base font-bold transition-all hover:scale-[1.02]"
-                    style={{ backgroundColor: "#FEE500", color: "#1a1a1a" }}
-                  >
-                    카카오톡 채널 추가하기
-                  </a>
-                </div>
-              </FadeUp>
-            </div>
-          ) : paymentStatus === "success" ? (
+          {paymentStatus === "success" ? (
             <div className="py-16">
               <FadeUp>
                 <div className="text-center mb-10">
@@ -1293,12 +1273,17 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
             <>
               <FadeUp>
                 <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black text-center mb-4 leading-snug">
-                  지금 얼리버드로<br />신청하세요
+                  {soldOut ? <>신청이 마감되었습니다</> : <>지금 얼리버드로<br />신청하세요</>}
                 </h2>
+                {soldOut && (
+                  <p className="text-center text-lg sm:text-xl opacity-60 mb-2">
+                    많은 관심 감사합니다. 다음 기수 모집 시 알림을 받으시려면 카카오 채널을 추가해주세요.
+                  </p>
+                )}
               </FadeUp>
 
               <FadeUp delay={0.1}>
-                <div className="flex justify-center gap-4 my-10">
+                <div className={`flex justify-center gap-4 my-10${soldOut ? " opacity-50" : ""}`}>
                   <div className="flex justify-center gap-4">
                     <div className="bg-white rounded-2xl p-4 sm:p-6 text-center border-2 border-black/10">
                       <p className="text-sm opacity-40 line-through mb-1">정가 100만 원</p>
@@ -1313,39 +1298,40 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
               </FadeUp>
 
               <FadeUp delay={0.2}>
-                <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8">
+                <div className={`bg-white rounded-2xl p-4 sm:p-6 lg:p-8${soldOut ? " opacity-50 pointer-events-none select-none" : ""}`}>
                   <h3 className="text-base sm:text-lg font-bold mb-6">신청 정보</h3>
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm opacity-60 mb-1">이름 *</label>
-                      <input type="text" value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="홍길동" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition" />
+                      <input type="text" value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="홍길동" disabled={soldOut} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition disabled:bg-gray-100 disabled:cursor-not-allowed" />
                     </div>
                     <div>
                       <label className="block text-sm opacity-60 mb-1">전화번호 *</label>
-                      <input type="tel" value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder="010-0000-0000" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition" />
+                      <input type="tel" value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder="010-0000-0000" disabled={soldOut} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition disabled:bg-gray-100 disabled:cursor-not-allowed" />
                     </div>
                     <div>
                       <label className="block text-sm opacity-60 mb-1">이메일 *</label>
-                      <input type="email" value={formEmail} onChange={(e) => setFormEmail(e.target.value)} placeholder="email@example.com" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition" />
+                      <input type="email" value={formEmail} onChange={(e) => setFormEmail(e.target.value)} placeholder="email@example.com" disabled={soldOut} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition disabled:bg-gray-100 disabled:cursor-not-allowed" />
                     </div>
                     <div>
                       <label className="block text-sm opacity-60 mb-1">7주 동안 만들고 싶은 것 (한 줄)</label>
-                      <input type="text" value={formGoal} onChange={(e) => setFormGoal(e.target.value)} placeholder="예: 마케팅 자동화 대시보드" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition" />
+                      <input type="text" value={formGoal} onChange={(e) => setFormGoal(e.target.value)} placeholder="예: 마케팅 자동화 대시보드" disabled={soldOut} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:border-gray-400 transition disabled:bg-gray-100 disabled:cursor-not-allowed" />
                     </div>
                   </div>
                   <p className="text-sm text-center mt-4 opacity-60">
-                    🎁 해당 이기적공유회 신청 시, 이기적멤버십 2.0에도 무료로 자동가입됩니다.
+                    해당 이기적공유회 신청 시, 이기적멤버십 2.0에도 무료로 자동가입됩니다.
                   </p>
 
                   <div className="mt-5 p-4 rounded-xl bg-gray-50 border border-gray-200">
                     <p className="text-sm opacity-70 mb-3">
-                      신청 및 결제 완료 시 4/30(목) 참여자 대상 상세 안내를 보내드립니다.
+                      신청 및 결제 완료 시 참여자 대상 상세 안내를 보내드립니다.
                     </p>
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={formConfirm}
                         onChange={(e) => setFormConfirm(e.target.checked)}
+                        disabled={soldOut}
                         className="w-4 h-4 rounded accent-black"
                       />
                       <span className="text-sm font-medium">확인했습니다 <span className="text-red-500">*</span></span>
@@ -1358,14 +1344,30 @@ export function SpongeClubPaidLanding({ item, previewSuccess = false }: Props) {
 
                   <button
                     onClick={handlePayment}
-                    disabled={paymentStatus === "processing"}
-                    className="w-full mt-6 py-4 rounded-full text-lg font-bold transition-all hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed"
-                    style={{ backgroundColor: "#E9ED12", color: "#0A0A0A" }}
+                    disabled={soldOut || paymentStatus === "processing"}
+                    className="w-full mt-6 py-4 rounded-full text-lg font-bold transition-all disabled:cursor-not-allowed"
+                    style={{ backgroundColor: soldOut ? "#999" : "#E9ED12", color: soldOut ? "#fff" : "#0A0A0A" }}
                   >
-                    {paymentStatus === "processing" ? "결제 처리 중..." : "선착순 신청하기"}
+                    {soldOut ? "신청이 마감되었습니다" : paymentStatus === "processing" ? "결제 처리 중..." : "선착순 신청하기"}
                   </button>
                 </div>
               </FadeUp>
+
+              {soldOut && (
+                <FadeUp delay={0.3}>
+                  <div className="text-center mt-8">
+                    <a
+                      href="http://pf.kakao.com/_dxmxixhG"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base font-bold transition-all hover:scale-[1.02]"
+                      style={{ backgroundColor: "#FEE500", color: "#1a1a1a" }}
+                    >
+                      카카오톡 채널 추가하기
+                    </a>
+                  </div>
+                </FadeUp>
+              )}
             </>
           )}
         </div>
