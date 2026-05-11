@@ -233,27 +233,36 @@ export default async function SharingDetailPage({ params }: Props) {
       <>
         <Header />
         <main className="pt-14">
-          {/* 히어로 — 썸네일 배경 */}
-          {thumbnailUrl && (
-            <section className="relative min-h-[50vh] lg:min-h-[60vh] flex items-end overflow-hidden">
+          {/* 히어로 */}
+          <section className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden">
+            {thumbnailUrl ? (
               <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${thumbnailUrl})`, opacity: 0.3 }}
               />
-              <div className="absolute inset-0 bg-[#0A0A0A]/70" />
-              <div className="relative z-10 w-full max-w-3xl mx-auto px-5 lg:px-10 pb-12 lg:pb-16">
-                <p className="text-[11px] text-[#E2E545] tracking-[0.3em] uppercase mb-4">
-                  {item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : item.i_type === "workshop" ? "워크숍" : item.i_type}
-                </p>
-                <h1 className="text-3xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-                  {displayTitle}
-                </h1>
-                {item.i_full_schedule && (
-                  <p className="text-white/50 text-sm lg:text-base">{item.i_full_schedule}</p>
-                )}
-              </div>
-            </section>
-          )}
+            ) : null}
+            <div className="absolute inset-0 bg-[#0A0A0A]" style={{ opacity: thumbnailUrl ? 0.7 : 1 }} />
+            <div className="relative z-10 w-full max-w-3xl mx-auto px-5 lg:px-10 py-16 text-center">
+              <p className="text-[11px] text-[#E2E545] tracking-[0.3em] uppercase mb-6">
+                {item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : item.i_type === "workshop" ? "워크숍" : item.i_type}
+              </p>
+              <h1 className="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+                {displayTitle}
+              </h1>
+              {(item.i_eventdate || item.i_full_schedule || isPaid) && (
+                <div className="inline-block bg-[#1a1a1a] rounded-2xl px-8 py-5 mt-4">
+                  {item.i_full_schedule ? (
+                    <p className="text-white/80 text-sm lg:text-base">{item.i_full_schedule}</p>
+                  ) : item.i_eventdate ? (
+                    <p className="text-white/80 text-sm lg:text-base">{item.i_eventdate}</p>
+                  ) : null}
+                  <p className="text-white/50 text-sm mt-1">
+                    {isPaid ? `${price.toLocaleString()}원` : "무료"}
+                  </p>
+                </div>
+              )}
+            </div>
+          </section>
 
           {/* 상단 공통 블록 */}
           {topBlocks.length > 0 && (
