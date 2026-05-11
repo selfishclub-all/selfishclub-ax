@@ -314,6 +314,29 @@ export default function DetailPage() {
     setContentBlocks((prev) => prev.filter((_, i) => i !== index));
   }
 
+  // 블록 분할 — 자식 요소를 개별 블록으로 쪼갬
+  function splitBlock(index: number) {
+    const block = contentBlocks[index];
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(block.html, "text/html");
+    const root = doc.body.firstElementChild;
+    if (!root || root.children.length <= 1) return;
+
+    // 내부 컨테이너가 하나 있으면 그 안의 자식들을 분할
+    const container = root.children.length === 1 ? root.children[0] : root;
+    const newBlocks = Array.from(container.children).map((child) => ({
+      id: `b_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+      html: child.outerHTML.trim(),
+    }));
+
+    if (newBlocks.length <= 1) return;
+    setContentBlocks((prev) => [
+      ...prev.slice(0, index),
+      ...newBlocks,
+      ...prev.slice(index + 1),
+    ]);
+  }
+
   // 블록 HTML 수정
   function updateBlockHtml(id: string, html: string) {
     setContentBlocks((prev) => prev.map((b) => b.id === id ? { ...b, html } : b));
@@ -856,6 +879,7 @@ export default function DetailPage() {
                                 {uploading ? "..." : "파일 변경"}
                               </button>
                             )}
+                            <button onClick={() => splitBlock(i)} className="text-[10px] px-1.5 py-0.5 text-[#888] hover:text-[#0A0A0A]">분할</button>
                             <button onClick={() => setEditingBlockId(editingBlockId === block.id ? null : block.id)} className="text-[10px] px-1.5 py-0.5 text-[#888] hover:text-[#0A0A0A]">
                               {editingBlockId === block.id ? "코드 닫기" : "코드"}
                             </button>
