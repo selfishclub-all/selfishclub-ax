@@ -3,6 +3,14 @@
 import { useState } from "react";
 import * as PortOne from "@portone/browser-sdk/v2";
 
+interface UtmParams {
+  utm_source: string;
+  utm_medium: string;
+  utm_campaign: string;
+  utm_content: string;
+  utm_term: string;
+}
+
 interface Props {
   itemId: string;
   slug: string;
@@ -12,12 +20,13 @@ interface Props {
   customerName?: string;
   customerPhone?: string;
   customerEmail?: string;
+  utm?: UtmParams;
 }
 
 const storeId = process.env.NEXT_PUBLIC_PORTONE_STORE_ID!;
 const channelKey = process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY!;
 
-export function PurchaseButton({ itemId, slug, title, price, isPaid, customerName, customerPhone, customerEmail }: Props) {
+export function PurchaseButton({ itemId, slug, title, price, isPaid, customerName, customerPhone, customerEmail, utm }: Props) {
   const [status, setStatus] = useState<"idle" | "opening" | "confirming">("idle");
 
   async function handlePurchase() {
@@ -66,6 +75,10 @@ export function PurchaseButton({ itemId, slug, title, price, isPaid, customerNam
       body: JSON.stringify({
         paymentId: response.paymentId,
         itemId,
+        u_name: customerName,
+        u_phone: customerPhone,
+        u_email: customerEmail,
+        ...(utm || {}),
       }),
     });
 

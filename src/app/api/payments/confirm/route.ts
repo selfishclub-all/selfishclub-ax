@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const { paymentId, itemId } = await request.json();
+  const { paymentId, itemId, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = await request.json();
 
   // 0. 이미 처리된 결제인지 확인 (모바일 복귀 시 중복 호출 방지)
   const { data: existingPurchase } = await supabase
@@ -180,6 +180,11 @@ export async function POST(request: NextRequest) {
     e_marketingagree_tf: true,
     e_infoagree_tf: true,
     e_new_tf: isNew,
+    utm_source: utm_source || null,
+    utm_medium: utm_medium || null,
+    utm_campaign: utm_campaign || null,
+    utm_content: utm_content || null,
+    utm_term: utm_term || null,
   });
 
   // 9. 신규 유저일 경우 membership 테이블에 자동 가입
@@ -197,6 +202,11 @@ export async function POST(request: NextRequest) {
         u_phone,
         u_email,
         u_membership_type: item.i_formid_webflow,
+        utm_source: utm_source || null,
+        utm_medium: utm_medium || null,
+        utm_campaign: utm_campaign || null,
+        utm_content: utm_content || null,
+        utm_term: utm_term || null,
       });
     }
   }
@@ -218,6 +228,11 @@ export async function POST(request: NextRequest) {
           event_count: finalCount,
           is_new: isNew,
           p_amount: payment.amount.total,
+          utm_source: utm_source || "",
+          utm_medium: utm_medium || "",
+          utm_campaign: utm_campaign || "",
+          utm_content: utm_content || "",
+          utm_term: utm_term || "",
         }),
       });
     } catch {

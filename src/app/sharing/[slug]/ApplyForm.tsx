@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { PurchaseButton } from "./PurchaseButton";
 
 interface Props {
@@ -26,6 +27,14 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
   const displayFormTitle = formTitle || "";
   const displayFormSubtitle = formSubtitle || "";
   const displayButtonText = formButtonText || "마감되기 전에 신청하기";
+  const searchParams = useSearchParams();
+  const utm = useMemo(() => ({
+    utm_source: searchParams.get("utm_source") || "",
+    utm_medium: searchParams.get("utm_medium") || "",
+    utm_campaign: searchParams.get("utm_campaign") || "",
+    utm_content: searchParams.get("utm_content") || "",
+    utm_term: searchParams.get("utm_term") || "",
+  }), [searchParams]);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -57,6 +66,7 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
           u_phone: phone,
           u_email: email,
           slug,
+          ...utm,
         }),
       });
       const result = await res.json();
@@ -172,6 +182,7 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
             customerName={name}
             customerPhone={phone}
             customerEmail={email}
+            utm={utm}
           />
         ) : (
           <button
