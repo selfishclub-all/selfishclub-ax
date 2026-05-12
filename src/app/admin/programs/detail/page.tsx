@@ -1050,20 +1050,34 @@ export default function DetailPage() {
                     <span className="w-px h-4 bg-[#E5E5E5]" />
                     <select
                       onChange={(e) => {
-                        if (e.target.value) document.execCommand("fontSize", false, e.target.value);
+                        if (!e.target.value) return;
+                        const size = e.target.value;
+                        const sel = window.getSelection();
+                        if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+                          const range = sel.getRangeAt(0);
+                          const span = document.createElement("span");
+                          span.style.fontSize = size + "px";
+                          range.surroundContents(span);
+                          // 편집 영역 HTML 업데이트
+                          const editorEl = document.querySelector('[data-block-id="__editor__"]');
+                          if (editorEl) {
+                            setContentBlocks([{ id: contentBlocks[0]?.id || `b_${Date.now()}`, html: editorEl.innerHTML }]);
+                          }
+                        }
                         e.target.value = "";
                       }}
                       className="text-[10px] px-1 py-1 bg-transparent border border-[#E5E5E5] rounded hover:bg-[#E5E5E5] cursor-pointer"
                       defaultValue=""
                     >
-                      <option value="" disabled>텍스트 크기</option>
-                      <option value="1">아주 작게</option>
-                      <option value="2">작게</option>
-                      <option value="3">보통</option>
-                      <option value="4">크게</option>
-                      <option value="5">아주 크게</option>
-                      <option value="6">제목</option>
-                      <option value="7">큰 제목</option>
+                      <option value="" disabled>크기(px)</option>
+                      <option value="12">12px 캡션</option>
+                      <option value="13">13px 보조</option>
+                      <option value="15">15px 본문</option>
+                      <option value="18">18px 강조</option>
+                      <option value="20">20px 중간제목</option>
+                      <option value="24">24px 소제목</option>
+                      <option value="28">28px 제목</option>
+                      <option value="36">36px 대제목</option>
                     </select>
                     <span className="w-px h-4 bg-[#E5E5E5]" />
                     <button
