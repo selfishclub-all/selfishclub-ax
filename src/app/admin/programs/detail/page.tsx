@@ -855,7 +855,7 @@ export default function DetailPage() {
               <div>
                 <label className={labelClass}>알림톡 URL (라이브 입장링크 등)</label>
                 <input
-                  defaultValue={(selectedItem as Record<string, unknown>)?.i_alimurl as string || ""}
+                  defaultValue={(selectedItem as unknown as Record<string, string>)?.i_alimurl || ""}
                   placeholder="https://notion.site/..."
                   onBlur={(e) => {
                     fetch("/api/admin/programs", {
