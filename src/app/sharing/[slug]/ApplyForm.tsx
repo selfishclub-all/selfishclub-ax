@@ -31,16 +31,22 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name || !phone || !email) {
       setError("이름, 전화번호, 이메일을 모두 입력해주세요.");
       return;
     }
-    setLoading(true);
     setError("");
+    setShowConfirm(true);
+  }
+
+  async function confirmSubmit() {
+    setShowConfirm(false);
+    setLoading(true);
 
     try {
       const res = await fetch("/api/registrations/free", {
@@ -177,6 +183,52 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
           </button>
         )}
       </form>
+
+      {showConfirm && (
+        <div
+          style={{ position: "fixed", inset: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.5)", padding: "0 16px" }}
+          onClick={() => setShowConfirm(false)}
+        >
+          <div
+            style={{ background: "#fff", borderRadius: 16, padding: 24, width: "100%", maxWidth: 400, boxShadow: "0 25px 50px rgba(0,0,0,0.25)" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p style={{ fontSize: 18, fontWeight: 700, color: "#0A0A0A", marginBottom: 4 }}>입력하신 정보를 확인해주세요</p>
+            <p style={{ fontSize: 13, color: "#888", marginBottom: 20, lineHeight: 1.5 }}>신청하신 정보로 Zoom 라이브 링크를 안내드립니다.<br />정확하게 입력되었는지 꼭 확인해주세요.</p>
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid #f0f0f0" }}>
+                <span style={{ fontSize: 14, color: "#888" }}>이름</span>
+                <span style={{ fontSize: 14, fontWeight: 600, color: "#0A0A0A" }}>{name}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid #f0f0f0" }}>
+                <span style={{ fontSize: 14, color: "#888" }}>전화번호</span>
+                <span style={{ fontSize: 14, fontWeight: 600, color: "#0A0A0A" }}>{phone}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid #f0f0f0" }}>
+                <span style={{ fontSize: 14, color: "#888" }}>이메일</span>
+                <span style={{ fontSize: 14, fontWeight: 600, color: "#0A0A0A" }}>{email}</span>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <button
+                type="button"
+                onClick={() => setShowConfirm(false)}
+                style={{ flex: 1, padding: "12px 0", borderRadius: 12, border: "1px solid #E5E5E5", background: "#fff", fontSize: 14, fontWeight: 600, color: "#0A0A0A", cursor: "pointer" }}
+              >
+                수정하기
+              </button>
+              <button
+                type="button"
+                onClick={confirmSubmit}
+                disabled={loading}
+                style={{ flex: 1, padding: "12px 0", borderRadius: 12, border: "none", background: "#0A0A0A", fontSize: 14, fontWeight: 700, color: "#E2E545", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.5 : 1 }}
+              >
+                {loading ? "신청 중..." : "신청 완료하기"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
