@@ -30,24 +30,6 @@ const footerLinks = [
 export function Footer() {
   return (
     <footer className="bg-[#0A0A0A] text-white">
-      {/* 상단 CTA */}
-      <div className="border-t border-white/5">
-        <div className="max-w-[1400px] mx-auto px-5 lg:px-10 py-20 text-center">
-          <p className="text-white/30 text-sm tracking-widest uppercase mb-4">
-            Ready to start
-          </p>
-          <p className="text-2xl lg:text-4xl font-bold mb-8 leading-tight">
-            당신의 실전이 시작되는 곳
-          </p>
-          <Link
-            href="/membership"
-            className="inline-flex text-sm text-[#0A0A0A] bg-[#E2E545] font-semibold px-8 py-3 rounded hover:bg-[#CDD03B] transition-colors duration-300"
-          >
-            멤버십 시작하기
-          </Link>
-        </div>
-      </div>
-
       {/* 링크 */}
       <div className="border-t border-white/5">
         <div className="max-w-[1400px] mx-auto px-5 lg:px-10 py-12">
