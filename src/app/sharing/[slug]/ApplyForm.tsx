@@ -80,7 +80,7 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light" 
   }
 
   return (
-    <section style={{ background: t.bg, padding: "56px 20px" }}>
+    <section data-apply-form style={{ background: t.bg, padding: "56px 20px" }}>
       <form onSubmit={handleSubmit} style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
         <p style={{ fontSize: 13, color: t.muted, margin: "0 0 8px" }}>
           {isPaid ? `${price.toLocaleString()}원` : "무료"} · 온라인 라이브 · 선착순
@@ -149,7 +149,7 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light" 
             disabled={loading}
             style={{ width: "100%", height: 52, background: loading ? "#ccc" : t.btnBg, border: "none", borderRadius: 12, fontSize: 16, fontWeight: 700, color: t.btnText, cursor: loading ? "not-allowed" : "pointer" }}
           >
-            {loading ? "신청 중..." : "신청하기"}
+            {loading ? "신청 중..." : "마감되기 전에 신청하기"}
           </button>
         )}
       </form>

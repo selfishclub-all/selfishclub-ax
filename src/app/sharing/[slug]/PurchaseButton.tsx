@@ -79,7 +79,7 @@ export function PurchaseButton({ itemId, slug, title, price, isPaid, customerNam
       onClick={handlePurchase}
       className="bg-[#0A0A0A] text-white font-semibold px-8 py-3 rounded-lg hover:bg-[#222] transition-colors"
     >
-      {isPaid ? "신청하기" : "무료 신청"}
+      마감되기 전에 신청하기
     </button>
   );
 }

@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PurchaseButton } from "./PurchaseButton";
 import { ApplyForm } from "./ApplyForm";
+import { FloatingCta } from "./FloatingCta";
 
 export const dynamic = "force-dynamic";
 
@@ -329,6 +330,7 @@ export default async function SharingDetailPage({ params }: Props) {
             ))
           }
         </main>
+        {!past && <FloatingCta />}
         <Footer />
       </>
     );
