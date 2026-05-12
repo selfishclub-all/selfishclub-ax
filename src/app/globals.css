@@ -23,11 +23,24 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-pretendard), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
 /* 어드민에서 만든 상세 페이지 HTML — Tailwind preflight 무효화 */
 .detail-html-content {
   display: block;
+  overflow-x: hidden;
+  word-break: break-word;
+}
+
+.detail-html-content * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.detail-html-content div,
+.detail-html-content section {
+  overflow-x: hidden;
 }
 
 @media (max-width: 768px) {
