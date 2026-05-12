@@ -1054,10 +1054,9 @@ export default function DetailPage() {
                         const size = e.target.value;
                         const sel = window.getSelection();
                         if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
-                          const range = sel.getRangeAt(0);
-                          const span = document.createElement("span");
-                          span.style.fontSize = size + "px";
-                          range.surroundContents(span);
+                          // 선택된 텍스트를 span으로 감싸서 삽입
+                          const selectedText = sel.toString();
+                          document.execCommand("insertHTML", false, `<span style="font-size:${size}px">${selectedText}</span>`);
                           // 편집 영역 HTML 업데이트
                           const editorEl = document.querySelector('[data-block-id="__editor__"]');
                           if (editorEl) {
