@@ -1049,20 +1049,30 @@ export default function DetailPage() {
                     <button onClick={() => document.execCommand("underline")} className="px-2 py-1 text-xs underline hover:bg-[#E5E5E5] rounded" title="밑줄">U</button>
                     <span className="w-px h-4 bg-[#E5E5E5]" />
                     <select
-                      onChange={(e) => {
-                        if (!e.target.value) return;
-                        const size = e.target.value;
+                      onMouseDown={() => {
+                        // 드롭다운 열기 전에 현재 선택 저장
                         const sel = window.getSelection();
                         if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
-                          // 선택된 텍스트를 span으로 감싸서 삽입
-                          const selectedText = sel.toString();
-                          document.execCommand("insertHTML", false, `<span style="font-size:${size}px">${selectedText}</span>`);
-                          // 편집 영역 HTML 업데이트
-                          const editorEl = document.querySelector('[data-block-id="__editor__"]');
-                          if (editorEl) {
-                            setContentBlocks([{ id: contentBlocks[0]?.id || `b_${Date.now()}`, html: editorEl.innerHTML }]);
-                          }
+                          savedSelection.current = { blockId: "__editor__", range: sel.getRangeAt(0).cloneRange() };
                         }
+                      }}
+                      onChange={(e) => {
+                        if (!e.target.value || !savedSelection.current) return;
+                        const size = e.target.value;
+                        const { range } = savedSelection.current;
+                        // 선택 복원
+                        const sel = window.getSelection();
+                        sel?.removeAllRanges();
+                        sel?.addRange(range);
+                        // 선택된 텍스트에 크기 적용
+                        const selectedText = sel?.toString() || "";
+                        document.execCommand("insertHTML", false, `<span style="font-size:${size}px">${selectedText}</span>`);
+                        // 편집 영역 HTML 업데이트
+                        const editorEl = document.querySelector('[data-block-id="__editor__"]');
+                        if (editorEl) {
+                          setContentBlocks([{ id: contentBlocks[0]?.id || `b_${Date.now()}`, html: editorEl.innerHTML }]);
+                        }
+                        savedSelection.current = null;
                         e.target.value = "";
                       }}
                       className="text-[10px] px-1 py-1 bg-transparent border border-[#E5E5E5] rounded hover:bg-[#E5E5E5] cursor-pointer"
