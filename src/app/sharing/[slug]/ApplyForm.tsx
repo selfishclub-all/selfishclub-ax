@@ -68,17 +68,44 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
 
   if (submitted) {
     return (
-      <section style={{ background: t.bg, padding: "56px 20px" }}>
+      <section data-apply-form style={{ background: t.bg, padding: "56px 20px" }}>
         <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontSize: 40, marginBottom: 16 }}>🎉</p>
           <p style={{ fontSize: 24, fontWeight: 700, color: t.text, marginBottom: 8 }}>신청 완료!</p>
-          <p style={{ fontSize: 15, color: t.sub, marginBottom: 16 }}>공유회 당일 알림톡과 이메일로 라이브 링크를 보내드릴게요.</p>
+          <p style={{ fontSize: 15, color: t.sub, marginBottom: 24, lineHeight: 1.6 }}>행사 당일, 알림톡과 이메일로 라이브 링크를 보내드려요.</p>
+          <div style={{ textAlign: "left", marginBottom: 24 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 12, background: "rgba(0,0,0,0.05)", borderRadius: 12, padding: "12px 16px", marginBottom: 12 }}>
+              <span style={{ fontSize: 16, marginTop: 2 }}>💬</span>
+              <p style={{ fontSize: 14, color: t.sub, lineHeight: 1.6, margin: 0 }}>당일 <strong style={{ color: t.text }}>카카오톡 셀피쉬클럽 알림톡</strong> 채팅창을 꼭 확인해주세요!</p>
+            </div>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 12, background: "rgba(0,0,0,0.05)", borderRadius: 12, padding: "12px 16px" }}>
+              <span style={{ fontSize: 16, marginTop: 2 }}>🔧</span>
+              <p style={{ fontSize: 14, color: t.sub, lineHeight: 1.6, margin: 0 }}>홈페이지 리뉴얼 중이라 기존 마이페이지에 신청내역이 안 보일 수 있어요. 신청은 정상 접수됐으니 걱정 마세요!</p>
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: 12 }}>
+            <a
+              href={`/sharing/${slug}`}
+              style={{ flex: 1, display: "block", padding: "12px 0", borderRadius: 12, border: "1px solid #E5E5E5", fontSize: 14, fontWeight: 600, color: t.text, textDecoration: "none", textAlign: "center" }}
+            >
+              돌아가기
+            </a>
+            <a
+              href="http://pf.kakao.com/_dxmxixhG/chat"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ flex: 1, display: "block", padding: "12px 0", borderRadius: 12, background: "#0A0A0A", fontSize: 14, fontWeight: 600, color: "#fff", textDecoration: "none", textAlign: "center" }}
+            >
+              카카오 채널 문의
+            </a>
+          </div>
           <a
-            href="https://selfishclub.xyz/mypage"
+            href="http://pf.kakao.com/_dxmxixhG/chat"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: 14, color: t.text, textDecoration: "underline" }}
+            style={{ display: "inline-block", marginTop: 20, fontSize: 14, color: t.muted, textDecoration: "underline" }}
           >
-            마이페이지에서 신청 내역 확인하기 →
+            궁금한 점은 카카오 채널로 문의
           </a>
         </div>
       </section>
