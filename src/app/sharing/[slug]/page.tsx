@@ -6,10 +6,29 @@ import { PurchaseButton } from "./PurchaseButton";
 import { ApplyForm } from "./ApplyForm";
 import { FloatingCta } from "./FloatingCta";
 
+import type { Metadata } from "next";
+
 export const dynamic = "force-dynamic";
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const item = await getProgram(slug);
+  if (!item) return {};
+  const title = item.i_title_userside || item.i_title;
+  const thumbnail = item.i_thumbnail as string | null;
+  return {
+    title: `${title} — 셀피쉬클럽`,
+    description: `${item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : "워크숍"} | ${title}`,
+    openGraph: {
+      title,
+      description: `${item.i_type === "sharing" ? "이기적공유회" : item.i_type === "challenge" ? "이기적챌린지" : "워크숍"} | ${title}`,
+      ...(thumbnail ? { images: [{ url: thumbnail }] } : {}),
+    },
+  };
 }
 
 // 프로토타입: 3개 샘플 상세 콘텐츠
