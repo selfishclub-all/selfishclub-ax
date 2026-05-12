@@ -84,3 +84,11 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* flex 컨테이너 안 이미지는 가운데 정렬 해제 */
+.detail-html-content [style*="display:flex"] img,
+.detail-html-content [style*="display: flex"] img {
+  display: initial;
+  margin-left: initial;
+  margin-right: initial;
+}
