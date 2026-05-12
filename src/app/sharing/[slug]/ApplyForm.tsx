@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import { PurchaseButton } from "./PurchaseButton";
 
 interface Props {
@@ -27,14 +26,17 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
   const displayFormTitle = formTitle || "";
   const displayFormSubtitle = formSubtitle || "";
   const displayButtonText = formButtonText || "마감되기 전에 신청하기";
-  const searchParams = useSearchParams();
-  const utm = useMemo(() => ({
-    utm_source: searchParams.get("utm_source") || "",
-    utm_medium: searchParams.get("utm_medium") || "",
-    utm_campaign: searchParams.get("utm_campaign") || "",
-    utm_content: searchParams.get("utm_content") || "",
-    utm_term: searchParams.get("utm_term") || "",
-  }), [searchParams]);
+  const [utm, setUtm] = useState({ utm_source: "", utm_medium: "", utm_campaign: "", utm_content: "", utm_term: "" });
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setUtm({
+      utm_source: params.get("utm_source") || "",
+      utm_medium: params.get("utm_medium") || "",
+      utm_campaign: params.get("utm_campaign") || "",
+      utm_content: params.get("utm_content") || "",
+      utm_term: params.get("utm_term") || "",
+    });
+  }, []);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
