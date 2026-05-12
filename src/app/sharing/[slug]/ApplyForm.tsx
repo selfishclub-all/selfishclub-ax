@@ -99,14 +99,6 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
               카카오 채널 문의
             </a>
           </div>
-          <a
-            href="http://pf.kakao.com/_dxmxixhG/chat"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: "inline-block", marginTop: 20, fontSize: 14, color: t.muted, textDecoration: "underline" }}
-          >
-            궁금한 점은 카카오 채널로 문의
-          </a>
         </div>
       </section>
     );

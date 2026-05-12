@@ -44,14 +44,6 @@ function SuccessContent() {
           </a>
         </div>
 
-        <a
-          href="http://pf.kakao.com/_dxmxixhG/chat"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block mt-5 text-sm text-[#0A0A0A]/50 underline hover:text-[#0A0A0A]/70"
-        >
-          궁금한 점은 카카오 채널로 문의
-        </a>
       </div>
     </div>
   );
