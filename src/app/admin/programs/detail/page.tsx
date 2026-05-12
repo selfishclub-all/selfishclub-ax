@@ -852,6 +852,21 @@ export default function DetailPage() {
                   />
                 </div>
               </div>
+              <div>
+                <label className={labelClass}>알림톡 URL (라이브 입장링크 등)</label>
+                <input
+                  defaultValue={(selectedItem as Record<string, unknown>)?.i_alimurl as string || ""}
+                  placeholder="https://notion.site/..."
+                  onBlur={(e) => {
+                    fetch("/api/admin/programs", {
+                      method: "PUT",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ iid: selectedIid, i_alimurl: e.target.value || null }),
+                    });
+                  }}
+                  className={inputClass}
+                />
+              </div>
             </div>
 
             {/* 썸네일 */}

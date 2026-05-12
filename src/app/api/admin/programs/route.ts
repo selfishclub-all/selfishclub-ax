@@ -83,6 +83,7 @@ export async function PUT(request: NextRequest) {
   if (body.i_full_schedule !== undefined) updateData.i_full_schedule = body.i_full_schedule;
   if (body.is_visible !== undefined) updateData.is_visible = body.is_visible;
   if (body.i_thumbnail !== undefined) updateData.i_thumbnail = body.i_thumbnail;
+  if (body.i_alimurl !== undefined) updateData.i_alimurl = body.i_alimurl;
 
   const { data, error } = await supabase
     .from("item")

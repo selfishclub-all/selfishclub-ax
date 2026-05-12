@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   // 1. item 조회
   const { data: item, error: itemError } = await supabase
     .from("item")
-    .select("iid, i_title, i_type, i_formid_webflow, i_title_userside, i_full_schedule")
+    .select("iid, i_title, i_type, i_formid_webflow, i_title_userside, i_full_schedule, i_alimurl")
     .eq("i_formid_webflow", slug)
     .eq("is_visible", true)
     .order("ID", { ascending: false })
@@ -119,6 +119,8 @@ export async function POST(request: NextRequest) {
           u_email,
           item_title: item.i_title_userside || item.i_title,
           item_schedule: item.i_full_schedule,
+          i_alimurl: item.i_alimurl || "",
+          i_full_schedule: item.i_full_schedule || "",
           slug,
           event_count: finalCount,
           is_new: isNew,

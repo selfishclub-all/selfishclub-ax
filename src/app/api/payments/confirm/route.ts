@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
   // 6. item 테이블 신청자 수 + 매출 업데이트
   const { data: current } = await supabase
     .from("item")
-    .select("i_event_count, i_total_revenue, i_type, i_title_userside, i_full_schedule")
+    .select("i_event_count, i_total_revenue, i_type, i_title_userside, i_full_schedule, i_alimurl")
     .eq("iid", item.iid)
     .single();
 
@@ -229,6 +229,8 @@ export async function POST(request: NextRequest) {
           u_email,
           item_title: current?.i_title_userside || item.i_title,
           item_schedule: current?.i_full_schedule || "",
+          i_alimurl: current?.i_alimurl || "",
+          i_full_schedule: current?.i_full_schedule || "",
           slug: item.i_formid_webflow,
           event_count: finalCount,
           is_new: isNew,
