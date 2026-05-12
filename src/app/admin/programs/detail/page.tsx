@@ -14,6 +14,9 @@ interface TopBlock {
   html: string;
   enabled: boolean;
   theme?: "light" | "dark" | "brand";
+  formTitle?: string;
+  formSubtitle?: string;
+  formButtonText?: string;
 }
 
 interface ProgramItem {
@@ -1208,7 +1211,7 @@ export default function DetailPage() {
               <h2 className="text-sm font-bold text-[#0A0A0A]">신청폼</h2>
               <p className="text-xs text-[#999]">FAQ 위에 표시됩니다</p>
               {bottomBlocks.filter((b) => b.id === "apply-form").map((block) => (
-                <div key={block.id} className="space-y-2">
+                <div key={block.id} className="space-y-3">
                   <div className="flex items-center justify-between">
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
@@ -1221,84 +1224,53 @@ export default function DetailPage() {
                     </label>
                   </div>
                   {block.enabled && (
-                    <div className="space-y-2">
-                      {block.id === "apply-form" ? (
-                        <div
-                          className="rounded-lg p-3 max-h-[200px] overflow-hidden"
-                          style={{ backgroundColor: { light: "#FAFAF8", dark: "#0A0A0A", brand: "#E2E545" }[block.theme || "light"] }}
-                          dangerouslySetInnerHTML={{ __html: block.html.replace(
-                            /background:#[A-Fa-f0-9]{6}/,
-                            `background:${{ light: "#FAFAF8", dark: "#0A0A0A", brand: "#E2E545" }[block.theme || "light"]}`
-                          ).replace(
-                            /color:#0A0A0A/g,
-                            `color:${{ light: "#0A0A0A", dark: "#FFFFFF", brand: "#0A0A0A" }[block.theme || "light"]}`
-                          ) }}
+                    <div className="space-y-3">
+                      <p className="text-[10px] text-[#888]">배경 테마</p>
+                      <div className="flex gap-2">
+                        {([
+                          { value: "light" as const, label: "밝은 회색", bg: "#FAFAF8", text: "#333" },
+                          { value: "dark" as const, label: "블랙", bg: "#0A0A0A", text: "#fff" },
+                          { value: "brand" as const, label: "브랜드", bg: "#E2E545", text: "#0A0A0A" },
+                        ]).map((opt) => (
+                          <button
+                            key={opt.value}
+                            onClick={() => updateBottomBlockTheme(block.id, opt.value)}
+                            className={`flex-1 py-2 rounded-lg text-xs font-medium border-2 transition-all ${(block.theme || "light") === opt.value ? "border-[#0A0A0A] ring-1 ring-[#0A0A0A]" : "border-transparent"}`}
+                            style={{ backgroundColor: opt.bg, color: opt.text }}
+                          >
+                            {opt.label}
+                          </button>
+                        ))}
+                      </div>
+                      <div>
+                        <label className={labelClass}>타이틀 (최대 2줄)</label>
+                        <textarea
+                          value={block.formTitle ?? ""}
+                          onChange={(e) => setBottomBlocks((prev) => prev.map((b) => b.id === "apply-form" ? { ...b, formTitle: e.target.value } : b))}
+                          placeholder="라이브에서 만나요"
+                          rows={2}
+                          className={inputClass + " resize-none"}
                         />
-                      ) : (
-                        <div className="bg-[#F5F5F0] rounded-lg p-3 max-h-[200px] overflow-hidden" dangerouslySetInnerHTML={{ __html: block.html }} />
-                      )}
-                      {block.id === "apply-form" && (
-                        <div className="space-y-2 pl-1">
-                          <p className="text-[10px] text-[#888]">배경 테마</p>
-                          <div className="flex gap-2">
-                            {([
-                              { value: "light" as const, label: "밝은 회색", bg: "#FAFAF8", text: "#333" },
-                              { value: "dark" as const, label: "블랙", bg: "#0A0A0A", text: "#fff" },
-                              { value: "brand" as const, label: "브랜드", bg: "#E2E545", text: "#0A0A0A" },
-                            ]).map((opt) => (
-                              <button
-                                key={opt.value}
-                                onClick={() => updateBottomBlockTheme(block.id, opt.value)}
-                                className={`flex-1 py-2 rounded-lg text-xs font-medium border-2 transition-all ${(block.theme || "light") === opt.value ? "border-[#0A0A0A] ring-1 ring-[#0A0A0A]" : "border-transparent"}`}
-                                style={{ backgroundColor: opt.bg, color: opt.text }}
-                              >
-                                {opt.label}
-                              </button>
-                            ))}
-                          </div>
-                          <p className="text-[10px] text-[#888]">텍스트 수정</p>
-                          <input
-                            defaultValue="라이브에서 만나요"
-                            placeholder="제목"
-                            onBlur={(e) => {
-                              const current = block.html;
-                              const updated = current.replace(/>라이브에서 만나요</, `>${e.target.value}<`).replace(/>[^<]*만나요</, `>${e.target.value}<`);
-                              updateBottomBlockHtml(block.id, updated !== current ? updated : current);
-                            }}
-                            className={inputClass}
-                          />
-                          <input
-                            defaultValue="공유회 당일 알림톡과 이메일로 라이브 링크를 보내드립니다."
-                            placeholder="설명"
-                            onBlur={(e) => {
-                              const current = block.html;
-                              const updated = current.replace(/공유회 당일[^<]*/, e.target.value);
-                              updateBottomBlockHtml(block.id, updated);
-                            }}
-                            className={inputClass}
-                          />
-                          <input
-                            defaultValue="선착순 1000명으로 입장이 제한됩니다."
-                            placeholder="안내 문구"
-                            onBlur={(e) => {
-                              const current = block.html;
-                              const updated = current.replace(/선착순[^<]*/, e.target.value);
-                              updateBottomBlockHtml(block.id, updated);
-                            }}
-                            className={inputClass}
-                          />
-                          <input
-                            defaultValue="신청하기"
-                            placeholder="버튼 텍스트"
-                            onBlur={(e) => {
-                              const current = block.html;
-                              const updated = current.replace(/>신청하기</, `>${e.target.value}<`);
-                              updateBottomBlockHtml(block.id, updated);
-                            }}
-                            className={inputClass}
-                          />
-                        </div>
-                      )}
+                      </div>
+                      <div>
+                        <label className={labelClass}>부제 (최대 2줄)</label>
+                        <textarea
+                          value={block.formSubtitle ?? ""}
+                          onChange={(e) => setBottomBlocks((prev) => prev.map((b) => b.id === "apply-form" ? { ...b, formSubtitle: e.target.value } : b))}
+                          placeholder="공유회 당일 알림톡과 이메일로 라이브 링크를 보내드립니다."
+                          rows={2}
+                          className={inputClass + " resize-none"}
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>버튼 문구</label>
+                        <input
+                          value={block.formButtonText ?? ""}
+                          onChange={(e) => setBottomBlocks((prev) => prev.map((b) => b.id === "apply-form" ? { ...b, formButtonText: e.target.value } : b))}
+                          placeholder="마감되기 전에 신청하기"
+                          className={inputClass}
+                        />
+                      </div>
                     </div>
                   )}
                 </div>

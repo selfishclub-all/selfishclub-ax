@@ -10,6 +10,9 @@ interface Props {
   price: number;
   itemId?: string;
   theme?: "light" | "dark" | "brand";
+  formTitle?: string;
+  formSubtitle?: string;
+  formButtonText?: string;
 }
 
 const THEME_STYLES = {
@@ -18,8 +21,11 @@ const THEME_STYLES = {
   brand: { bg: "#E2E545", text: "#0A0A0A", sub: "#444", muted: "#666", inputBg: "#FFFFFF", inputBorder: "#ccc", btnBg: "#0A0A0A", btnText: "#FFFFFF", tipBg: "#d4d73e", tipText: "#333" },
 };
 
-export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light" }: Props) {
+export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light", formTitle, formSubtitle, formButtonText }: Props) {
   const t = THEME_STYLES[theme];
+  const displayFormTitle = formTitle || "";
+  const displayFormSubtitle = formSubtitle || "";
+  const displayButtonText = formButtonText || "마감되기 전에 신청하기";
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -82,18 +88,17 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light" 
   return (
     <section data-apply-form style={{ background: t.bg, padding: "56px 20px" }}>
       <form onSubmit={handleSubmit} style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
-        <p style={{ fontSize: 13, color: t.muted, margin: "0 0 8px" }}>
-          {isPaid ? `${price.toLocaleString()}원` : "무료"} · 온라인 라이브 · 선착순
-        </p>
-        <h3 style={{ fontSize: 24, fontWeight: 700, color: t.text, margin: "0 0 4px", lineHeight: 1.3 }}>
-          라이브에서 만나요
-        </h3>
-        <p style={{ fontSize: 15, color: t.sub, margin: "0 0 8px" }}>
-          공유회 당일 알림톡과 이메일로 라이브 링크를 보내드립니다.
-        </p>
-        <p style={{ fontSize: 14, color: t.muted, margin: "0 0 28px" }}>
-          선착순 1000명으로 입장이 제한됩니다.
-        </p>
+        {displayFormTitle && (
+          <h3 style={{ fontSize: 24, fontWeight: 700, color: t.text, margin: "0 0 8px", lineHeight: 1.3, whiteSpace: "pre-line" }}>
+            {displayFormTitle}
+          </h3>
+        )}
+        {displayFormSubtitle && (
+          <p style={{ fontSize: 15, color: t.sub, margin: "0 0 28px", whiteSpace: "pre-line" }}>
+            {displayFormSubtitle}
+          </p>
+        )}
+        {!displayFormTitle && !displayFormSubtitle && <div style={{ height: 16 }} />}
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
           <input
@@ -149,7 +154,7 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light" 
             disabled={loading}
             style={{ width: "100%", height: 52, background: loading ? "#ccc" : t.btnBg, border: "none", borderRadius: 12, fontSize: 16, fontWeight: 700, color: t.btnText, cursor: loading ? "not-allowed" : "pointer" }}
           >
-            {loading ? "신청 중..." : "마감되기 전에 신청하기"}
+            {loading ? "신청 중..." : displayButtonText}
           </button>
         )}
       </form>
