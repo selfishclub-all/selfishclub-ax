@@ -74,10 +74,13 @@ body {
   margin: 0;
 }
 
-/* 이미지/영상/GIF — 넘침 방지만, 나머지는 인라인 스타일 존중 */
+/* 이미지/영상/GIF — 넘침 방지 + 가운데 정렬 */
 .detail-html-content img,
 .detail-html-content video,
 .detail-html-content iframe {
   max-width: 100%;
   height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
