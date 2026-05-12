@@ -294,7 +294,7 @@ export default async function SharingDetailPage({ params }: Props) {
 
           {/* 본문 HTML — Tailwind 리셋을 무효화하고 인라인 스타일 그대로 적용 */}
           <div
-            className="detail-html-content"
+            className="detail-html-content max-w-4xl mx-auto"
             dangerouslySetInnerHTML={{ __html: item.i_detail_html }}
           />
 
