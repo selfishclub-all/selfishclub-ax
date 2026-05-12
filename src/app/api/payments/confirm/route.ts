@@ -125,6 +125,11 @@ export async function POST(request: NextRequest) {
       portone: true,
     }),
     p_new_tf: "new",
+    utm_source: utm_source || null,
+    utm_medium: utm_medium || null,
+    utm_campaign: utm_campaign || null,
+    utm_content: utm_content || null,
+    utm_term: utm_term || null,
   });
 
   if (purchaseError) {
