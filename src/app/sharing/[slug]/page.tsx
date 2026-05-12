@@ -230,10 +230,11 @@ export default async function SharingDetailPage({ params }: Props) {
   // 어드민에서 만든 상세 페이지가 있으면 그걸 렌더링
   if (hasDetailHtml) {
     const thumbnailUrl = item.i_thumbnail as string | null;
+    const hideNav = slug === "ax-project";
     return (
       <>
-        <Header />
-        <main className="pt-14">
+        {!hideNav && <Header />}
+        <main className={hideNav ? "" : "pt-14"}>
           {/* 히어로 */}
           <section className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden">
             {thumbnailUrl ? (
@@ -337,10 +338,11 @@ export default async function SharingDetailPage({ params }: Props) {
   }
 
   // 기존 DETAIL_DATA 기반 렌더링 (폴백)
+  const hideNavFallback = slug === "ax-project";
   return (
     <>
-      <Header />
-      <main className="pt-14">
+      {!hideNavFallback && <Header />}
+      <main className={hideNavFallback ? "" : "pt-14"}>
         {/* 히어로 — 이미지 + 딤 + 타이틀 */}
         <section className="relative min-h-[50vh] lg:min-h-[60vh] flex items-end overflow-hidden">
           {heroImage ? (
