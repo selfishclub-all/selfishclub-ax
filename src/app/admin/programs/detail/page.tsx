@@ -1043,7 +1043,7 @@ export default function DetailPage() {
                 /* 서식 툴바 + 편집 영역 */
                 <>
                   {/* 서식 툴바 */}
-                  <div className="flex flex-wrap items-center gap-1 px-2 py-2 bg-[#FAFAF8]/95 backdrop-blur-sm border border-[#E5E5E5] rounded-lg fixed top-0 left-0 right-0 z-50 mx-4 mt-2 shadow-md" onMouseDown={(e) => e.preventDefault()}>
+                  <div className="flex flex-wrap items-center gap-1 px-2 py-2 bg-[#FAFAF8]/95 backdrop-blur-sm border border-[#E5E5E5] rounded-lg fixed top-0 left-0 right-0 z-50 mx-4 mt-2 shadow-md" onMouseDown={(e) => { if ((e.target as HTMLElement).tagName !== "SELECT" && (e.target as HTMLElement).tagName !== "OPTION") e.preventDefault(); }}>
                     <button onClick={() => document.execCommand("bold")} className="px-2 py-1 text-xs font-bold hover:bg-[#E5E5E5] rounded" title="굵게">B</button>
                     <button onClick={() => document.execCommand("italic")} className="px-2 py-1 text-xs italic hover:bg-[#E5E5E5] rounded" title="기울임">I</button>
                     <button onClick={() => document.execCommand("underline")} className="px-2 py-1 text-xs underline hover:bg-[#E5E5E5] rounded" title="밑줄">U</button>
