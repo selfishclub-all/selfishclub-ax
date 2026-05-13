@@ -43,6 +43,20 @@ export function PurchaseButton({ itemId, slug, title, price, isPaid, customerNam
     setStatus("opening");
     const orderId = `${itemId}_${Date.now()}`;
 
+    // 모바일 리다이렉트 시 UTM + 고객정보를 보존하기 위해 redirectUrl에 포함
+    const redirectParams = new URLSearchParams({
+      itemId,
+      slug,
+      u_name: customerName || "",
+      u_phone: customerPhone || "",
+      u_email: customerEmail || "",
+      ...(utm?.utm_source ? { utm_source: utm.utm_source } : {}),
+      ...(utm?.utm_medium ? { utm_medium: utm.utm_medium } : {}),
+      ...(utm?.utm_campaign ? { utm_campaign: utm.utm_campaign } : {}),
+      ...(utm?.utm_content ? { utm_content: utm.utm_content } : {}),
+      ...(utm?.utm_term ? { utm_term: utm.utm_term } : {}),
+    });
+
     const response = await PortOne.requestPayment({
       storeId,
       channelKey,
@@ -51,7 +65,7 @@ export function PurchaseButton({ itemId, slug, title, price, isPaid, customerNam
       totalAmount: price,
       currency: "CURRENCY_KRW",
       payMethod: "CARD",
-      redirectUrl: `${window.location.origin}/payments/success?itemId=${itemId}&slug=${slug}`,
+      redirectUrl: `${window.location.origin}/payments/success?${redirectParams.toString()}`,
       customer: {
         fullName: customerName,
         phoneNumber: customerPhone,

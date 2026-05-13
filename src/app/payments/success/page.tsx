@@ -1,11 +1,99 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 function SuccessContent() {
   const searchParams = useSearchParams();
   const slug = searchParams.get("slug");
+  const paymentId = searchParams.get("paymentId");
+  const itemId = searchParams.get("itemId");
+  const [status, setStatus] = useState<"confirming" | "done" | "error">(
+    paymentId ? "confirming" : "done"
+  );
+  const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (!paymentId || !itemId) return;
+
+    // 모바일 리다이렉트 후 결제 검증 — UTM + 고객정보를 URL에서 복원
+    const confirm = async () => {
+      try {
+        const res = await fetch("/api/payments/confirm", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            paymentId,
+            itemId,
+            u_name: searchParams.get("u_name") || "",
+            u_phone: searchParams.get("u_phone") || "",
+            u_email: searchParams.get("u_email") || "",
+            utm_source: searchParams.get("utm_source") || "",
+            utm_medium: searchParams.get("utm_medium") || "",
+            utm_campaign: searchParams.get("utm_campaign") || "",
+            utm_content: searchParams.get("utm_content") || "",
+            utm_term: searchParams.get("utm_term") || "",
+          }),
+        });
+        const result = await res.json();
+        if (result.error) {
+          setErrorMsg(result.error);
+          setStatus("error");
+        } else {
+          setStatus("done");
+        }
+      } catch {
+        setErrorMsg("결제 확인 중 네트워크 오류가 발생했습니다.");
+        setStatus("error");
+      }
+    };
+
+    confirm();
+  }, [paymentId, itemId, searchParams]);
+
+  if (status === "confirming") {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FAFAF8] px-5">
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            border: "3px solid rgba(0,0,0,0.1)",
+            borderTop: "3px solid #0A0A0A",
+            borderRadius: "50%",
+            animation: "spin 1s linear infinite",
+          }}
+        />
+        <p className="text-lg font-semibold mt-4">결제 확인 중...</p>
+        <p className="text-sm text-[#0A0A0A]/50 mt-1">잠시만 기다려주세요</p>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8] px-5">
+        <div className="bg-white rounded-2xl border border-[#E5E5E5] p-8 max-w-md w-full text-center">
+          <p className="text-4xl mb-4">⚠️</p>
+          <p className="text-xl font-bold text-[#0A0A0A] mb-2">결제 확인 실패</p>
+          <p className="text-sm text-[#0A0A0A]/50 leading-relaxed mb-6">
+            {errorMsg || "결제 확인 중 문제가 발생했습니다."}
+            <br />
+            카카오 채널로 문의해주세요.
+          </p>
+          <a
+            href="http://pf.kakao.com/_dxmxixhG/chat"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-[#0A0A0A] text-white px-6 py-3 rounded-lg font-semibold text-sm hover:bg-[#222] transition-colors"
+          >
+            카카오 채널 문의
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8] px-5">
