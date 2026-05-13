@@ -12,6 +12,7 @@ const ALLOWED_PATHS = [
   "/payments",
   "/spongeclub",
   "/sharing/aaa",
+  "/campaign",
 ];
 
 export function middleware(request: NextRequest) {
