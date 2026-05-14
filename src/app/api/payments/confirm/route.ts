@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
 
   const { error: purchaseError } = await supabase.from("purchase").insert({
     ID: newId,
-    p_created_at: new Date().toISOString(),
+    p_created_at: new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().replace("Z", ""),
     u_name: payment.customer?.name || "",
     u_phone: payment.customer?.phoneNumber || "",
     u_email: payment.customer?.email || "",
