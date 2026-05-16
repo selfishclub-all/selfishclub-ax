@@ -8,10 +8,16 @@ function SuccessContent() {
   const slug = searchParams.get("slug");
   const paymentId = searchParams.get("paymentId");
   const itemId = searchParams.get("itemId");
+  const errorCode = searchParams.get("code");
+
+  // 결제 실패로 리다이렉트된 경우 (PortOne이 code 파라미터를 붙임)
+  const isFailed = !!errorCode;
   const [status, setStatus] = useState<"confirming" | "done" | "error">(
-    paymentId ? "confirming" : "done"
+    isFailed ? "error" : paymentId ? "confirming" : "done"
   );
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState(
+    isFailed ? "결제가 완료되지 않았습니다. 다시 시도해주세요." : ""
+  );
 
   useEffect(() => {
     if (!paymentId || !itemId) return;
