@@ -226,6 +226,8 @@ export default async function SharingDetailPage({ params }: Props) {
   const detail = DETAIL_DATA[slug];
   const heroImage = detail?.images?.[0];
   const past = isPast(item.i_eventdate);
+  const CLOSED_SLUGS = ["ax-project"];
+  const closed = CLOSED_SLUGS.includes(slug);
 
   // DB에 i_detail_html이 있으면 어드민에서 만든 상세 페이지 렌더링
   const hasDetailHtml = !!item.i_detail_html;
@@ -318,7 +320,7 @@ export default async function SharingDetailPage({ params }: Props) {
           />
 
           {/* 신청/결제 */}
-          {!past && (() => {
+          {!past && !closed && (() => {
             const applyBlock = (item.i_detail_top_blocks as { id: string; theme?: string; formTitle?: string; formSubtitle?: string; formButtonText?: string }[] | null)
               ?.find((b) => b.id === "apply-form");
             const formTheme = (applyBlock?.theme as "light" | "dark" | "brand") || "light";
@@ -350,7 +352,7 @@ export default async function SharingDetailPage({ params }: Props) {
             ))
           }
         </main>
-        {!past && <FloatingCta />}
+        {!past && !closed && <FloatingCta />}
         <Footer />
       </>
     );

@@ -13,6 +13,7 @@ interface Props {
   formTitle?: string;
   formSubtitle?: string;
   formButtonText?: string;
+  closed?: boolean;
 }
 
 const THEME_STYLES = {
@@ -23,7 +24,7 @@ const THEME_STYLES = {
 
 const SKIP_FORM_SLUGS = ["individualpay_260518"];
 
-export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light", formTitle, formSubtitle, formButtonText }: Props) {
+export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light", formTitle, formSubtitle, formButtonText, closed = false }: Props) {
   const t = THEME_STYLES[theme];
   const skipForm = SKIP_FORM_SLUGS.includes(slug);
   const displayFormTitle = formTitle || "";
@@ -85,6 +86,38 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
     } finally {
       setLoading(false);
     }
+  }
+
+  if (closed) {
+    return (
+      <section data-apply-form style={{ background: t.bg, padding: "56px 20px" }}>
+        <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
+          {displayFormTitle && (
+            <h3 style={{ fontSize: 24, fontWeight: 700, color: t.text, margin: "0 0 8px", lineHeight: 1.3, whiteSpace: "pre-line", opacity: 0.4 }}>
+              {displayFormTitle}
+            </h3>
+          )}
+          {displayFormSubtitle && (
+            <p style={{ fontSize: 15, color: t.sub, margin: "0 0 28px", whiteSpace: "pre-line", opacity: 0.4 }}>
+              {displayFormSubtitle}
+            </p>
+          )}
+          {!displayFormTitle && !displayFormSubtitle && <div style={{ height: 16 }} />}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
+            <input disabled placeholder="이름" style={{ width: "100%", height: 52, padding: "0 16px", border: `1px solid ${t.inputBorder}`, borderRadius: 12, fontSize: 15, color: t.text, background: t.inputBg, opacity: 0.4, cursor: "not-allowed", boxSizing: "border-box" as const }} />
+            <input disabled placeholder="전화번호 (010-0000-0000)" style={{ width: "100%", height: 52, padding: "0 16px", border: `1px solid ${t.inputBorder}`, borderRadius: 12, fontSize: 15, color: t.text, background: t.inputBg, opacity: 0.4, cursor: "not-allowed", boxSizing: "border-box" as const }} />
+            <input disabled placeholder="이메일" style={{ width: "100%", height: 52, padding: "0 16px", border: `1px solid ${t.inputBorder}`, borderRadius: 12, fontSize: 15, color: t.text, background: t.inputBg, opacity: 0.4, cursor: "not-allowed", boxSizing: "border-box" as const }} />
+          </div>
+          <button
+            type="button"
+            disabled
+            style={{ width: "100%", height: 52, background: "#ccc", border: "none", borderRadius: 12, fontSize: 16, fontWeight: 700, color: "#888", cursor: "not-allowed" }}
+          >
+            신청이 마감되었습니다
+          </button>
+        </div>
+      </section>
+    );
   }
 
   if (submitted) {
