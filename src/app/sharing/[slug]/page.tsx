@@ -320,7 +320,7 @@ export default async function SharingDetailPage({ params }: Props) {
           />
 
           {/* 신청/결제 */}
-          {(!past || closed) && (() => {
+          {(closed || !past) && (() => {
             const applyBlock = (item.i_detail_top_blocks as { id: string; theme?: string; formTitle?: string; formSubtitle?: string; formButtonText?: string }[] | null)
               ?.find((b) => b.id === "apply-form");
             const formTheme = (applyBlock?.theme as "light" | "dark" | "brand") || "light";
