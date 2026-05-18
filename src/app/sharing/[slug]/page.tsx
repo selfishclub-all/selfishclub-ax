@@ -320,11 +320,11 @@ export default async function SharingDetailPage({ params }: Props) {
           />
 
           {/* 신청/결제 */}
-          {!past && !closed && (() => {
+          {(!past || closed) && (() => {
             const applyBlock = (item.i_detail_top_blocks as { id: string; theme?: string; formTitle?: string; formSubtitle?: string; formButtonText?: string }[] | null)
               ?.find((b) => b.id === "apply-form");
             const formTheme = (applyBlock?.theme as "light" | "dark" | "brand") || "light";
-            return <ApplyForm slug={slug} title={displayTitle} isPaid={isPaid} price={price} itemId={item.iid} theme={formTheme} formTitle={applyBlock?.formTitle} formSubtitle={applyBlock?.formSubtitle} formButtonText={applyBlock?.formButtonText} />;
+            return <ApplyForm slug={slug} title={displayTitle} isPaid={isPaid} price={price} itemId={item.iid} theme={formTheme} formTitle={applyBlock?.formTitle} formSubtitle={applyBlock?.formSubtitle} formButtonText={applyBlock?.formButtonText} closed={closed} />;
           })()}
 
           {/* FAQ */}
