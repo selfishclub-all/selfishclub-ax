@@ -12,6 +12,7 @@ const ALLOWED_PATHS = [
   "/payments",
   "/spongeclub",
   "/sharing/aaa",
+  "/sharing/individualpay_260518",
   "/campaign",
 ];
 
