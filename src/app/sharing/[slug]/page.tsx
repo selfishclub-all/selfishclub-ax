@@ -585,6 +585,7 @@ export default async function SharingDetailPage({ params }: Props) {
                     title={displayTitle}
                     price={price}
                     isPaid={isPaid}
+                    skipForm={slug === "individualpay_260518"}
                   />
                 </div>
               </div>
