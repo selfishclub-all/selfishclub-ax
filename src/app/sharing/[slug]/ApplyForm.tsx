@@ -21,11 +21,14 @@ const THEME_STYLES = {
   brand: { bg: "#E2E545", text: "#0A0A0A", sub: "#444", muted: "#666", inputBg: "#FFFFFF", inputBorder: "#ccc", btnBg: "#0A0A0A", btnText: "#FFFFFF", tipBg: "#d4d73e", tipText: "#333" },
 };
 
+const SKIP_FORM_SLUGS = ["individualpay_260518"];
+
 export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light", formTitle, formSubtitle, formButtonText }: Props) {
   const t = THEME_STYLES[theme];
+  const skipForm = SKIP_FORM_SLUGS.includes(slug);
   const displayFormTitle = formTitle || "";
   const displayFormSubtitle = formSubtitle || "";
-  const displayButtonText = formButtonText || "마감되기 전에 신청하기";
+  const displayButtonText = formButtonText || (skipForm ? "결제하기" : "마감되기 전에 신청하기");
   const [utm, setUtm] = useState({ utm_source: "", utm_medium: "", utm_campaign: "", utm_content: "", utm_term: "" });
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -137,38 +140,42 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
         )}
         {!displayFormTitle && !displayFormSubtitle && <div style={{ height: 16 }} />}
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="이름"
-            required
-            style={{ width: "100%", height: 52, padding: "0 16px", border: `1px solid ${t.inputBorder}`, borderRadius: 12, fontSize: 15, color: t.text, background: t.inputBg, outline: "none", boxSizing: "border-box" as const }}
-          />
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="전화번호 (010-0000-0000)"
-            required
-            style={{ width: "100%", height: 52, padding: "0 16px", border: `1px solid ${t.inputBorder}`, borderRadius: 12, fontSize: 15, color: t.text, background: t.inputBg, outline: "none", boxSizing: "border-box" as const }}
-          />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="이메일"
-            required
-            style={{ width: "100%", height: 52, padding: "0 16px", border: `1px solid ${t.inputBorder}`, borderRadius: 12, fontSize: 15, color: t.text, background: t.inputBg, outline: "none", boxSizing: "border-box" as const }}
-          />
-        </div>
+        {!skipForm && (
+          <>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="이름"
+                required
+                style={{ width: "100%", height: 52, padding: "0 16px", border: `1px solid ${t.inputBorder}`, borderRadius: 12, fontSize: 15, color: t.text, background: t.inputBg, outline: "none", boxSizing: "border-box" as const }}
+              />
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="전화번호 (010-0000-0000)"
+                required
+                style={{ width: "100%", height: 52, padding: "0 16px", border: `1px solid ${t.inputBorder}`, borderRadius: 12, fontSize: 15, color: t.text, background: t.inputBg, outline: "none", boxSizing: "border-box" as const }}
+              />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="이메일"
+                required
+                style={{ width: "100%", height: 52, padding: "0 16px", border: `1px solid ${t.inputBorder}`, borderRadius: 12, fontSize: 15, color: t.text, background: t.inputBg, outline: "none", boxSizing: "border-box" as const }}
+              />
+            </div>
 
-        <div style={{ background: t.tipBg, borderRadius: 12, padding: "14px 16px", marginBottom: 20 }}>
-          <p style={{ fontSize: 14, color: t.tipText, margin: 0 }}>
-            해당 이기적공유회 신청 시, 이기적멤버십 2.0에도 무료로 자동가입됩니다.
-          </p>
-        </div>
+            <div style={{ background: t.tipBg, borderRadius: 12, padding: "14px 16px", marginBottom: 20 }}>
+              <p style={{ fontSize: 14, color: t.tipText, margin: 0 }}>
+                해당 이기적공유회 신청 시, 이기적멤버십 2.0에도 무료로 자동가입됩니다.
+              </p>
+            </div>
+          </>
+        )}
 
         {error && (
           <p style={{ fontSize: 14, color: "#EF4444", marginBottom: 12 }}>{error}</p>
@@ -185,6 +192,7 @@ export function ApplyForm({ slug, title, isPaid, price, itemId, theme = "light",
             customerPhone={phone}
             customerEmail={email}
             utm={utm}
+            skipForm={skipForm}
           />
         ) : (
           <button

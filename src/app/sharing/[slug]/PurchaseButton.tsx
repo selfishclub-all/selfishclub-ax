@@ -21,12 +21,13 @@ interface Props {
   customerPhone?: string;
   customerEmail?: string;
   utm?: UtmParams;
+  skipForm?: boolean;
 }
 
 const storeId = process.env.NEXT_PUBLIC_PORTONE_STORE_ID!;
 const channelKey = process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY!;
 
-export function PurchaseButton({ itemId, slug, title, price, isPaid, customerName, customerPhone, customerEmail, utm }: Props) {
+export function PurchaseButton({ itemId, slug, title, price, isPaid, customerName, customerPhone, customerEmail, utm, skipForm }: Props) {
   const [status, setStatus] = useState<"idle" | "opening" | "confirming">("idle");
 
   async function handlePurchase() {
@@ -35,7 +36,7 @@ export function PurchaseButton({ itemId, slug, title, price, isPaid, customerNam
       return;
     }
 
-    if (!customerName || !customerPhone || !customerEmail) {
+    if (!skipForm && (!customerName || !customerPhone || !customerEmail)) {
       alert("이름, 전화번호, 이메일을 모두 입력해주세요.");
       return;
     }
@@ -107,7 +108,7 @@ export function PurchaseButton({ itemId, slug, title, price, isPaid, customerNam
     window.location.href = `/payments/success?orderId=${orderId}&slug=${slug}`;
   }
 
-  const label = status === "opening" ? "결제창 여는 중..." : status === "confirming" ? "결제 확인 중..." : "마감되기 전에 신청하기";
+  const label = status === "opening" ? "결제창 여는 중..." : status === "confirming" ? "결제 확인 중..." : skipForm ? "결제하기" : "마감되기 전에 신청하기";
 
   return (
     <>
