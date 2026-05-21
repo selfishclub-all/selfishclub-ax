@@ -89,13 +89,21 @@ type: feat, fix, refactor, style, docs, chore, test
 - [x] 프로젝트 초기 셋업 (Next.js 16, Tailwind v4, shadcn/ui)
 - [x] CLAUDE.md, DESIGN.md, BRIEFING.md 문서 작성
 - [x] 대시보드 v1 (`/admin/dashboard`) — 진행률, 사이트맵, CRM 에이전트 현황
+- [x] 카카오 소셜 로그인 + BetterAuth 설정
+- [x] 전체 페이지 레이아웃 쉘 (Header, Footer)
+- [x] 마이페이지 (구매 내역, 이벤트 이력, VOD 시청)
+- [x] 포트원 결제 연동 + 모바일 결제 버그 수정
+- [x] 이미지 업로드 Cloudflare R2 전환
+- [x] 블로그 목록/상세 + 어드민 블로그 관리
+- [x] AI툴 목록 + 어드민 AI툴 관리
+- [x] 공유회/챌린지 목록 + 상세 페이지
+- [x] 스폰지클럽 랜딩 + 결제
+- [x] 결제 시각 KST 저장
 
-### 다음 작업
-- [ ] 카카오 소셜 로그인 + BetterAuth 설정
-- [ ] 기존 회원 매핑 로직
-- [ ] 전체 페이지 레이아웃 쉘 (Header, Footer)
-- [ ] 마이페이지
-- [ ] 포트원 결제 재연동
+### 다음 작업 (최우선)
+- [ ] 구글 로그인 추가 (BetterAuth + Google OAuth)
+- [ ] 멤버십 가입 페이지 신규 제작
+- [ ] SEO 작업 (Webflow URL 매핑, sitemap.xml, OG 태그, Search Console)
 
 ### 미결정 사항
 - 배포 구조: `selfishclub-all/aaa` 레포에 합칠지 별도 레포 만들지 미정
